@@ -40,4 +40,9 @@ public class GameTreeNode {
      * Engine continuation.
      */
     private String engineLine;
+
+    /**
+     * The last move that was made before this position was achieved.
+     */
+    private Move lastMoveMade;
 }

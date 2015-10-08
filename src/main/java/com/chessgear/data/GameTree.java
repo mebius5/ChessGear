@@ -21,6 +21,11 @@ public class GameTree {
     private HashMap<Integer, GameTreeNode> nodeMapping;
 
     /**
+     * Counter for node ints.
+     */
+    private int nodeIntCounter;
+
+    /**
      * Adds game to tree.
      * @param g Game to add to tree.
      */
