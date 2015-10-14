@@ -6,6 +6,29 @@ package com.chessgear.game;
  */
 public class Move {
 
+    /**
+     * Whose move was it.
+     */
     private Player whoMoved;
+
+    /**
+     * What type of piece was moved.
+     */
+    private PieceType pieceType;
+
+    /**
+     * Origin square.
+     */
+    private Square origin;
+
+    /**
+     * Destination square.
+     */
+    private Square destination;
+
+    /**
+     * Null if not pawn promotion, else, type of piece promoted to.
+     */
+    private PieceType promotionType;
 
 }

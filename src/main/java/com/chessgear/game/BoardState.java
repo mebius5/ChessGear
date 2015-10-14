@@ -55,4 +55,14 @@ public class BoardState {
         return "";// TODO
     }
 
+    /**
+     * Returns the new boardstate after a move was done to it.
+     * NOTE: This boardstate remains unchanged! We do not do a modification in place!
+     * We clone the boardstate, then do a new move.
+     * @param m Move to execute.
+     * @return
+     */
+    public BoardState doMove(Move m) {
+        // TODO
+    }
 }
