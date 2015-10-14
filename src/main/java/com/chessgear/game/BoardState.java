@@ -101,7 +101,6 @@ public class BoardState {
         // TODO
 
     }
-
     /**
      *
      * @param origin
