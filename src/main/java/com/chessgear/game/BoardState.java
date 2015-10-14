@@ -65,4 +65,12 @@ public class BoardState {
     public BoardState doMove(Move m) {
         // TODO
     }
+
+    /**
+     * Clone constructor.
+     * @return A deep copy of this object.
+     */
+    public BoardState clone() {
+
+    }
 }
