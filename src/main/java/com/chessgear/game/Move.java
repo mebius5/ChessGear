@@ -31,4 +31,9 @@ public class Move {
      */
     private PieceType promotionType;
 
+    /**
+     * Flag that indicates whether the move is a castling move.
+     */
+    private boolean castling;
+
 }

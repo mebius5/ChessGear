@@ -1,5 +1,7 @@
 package com.chessgear.game;
 
+import java.util.List;
+
 /**
  * Board state class.
  * Created by Ran on 10/8/2015.
@@ -86,5 +88,29 @@ public class BoardState {
      */
     public BoardState clone() {
         BoardState cloneBoardState = new BoardState();
+    }
+
+    /**
+     * Returns a list of all pieces owned by a particular player on board of the given type.
+     * @param player Player's pieces who we should look through.
+     * @param type Type of piece we should look for.
+     * @return A list of all pieces owned by the specified player, of the specified type.
+     */
+    List<Piece> getAllPiecesOfType(Player player, PieceType type) {
+
+        // TODO
+
+    }
+
+    /**
+     *
+     * @param origin
+     * @param target
+     * @return
+     */
+    public boolean canMakeMove(Square origin, Square target) {
+
+        // NOTE: We must check for absolute pins!
+
     }
 }
