@@ -48,6 +48,20 @@ public class BoardState {
     private int fullMoveCounter;
 
     /**
+     * Default constructor.
+     */
+    public BoardState() {
+
+    }
+
+    /**
+     * Sets the boardstate to the starting position.
+     */
+    public void setToDefaultPosition() {
+
+    }
+
+    /**
      * Returns the Forsyth-Edwards Notation for the current board state.
      * @return FEN string representation of current board state.
      */
@@ -64,5 +78,13 @@ public class BoardState {
      */
     public BoardState doMove(Move m) {
         // TODO
+    }
+
+    /**
+     * Clone constructor.
+     * @return A deep copy of this object.
+     */
+    public BoardState clone() {
+        BoardState cloneBoardState = new BoardState();
     }
 }
