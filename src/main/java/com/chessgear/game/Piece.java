@@ -25,9 +25,9 @@ public class Piece {
 
     /**
      * Constructor for Piece object.
-     * @param type
-     * @param owner
-     * @param location
+     * @param type Type of piece
+     * @param owner Owner of piece
+     * @param location Location of piece
      */
     public Piece(PieceType type, Player owner, Square location) {
         this.type = type;

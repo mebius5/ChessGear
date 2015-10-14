@@ -99,8 +99,8 @@ public class BoardState {
     List<Piece> getAllPiecesOfType(Player player, PieceType type) {
 
         // TODO
-
     }
+
     /**
      *
      * @param origin
@@ -108,7 +108,7 @@ public class BoardState {
      * @return
      */
     public boolean canMakeMove(Square origin, Square target) {
-
+        // TODO
         // NOTE: We must check for absolute pins!
 
     }

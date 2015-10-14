@@ -31,7 +31,7 @@ public class Game {
     /**
      * Game result.
      */
-    private Result result
+    private Result result;
 
     /**
      * Id of game.
