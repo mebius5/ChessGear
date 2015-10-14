@@ -29,9 +29,9 @@ public class Game {
     private String pgn;
 
     /**
-     * Winner of game.
+     * Game result.
      */
-    private boolean whiteWin;
+    private Result result
 
     /**
      * Id of game.
