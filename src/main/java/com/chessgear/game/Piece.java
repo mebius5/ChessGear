@@ -15,4 +15,14 @@ public class Piece {
      * Onwer of the piece.
      */
     private Player owner;
+
+    /**
+     * Constructor for Piece object.
+     * @param type
+     * @param owner
+     */
+    public Piece(PieceType type, Player owner) {
+        this.type = type;
+        this.owner = owner;
+    }
 }
