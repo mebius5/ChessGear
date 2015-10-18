@@ -31,5 +31,9 @@ public class User {
      */
     private List<Game> games;
 
+    public static class Property {
+
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.chessgear.game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,17 +51,52 @@ public class BoardState {
     private int fullMoveCounter;
 
     /**
+     * Whose turn it is currently.
+     */
+    private Player active;
+
+    /**
      * Default constructor.
      */
     public BoardState() {
-
+        this.pieces = new Piece[8][8];
     }
 
     /**
      * Sets the boardstate to the starting position.
      */
     public void setToDefaultPosition() {
-
+        // Adds pieces to starting positions
+        this.pieces[0][0] = new Piece(PieceType.ROOK, Player.WHITE, new Square(0,0));
+        this.pieces[1][0] = new Piece(PieceType.KNIGHT, Player.WHITE, new Square(1,0));
+        this.pieces[2][0] = new Piece(PieceType.BISHOP, Player.WHITE, new Square(2,0));
+        this.pieces[3][0] = new Piece(PieceType.QUEEN, Player.WHITE, new Square(3,0));
+        this.pieces[4][0] = new Piece(PieceType.KING, Player.WHITE, new Square(4,0));
+        this.pieces[5][0] = new Piece(PieceType.BISHOP, Player.WHITE, new Square(5,0));
+        this.pieces[6][0] = new Piece(PieceType.KNIGHT, Player.WHITE, new Square(6,0));
+        this.pieces[7][0] = new Piece(PieceType.ROOK, Player.WHITE, new Square(7,0));
+        for (int c = 0; c < 8; c++) {
+            this.pieces[c][1] = new Piece(PieceType.PAWN, Player.WHITE, new Square(c, 1));
+        }
+        this.pieces[0][7] = new Piece(PieceType.ROOK, Player.BLACK, new Square(0,7));
+        this.pieces[1][7] = new Piece(PieceType.KNIGHT, Player.BLACK, new Square(1,7));
+        this.pieces[2][7] = new Piece(PieceType.BISHOP, Player.BLACK, new Square(2,7));
+        this.pieces[3][7] = new Piece(PieceType.QUEEN, Player.BLACK, new Square(3,7));
+        this.pieces[4][7] = new Piece(PieceType.KING, Player.BLACK, new Square(4,7));
+        this.pieces[5][7] = new Piece(PieceType.BISHOP, Player.BLACK, new Square(5,7));
+        this.pieces[6][7] = new Piece(PieceType.KNIGHT, Player.BLACK, new Square(6,7));
+        this.pieces[7][7] = new Piece(PieceType.ROOK, Player.BLACK, new Square(7,7));
+        for (int c = 0; c < 8; c++) {
+            this.pieces[c][6] = new Piece(PieceType.PAWN, Player.BLACK, new Square(c, 6));
+        }
+        // Initialize flags and counters
+        this.canWhiteCastleKingside = true;
+        this.canWhiteCastleQueenSide = true;
+        this.canBlackCastleKingSide = true;
+        this.canBlackCastleQueenSide = true;
+        this.halfMoveCounter = 0;
+        this.fullMoveCounter = 1;
+        this.active = Player.WHITE;
     }
 
     /**
@@ -80,6 +116,7 @@ public class BoardState {
      */
     public BoardState doMove(Move m) {
         // TODO
+        return null;
     }
 
     /**
@@ -88,6 +125,21 @@ public class BoardState {
      */
     public BoardState clone() {
         BoardState cloneBoardState = new BoardState();
+        for (int c = 0; c < 8; c++) {
+            for (int d = 0; d < 8; d++) {
+                cloneBoardState.pieces[c][d] = this.pieces[c][d].clone();
+            }
+        }
+        cloneBoardState.canBlackCastleKingSide = this.canBlackCastleKingSide;
+        cloneBoardState.canBlackCastleQueenSide = this.canBlackCastleQueenSide;
+        cloneBoardState.canWhiteCastleQueenSide = this.canWhiteCastleQueenSide;
+        cloneBoardState.canWhiteCastleKingside = this.canWhiteCastleKingside;
+        cloneBoardState.enPassantTarget = this.enPassantTarget;
+        cloneBoardState.active = this.active;
+        cloneBoardState.halfMoveCounter = this.halfMoveCounter;
+        cloneBoardState.fullMoveCounter = this.fullMoveCounter;
+
+        return cloneBoardState;
     }
 
     /**
@@ -98,7 +150,17 @@ public class BoardState {
      */
     List<Piece> getAllPiecesOfType(Player player, PieceType type) {
 
-        // TODO
+        List<Piece> result = new ArrayList<>();
+
+        for (int c = 0; c < 8; c++) {
+            for (int d = 0; d < 8; d++) {
+                if (this.pieces[c][d].getOwner().equals(player) && this.pieces[c][d].getType().equals(type)) {
+                    result.add(this.pieces[c][d]);
+                }
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -110,6 +172,6 @@ public class BoardState {
     public boolean canMakeMove(Square origin, Square target) {
         // TODO
         // NOTE: We must check for absolute pins!
-
+        return false;
     }
 }

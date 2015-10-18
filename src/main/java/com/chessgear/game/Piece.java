@@ -35,4 +35,37 @@ public class Piece {
         this.location = location;
     }
 
+    /**
+     * Accessor for piece type.
+     * @return Type of piece.
+     */
+    public PieceType getType() {
+        return this.type;
+    }
+
+    /**
+     * Accessor for owner.
+     * @return Player that owns this piece
+     */
+    public Player getOwner() {
+        return this.owner;
+    }
+
+    /**
+     * Clone method for Piece.
+     * @return Deep copy of this piece.
+     */
+    public Piece clone() {
+        Piece clone = new Piece(this.type, this.owner, this.location);
+        return clone;
+    }
+
+    /**
+     * Mutator for location.
+     * @param target New location of piece.
+     */
+    public void setLocation(Square target) {
+        this.location = target;
+    }
+
 }
