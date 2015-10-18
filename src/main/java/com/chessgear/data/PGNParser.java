@@ -66,6 +66,7 @@ public class PGNParser {
      */
     public Move getHalfMove(Player player, int fullMoveNumber) {
         // TODO
+        return null;
     }
 
     /**
@@ -73,7 +74,7 @@ public class PGNParser {
      * @param pgn Pgn string.
      * @return List of tags contained within pgn string.
      */
-    private static List<Tag> parseTags(String pgn){
+    public static List<Tag> parseTags(String pgn){
         List<Tag> tags = new ArrayList<>();
         Scanner scanner = new Scanner(pgn);
 
@@ -88,6 +89,8 @@ public class PGNParser {
                 int splitIndex = strippedLine.indexOf(" ");
                 String name = strippedLine.substring(0, splitIndex);
                 String value = strippedLine.substring(splitIndex + 1);
+                Tag newTag = new Tag(name, value);
+                tags.add(newTag);
             }
 
         }
@@ -114,15 +117,41 @@ public class PGNParser {
     /**
      * Inner class tag. Encodes tag information.
      */
-    private static class Tag {
+    public static class Tag {
         /**
          * Name of the tag.
          */
-        String name;
+        private String name;
         /**
          * Value of the tag.
          */
-        String value;
+        private String value;
+
+        /**
+         * Field-based constructor.
+         * @param name Name of tag.
+         * @param value Value of tag.
+         */
+        public Tag(String name, String value) {
+            this.name = name;
+            this.value = value;
+        }
+
+        /**
+         * Accessor for name.
+         * @return Name of tag.
+         */
+        public String getName() {
+            return this.name;
+        }
+
+        /**
+         * Accessor for value.
+         * @return Value of tag.
+         */
+        public String getValue() {
+            return this.value;
+        }
     }
 }
 
