@@ -104,7 +104,78 @@ public class BoardState {
      * @return FEN string representation of current board state.
      */
     public String toFEN() {
-        return "";// TODO
+        StringBuilder fenBuilder = new StringBuilder();
+        // Build the piece string.
+        for (int i = 7; i>=0; i--) {
+            int numEmptySquares = 0;
+            for (int j  = 0; j < 8; j++) {
+                if (this.pieces[j][i] != null) {
+                    if (numEmptySquares != 0) {
+                        fenBuilder.append(numEmptySquares);
+                        numEmptySquares = 0;
+                    }
+                    fenBuilder.append(this.pieces[j][i].getFENChar());
+                } else {
+                    numEmptySquares++;
+                }
+            }
+            if (numEmptySquares != 0) {
+                fenBuilder.append(numEmptySquares);
+                numEmptySquares = 0;
+            }
+            if (i != 0) fenBuilder.append("/"); // No slash on the last rank
+        }
+
+        // Append a space.
+        fenBuilder.append(" ");
+        // Active color
+        switch (this.active) {
+            case WHITE:
+                fenBuilder.append('w');
+                break;
+            case BLACK:
+                fenBuilder.append('b');
+                break;
+            default:
+        }
+        fenBuilder.append(" ");
+
+        // Castling availability
+        if (this.canWhiteCastleQueenSide || this.canBlackCastleQueenSide || this.canWhiteCastleKingside || this.canBlackCastleKingSide) {
+            if (this.canWhiteCastleKingside) {
+                fenBuilder.append("K");
+            }
+            if (this.canWhiteCastleQueenSide) {
+                fenBuilder.append("Q");
+            }
+            if (this.canBlackCastleKingSide) {
+                fenBuilder.append("k");
+            }
+            if (this.canBlackCastleQueenSide) {
+                fenBuilder.append("q");
+            }
+        } else {
+            fenBuilder.append("-");
+        }
+        fenBuilder.append(" ");
+
+        // En passant target
+        if (this.enPassantTarget != null) {
+            fenBuilder.append(this.enPassantTarget.toString());
+        } else {
+            fenBuilder.append("-");
+        }
+
+        fenBuilder.append(" ");
+
+        // Halfmove
+        fenBuilder.append(this.halfMoveCounter);
+        fenBuilder.append(" ");
+
+        // Fullmove
+        fenBuilder.append(this.fullMoveCounter);
+
+        return fenBuilder.toString();
     }
 
     /**

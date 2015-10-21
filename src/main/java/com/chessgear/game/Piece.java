@@ -68,4 +68,19 @@ public class Piece {
         this.location = target;
     }
 
+    /**
+     * Returns the FEN character representation of this piece.
+     * @return FEN character representation of this piece.
+     */
+    public char getFENChar() {
+        switch(this.getOwner()) {
+            case WHITE:
+                return Character.toUpperCase(this.getType().getFENChar());
+            case BLACK:
+                return this.getType().getFENChar();
+            default:
+                return 0;
+        }
+    }
+
 }

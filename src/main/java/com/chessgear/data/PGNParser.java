@@ -1,5 +1,6 @@
 package com.chessgear.data;
 
+import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
 import com.chessgear.game.Player;
 import com.chessgear.game.Result;
@@ -38,6 +39,16 @@ public class PGNParser {
     private Result result;
 
     /**
+     * White's half moves.
+     */
+    private List<Move> whiteHalfMoves;
+
+    /**
+     * Black's half moves.
+     */
+    private List<Move> blackHalfMoves;
+
+    /**
      * Constructs the parser with the string we need to parse.
      * @param pgn
      */
@@ -64,6 +75,9 @@ public class PGNParser {
                     break;
             }
         }
+
+        // Parse the half moves.
+        this.parseMoves(this.pgn);
 
     }
 
@@ -98,8 +112,14 @@ public class PGNParser {
      * @return Move corresponding to the passed arguments.
      */
     public Move getHalfMove(Player player, int fullMoveNumber) {
-        // TODO
-        return null;
+        switch (player) {
+            case BLACK:
+                return this.blackHalfMoves.get(fullMoveNumber);
+            case WHITE:
+                return this.whiteHalfMoves.get(fullMoveNumber);
+            default:
+                return null;
+        }
     }
 
     /**
@@ -144,6 +164,14 @@ public class PGNParser {
         // Recursively remove everything within parentheses - balanced removal
         result = result.replaceAll("\\((?:(?R)|[^()])*\\)", "");
         return result;
+    }
+
+    private void parseMoves(String pgn) {
+        String strippedPgn = stripAnnotations(pgn);
+        BoardState startingBoardState = new BoardState();
+        startingBoardState.setToDefaultPosition();
+        // TODO
+
     }
 
     /**
