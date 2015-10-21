@@ -186,8 +186,64 @@ public class BoardState {
      * @return
      */
     public BoardState doMove(Move m) {
-        // TODO
-        return null;
+        boolean capture = false;
+        BoardState newBoardState = this.clone();
+
+        // Move the piece.
+        Piece originPiece = newBoardState.getPieceAt(m.getOrigin());
+        newBoardState.setPieceAt(m.getOrigin(), null); // Remove from original location.
+        Piece destinationPiece = newBoardState.getPieceAt(m.getDestination());
+        if (destinationPiece != null) capture = true;
+        newBoardState.setPieceAt(m.getDestination(), originPiece);
+
+        // If castling.
+        if (m.isCastling()) {
+            String castlingDestination = m.getDestination().toString();
+            Piece castlePiece;
+            switch (castlingDestination) {
+                case "g1":
+                    // Get the piece at h1, move it to f1
+                    castlePiece = newBoardState.pieces[7][0];
+                    newBoardState.pieces[7][0] = null;
+                    newBoardState.pieces[5][0] = castlePiece;
+                    break;
+                case "c1":
+                    // Get the piece at a1, move it to d1
+                    castlePiece = newBoardState.pieces[0][0];
+                    newBoardState.pieces[0][0] = null;
+                    newBoardState.pieces[3][0] = castlePiece;
+                    break;
+                case "g8":
+                    // Get the piece at h8, move it to f8
+                    castlePiece = newBoardState.pieces[7][7];
+                    newBoardState.pieces[7][7] = null;
+                    newBoardState.pieces[5][7] = castlePiece;
+                    break;
+                case "c8":
+                    // Get the pice at a8, move it to d8
+                    castlePiece = newBoardState.pieces[0][7];
+                    newBoardState.pieces[0][7] = null;
+                    newBoardState.pieces[3][7] = castlePiece;
+                    break;
+                default:
+            }
+        }
+
+        // If promotion, change piece's type.
+        if (m.getPromotionType() != null) {
+            destinationPiece.setPieceType(m.getPromotionType());
+        }
+
+        // If nothing was captured, or if no pawn was moved, increment half move counter.
+        if (!capture) {
+            newBoardState.halfMoveCounter++;
+        }
+
+        // If black moved, increment full move counter
+        if (m.getWhoMoved() == Player.BLACK) {
+            newBoardState.fullMoveCounter++;
+        }
+        return newBoardState;
     }
 
     /**
@@ -220,9 +276,7 @@ public class BoardState {
      * @return A list of all pieces owned by the specified player, of the specified type.
      */
     List<Piece> getAllPiecesOfType(Player player, PieceType type) {
-
         List<Piece> result = new ArrayList<>();
-
         for (int c = 0; c < 8; c++) {
             for (int d = 0; d < 8; d++) {
                 if (this.pieces[c][d].getOwner().equals(player) && this.pieces[c][d].getType().equals(type)) {
@@ -230,19 +284,38 @@ public class BoardState {
                 }
             }
         }
-
         return result;
     }
 
     /**
      *
-     * @param origin
-     * @param target
-     * @return
+     * @param origin Location of piece being moved
+     * @param target The target square
+     * @return True if piece can make the move; false if not.
      */
     public boolean canMakeMove(Square origin, Square target) {
         // TODO
         // NOTE: We must check for absolute pins!
         return false;
     }
+
+    /**
+     * Sets piece on the board at the specified square.
+     * @param s Square to set piece at.
+     * @param p Piece.
+     */
+    public void setPieceAt(Square s, Piece p) {
+        this.pieces[s.getX()][s.getY()] = p;
+    }
+
+    /**
+     * Gets the piece on the board at the specified square.
+     * @param s Square to get piece at.
+     * @return Piece at square.
+     */
+    public Piece getPieceAt(Square s) {
+        return this.pieces[s.getX()][s.getY()];
+    }
+
+
 }

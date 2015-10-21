@@ -27,6 +27,22 @@ public class Square {
     }
 
     /**
+     * Accessor for x.
+     * @return Integer representation of file.
+     */
+    public int getX() {
+        return this.x;
+    }
+
+    /**
+     * Accessor for y.
+     * @return Integer representation of rank.
+     */
+    public int getY() {
+        return this.y;
+    }
+
+    /**
      * Returns string of location.
      * @return
      */

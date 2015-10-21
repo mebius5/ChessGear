@@ -161,8 +161,8 @@ public class PGNParser {
         String result = pgn.replaceAll("\\[[^]]*\\]", "");
         // Remove everything within curly brackets
         result = result.replaceAll("\\{[^}]*\\}", "");
-        // Recursively remove everything within parentheses - balanced removal
-        result = result.replaceAll("\\((?:(?R)|[^()])*\\)", "");
+        // Remove everything within parentheses.
+        result = result.replaceAll("\\([^)]*\\)", "");
         return result;
     }
 

@@ -83,4 +83,12 @@ public class Piece {
         }
     }
 
+    /**
+     * Mutator for piece type.
+     * @param type Type of piece.
+     */
+    public void setPieceType(PieceType type) {
+        this.type = type;
+    }
+
 }
