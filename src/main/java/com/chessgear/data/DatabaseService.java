@@ -12,7 +12,7 @@ import java.util.Map;
 
 import com.chessgear.game.Game;
 import com.chessgear.server.User;
-import com.chessgear.server.User.Properties;
+import com.chessgear.server.User.Property;
 
 import org.sql2o.Sql2o;
 import org.sqlite.SQLiteDataSource;
@@ -47,30 +47,31 @@ public class DatabaseService {
     }
     
     private Sql2o prepareCuteDatabase(String databasePath){
-        //if file does not exists, create it
-        Path dbPath = Paths.get(databasePath + "chessgear.sql");
-        if (!(Files.exists(dbPath))) {
-            Files.createFile(dbPath);
-        }
-
-        //create the source database object
-        SQLiteDataSource source = new SQLiteDataSource();
-        source.setUrl("jdbc:sqlite:" + databasePath + "chessgear.sql");
-        
-        Sql2o toReturn = new Sql2o(source);
-        
-        
-        //Create the schema for the database if necessary. This allows this
-        //program to mostly self-contained. But this is not always what you want;
-        //sometimes you want to create the schema externally via a script.
-        try (Connection conn = db.open()) {
-            String sql = "CREATE TABLE IF NOT EXISTS item (item_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                         "                                 title TEXT, done BOOLEAN, created_on TIMESTAMP)" ;
-            conn.createQuery(sql).executeUpdate();
-        } catch(Sql2oException ex) {
-            logger.error("Failed to create schema at startup", ex);
-            throw new TodoServiceException("Failed to create schema at startup", ex);
-        }
+        return null;
+//        //if file does not exists, create it
+//        Path dbPath = Paths.get(databasePath + "chessgear.sql");
+//        if (!(Files.exists(dbPath))) {
+//            Files.createFile(dbPath);
+//        }
+//
+//        //create the source database object
+//        SQLiteDataSource source = new SQLiteDataSource();
+//        source.setUrl("jdbc:sqlite:" + databasePath + "chessgear.sql");
+//        
+//        Sql2o toReturn = new Sql2o(source);
+//        
+//        
+//        //Create the schema for the database if necessary. This allows this
+//        //program to mostly self-contained. But this is not always what you want;
+//        //sometimes you want to create the schema externally via a script.
+//        try (Connection conn = db.open()) {
+//            String sql = "CREATE TABLE IF NOT EXISTS item (item_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                         "                                 title TEXT, done BOOLEAN, created_on TIMESTAMP)" ;
+//            conn.createQuery(sql).executeUpdate();
+//        } catch(Sql2oException ex) {
+//            logger.error("Failed to create schema at startup", ex);
+//            throw new TodoServiceException("Failed to create schema at startup", ex);
+//        }
         
         
         
@@ -87,7 +88,7 @@ public class DatabaseService {
      * @param attributes
      * @throws IllegalArgumentException
      */
-    public void addUser(String email, Map<Properties,String> attributes) throws IllegalArgumentException{
+    public void addUser(String email, Map<Property,String> attributes) throws IllegalArgumentException{
         throw new UnsupportedOperationException();
     }
 
@@ -110,7 +111,7 @@ public class DatabaseService {
      * 
      * @throws IllegalArgumentException
      */
-    public void updateUserProperty(String email, Properties p, String v) throws IllegalArgumentException{
+    public void updateUserProperty(String email, Property p, String v) throws IllegalArgumentException{
         throw new UnsupportedOperationException(); 
     }
 
@@ -136,7 +137,7 @@ public class DatabaseService {
      * 
      * @throws IllegalArgumentException If the user does not exist see {@link #userExists(String) userExists}
      */
-    public Map<Properties, String> fetchUserProperties(String email) throws IllegalArgumentException{
+    public Map<Property, String> fetchUserProperties(String email) throws IllegalArgumentException{
         if(!userExists(email))
             throw new IllegalArgumentException();
 
@@ -145,42 +146,6 @@ public class DatabaseService {
 
     public void addGame(User u, Game g){
 
-    }
-
-    /**
-     * This method builds the database. It specify tables, entities, keys and so on.
-     * 
-     * @param databasePath The path of the database file wanted
-     */
-    public static void createDatabaseFile(String databasePath){
-        //if file does not exists, create it
-        Path dbPath = Paths.get(databasePath + "chessgear.sql");
-        if (!(Files.exists(dbPath))) {
-            Files.createFile(dbPath);
-        }
-
-        //create the source database object
-        SQLiteDataSource source = new SQLiteDataSource();
-        source.setUrl("jdbc:sqlite:" + databasePath + "chessgear.sql");
-        
-        
-        Sql2o = new Sql2o(dataSource);
-
-        //Create the schema for the database if necessary. This allows this
-        //program to mostly self-contained. But this is not always what you want;
-        //sometimes you want to create the schema externally via a script.
-        try (Connection conn = db.open()) {
-            String sql = "CREATE TABLE IF NOT EXISTS item (item_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                         "                                 title TEXT, done BOOLEAN, created_on TIMESTAMP)" ;
-            conn.createQuery(sql).executeUpdate();
-        } catch(Sql2oException ex) {
-            logger.error("Failed to create schema at startup", ex);
-            throw new TodoServiceException("Failed to create schema at startup", ex);
-        }
-        
-        
-        
-        
     }
 
 
