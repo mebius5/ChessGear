@@ -38,9 +38,4 @@ public class GameTree {
     public GameTree(GameTreeNode root){
         this.root = root;
     }
-    
-    public String serialize(){
-        return root.serialize();
     }
-
-}
