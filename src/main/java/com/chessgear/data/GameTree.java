@@ -10,6 +10,8 @@ import java.util.HashMap;
  */
 public class GameTree {
 
+    public static final char END_OF_CHILDREN = '$';
+    
     /**
      * Root node of the game tree.
      */
@@ -31,6 +33,14 @@ public class GameTree {
      */
     public void addGame(Game g) {
         // TODO
+    }
+    
+    public GameTree(GameTreeNode root){
+        this.root = root;
+    }
+    
+    public String serialize(){
+        return root.serialize();
     }
 
 }

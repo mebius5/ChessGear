@@ -19,7 +19,7 @@ public abstract class TreeNode<E> {
      * 
      * @return A list of all chilfren form the current node.
      */
-    public abstract List<TreeNode<E>> getChildren();
+    public abstract List<? extends TreeNode<?>> getChildren();
     
     /**
      * This methods tells wether the node is a leaf (ie has no children).
