@@ -1,5 +1,6 @@
 package com.chessgear.data;
 
+import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
 import com.chessgear.game.Player;
 import com.chessgear.game.Result;
@@ -7,23 +8,50 @@ import com.chessgear.game.Result;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 /**
+ * PGN Parser class.
  * Created by Ran on 10/14/2015.
  */
 public class PGNParser {
 
+    /**
+     * Minimum possible length of a line containing a tag.
+     */
+    private static final int MINIMUM_TAG_LINE_LENGTH = 6;
+
+    /**
+     *
+     */
     private String pgn;
+    /**
+     * White player name.
+     */
     private String whitePlayerName;
+    /**
+     * Black player name.
+     */
     private String blackPlayerName;
+    /**
+     * Result of the game.
+     */
     private Result result;
+
+    /**
+     * White's half moves.
+     */
+    private List<Move> whiteHalfMoves;
+
+    /**
+     * Black's half moves.
+     */
+    private List<Move> blackHalfMoves;
 
     /**
      * Constructs the parser with the string we need to parse.
      * @param pgn
      */
-    public PGNParser(String pgn) {
+    public PGNParser(String pgn) throws PGNParseException {
         this.pgn = pgn;
         this.parse();
     }
@@ -31,7 +59,25 @@ public class PGNParser {
     /**
      * Parses the pgn and stores relevant information in the class attributes.
      */
-    private void parse(){
+    private void parse() throws PGNParseException {
+
+        // Parse the tags.
+        List<Tag> tags = parseTags(this.pgn);
+        // Get tag with name White
+        for (Tag t : tags) {
+            switch (t.getName()) {
+                case "White": this.whitePlayerName = t.getValue();
+                    break;
+                case "Black": this.blackPlayerName = t.getValue();
+                    break;
+                case "Result": this.result = Result.parseResult(t.getValue());
+                    break;
+            }
+        }
+
+        // Parse the half moves.
+        this.parseMoves(this.pgn);
+
     }
 
     /**
@@ -65,8 +111,14 @@ public class PGNParser {
      * @return Move corresponding to the passed arguments.
      */
     public Move getHalfMove(Player player, int fullMoveNumber) {
-        // TODO
-        return null;
+        switch (player) {
+            case BLACK:
+                return this.blackHalfMoves.get(fullMoveNumber);
+            case WHITE:
+                return this.whiteHalfMoves.get(fullMoveNumber);
+            default:
+                return null;
+        }
     }
 
     /**
@@ -84,7 +136,7 @@ public class PGNParser {
 
             int lineLength = line.length();
             // This is a tag.
-            if (line.charAt(0) == '[' && line.charAt(lineLength - 1) == ']') {
+            if (lineLength > MINIMUM_TAG_LINE_LENGTH && line.charAt(0) == '[' && line.charAt(lineLength - 1) == ']') {
                 String strippedLine = line.replaceAll("\\[|\\]|\"", "");
                 int splitIndex = strippedLine.indexOf(" ");
                 String name = strippedLine.substring(0, splitIndex);
@@ -92,7 +144,6 @@ public class PGNParser {
                 Tag newTag = new Tag(name, value);
                 tags.add(newTag);
             }
-
         }
 
         scanner.close();
@@ -104,14 +155,22 @@ public class PGNParser {
      * @param pgn Pgn string to strip.
      * @return PGN string containing only moves.
      */
-    private static String stripAnnotations(String pgn) {
+    public static String stripAnnotations(String pgn) {
         // Remove everything within square brackets (tags)
         String result = pgn.replaceAll("\\[[^]]*\\]", "");
         // Remove everything within curly brackets
         result = result.replaceAll("\\{[^}]*\\}", "");
-        // Recursively remove everything within parentheses - balanced removal
-        result = result.replaceAll("\\((?:(?R)|[^()])*\\)", "");
+        // Remove everything within parentheses.
+        result = result.replaceAll("\\([^)]*\\)", "");
         return result;
+    }
+
+    private void parseMoves(String pgn) {
+        String strippedPgn = stripAnnotations(pgn);
+        BoardState startingBoardState = new BoardState();
+        startingBoardState.setToDefaultPosition();
+        // TODO
+
     }
 
     /**

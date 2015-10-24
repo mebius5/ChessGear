@@ -38,4 +38,36 @@ public class Game {
      */
     private int id;
 
+    /**
+     * Accessor for name of white player.
+     * @return Name of white player.
+     */
+    public String getWhitePlayerName() {
+        return this.whitePlayerName;
+    }
+
+    /**
+     * Accessor for name of black player.
+     * @return Name of black player.
+     */
+    public String getBlackPlayerName() {
+        return this.blackPlayerName;
+    }
+
+    /**
+     * Accessor for pgn of game.
+     * @return Pgn of game.
+     */
+    public String getPgn() {
+        return this.pgn;
+    }
+
+    /**
+     * Accessor for the result of the game.
+     * @return Result of game.
+     */
+    public Result getResult() {
+        return this.result;
+    }
+
 }

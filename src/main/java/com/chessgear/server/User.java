@@ -31,8 +31,7 @@ public class User {
      */
     private List<Game> games;
 
-    
-    public enum Properties{
+    public static enum Property {
         USERNAME, PASSWORD
     }
 

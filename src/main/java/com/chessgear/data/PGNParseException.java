@@ -6,4 +6,12 @@ package com.chessgear.data;
  */
 public class PGNParseException extends Exception {
 
+    /**
+     * Constructs an exception with a message.
+     * @param message Messag efor exception.
+     */
+    public PGNParseException(String message) {
+        super(message);
+    }
+
 }
