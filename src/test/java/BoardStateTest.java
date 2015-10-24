@@ -32,4 +32,13 @@ public class BoardStateTest {
         assertEquals(whiteKingList.get(0).getLocation(), new Square("e1"));
     }
 
+    @Test
+    public void testDoMove() {
+
+        Move d4 = new Move(Player.WHITE, PieceType.PAWN, new Square("d2"), new Square("d4"), false, null);
+        BoardState pawnPushed = defaultBoardState.doMove(d4);
+        assertEquals(pawnPushed.toFEN(), "rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq d3 0 1");
+
+    }
+
 }

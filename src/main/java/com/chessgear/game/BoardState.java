@@ -254,7 +254,7 @@ public class BoardState {
         BoardState cloneBoardState = new BoardState();
         for (int c = 0; c < 8; c++) {
             for (int d = 0; d < 8; d++) {
-                cloneBoardState.pieces[c][d] = this.pieces[c][d].clone();
+                if (this.pieces[c][d] != null) cloneBoardState.pieces[c][d] = this.pieces[c][d].clone();
             }
         }
         cloneBoardState.canBlackCastleKingSide = this.canBlackCastleKingSide;
@@ -319,7 +319,7 @@ public class BoardState {
      */
     public void setPieceAt(Square s, Piece p) {
         this.pieces[s.getX()][s.getY()] = p;
-        p.setLocation(s);
+        if (p!= null) p.setLocation(s);
     }
 
     /**
@@ -330,6 +330,5 @@ public class BoardState {
     public Piece getPieceAt(Square s) {
         return this.pieces[s.getX()][s.getY()];
     }
-
 
 }
