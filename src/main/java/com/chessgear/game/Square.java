@@ -54,14 +54,30 @@ public class Square {
     }
 
     /**
+     * Gets character representation of file.
+     * @return File of square.
+     */
+    public char getFile() {
+        return (char)('a' + this.x);
+    }
+
+    /**
+     * Gets integer representation of rank.
+     * @return Rank of square.
+     */
+    public int getRank() {
+        return this.y + 1;
+    }
+
+    /**
      * Returns string of location.
      * @return
      */
     public String toString() {
         StringBuilder result = new StringBuilder();
-        char file = (char)('a' + this.x);
+        char file = this.getFile();
         result.append(file);
-        result.append(this.y + 1);
+        result.append(this.getRank());
 
         return result.toString();
     }

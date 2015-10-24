@@ -1,5 +1,7 @@
 package com.chessgear;
 
+import com.chessgear.server.ChessGearServer;
+
 import static spark.Spark.*;
 
 /**
@@ -21,6 +23,7 @@ public class Bootstrap {
     public static void main (String[] args) {
 
         // Initialize server state
+        ChessGearServer server = new ChessGearServer();
 
         port(PORT);
         ipAddress(ADDRESS);

@@ -33,7 +33,7 @@ public class BoardStateTest {
     }
 
     @Test
-    public void testDoMove() {
+    public void testBasicDoMove() {
 
         Move d4 = new Move(Player.WHITE, PieceType.PAWN, new Square("d2"), new Square("d4"), false, null);
         BoardState pawnPushed = defaultBoardState.doMove(d4);

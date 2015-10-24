@@ -301,13 +301,26 @@ public class BoardState {
 
     /**
      * Gets piece by target square.
-     * @param type Type of piece
-     * @param target
-     * @param fileDisambiguation
-     * @param rankDisambiguation
-     * @return
+     * @param type Type of piece.
+     * @param owner Onwer of piece.
+     * @param target Square that piece is being moved to.
+     * @param fileDisambiguation Disambiguation for file.
+     * @param rankDisambiguation Disambiguation for rank.
+     * @return Returns the piece.
      */
-    public Piece getPieceByTarget(PieceType type, Square target, char fileDisambiguation, int rankDisambiguation) {
+    public Piece getPieceByTarget(PieceType type, Player owner, Square target, char fileDisambiguation, int rankDisambiguation) {
+        List<Piece> candidatePieces = this.getAllPiecesOfType(owner, type);
+        for (Piece p : candidatePieces) {
+            if (this.canMakeMove(p.getLocation(), target)) {
+                if (fileDisambiguation != 0) {
+
+                }
+                if (rankDisambiguation != -1) {
+
+                }
+                return p;
+            }
+        }
         // TODO
         return null;
     }

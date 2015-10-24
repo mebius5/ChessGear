@@ -6,7 +6,6 @@ package com.chessgear.game;
  */
 public enum Player {
 
-
     WHITE, BLACK
 
 }

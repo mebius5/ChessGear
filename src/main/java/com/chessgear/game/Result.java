@@ -20,7 +20,6 @@ public enum Result {
                 return DRAW;
             default:
                 throw new PGNParseException("Could not parse result!");
-
         }
     }
 

@@ -34,7 +34,7 @@ public class GameTree {
     public void addGame(Game g) {
         // TODO
     }
-    
+
     public GameTree(GameTreeNode root){
         this.root = root;
     }
