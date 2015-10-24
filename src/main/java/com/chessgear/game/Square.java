@@ -27,6 +27,17 @@ public class Square {
     }
 
     /**
+     * Constructs a square.
+     * @param square String containing location of square.
+     */
+    public Square(String square) {
+        square = square.trim().toLowerCase();
+        this.x = (int)square.charAt(0) - 'a';
+        this.y = (int)square.charAt(1) - '1';
+
+    }
+
+    /**
      * Accessor for x.
      * @return Integer representation of file.
      */
@@ -53,6 +64,14 @@ public class Square {
         result.append(this.y + 1);
 
         return result.toString();
+    }
+
+    public boolean equals(Object o) {
+        if (o instanceof Square) {
+            Square other = (Square)o;
+            if (this.x == other.x && this.y == other.y) return true;
+        }
+        return false;
     }
 
 }

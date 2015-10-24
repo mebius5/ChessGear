@@ -84,6 +84,14 @@ public class Piece {
     }
 
     /**
+     * Accessor for the location of the piece.
+     * @return Location of piece.
+     */
+    public Square getLocation() {
+        return this.location;
+    }
+
+    /**
      * Mutator for piece type.
      * @param type Type of piece.
      */

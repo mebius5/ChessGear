@@ -275,11 +275,11 @@ public class BoardState {
      * @param type Type of piece we should look for.
      * @return A list of all pieces owned by the specified player, of the specified type.
      */
-    List<Piece> getAllPiecesOfType(Player player, PieceType type) {
+    public List<Piece> getAllPiecesOfType(Player player, PieceType type) {
         List<Piece> result = new ArrayList<>();
         for (int c = 0; c < 8; c++) {
             for (int d = 0; d < 8; d++) {
-                if (this.pieces[c][d].getOwner().equals(player) && this.pieces[c][d].getType().equals(type)) {
+                if (this.pieces[c][d] != null && this.pieces[c][d].getOwner().equals(player) && this.pieces[c][d].getType().equals(type)) {
                     result.add(this.pieces[c][d]);
                 }
             }
@@ -300,12 +300,26 @@ public class BoardState {
     }
 
     /**
+     * Gets piece by target square.
+     * @param type Type of piece
+     * @param target
+     * @param fileDisambiguation
+     * @param rankDisambiguation
+     * @return
+     */
+    public Piece getPieceByTarget(PieceType type, Square target, char fileDisambiguation, int rankDisambiguation) {
+        // TODO
+        return null;
+    }
+
+    /**
      * Sets piece on the board at the specified square.
      * @param s Square to set piece at.
      * @param p Piece.
      */
     public void setPieceAt(Square s, Piece p) {
         this.pieces[s.getX()][s.getY()] = p;
+        p.setLocation(s);
     }
 
     /**

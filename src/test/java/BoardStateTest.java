@@ -1,5 +1,8 @@
-import com.chessgear.game.BoardState;
+import com.chessgear.game.*;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,12 +12,24 @@ import static org.junit.Assert.assertEquals;
  */
 public class BoardStateTest {
 
+    private BoardState defaultBoardState;
+
+    @Before
+    public void intialize() {
+        defaultBoardState = new BoardState();
+        defaultBoardState.setToDefaultPosition();
+    }
+
     @Test
     public void testFEN() {
-        BoardState testBoardState = new BoardState();
-        testBoardState.setToDefaultPosition();
+        assertEquals(defaultBoardState.toFEN(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+    }
 
-        assertEquals(testBoardState.toFEN(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+    @Test
+    public void testGetPieceAt() {
+        List<Piece> whiteKingList = defaultBoardState.getAllPiecesOfType(Player.WHITE, PieceType.KING);
+        assertEquals(whiteKingList.size(), 1);
+        assertEquals(whiteKingList.get(0).getLocation(), new Square("e1"));
     }
 
 }
