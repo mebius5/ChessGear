@@ -1,4 +1,6 @@
+
 com.chessgear
 com.chessgear.data
+com.chessgear.engine
 com.chessgear.game
 com.chessgear.server

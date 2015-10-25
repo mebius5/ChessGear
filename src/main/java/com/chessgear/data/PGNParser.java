@@ -49,7 +49,8 @@ public class PGNParser {
 
     /**
      * Constructs the parser with the string we need to parse.
-     * @param pgn
+     * @param pgn String containing the PGN for a game.
+     * @throws PGNParseException PGN couldn't be parsed.
      */
     public PGNParser(String pgn) throws PGNParseException {
         this.pgn = pgn;

@@ -8,7 +8,7 @@ public class PGNParseException extends Exception {
 
     /**
      * Constructs an exception with a message.
-     * @param message Messag efor exception.
+     * @param message Message for exception.
      */
     public PGNParseException(String message) {
         super(message);

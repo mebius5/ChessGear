@@ -183,7 +183,7 @@ public class BoardState {
      * NOTE: This boardstate remains unchanged! We do not do a modification in place!
      * We clone the boardstate, then do a new move.
      * @param m Move to execute.
-     * @return
+     * @return Returns the boardstate resulting from the move.
      */
     public BoardState doMove(Move m) {
         boolean capture = false;

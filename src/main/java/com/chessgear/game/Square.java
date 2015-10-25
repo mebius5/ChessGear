@@ -18,8 +18,8 @@ public class Square {
 
     /**
      * Constructs a square.
-     * @param x
-     * @param y
+     * @param x X coordinate of square (a=0)
+     * @param y Y coordinate of square (1=0)
      */
     public Square(int x, int y) {
         this.x = x;
@@ -71,7 +71,7 @@ public class Square {
 
     /**
      * Returns string of location.
-     * @return
+     * @return String of the location of the square.
      */
     public String toString() {
         StringBuilder result = new StringBuilder();

@@ -10,6 +10,12 @@ public enum Result {
 
     WHITE_WIN, BLACK_WIN, DRAW, INVALID;
 
+    /**
+     * Parses a string containing a result.
+     * @param resultString Result string.
+     * @return Result.
+     * @throws PGNParseException If invalid string.
+     */
     public static Result parseResult(String resultString) throws PGNParseException {
         switch (resultString) {
             case "1-0":
