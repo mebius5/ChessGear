@@ -1,15 +1,28 @@
 /**
  * Created by Grady Xiao on 10/24/15.
  */
-import com.chessgear.game.Move;
-import com.chessgear.game.PieceType;
-import com.chessgear.game.Player;
-import com.chessgear.game.Square;
+import com.chessgear.game.*;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class MoveTest {
+    @Test
+    public void testMoveConstructor(){
+        Player whoMoved = Player.WHITE;
+        PieceType pieceType = PieceType.PAWN;
+        Square origin = new Square("e2");
+        Square destination = new Square("e4");
+        PieceType promotionType = null;
+        Move e4 = new Move(whoMoved, pieceType, origin, destination, false, promotionType);
+        assertEquals(e4.getWhoMoved(), Player.WHITE);
+        assertEquals(e4.getPieceType(),pieceType);
+        assertEquals(e4.getOrigin(), origin);
+        assertEquals(e4.getDestination(), destination);
+        assertFalse(e4.isCastling());
+        assertEquals(e4. getPromotionType(), promotionType);
+    }
+
     @Test
     public void testPawnPushDetector() {
         Move d4 = new Move(Player.WHITE, PieceType.PAWN, new Square("d2"), new Square("d4"), false, null);

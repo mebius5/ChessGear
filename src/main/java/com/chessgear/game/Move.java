@@ -98,6 +98,13 @@ public class Move {
         return null;
     }
 
+    /***
+     * Accessor for pieceType
+     * @return The piece type of the piece being moved.
+     */
+    public PieceType getPieceType(){
+        return this.pieceType;
+    }
     /**
      * Accessor for origin.
      * @return Origin square of piece being moved.

@@ -22,7 +22,7 @@ public class GameTest {
         String blackPlayerName="Rob";
         Date date = new Date(2008, 8, 28);
         String pgn ="Sample";
-        Result result = null;
+        Result result = Result.WHITE_WIN;
         int id = 5;
 
         Game test = new Game(whitePlayerName,blackPlayerName,date,pgn,result,id);
