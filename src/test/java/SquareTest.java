@@ -26,4 +26,20 @@ public class SquareTest {
         assertEquals(d4.toString(), "d4");
     }
 
+    @Test
+    public void getXYTest(){
+        Square test = new Square("a1");
+        assertEquals(test.getX(), 0);
+        assertEquals(test.getY(), 0);
+    }
+
+    @Test
+    public void squareEqualsTest(){
+        Square test = new Square("b3");
+        Square same = new Square("b3");
+        Square different = new Square("c3");
+        assertTrue(test.equals(same));
+        assertFalse(test.equals(different));
+    }
+
 }
