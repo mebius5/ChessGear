@@ -23,7 +23,7 @@ public class BoardState {
     /**
      * Flag indicating whether or not castling kingside for white is legal.
      */
-    private boolean canWhiteCastleKingside;
+    private boolean canWhiteCastleKingSide;
 
     /**
      * Flag indicating whether or not castling queenside for black is legal.
@@ -90,7 +90,7 @@ public class BoardState {
             this.pieces[c][6] = new Piece(PieceType.PAWN, Player.BLACK, new Square(c, 6));
         }
         // Initialize flags and counters
-        this.canWhiteCastleKingside = true;
+        this.canWhiteCastleKingSide = true;
         this.canWhiteCastleQueenSide = true;
         this.canBlackCastleKingSide = true;
         this.canBlackCastleQueenSide = true;
@@ -141,8 +141,8 @@ public class BoardState {
         fenBuilder.append(" ");
 
         // Castling availability
-        if (this.canWhiteCastleQueenSide || this.canBlackCastleQueenSide || this.canWhiteCastleKingside || this.canBlackCastleKingSide) {
-            if (this.canWhiteCastleKingside) {
+        if (this.canWhiteCastleQueenSide || this.canBlackCastleQueenSide || this.canWhiteCastleKingSide || this.canBlackCastleKingSide) {
+            if (this.canWhiteCastleKingSide) {
                 fenBuilder.append("K");
             }
             if (this.canWhiteCastleQueenSide) {
@@ -191,10 +191,50 @@ public class BoardState {
 
         // Move the piece.
         Piece originPiece = newBoardState.getPieceAt(m.getOrigin());
+
+        // Check if it was a pawn move. This flag is used for setting the halfmove clock.
+        boolean pawnMove = (originPiece.getType() == PieceType.PAWN);
+
+        // Check if it was a king move. If so, we set all castling flags for this player to false.
+        if (originPiece.getType() == PieceType.KING) {
+            switch (m.getWhoMoved()) {
+                case WHITE:
+                    newBoardState.canWhiteCastleKingSide = false;
+                    newBoardState.canWhiteCastleQueenSide = false;
+                    break;
+                case BLACK:
+                    newBoardState.canBlackCastleKingSide = false;
+                    newBoardState.canBlackCastleQueenSide = false;
+                    break;
+            }
+        }
+
+        // Check if it was a rook move, and if it was one of the corner rooks. We set that side's castling flag to false.
+        if (originPiece.getType() == PieceType.ROOK) {
+            if (m.getWhoMoved() == Player.WHITE) {
+                if (m.getOrigin().equals(new Square("a1"))) {
+                    newBoardState.canWhiteCastleQueenSide = false;
+                }
+                if (m.getOrigin().equals(new Square("h1"))) {
+                    newBoardState.canWhiteCastleKingSide = false;
+                }
+            } else {
+                if (m.getOrigin().equals(new Square("a8"))) {
+                    newBoardState.canBlackCastleQueenSide = false;
+                }
+                if (m.getOrigin().equals(new Square("h8"))) {
+                    newBoardState.canBlackCastleKingSide = false;
+                }
+            }
+        }
+
         newBoardState.setPieceAt(m.getOrigin(), null); // Remove from original location.
         Piece destinationPiece = newBoardState.getPieceAt(m.getDestination());
         if (destinationPiece != null) capture = true;
         newBoardState.setPieceAt(m.getDestination(), originPiece);
+
+        // Check if pawn was pushed two squares.
+        newBoardState.enPassantTarget = m.getEnPassantTarget();
 
         // If castling.
         if (m.isCastling()) {
@@ -235,14 +275,20 @@ public class BoardState {
         }
 
         // If nothing was captured, or if no pawn was moved, increment half move counter.
-        if (!capture) {
+        if (!capture && !pawnMove) {
             newBoardState.halfMoveCounter++;
+        } else {
+            newBoardState.halfMoveCounter = 0;
         }
 
         // If black moved, increment full move counter
         if (m.getWhoMoved() == Player.BLACK) {
             newBoardState.fullMoveCounter++;
         }
+
+        // Toggle active switch
+        newBoardState.active = this.active.toggle();
+
         return newBoardState;
     }
 
@@ -260,7 +306,7 @@ public class BoardState {
         cloneBoardState.canBlackCastleKingSide = this.canBlackCastleKingSide;
         cloneBoardState.canBlackCastleQueenSide = this.canBlackCastleQueenSide;
         cloneBoardState.canWhiteCastleQueenSide = this.canWhiteCastleQueenSide;
-        cloneBoardState.canWhiteCastleKingside = this.canWhiteCastleKingside;
+        cloneBoardState.canWhiteCastleKingSide = this.canWhiteCastleKingSide;
         cloneBoardState.enPassantTarget = this.enPassantTarget;
         cloneBoardState.active = this.active;
         cloneBoardState.halfMoveCounter = this.halfMoveCounter;
@@ -302,7 +348,7 @@ public class BoardState {
     /**
      * Gets piece by target square.
      * @param type Type of piece.
-     * @param owner Onwer of piece.
+     * @param owner Owner of piece.
      * @param target Square that piece is being moved to.
      * @param fileDisambiguation Disambiguation for file.
      * @param rankDisambiguation Disambiguation for rank.
@@ -311,17 +357,32 @@ public class BoardState {
     public Piece getPieceByTarget(PieceType type, Player owner, Square target, char fileDisambiguation, int rankDisambiguation) {
         List<Piece> candidatePieces = this.getAllPiecesOfType(owner, type);
         for (Piece p : candidatePieces) {
-            if (this.canMakeMove(p.getLocation(), target)) {
+            Square location = p.getLocation();
+            if (this.canMakeMove(location, target)) {
+                // Check if there's file disambiguation
                 if (fileDisambiguation != 0) {
-
+                    // If there is, then check if we're on the correct file
+                    if (location.getFile() == fileDisambiguation) {
+                        return p;
+                    } else {
+                        // If we're not, continue with the loop.
+                        continue;
+                    }
                 }
+                // Else, check if there's rank disambiguation
                 if (rankDisambiguation != -1) {
-
+                    // If there is, check if we're on the correct rank.
+                    if (location.getRank() == rankDisambiguation) {
+                        return p;
+                    } else {
+                        // If we're not, continue.
+                        continue;
+                    }
                 }
+                // If there's no disambiguation at all, we return p.
                 return p;
             }
         }
-        // TODO
         return null;
     }
 

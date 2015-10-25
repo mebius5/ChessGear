@@ -71,6 +71,34 @@ public class Move {
     }
 
     /**
+     * Checks if this move was a double pawn push.
+     * @return True if a pawn was moved forward two spaces.
+     */
+    public boolean isPawnPush() {
+        if (this.pieceType == PieceType.PAWN) {
+            int difference = this.origin.getY() - this.destination.getY();
+            if (difference == 2 || difference == -2) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * If this move was a double pawn push, return the location of the en passant square.
+     * Else returns null.
+     * @return The new en passant target square.
+     */
+    public Square getEnPassantTarget() {
+        if (this.isPawnPush()) {
+            int median = (this.origin.getY() + this.destination.getY()) / 2;
+            int file = this.origin.getX();
+            return new Square(file, median);
+        }
+        return null;
+    }
+
+    /**
      * Accessor for origin.
      * @return Origin square of piece being moved.
      */
