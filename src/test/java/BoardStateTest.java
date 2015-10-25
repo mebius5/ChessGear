@@ -33,13 +33,6 @@ public class BoardStateTest {
     }
 
     @Test
-    public void testPawnPushDetector() {
-        Move d4 = new Move(Player.WHITE, PieceType.PAWN, new Square("d2"), new Square("d4"), false, null);
-        assertTrue(d4.isPawnPush());
-        assertEquals(d4.getEnPassantTarget(), new Square("d3"));
-    }
-
-    @Test
     public void testDoMove() {
 
         Move e4 = new Move(Player.WHITE, PieceType.PAWN, new Square("e2"), new Square("e4"), false, null);
