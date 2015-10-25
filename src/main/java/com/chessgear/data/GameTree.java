@@ -38,4 +38,12 @@ public class GameTree {
     public GameTree(GameTreeNode root){
         this.root = root;
     }
+
+    /**
+     * Accessor function to get the root of the GameTree
+     * @return the root of the GameTree
+     */
+    public GameTreeNode getRoot(){
+        return this.root;
     }
+}
