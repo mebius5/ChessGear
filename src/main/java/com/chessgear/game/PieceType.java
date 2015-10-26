@@ -15,7 +15,7 @@ public enum PieceType {
      * @return Piece type.
      */
     public static PieceType parseCharacter(char c) {
-        switch (c) {
+        switch (Character.toLowerCase(c)) {
             case 'p':
                 return PAWN;
             case 'n':

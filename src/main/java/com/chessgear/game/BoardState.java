@@ -1,5 +1,7 @@
 package com.chessgear.game;
 
+import com.chessgear.data.PGNParseException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +62,81 @@ public class BoardState {
      */
     public BoardState() {
         this.pieces = new Piece[8][8];
+    }
+
+    /**
+     * Reads in information from Forsythe-Edwards notation into a Boardstate object.
+     * @param fen FEN notation of the board state.
+     */
+    public BoardState(String fen) {
+        this.pieces = new Piece[8][8];
+
+        String[] tokenizedFen = fen.split(" ");
+        String[] tokenizedPiecePositions = tokenizedFen[0].split("/");
+        // For each token
+        for (int c = 0; c < 8 ; c++) {
+            // We begin on the 8th rank, and work our way back.
+            int rank = 7 - c;
+            // We begin on the a file, and work our way to the right.
+            int file = 0;
+
+            // For each character on each rank:
+            for (int d = 0; d < tokenizedPiecePositions[c].length(); d++) {
+                char currentCharacter = tokenizedPiecePositions[c].charAt(d);
+                // If it's numeric, it symbolizes the number of spaces we skip.
+                if (Character.isDigit(currentCharacter)) {
+                    int numberOfEmpties = Character.getNumericValue(currentCharacter);
+                    file += numberOfEmpties;
+                } else {
+                    PieceType type = PieceType.parseCharacter(currentCharacter);
+                    Player player;
+                    if (Character.isUpperCase(currentCharacter)) {
+                        player = Player.WHITE;
+                    } else {
+                        player = Player.BLACK;
+                    }
+                    this.pieces[file][rank] = new Piece(type, player, new Square(file, rank));
+                    file++;
+                }
+            }
+        }
+
+        // Now read in active flag.
+        switch (tokenizedFen[1]) {
+            case "w":
+                this.active = Player.WHITE;
+                break;
+            case "b":
+                this.active = Player.BLACK;
+                break;
+        }
+
+        // Read in castling flags.
+        String castlingFlags = tokenizedFen[2];
+        if (castlingFlags.contains("Q")) {
+            this.canWhiteCastleQueenSide = true;
+        }
+        if (castlingFlags.contains("K")) {
+            this.canWhiteCastleKingSide = true;
+        }
+        if (castlingFlags.contains("k")) {
+            this.canBlackCastleKingSide = true;
+        }
+        if (castlingFlags.contains("q")) {
+            this.canBlackCastleQueenSide = true;
+        }
+
+        // Read in en passant target.
+        String enPassantTarget = tokenizedFen[3];
+        if (!enPassantTarget.equals("-")) {
+            this.enPassantTarget = new Square(enPassantTarget);
+        }
+
+        // Read in half move counter.
+        this.halfMoveCounter = Integer.parseInt(tokenizedFen[4]);
+
+        // Read in full move counter.
+        this.fullMoveCounter = Integer.parseInt(tokenizedFen[5]);
     }
 
     /**
@@ -334,15 +411,90 @@ public class BoardState {
     }
 
     /**
-     *
+     * Checks if move can be made.
      * @param origin Location of piece being moved
      * @param target The target square
      * @return True if piece can make the move; false if not.
      */
     public boolean canMakeMove(Square origin, Square target) {
-        // TODO
-        // NOTE: We must check for absolute pins!
+        Piece piece = this.getPieceAt(origin);
+        int xDisplace = origin.getXDisplacement(target);
+        int yDisplace = origin.getYDisplacement(target);
+
+        // Firstly, the piece has to exist.
+        if (piece != null) {
+
+            switch (piece.getType()) {
+                case PAWN:
+                    // Can't move if path is blocked
+                    if (this.isBlocked(origin, target)) return false;
+                    // Can't move more than 1 laterally or 2 horizontally, can't stay on same rank.
+                    if (Math.abs(yDisplace) > 2 || yDisplace == 0 || Math.abs(xDisplace) > 1) return false;
+                    switch (piece.getOwner()) {
+                        case WHITE:
+                            // Can't move backwards as white.
+                            if (yDisplace < 0) return false;
+                            // Can't move forwards 2 unless we're on the correct rank (2nd rank)
+                            if (yDisplace == 2 && (piece.getLocation().getY() != 1 || xDisplace != 0)) return false;
+                            // If we're moving laterally, we have to either be moving to the en passant target or taking a piece.
+                            if (Math.abs(xDisplace) == 1) {
+                                if (this.getPieceAt(target) == null && !this.enPassantTarget.equals(target)) return false;
+                            }
+                            break;
+                        case BLACK:
+                            if (yDisplace > 0) return false;
+                            // Can't move up 2 unless we're on the correct rank (7th rank)
+                            if (yDisplace == -2 && (piece.getLocation().getY() != 6 || xDisplace != 0)) return false;
+                            if (Math.abs(xDisplace) == 1) {
+                                if (this.getPieceAt(target) == null && !this.enPassantTarget.equals(target)) return false;
+                            }
+                            break;
+                    }
+                    break;
+
+                case BISHOP:
+                    // Can't move if not on the same diagonal.
+                    if (!origin.isOnDiagonal(target)) return false;
+                    // Can't move if path is blocked.
+                    if (this.isBlocked(origin, target)) return false;
+                    break;
+
+                case KNIGHT:
+                    if (!((Math.abs(xDisplace) == 2 && Math.abs(yDisplace) == 1) || Math.abs(xDisplace) == 1 && Math.abs(yDisplace) == 2)) return false;
+                    break;
+
+                case ROOK:
+                    if (!origin.isOnSameFile(target) && !origin.isOnSameRank(target)) return false;
+                    if (this.isBlocked(origin, target)) return false;
+                    break;
+
+                case QUEEN:
+                    if (!origin.isOnDiagonal(target) && !origin.isOnSameFile(target) && origin.isOnSameRank(target)) return false;
+                    if (this.isBlocked(origin, target)) return false;
+                    break;
+
+                case KING:
+                    // TODO validate king moves. Not essential for basic pgn parsing.
+                    break;
+
+            }
+            // TODO
+            // Must check for absolute pins, if we're on the same diagonal, rank, or file as the king.
+
+            return true;
+        }
+
         return false;
+    }
+
+    /**
+     * Checks if move can be made.
+     * @param origin Location of origin piece.
+     * @param target Location of target piece.
+     * @return True if can be made, else false.
+     */
+    public boolean canMakeMove(String origin, String target) {
+        return this.canMakeMove(new Square(origin), new Square(target));
     }
 
     /**
@@ -403,6 +555,96 @@ public class BoardState {
      */
     public Piece getPieceAt(Square s) {
         return this.pieces[s.getX()][s.getY()];
+    }
+
+    /**
+     * Checks if there is a piece between the two squares.
+     * @param origin Origin square.
+     * @param destination Destination square.
+     * @return True if the path is blocked. False if not.
+     */
+    public boolean isBlocked(Square origin, Square destination) {
+        int xDisplacement = origin.getXDisplacement(destination);
+        int yDisplacement = origin.getYDisplacement(destination);
+
+        // Along a rank
+        if (xDisplacement == 0 && yDisplacement != 0) {
+            int x = origin.getX();
+            if (yDisplacement > 0) {
+                for (int y = origin.getY() + 1; y < destination.getY(); y++) {
+                    if (this.getPieceAt(new Square(x, y)) != null) {
+                        return true;
+                    }
+                }
+            } else {
+                for (int y = origin.getY() - 1; y > destination.getY(); y--) {
+                    if (this.getPieceAt(new Square(x, y)) != null) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        // Along a file
+        if (yDisplacement == 0 && xDisplacement != 0) {
+            int y = origin.getY();
+            if (xDisplacement > 0) {
+                for (int x = origin.getX() + 1; x < destination.getX(); x++) {
+                    if (this.getPieceAt(new Square(x, y)) != null) {
+                        return true;
+                    }
+                }
+            } else {
+                for (int x = origin.getX() - 1; x > destination.getX(); x--) {
+                    if (this.getPieceAt(new Square(x, y)) != null) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        // Diagonal
+        if (xDisplacement > 0) {
+            if (yDisplacement > 0) {
+                for (int c = 1; c < xDisplacement; c++) {
+                    int x = origin.getX() + c;
+                    int y = origin.getY() + c;
+                    if (this.getPieceAt(new Square(x, y)) != null) {
+                        return true;
+                    }
+                }
+            } else {
+                for (int c = 1; c < xDisplacement; c++) {
+                    int x = origin.getX() + c;
+                    int y = origin.getY() - c;
+                    if (this.getPieceAt(new Square(x, y)) != null) {
+                        return true;
+                    }
+                }
+            }
+        } else {
+            if (yDisplacement > 0) {
+                for (int c = 1; c < Math.abs(xDisplacement); c++) {
+                    int x = origin.getX() - c;
+                    int y = origin.getY() + c;
+                    if (this.getPieceAt(new Square(x, y)) != null) {
+                        return true;
+                    }
+                }
+            } else {
+                for (int c = 1; c < Math.abs(xDisplacement); c++) {
+                    int x = origin.getX() - c;
+                    int y = origin.getY() - c;
+                    if (this.getPieceAt(new Square(x, y)) != null) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
 }

@@ -63,4 +63,37 @@ public class BoardStateTest {
 
     }
 
+    @Test
+    public void testFENConstructor() {
+        BoardState test = new BoardState("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
+        assertEquals(test.toFEN(), "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
+    }
+
+    @Test
+    public void testIsBlocked() {
+        assertTrue(defaultBoardState.isBlocked(new Square("a1"), new Square("a3")));
+        assertTrue(defaultBoardState.isBlocked(new Square("a1"), new Square("c3")));
+        assertFalse(defaultBoardState.isBlocked(new Square("a2"), new Square("b3")));
+        assertFalse(defaultBoardState.isBlocked(new Square("b8"), new Square("c7")));
+        assertTrue(defaultBoardState.isBlocked(new Square("b8"), new Square("d6")));
+        assertFalse(defaultBoardState.isBlocked(new Square("c3"), new Square("e3")));
+    }
+
+    @Test
+    public void testCanMakeMove() {
+
+        assertTrue(defaultBoardState.canMakeMove(new Square("e2"), new Square("e4")));
+        assertTrue(defaultBoardState.canMakeMove(new Square("a2"), new Square("a3")));
+        assertTrue(defaultBoardState.canMakeMove(new Square("b1"), new Square("c3")));
+        assertFalse(defaultBoardState.canMakeMove("c1", "d5"));
+
+    }
+
+    @Test
+    public void testGetPieceByTarget() {
+
+
+
+    }
+
 }

@@ -38,6 +38,58 @@ public class Square {
     }
 
     /**
+     * Gets displacement from this square to the other square in the x dimension.
+     * @param other Square to get displacement to.
+     * @return Displacement in the x dimension.
+     */
+    public int getXDisplacement(Square other) {
+        return other.x - this.x;
+    }
+
+    /**
+     * Gets displacement from this square to other square in the y dimension.
+     * @param other Square to get displacement to.
+     * @return Displacement in the y dimension.
+     */
+    public int getYDisplacement(Square other) {
+        return other.y - this.y;
+    }
+
+    /**
+     * Checks if this square is on the same diagonal as another square.
+     * @param other Square to check if is on the same diagonal.
+     * @return True if yes, else false.
+     */
+    public boolean isOnDiagonal(Square other) {
+        int xDisplace = this.getXDisplacement(other);
+        int yDisplace = this.getYDisplacement(other);
+        if (Math.abs(xDisplace) == Math.abs(yDisplace)) return true;
+        return false;
+    }
+
+    /**
+     * Checks if this square is on the same file as another square.
+     * @param other Square to check if is on the same file.
+     * @return True if yes, else false.
+     */
+    public boolean isOnSameFile(Square other) {
+        int xDisplace = this.getXDisplacement(other);
+        if (xDisplace == 0) return true;
+        return false;
+    }
+
+    /**
+     * Checks if this square is on the same rank as another square.
+     * @param other Square to check if is on the same rank.
+     * @return True if yes, else false.
+     */
+    public boolean isOnSameRank(Square other) {
+        int yDisplace = this.getYDisplacement(other);
+        if (yDisplace == 0) return true;
+        return false;
+    }
+
+    /**
      * Accessor for x.
      * @return Integer representation of file.
      */
@@ -82,6 +134,11 @@ public class Square {
         return result.toString();
     }
 
+    /**
+     * Checks if the two objects are equivalent.
+     * @param o Object to compare to.
+     * @return True if equivalent, else false.
+     */
     public boolean equals(Object o) {
         if (o instanceof Square) {
             Square other = (Square)o;
