@@ -144,6 +144,10 @@ public class Square {
             Square other = (Square)o;
             if (this.x == other.x && this.y == other.y) return true;
         }
+        if (o instanceof String) {
+            Square other = new Square((String)o);
+            if (this.x == other.x && this.y == other.y) return true;
+        }
         return false;
     }
 

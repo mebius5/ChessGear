@@ -86,13 +86,15 @@ public class BoardStateTest {
         assertTrue(defaultBoardState.canMakeMove(new Square("a2"), new Square("a3")));
         assertTrue(defaultBoardState.canMakeMove(new Square("b1"), new Square("c3")));
         assertFalse(defaultBoardState.canMakeMove("c1", "d5"));
+        assertFalse(defaultBoardState.canMakeMove("a1", "d1"));
 
     }
 
     @Test
     public void testGetPieceByTarget() {
 
-
+        Piece p = defaultBoardState.getPieceByTarget(PieceType.PAWN, Player.WHITE, new Square("e4"), (char)0, -1);
+        assertEquals(p.getLocation(), new Square("e2"));
 
     }
 
