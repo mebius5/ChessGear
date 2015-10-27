@@ -48,12 +48,20 @@ public class PGNParser {
     private List<Move> blackHalfMoves;
 
     /**
+     * List of board states of the game's progression.
+     */
+    private List<BoardState> boardStates;
+
+    /**
      * Constructs the parser with the string we need to parse.
      * @param pgn String containing the PGN for a game.
      * @throws PGNParseException PGN couldn't be parsed.
      */
     public PGNParser(String pgn) throws PGNParseException {
         this.pgn = pgn;
+        this.whiteHalfMoves = new ArrayList<>();
+        this.blackHalfMoves = new ArrayList<>();
+        this.boardStates = new ArrayList<>();
         this.parse();
     }
 
@@ -120,6 +128,15 @@ public class PGNParser {
             default:
                 return null;
         }
+    }
+
+    /**
+     * Returns the game represented as a list of board states. 0 indexed at the starting position.
+     * @return List of board states containing game progression.
+     */
+    public List<BoardState> getListOfBoardStates() {
+        // TODO
+        return null;
     }
 
     /**
