@@ -184,9 +184,9 @@ public class PGNParser {
 
     private void parseMoves(String pgn) {
         String strippedPgn = stripAnnotations(pgn);
-        BoardState startingBoardState = new BoardState();
-        startingBoardState.setToDefaultPosition();
-        // TODO
+        BoardState currentBoardState = new BoardState();
+        currentBoardState.setToDefaultPosition();
+        this.boardStates.add(currentBoardState);
 
     }
 
