@@ -87,7 +87,6 @@ public class BoardStateTest {
         assertTrue(defaultBoardState.canMakeMove(new Square("b1"), new Square("c3")));
         assertFalse(defaultBoardState.canMakeMove("c1", "d5"));
         assertFalse(defaultBoardState.canMakeMove("a1", "d1"));
-
     }
 
     @Test
@@ -95,6 +94,28 @@ public class BoardStateTest {
 
         Piece p = defaultBoardState.getPieceByTarget(PieceType.PAWN, Player.WHITE, new Square("e4"), (char)0, -1);
         assertEquals(p.getLocation(), new Square("e2"));
+        p = defaultBoardState.getPieceByTarget(PieceType.KNIGHT, Player.WHITE, new Square("c3"), (char)0, -1);
+        assertEquals(p.getLocation(), "b1");
+
+        BoardState testBoardState = new BoardState("r1bqkb1r/pppp1ppp/2n2n2/8/2BpP3/8/PPPN1PPP/R1BQK1NR w KQkq - 1 5");
+        p = testBoardState.getPieceByTarget(PieceType.KNIGHT, Player.WHITE, new Square("f3"), 'd', -1);
+        assertEquals(p.getLocation(), "d2");
+        p = testBoardState.getPieceByTarget(PieceType.KNIGHT, Player.WHITE, new Square("f3"), 'g', -1);
+        assertEquals(p.getLocation(), "g1");
+        p = testBoardState.getPieceByTarget(PieceType.KNIGHT, Player.WHITE, new Square("f3"), (char)0, 1);
+        assertEquals(p.getLocation(), "g1");
+        p = testBoardState.getPieceByTarget(PieceType.KNIGHT, Player.WHITE, new Square("f3"), (char)0, 2);
+        assertEquals(p.getLocation(), "d2");
+
+
+
+    }
+
+    @Test
+    public void testEnPassant() {
+        BoardState testBoardState = new BoardState("r1bqkbnr/ppppp1pp/2n5/4Pp2/8/8/PPPP1PPP/RNBQKBNR w KQkq f6 0 3");
+        Piece p = testBoardState.getPieceByTarget(PieceType.PAWN, Player.WHITE, new Square("f6"), (char)0, -1);
+        assertEquals(p.getLocation(), "e5");
 
     }
 

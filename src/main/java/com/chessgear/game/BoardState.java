@@ -427,18 +427,28 @@ public class BoardState {
             switch (piece.getType()) {
                 case PAWN:
                     // Can't move if path is blocked
-                    if (this.isBlocked(origin, target)) return false;
+                    if (this.isBlocked(origin, target)) {
+                        return false;
+                    }
                     // Can't move more than 1 laterally or 2 horizontally, can't stay on same rank.
-                    if (Math.abs(yDisplace) > 2 || yDisplace == 0 || Math.abs(xDisplace) > 1) return false;
+                    if (Math.abs(yDisplace) > 2 || yDisplace == 0 || Math.abs(xDisplace) > 1) {
+                        return false;
+                    }
                     switch (piece.getOwner()) {
                         case WHITE:
                             // Can't move backwards as white.
-                            if (yDisplace < 0) return false;
+                            if (yDisplace < 0) {
+                                return false;
+                            }
                             // Can't move forwards 2 unless we're on the correct rank (2nd rank)
-                            if (yDisplace == 2 && (piece.getLocation().getY() != 1 || xDisplace != 0)) return false;
+                            if (yDisplace == 2 && (piece.getLocation().getY() != 1 || xDisplace != 0)) {
+                                return false;
+                            }
                             // If we're moving laterally, we have to either be moving to the en passant target or taking a piece.
                             if (Math.abs(xDisplace) == 1) {
-                                if (this.getPieceAt(target) == null && !this.enPassantTarget.equals(target)) return false;
+                                if (this.getPieceAt(target) == null && !this.enPassantTarget.equals(target)) {
+                                    return false;
+                                }
                             }
                             break;
                         case BLACK:
@@ -480,7 +490,6 @@ public class BoardState {
             }
             // TODO
             // Must check for absolute pins, if we're on the same diagonal, rank, or file as the king.
-
             return true;
         }
 
@@ -508,6 +517,7 @@ public class BoardState {
      */
     public Piece getPieceByTarget(PieceType type, Player owner, Square target, char fileDisambiguation, int rankDisambiguation) {
         List<Piece> candidatePieces = this.getAllPiecesOfType(owner, type);
+
         for (Piece p : candidatePieces) {
             Square location = p.getLocation();
             if (this.canMakeMove(location, target)) {

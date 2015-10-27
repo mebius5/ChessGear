@@ -135,8 +135,7 @@ public class PGNParser {
      * @return List of board states containing game progression.
      */
     public List<BoardState> getListOfBoardStates() {
-        // TODO
-        return null;
+        return this.boardStates;
     }
 
     /**
