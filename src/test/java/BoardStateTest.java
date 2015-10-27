@@ -1,3 +1,4 @@
+import com.chessgear.data.PGNParser;
 import com.chessgear.game.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -117,6 +118,36 @@ public class BoardStateTest {
         Piece p = testBoardState.getPieceByTarget(PieceType.PAWN, Player.WHITE, new Square("f6"), (char)0, -1);
         assertEquals(p.getLocation(), "e5");
 
+    }
+
+    @Test
+    public void failureCasesTest() {
+        /*
+        BoardState testBoardState = new BoardState("r4rk1/pp3pbp/4p1p1/3q4/3P4/4BP2/PP1Q1P1P/R4R1K w - - 0 17");
+        Piece qd2 = testBoardState.getPieceAt(new Square("d2"));
+        assertNotNull(qd2);
+        assertTrue(testBoardState.canMakeMove(new Square("d2"), new Square("e2")));
+        Piece p = testBoardState.getPieceByTarget(PieceType.QUEEN, Player.WHITE, new Square("e2"), (char)0, -1);
+        assertEquals(p.getLocation(), "d2");
+        */
+
+        BoardState failureCase2 = new BoardState("2R2rk1/pp3pbp/4p1p1/8/3P4/4BP2/qP2QP1P/5R1K b - - 0 19");
+        List<Piece> candidates = failureCase2.getAllPiecesOfType(Player.BLACK, PieceType.ROOK);
+        for (Piece piece : candidates) {
+            System.out.println(piece.getLocation());
+        }
+
+        Player active = Player.BLACK;
+        String s = "Rc8";
+        PieceType type = PGNParser.getPieceType(s);
+        Square target = PGNParser.extractTarget(s);
+        char fileDisambiguation = PGNParser.getFileDisambiguation(s);
+        int rankDisambiguation = PGNParser.getRankDisambiguation(s);
+        Piece p = failureCase2.getPieceByTarget(type, active, target, fileDisambiguation, rankDisambiguation);
+        Square origin = p.getLocation();
+        PieceType promotionType = PGNParser.getPromotionType(s);
+        Move m = new Move(active, type, origin, target, false, promotionType);
+        System.out.println("Move: " + m.getOrigin() + " to " + m.getDestination());
     }
 
 }

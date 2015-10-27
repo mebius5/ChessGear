@@ -1,9 +1,6 @@
 package com.chessgear.data;
 
-import com.chessgear.game.BoardState;
-import com.chessgear.game.Move;
-import com.chessgear.game.Player;
-import com.chessgear.game.Result;
+import com.chessgear.game.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,15 +176,179 @@ public class PGNParser {
         result = result.replaceAll("\\{[^}]*\\}", "");
         // Remove everything within parentheses.
         result = result.replaceAll("\\([^)]*\\)", "");
-        return result;
+        result = result.replaceAll("[!|?|+|x|#]", "");
+        result = result.replaceAll("[0-9]+[.]+", "");
+        result = result.replaceAll("1/2-1/2|0-1|1-0", "");
+        result = result.replaceAll("\\s+", " ");
+        return result.trim();
     }
 
-    private void parseMoves(String pgn) {
+    /**
+     * Parses the moves contained within a pgn string.
+     * @param pgn String containing the PGN for a game of chess.
+     * @throws PGNParseException Something went wrong.
+     */
+    private void parseMoves(String pgn) throws PGNParseException {
         String strippedPgn = stripAnnotations(pgn);
         BoardState currentBoardState = new BoardState();
         currentBoardState.setToDefaultPosition();
         this.boardStates.add(currentBoardState);
 
+        String[] tokenizedMoves = strippedPgn.split(" ");
+        Player active = Player.WHITE;
+
+        for (String s : tokenizedMoves) {
+            System.out.println("Token: " + s);
+
+            Move m;
+            if (s.equals("O-O")) {
+                // Castles kingside
+                PieceType type = PieceType.KING;
+                Square target;
+                Square origin;
+                switch (active) {
+                    case WHITE:
+                        origin = new Square("e1");
+                        target = new Square("g1");
+                        break;
+                    case BLACK:
+                        origin = new Square("e8");
+                        target = new Square("g8");
+                        break;
+                    default:
+                        throw new PGNParseException("Invalid active player!");
+                }
+                m = new Move(active, type, origin, target, true, null);
+            } else if (s.equals("O-O-O")) {
+                PieceType type = PieceType.KING;
+                Square target;
+                Square origin;
+                // Castles queenside.
+                switch (active) {
+                    case WHITE:
+                        origin = new Square("e1");
+                        target = new Square("c1");
+                        break;
+                    case BLACK:
+                        origin = new Square("e8");
+                        target = new Square("c8");
+                        break;
+                    default:
+                        throw new PGNParseException("Invalid active player!");
+                }
+                m = new Move(active, type, origin, target, true, null);
+            } else {
+
+                // Regular move.
+                PieceType type = getPieceType(s);
+                Square target = extractTarget(s);
+                char fileDisambiguation = getFileDisambiguation(s);
+                if (fileDisambiguation != 0) {
+                }
+                int rankDisambiguation = getRankDisambiguation(s);
+                Piece p = currentBoardState.getPieceByTarget(type, active, target, fileDisambiguation, rankDisambiguation);
+                Square origin = p.getLocation();
+                PieceType promotionType = getPromotionType(s);
+                m = new Move(active, type, origin, target, false, promotionType);
+
+            }
+            switch (active) {
+                case WHITE:
+                    this.whiteHalfMoves.add(m);
+                    break;
+                case BLACK:default:
+                    this.blackHalfMoves.add(m);
+                    break;
+            }
+            currentBoardState = currentBoardState.doMove(m);
+
+            this.boardStates.add(currentBoardState);
+            active = active.toggle();
+        }
+    }
+
+    /**
+     *
+     * @param token
+     * @return
+     */
+    public static Square extractTarget(String token) {
+        int lastIndex = getLastNumericIndex(token);
+        int rank = (int)(token.charAt(lastIndex)) - '1';
+        int file = (int)token.charAt(lastIndex - 1) - 'a';
+        return new Square(file, rank);
+    }
+
+    /**
+     * Returns the file disambiguation of a PGN move token.
+     * @param token PGN String token.
+     * @return File disambiguation character.
+     */
+    public static char getFileDisambiguation(String token) {
+        int lastIndex = getLastNumericIndex(token);
+        if (lastIndex > 1) {
+            char candidateCharacter = token.charAt(lastIndex - 2);
+            if (Character.isAlphabetic(candidateCharacter) && Character.isLowerCase(candidateCharacter)) {
+                return candidateCharacter;
+            }
+        }
+        return (char)0;
+    }
+
+    /**
+     * Gets the rank disambiguation of a PGN move token.
+     * @param token PGN String token.
+     * @return Rank disambiguation.
+     */
+    public static int getRankDisambiguation(String token) {
+        int lastIndex = getLastNumericIndex(token);
+        if (lastIndex > 1 && Character.isDigit(token.charAt(lastIndex - 2))) {
+            return Character.getNumericValue(token.charAt(lastIndex - 2));
+        }
+        return -1;
+    }
+
+    /**
+     * Gets the type of piece that was moved.
+     * @param token PGN move token string.
+     * @return PieceType of piece that was moved.
+     */
+    public static PieceType getPieceType(String token) {
+
+        int lastIndex = getLastNumericIndex(token);
+        for (int c = 0; c < lastIndex; c++) {
+            if (Character.isUpperCase(token.charAt(c))) {
+                return PieceType.parseCharacter(token.charAt(c));
+            }
+        }
+        return PieceType.PAWN;
+    }
+
+    /**
+     * Gets promotion type.
+     * @param token PGN move token string.
+     * @return PieceType of pawn that was promoted.
+     */
+    public static PieceType getPromotionType(String token) {
+        if (token.contains("=")) {
+            return PieceType.parseCharacter(token.charAt(token.indexOf('=') + 1));
+        } else {
+            return null;
+        }
+
+    }
+
+    /**
+     * Gets the index of the last numeric character in a string.
+     * @param token String for which to find last numeric index.
+     * @return Last numeric index.
+     */
+    public static int getLastNumericIndex(String token) {
+        int lastIndex = 0;
+        for (int c = 0; c < token.length(); c++) {
+            if (Character.isDigit(token.charAt(c))) lastIndex = c;
+        }
+        return lastIndex;
     }
 
     /**

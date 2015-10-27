@@ -320,27 +320,27 @@ public class BoardState {
             switch (castlingDestination) {
                 case "g1":
                     // Get the piece at h1, move it to f1
-                    castlePiece = newBoardState.pieces[7][0];
-                    newBoardState.pieces[7][0] = null;
-                    newBoardState.pieces[5][0] = castlePiece;
+                    castlePiece = newBoardState.getPieceAt(new Square("h1"));
+                    newBoardState.setPieceAt(new Square("h1"), null);
+                    newBoardState.setPieceAt(new Square("f1"), castlePiece);
                     break;
                 case "c1":
                     // Get the piece at a1, move it to d1
-                    castlePiece = newBoardState.pieces[0][0];
-                    newBoardState.pieces[0][0] = null;
-                    newBoardState.pieces[3][0] = castlePiece;
+                    castlePiece = newBoardState.getPieceAt(new Square("a1"));
+                    newBoardState.setPieceAt(new Square("a1"), null);
+                    newBoardState.setPieceAt(new Square("d1"), castlePiece);
                     break;
                 case "g8":
                     // Get the piece at h8, move it to f8
-                    castlePiece = newBoardState.pieces[7][7];
-                    newBoardState.pieces[7][7] = null;
-                    newBoardState.pieces[5][7] = castlePiece;
+                    castlePiece = newBoardState.getPieceAt(new Square("h8"));
+                    newBoardState.setPieceAt(new Square("h8"), null);
+                    newBoardState.setPieceAt(new Square("f8"), castlePiece);
                     break;
                 case "c8":
                     // Get the pice at a8, move it to d8
-                    castlePiece = newBoardState.pieces[0][7];
-                    newBoardState.pieces[0][7] = null;
-                    newBoardState.pieces[3][7] = castlePiece;
+                    castlePiece = newBoardState.getPieceAt(new Square("a8"));
+                    newBoardState.setPieceAt(new Square("a8"), null);
+                    newBoardState.setPieceAt(new Square("d8"), castlePiece);
                     break;
                 default:
             }
@@ -348,7 +348,7 @@ public class BoardState {
 
         // If promotion, change piece's type.
         if (m.getPromotionType() != null) {
-            destinationPiece.setPieceType(m.getPromotionType());
+            originPiece.setPieceType(m.getPromotionType());
         }
 
         // If nothing was captured, or if no pawn was moved, increment half move counter.
@@ -426,10 +426,6 @@ public class BoardState {
 
             switch (piece.getType()) {
                 case PAWN:
-                    // Can't move if path is blocked
-                    if (this.isBlocked(origin, target)) {
-                        return false;
-                    }
                     // Can't move more than 1 laterally or 2 horizontally, can't stay on same rank.
                     if (Math.abs(yDisplace) > 2 || yDisplace == 0 || Math.abs(xDisplace) > 1) {
                         return false;
@@ -456,9 +452,13 @@ public class BoardState {
                             // Can't move up 2 unless we're on the correct rank (7th rank)
                             if (yDisplace == -2 && (piece.getLocation().getY() != 6 || xDisplace != 0)) return false;
                             if (Math.abs(xDisplace) == 1) {
-                                if (this.getPieceAt(target) == null && !this.enPassantTarget.equals(target)) return false;
+                                if (this.getPieceAt(target) == null && (this.enPassantTarget == null || !this.enPassantTarget.equals(target))) return false;
                             }
                             break;
+                    }
+                    // Can't move if path is blocked
+                    if (this.isBlocked(origin, target)) {
+                        return false;
                     }
                     break;
 
@@ -474,12 +474,18 @@ public class BoardState {
                     break;
 
                 case ROOK:
-                    if (!origin.isOnSameFile(target) && !origin.isOnSameRank(target)) return false;
-                    if (this.isBlocked(origin, target)) return false;
+                    if (!origin.isOnSameFile(target) && !origin.isOnSameRank(target)) {
+                        return false;
+                    }
+                    if (this.isBlocked(origin, target)) {
+                        return false;
+                    }
                     break;
 
                 case QUEEN:
-                    if (!origin.isOnDiagonal(target) && !origin.isOnSameFile(target) && origin.isOnSameRank(target)) return false;
+                    if (!origin.isOnDiagonal(target) && !origin.isOnSameFile(target) && !origin.isOnSameRank(target)) {
+                        return false;
+                    }
                     if (this.isBlocked(origin, target)) return false;
                     break;
 
