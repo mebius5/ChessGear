@@ -1,4 +1,4 @@
-package com.chessgear.engine;
+package com.chessgear.analysis;
 
 /**
  * Class to facilitate engine analysis.
