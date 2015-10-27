@@ -1,5 +1,6 @@
 /**
  * Created by Grady Xiao on 10/24/15.
+ * JUnit Test for Move.java
  */
 import com.chessgear.game.*;
 import org.junit.Test;
@@ -11,9 +12,9 @@ public class MoveTest {
     public void testMoveConstructor(){
         Player whoMoved = Player.WHITE;
         PieceType pieceType = PieceType.PAWN;
-        Square origin = new Square("e2");
-        Square destination = new Square("e4");
-        PieceType promotionType = null;
+        Square origin = new Square("e7");
+        Square destination = new Square("e8");
+        PieceType promotionType = PieceType.QUEEN;
         Move e4 = new Move(whoMoved, pieceType, origin, destination, false, promotionType);
         assertEquals(e4.getWhoMoved(), Player.WHITE);
         assertEquals(e4.getPieceType(),pieceType);

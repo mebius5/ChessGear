@@ -4,7 +4,7 @@ import com.chessgear.game.Square;
 import org.junit.Test;
 
 /**
- * Test cases for square class.
+ * JUnit Test for Square.java
  * Created by Ran on 10/18/2015.
  */
 public class SquareTest {

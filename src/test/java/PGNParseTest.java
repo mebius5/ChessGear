@@ -11,7 +11,7 @@ import static com.chessgear.data.PGNParser.parseTags;
 import static com.chessgear.data.PGNParser.Tag;
 
 /**
- * PGN parser test.
+ * JUnit Test for PGNParse.java
  * Created by Ran on 10/18/2015.
  */
 public class PGNParseTest {

@@ -1,6 +1,6 @@
 /**
- * Test case for GameTree.java
  * Created by GradyXiao on 10/24/15.
+ * JUnit Test for GameTree.java
  */
 import static org.junit.Assert.*;
 

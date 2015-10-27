@@ -1,5 +1,6 @@
 /**
  * Created by Grady Xiao on 10/24/15.
+ * JUnit Test for PieceType.java
  */
 import org.junit.Test;
 import static org.junit.Assert.*;

@@ -1,5 +1,6 @@
 /**
  * Created by Grady Xiao on 10/24/15.
+ * JUnit Test for Game.java
  */
 
 import static org.junit.Assert.*;

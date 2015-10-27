@@ -1,5 +1,6 @@
 /**
  * Created by Grady Xiao on 10/24/15.
+ * JUnit Test for Piece.java
  */
 import com.chessgear.game.PieceType;
 import com.chessgear.game.Player;

@@ -15,6 +15,9 @@ import com.chessgear.server.User.Property;
  *	Date:        Oct 24, 2015
  */
 
+/***
+ * Test for DatabaseServer User
+ */
 public class DatabaseServiceUserTest {
 
     static String[] addresses = {"gogol@gmail.com", "jean@jean.fr", "hardcorechessplayer@jhu.edu"};
