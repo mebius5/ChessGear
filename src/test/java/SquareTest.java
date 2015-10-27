@@ -34,12 +34,38 @@ public class SquareTest {
     }
 
     @Test
+    public void getXYDisplacementTest() {
+        Square test = new Square("a1");
+        Square test2 = new Square("a3");
+        assertEquals(test.getXDisplacement(test2),0);
+        assertEquals(test.getYDisplacement(test2),2);
+    }
+
+    @Test
+    public void isTest(){
+        Square test = new Square("a1");
+        Square sameFile = new Square("a5");
+        Square sameRank = new Square("c1");
+        Square sameDiagonal = new Square("d4");
+        assertTrue(test.isOnSameFile(sameFile));
+        assertTrue(test.isOnSameRank(sameRank));
+        assertTrue(test.isOnDiagonal(sameDiagonal));
+        assertFalse(test.isOnSameFile(sameRank));
+        assertFalse(test.isOnSameRank(sameFile));
+        assertFalse(test.isOnDiagonal(sameRank));
+    }
+
+    @Test
     public void squareEqualsTest(){
         Square test = new Square("b3");
-        Square same = new Square("b3");
-        Square different = new Square("c3");
-        assertTrue(test.equals(same));
-        assertFalse(test.equals(different));
+        Square sameSquare = new Square("b3");
+        String sameString = "b3";
+        Square differentSquare = new Square("c3");
+        String differentString = "c3";
+        assertTrue(test.equals(sameSquare));
+        assertTrue(test.equals(sameString));
+        assertFalse(test.equals(differentSquare));
+        assertFalse(test.equals(differentString));
     }
 
 }
