@@ -102,6 +102,10 @@ public class PGNParseTest {
     public void parseMovesTest() {
         try {
 
+            PGNParser parser = new PGNParser(testString);
+            List<BoardState> boardStates = parser.getListOfBoardStates();
+            assertEquals(boardStates.get(boardStates.size() - 1).toFEN(), "2K5/8/1q1k2p1/6P1/8/8/8/8 w - - 0 48");
+
             String testPGN1 = "[Event \"Hourly Bullet Arena\"]\n" +
                     "[Site \"http://lichess.org/t3yPcgEw\"]\n" +
                     "[Date \"2015.10.25\"]\n" +
@@ -123,11 +127,27 @@ public class PGNParseTest {
             List<BoardState> boardStates1 = testParser1.getListOfBoardStates();
             assertEquals(boardStates1.get(boardStates1.size() - 1).toFEN(), "3r4/2r2k1p/p2Rp3/1p2Pp2/8/1P3KP1/P4P2/8 w - - 0 40");
 
+            String testPGN2 = "[Event \"Hourly Bullet Arena\"]\n" +
+                    "[Site \"http://lichess.org/RaBUFuVW\"]\n" +
+                    "[Date \"2015.10.25\"]\n" +
+                    "[White \"Fins\"]\n" +
+                    "[Black \"r3tard3d\"]\n" +
+                    "[Result \"1-0\"]\n" +
+                    "[WhiteElo \"2559\"]\n" +
+                    "[BlackElo \"1834\"]\n" +
+                    "[PlyCount \"75\"]\n" +
+                    "[Variant \"Standard\"]\n" +
+                    "[TimeControl \"60+0\"]\n" +
+                    "[ECO \"A41\"]\n" +
+                    "[Opening \"Rat Defence\"]\n" +
+                    "[Termination \"Time forfeit\"]\n" +
+                    "[Annotator \"lichess.org\"]\n" +
+                    "\n" +
+                    "1. d4 d6 { Rat Defence } 2. c4 g6 3. Nc3 Bg7 4. Nf3 c6 5. e4 Nd7 6. Bg5 h6 7. Bh4 Ngf6 8. Qd2 g5 9. Bg3 g4?! { (0.07 → 0.62) Inaccuracy. The best move was Nh5. } (9... Nh5 10. Be2 c5 11. d5 O-O 12. a3 a6 13. O-O Nb6 14. Bd3 Nxg3 15. hxg3 Bg4 16. Rfe1 Qc7 17. Rad1 Bd7 18. Nh2 Be5) 10. Nh4 Nh5 11. Nf5 Nxg3?! { (0.83 → 1.53) Inaccuracy. The best move was Bf6. } (11... Bf6 12. Be2 Nxg3 13. hxg3 h5 14. O-O-O Nf8 15. Kb1 Bxf5 16. exf5 Nd7 17. Ne4 Bg7 18. f3 d5 19. cxd5 cxd5 20. Nc3 Nf6 21. Bb5+) 12. hxg3 Bf6 13. Rxh6 Rxh6 14. Qxh6 Qa5?! { (1.61 → 2.42) Inaccuracy. The best move was Nf8. } (14... Nf8 15. Ng7+ Kd7 16. Rd1 Ng6 17. Nh5 Bh8 18. c5 Kc7 19. Bc4 Qg8 20. Nf4 Nxf4 21. gxf4 Be6 22. Bxe6 fxe6 23. Qh5 Rd8 24. Qh4) 15. O-O-O Kd8 16. Bd3?! { (3.12 → 2.14) Inaccuracy. The best move was Qh5. } (16. Qh5 Nb6 17. c5 Na4 18. Nxa4 Qxa4 19. e5 Bxf5 20. Qxf5 Bg7 21. Qg5 Qxa2 22. Qxg7 Qa1+ 23. Kc2 Qa4+ 24. b3 Qa2+ 25. Kc3) 16... Kc7 17. Qf4 e5 18. dxe5? { (2.00 → 0.23) Mistake. The best move was Qd2. } (18. Qd2 Kb8 19. d5 Qd8 20. Ne3 Bg5 21. Be2 Nc5 22. b4 cxd5 23. Qxd5 Ne6 24. Nb5 a5 25. Nxd6 axb4 26. Kb1 Ra5 27. Qd2 Ra4) 18... Bxe5 19. Qxg4? { (0.19 → -1.00) Mistake. The best move was Qd2. } (19. Qd2 Bxc3 20. bxc3 Qa3+ 21. Kb1 Nb6 22. Qb2 Qxb2+ 23. Kxb2 Be6 24. Be2 Rd8 25. Bxg4 Nxc4+ 26. Kc2 Na3+ 27. Kc1 Rh8 28. Ne3 Bxg4) 19... Nf6? { (-1.00 → 0.00) Mistake. The best move was Bxc3. } (19... Bxc3 20. bxc3 Qxc3+ 21. Kb1 Qb4+ 22. Ka1 Ne5 23. Qe2 Bxf5 24. exf5 Re8 25. Qe4 Nxd3 26. Qxd3 Re1 27. g4 Rxd1+ 28. Qxd1 Qxc4 29. f3) 20. Qg7 Bxc3?! { (-0.03 → 0.64) Inaccuracy. The best move was Be6. } (20... Be6 21. Qg5 Bxc3 22. bxc3 Qxc3+ 23. Kb1 Rd8 24. Qd2 Qe5 25. f3 Nd7 26. g4 Qc5 27. Ng7 Ne5 28. Nxe6+ fxe6 29. Bf1 Rh8 30. Qc3) 21. Qxf7+ Bd7 22. bxc3?! { (0.62 → 0.00) Inaccuracy. The best move was Bc2. } (22. Bc2 Bxb2+ 23. Kxb2 Qb4+ 24. Kc1 Qa3+ 25. Kd2 Ng4 26. Ke2 Qxa2 27. Rd2 Ne5 28. Qe7 Qxc4+ 29. Ke1 Rh8 30. Qxd6+ Kb6 31. Qd4+ Qxd4) 22... Qxc3+ 23. Bc2? { (0.00 → -1.85) Mistake. The best move was Kb1. } (23. Kb1 Qb4+ 24. Ka1 Qc3+ 25. Kb1) 23... Nxe4 24. Kb1?! { (-1.62 → -2.37) Inaccuracy. The best move was Qg7. } (24. Qg7 Qa3+ 25. Qb2 Qxb2+ 26. Kxb2 Bxf5 27. Re1 d5 28. g4 Be6 29. Bxe4 dxe4 30. Rxe4 Kd7 31. f3 Rh8 32. c5 Bd5 33. Re2 Rh1) 24... d5? { (-2.37 → 0.00) Mistake. The best move was Nd2+. } (24... Nd2+ 25. Kc1 Nxc4 26. Qg7 Qa3+ 27. Kb1 Re8 28. Ne3 Nxe3 29. fxe3 Qb4+ 30. Ka1 Rxe3 31. Bf5 Qc3+ 32. Qxc3 Rxc3 33. g4 Rg3 34. Rg1) 25. cxd5 cxd5? { (0.00 → 1.82) Mistake. The best move was Qb4+. } (25... Qb4+ 26. Ka1 Qc3+ 27. Kb1) 26. Qxd5? { (1.82 → 0.00) Mistake. The best move was Ne3. } (26. Ne3 Qb4+ 27. Bb3 Nc3+ 28. Ka1 Qf8 29. Nxd5+ Nxd5 30. Rc1+ Kb6 31. Qxd5 Qf6+ 32. Kb1 Qf5+ 33. Qxf5 Bxf5+ 34. Bc2 Be6 35. Be4 Rd8) 26... Nc5?? { (0.00 → 10.31) Blunder. The best move was Qb4+. } (26... Qb4+ 27. Ka1 Qc3+ 28. Kb1) 27. Qd6+ Kc8? { (8.06 → 53.03) Mistake. The best move was Kd8. } (27... Kd8 28. Nd4 Kc8 29. Qf8+ Kc7 30. Qxa8 Qb4+ 31. Bb3 Na4 32. Ne6+ Bxe6 33. Qd8+ Kc6 34. Qe8+ Kb6 35. Qxe6+ Ka5 36. Qe5+ Nc5 37. Ka1) 28. Ne7+ Kd8 29. Nd5 Qa5?! { (53.07 → Mate in 5) Checkmate is now unavoidable. The best move was Qg7. } (29... Qg7 30. Qc7+ Ke8 31. Re1+ Ne6 32. Rxe6+ Bxe6 33. Qxg7 Bxd5 34. Ba4+ Bc6 35. Qxb7 Bxa4 36. Qxa8+ Ke7 37. Qe4+ Kf6 38. Qxa4 Ke5 39. Qxa7) 30. Qe7+?! { (Mate in 5 → 53.00) Lost forced checkmate sequence. The best move was Qf8+. } (30. Qf8+ Be8 31. Nb6+ Qd2 32. Rxd2+ Nd3 33. Rxd3+ Kc7 34. Qd6#) 30... Kc8 31. Qf8+ Qd8 32. Ne7+ Kc7 33. Nd5+?! { (Mate in 10 → 10.17) Lost forced checkmate sequence. The best move was Qf4+. } (33. Qf4+ Kb6 34. Rd6+ Bc6 35. Nd5+ Ka6 36. Qc4+ b5 37. Rxc6+ Qb6 38. Qxc5 Rb8 39. Bf5 Kb7 40. Rxb6+ axb6 41. Qxb6+ Ka8 42. Nc7#) 33... Kc6 34. Qxc5+?? { (11.60 → -5.36) Blunder. The best move was Nb4+. } (34. Nb4+ Kb5 35. a4+ Nxa4 36. Rd5+ Kb6 37. Qh6+ Bc6 38. Rxd8 Nc3+ 39. Kb2 Rxd8 40. Kxc3 a5 41. Qe3+ Kc7 42. Nxc6 bxc6 43. Kc4 Rd7) 34... Kxc5 35. Bb3? { (-5.62 → -6.89) Mistake. The best move was f3. } (35. f3 Qa5 36. g4 Re8 37. Be4 Bc6 38. Rc1+ Kd6 39. Nc3 Kc7 40. Ka1 Qe5 41. Kb1 Rd8 42. Bxc6 bxc6) 35... Kb5? { (-6.89 → -5.69) Mistake. The best move was Bf5+. } (35... Bf5+ 36. Kb2 Qh8+ 37. Ka3 Qf8 38. Kb2 Qg7+ 39. Nc3 Rc8 40. Bc2 Bxc2 41. Kxc2 Kb4 42. Rb1+ Ka5 43. Rb5+ Ka6 44. Rb3 b6 45. Kd3) 36. Kb2? { (-5.69 → -7.01) Mistake. The best move was g4. } (36. g4 Rc8 37. f3 Ka5 38. Nf4 Qf6 39. Nh5 Qh6 40. Bd5 Rc5 41. Be4 Be6 42. g3 Rb5+ 43. Ka1) 36... Ka6? { (-7.01 → -5.91) Mistake. The best move was Rc8. } (36... Rc8 37. f3 Qh8+ 38. Ka3 Qf8+ 39. Kb2 Qg7+ 40. Ka3 Ka5 41. g4 Qe5 42. Rd2 Rc1 43. g5 Qxg5 44. f4 Qg7 45. Nb4 Qe7 46. Rd4) 37. Rc1? { (-5.91 → -8.60) Mistake. The best move was g4. } (37. g4 Ka5 38. f3 Qh8+ 39. Kb1 Rc8 40. Ne3 Qh7+ 41. Kb2 Qg7+ 42. Kb1 Qg6+ 43. Nc2 Be6 44. Rd2 Bc4 45. Kb2 Bxb3 46. axb3 Qf6+) 37... b6?? { (-8.60 → -4.68) Blunder. The best move was Qh8+. } (37... Qh8+ 38. Kb1 Rf8 39. Ne3 Rxf2 40. Rc2 Rxc2 41. Bxc2 Qd4 42. Nd1 Qd2 43. Nb2 Qxg2 44. Nd1 Kb6 45. Nc3 Qxg3 46. Kb2) 38. Nb4+?? { Black forfeits on time (-4.68 → -7.79) Blunder. The best move was Nc7+. } (38. Nc7+ Ka5 39. Nxa8 Qxa8 40. Rc4 Qxg2 41. Rf4 Qf1 42. Kc3 Qe1+ 43. Kd4 Kb5 44. Kd3 Kc5 45. Rc4+ Kd6 46. Rd4+ Kc7 47. Rf4 Be8) 1-0";
+            PGNParser testParser2 = new PGNParser(testPGN2);
+            List<BoardState> boardStates2 = testParser2.getListOfBoardStates();
+            assertEquals(boardStates2.get(boardStates2.size() - 1).toFEN(), "r2q4/p2b4/kp6/8/1N6/1B4P1/PK3PP1/2R5 b - - 1 38");
 
-
-            PGNParser parser = new PGNParser(testString);
-            List<BoardState> boardStates = parser.getListOfBoardStates();
-            assertEquals(boardStates.get(boardStates.size() - 1).toFEN(), "2K5/8/1q1k2p1/6P1/8/8/8/8 w - - 0 48");
         } catch (PGNParseException e) {
             System.err.println(e.getMessage());
             fail();
