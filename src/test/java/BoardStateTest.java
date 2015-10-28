@@ -133,9 +133,6 @@ public class BoardStateTest {
 
         BoardState failureCase2 = new BoardState("2R2rk1/pp3pbp/4p1p1/8/3P4/4BP2/qP2QP1P/5R1K b - - 0 19");
         List<Piece> candidates = failureCase2.getAllPiecesOfType(Player.BLACK, PieceType.ROOK);
-        for (Piece piece : candidates) {
-            System.out.println(piece.getLocation());
-        }
 
         Player active = Player.BLACK;
         String s = "Rc8";
@@ -147,7 +144,6 @@ public class BoardStateTest {
         Square origin = p.getLocation();
         PieceType promotionType = PGNParser.getPromotionType(s);
         Move m = new Move(active, type, origin, target, false, promotionType);
-        System.out.println("Move: " + m.getOrigin() + " to " + m.getDestination());
     }
 
 }

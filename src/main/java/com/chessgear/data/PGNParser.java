@@ -56,33 +56,30 @@ public class PGNParser {
      */
     public PGNParser(String pgn) throws PGNParseException {
         this.pgn = pgn;
-        this.whiteHalfMoves = new ArrayList<>();
-        this.blackHalfMoves = new ArrayList<>();
-        this.boardStates = new ArrayList<>();
-        this.parse();
     }
 
     /**
      * Parses the pgn and stores relevant information in the class attributes.
      */
-    private void parse() throws PGNParseException {
+    private void parseInformation() {
 
-        // Parse the tags.
-        List<Tag> tags = parseTags(this.pgn);
-        // Get tag with name White
-        for (Tag t : tags) {
-            switch (t.getName()) {
-                case "White": this.whitePlayerName = t.getValue();
-                    break;
-                case "Black": this.blackPlayerName = t.getValue();
-                    break;
-                case "Result": this.result = Result.parseResult(t.getValue());
-                    break;
+        try {
+            // Parse the tags.
+            List<Tag> tags = parseTags(this.pgn);
+            // Get tag with name White
+            for (Tag t : tags) {
+                switch (t.getName()) {
+                    case "White": this.whitePlayerName = t.getValue();
+                        break;
+                    case "Black": this.blackPlayerName = t.getValue();
+                        break;
+                    case "Result": this.result = Result.parseResult(t.getValue());
+                        break;
+                }
             }
+        } catch (PGNParseException e) {
+            System.err.println(e.getMessage());
         }
-
-        // Parse the half moves.
-        this.parseMoves(this.pgn);
 
     }
 
@@ -91,6 +88,7 @@ public class PGNParser {
      * @return White player name.
      */
     public String getWhitePlayerName() {
+        if (this.whitePlayerName == null) this.parseInformation();
         return this.whitePlayerName;
     }
 
@@ -99,6 +97,7 @@ public class PGNParser {
      * @return Black player name.
      */
     public String getBlackPlayerName() {
+        if (this.blackPlayerName == null) this.parseInformation();
         return this.blackPlayerName;
     }
 
@@ -107,6 +106,7 @@ public class PGNParser {
      * @return Result of the game.
      */
     public Result getResult() {
+        if (this.result == null) this.parseInformation();
         return this.result;
     }
 
@@ -117,6 +117,7 @@ public class PGNParser {
      * @return Move corresponding to the passed arguments.
      */
     public Move getHalfMove(Player player, int fullMoveNumber) {
+        if (this.boardStates == null) this.parseMoves(this.pgn);
         switch (player) {
             case BLACK:
                 return this.blackHalfMoves.get(fullMoveNumber);
@@ -132,6 +133,7 @@ public class PGNParser {
      * @return List of board states containing game progression.
      */
     public List<BoardState> getListOfBoardStates() {
+        if (this.boardStates == null) this.parseMoves(this.pgn);
         return this.boardStates;
     }
 
@@ -188,82 +190,89 @@ public class PGNParser {
      * @param pgn String containing the PGN for a game of chess.
      * @throws PGNParseException Something went wrong.
      */
-    private void parseMoves(String pgn) throws PGNParseException {
-        String strippedPgn = stripAnnotations(pgn);
-        BoardState currentBoardState = new BoardState();
-        currentBoardState.setToDefaultPosition();
-        this.boardStates.add(currentBoardState);
+    private void parseMoves(String pgn) {
+        this.whiteHalfMoves = new ArrayList<>();
+        this.blackHalfMoves = new ArrayList<>();
+        this.boardStates = new ArrayList<>();
 
-        String[] tokenizedMoves = strippedPgn.split(" ");
-        Player active = Player.WHITE;
-
-        for (String s : tokenizedMoves) {
-            System.out.println("Token: " + s);
-
-            Move m;
-            if (s.equals("O-O")) {
-                // Castles kingside
-                PieceType type = PieceType.KING;
-                Square target;
-                Square origin;
-                switch (active) {
-                    case WHITE:
-                        origin = new Square("e1");
-                        target = new Square("g1");
-                        break;
-                    case BLACK:
-                        origin = new Square("e8");
-                        target = new Square("g8");
-                        break;
-                    default:
-                        throw new PGNParseException("Invalid active player!");
-                }
-                m = new Move(active, type, origin, target, true, null);
-            } else if (s.equals("O-O-O")) {
-                PieceType type = PieceType.KING;
-                Square target;
-                Square origin;
-                // Castles queenside.
-                switch (active) {
-                    case WHITE:
-                        origin = new Square("e1");
-                        target = new Square("c1");
-                        break;
-                    case BLACK:
-                        origin = new Square("e8");
-                        target = new Square("c8");
-                        break;
-                    default:
-                        throw new PGNParseException("Invalid active player!");
-                }
-                m = new Move(active, type, origin, target, true, null);
-            } else {
-
-                // Regular move.
-                PieceType type = getPieceType(s);
-                Square target = extractTarget(s);
-                char fileDisambiguation = getFileDisambiguation(s);
-                if (fileDisambiguation != 0) {
-                }
-                int rankDisambiguation = getRankDisambiguation(s);
-                Piece p = currentBoardState.getPieceByTarget(type, active, target, fileDisambiguation, rankDisambiguation);
-                Square origin = p.getLocation();
-                PieceType promotionType = getPromotionType(s);
-                m = new Move(active, type, origin, target, false, promotionType);
-
-            }
-            switch (active) {
-                case WHITE:
-                    this.whiteHalfMoves.add(m);
-                    break;
-                case BLACK:default:
-                    this.blackHalfMoves.add(m);
-                    break;
-            }
-            currentBoardState = currentBoardState.doMove(m);
-
+        try {
+            String strippedPgn = stripAnnotations(pgn);
+            BoardState currentBoardState = new BoardState();
+            currentBoardState.setToDefaultPosition();
             this.boardStates.add(currentBoardState);
-            active = active.toggle();
+
+            String[] tokenizedMoves = strippedPgn.split(" ");
+            Player active = Player.WHITE;
+
+            for (String s : tokenizedMoves) {
+                Move m;
+                if (s.equals("O-O")) {
+                    // Castles kingside
+                    PieceType type = PieceType.KING;
+                    Square target;
+                    Square origin;
+                    switch (active) {
+                        case WHITE:
+                            origin = new Square("e1");
+                            target = new Square("g1");
+                            break;
+                        case BLACK:
+                            origin = new Square("e8");
+                            target = new Square("g8");
+                            break;
+                        default:
+                            throw new PGNParseException("Invalid active player!");
+                    }
+                    m = new Move(active, type, origin, target, true, null);
+                } else if (s.equals("O-O-O")) {
+                    PieceType type = PieceType.KING;
+                    Square target;
+                    Square origin;
+                    // Castles queenside.
+                    switch (active) {
+                        case WHITE:
+                            origin = new Square("e1");
+                            target = new Square("c1");
+                            break;
+                        case BLACK:
+                            origin = new Square("e8");
+                            target = new Square("c8");
+                            break;
+                        default:
+                            throw new PGNParseException("Invalid active player!");
+                    }
+                    m = new Move(active, type, origin, target, true, null);
+                } else {
+
+                    // Regular move.
+                    PieceType type = getPieceType(s);
+                    Square target = extractTarget(s);
+                    char fileDisambiguation = getFileDisambiguation(s);
+                    if (fileDisambiguation != 0) {
+                    }
+                    int rankDisambiguation = getRankDisambiguation(s);
+                    Piece p = currentBoardState.getPieceByTarget(type, active, target, fileDisambiguation, rankDisambiguation);
+                    Square origin = p.getLocation();
+                    PieceType promotionType = getPromotionType(s);
+                    m = new Move(active, type, origin, target, false, promotionType);
+
+                }
+                switch (active) {
+                    case WHITE:
+                        this.whiteHalfMoves.add(m);
+                        break;
+                    case BLACK:
+                    default:
+                        this.blackHalfMoves.add(m);
+                        break;
+                }
+                currentBoardState = currentBoardState.doMove(m);
+
+                this.boardStates.add(currentBoardState);
+                active = active.toggle();
+            }
+        } catch (PGNParseException e) {
+            System.err.println(e.getMessage());
         }
     }
 

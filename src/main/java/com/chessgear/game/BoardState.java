@@ -430,6 +430,12 @@ public class BoardState {
                     if (Math.abs(yDisplace) > 2 || yDisplace == 0 || Math.abs(xDisplace) > 1) {
                         return false;
                     }
+                    // If we're moving laterally, we have to either be moving to the en passant target or taking a piece.
+                    if (Math.abs(xDisplace) == 1) {
+                        if (this.getPieceAt(target) == null && (this.enPassantTarget == null || !this.enPassantTarget.equals(target))) {
+                            return false;
+                        }
+                    }
                     switch (piece.getOwner()) {
                         case WHITE:
                             // Can't move backwards as white.
@@ -440,20 +446,11 @@ public class BoardState {
                             if (yDisplace == 2 && (piece.getLocation().getY() != 1 || xDisplace != 0)) {
                                 return false;
                             }
-                            // If we're moving laterally, we have to either be moving to the en passant target or taking a piece.
-                            if (Math.abs(xDisplace) == 1) {
-                                if (this.getPieceAt(target) == null && !this.enPassantTarget.equals(target)) {
-                                    return false;
-                                }
-                            }
                             break;
                         case BLACK:
                             if (yDisplace > 0) return false;
                             // Can't move up 2 unless we're on the correct rank (7th rank)
                             if (yDisplace == -2 && (piece.getLocation().getY() != 6 || xDisplace != 0)) return false;
-                            if (Math.abs(xDisplace) == 1) {
-                                if (this.getPieceAt(target) == null && (this.enPassantTarget == null || !this.enPassantTarget.equals(target))) return false;
-                            }
                             break;
                     }
                     // Can't move if path is blocked

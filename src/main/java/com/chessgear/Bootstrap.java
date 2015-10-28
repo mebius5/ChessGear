@@ -15,7 +15,7 @@ public class Bootstrap {
      */
     private static final int PORT = 80;
 
-    /**
+    /**s
      * Address of server.
      */
     private static final String ADDRESS = "localhost";
