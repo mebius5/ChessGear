@@ -117,7 +117,6 @@ public class BoardStateTest {
         BoardState testBoardState = new BoardState("r1bqkbnr/ppppp1pp/2n5/4Pp2/8/8/PPPP1PPP/RNBQKBNR w KQkq f6 0 3");
         Piece p = testBoardState.getPieceByTarget(PieceType.PAWN, Player.WHITE, new Square("f6"), (char)0, -1);
         assertEquals(p.getLocation(), "e5");
-
     }
 
     @Test
