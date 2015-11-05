@@ -24,9 +24,18 @@ public class GameTree {
     private HashMap<Integer, GameTreeNode> nodeMapping;
 
     /**
-     * Counter for node ints.
+     * Counter for node ids.
      */
-    private int nodeIntCounter;
+    private int nodeIdCounter;
+
+    /**
+     * Initializes a new empty game tree.
+     */
+    public GameTree() {
+        this.nodeIdCounter = 0;
+        this.nodeMapping = new HashMap<>();
+        this.root = null;
+    }
 
     /**
      * Adds a game to the tree.
@@ -36,15 +45,20 @@ public class GameTree {
         // TODO
     }
 
-    public GameTree(GameTreeNode root){
-        this.root = root;
-    }
-
     /**
      * Accessor function to get the root of the GameTree
      * @return the root of the GameTree
      */
     public GameTreeNode getRoot(){
         return this.root;
+    }
+
+    /**
+     * Gets the node with the specified id.
+     * @param id
+     * @return
+     */
+    public GameTreeNode getNodeWithId(int id) {
+        return nodeMapping.get(id);
     }
 }

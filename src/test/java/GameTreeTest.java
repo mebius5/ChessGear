@@ -9,11 +9,6 @@ import com.chessgear.data.GameTreeNode;
 import org.junit.Test;
 
 public class GameTreeTest {
-    @Test
-    public void GameTreeConstructorTest() {
-        GameTreeNode root = new GameTreeNode(5);
-        GameTree test = new GameTree(root);
-        assertEquals(test.getRoot(),root);
-    }
+
 
 }

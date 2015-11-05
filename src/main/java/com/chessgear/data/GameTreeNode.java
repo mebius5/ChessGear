@@ -115,11 +115,27 @@ public class GameTreeNode {
     }
 
     /**
+     * Accessor for boardstate.
+     * @return Boardstate.
+     */
+    public BoardState getBoardState() {
+        return this.boardState;
+    }
+
+    /**
      * Mutator for last move made.
      * @param m Last move made for this node.
      */
     public void setLastMoveMade(Move m) {
         this.lastMoveMade = m;
+    }
+
+    /**
+     * Accessor for the last move made.
+     * @return Last move made before this position.
+     */
+    public Move getLastMoveMade() {
+        return this.lastMoveMade;
     }
 
     /**
