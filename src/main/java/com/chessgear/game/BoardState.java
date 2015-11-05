@@ -660,4 +660,17 @@ public class BoardState {
         return false;
     }
 
+    /**
+     * Overrides object comparison method.
+     * @param o Object to compare to.
+     * @return True if equal, else false.
+     */
+    public boolean equals(Object o) {
+        if (o instanceof BoardState) {
+            BoardState other = (BoardState)o;
+            if (other.toFEN().equals(this.toFEN())) return true;
+        }
+        return false;
+    }
+
 }

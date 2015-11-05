@@ -145,4 +145,9 @@ public class BoardStateTest {
         Move m = new Move(active, type, origin, target, false, promotionType);
     }
 
+    @Test
+    public void testEquals() {
+        assertTrue(this.defaultBoardState.equals(new BoardState("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")));
+    }
+
 }
