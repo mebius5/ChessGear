@@ -3,6 +3,7 @@ package com.chessgear.data;
 import com.chessgear.game.Game;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Game Tree data structure.
@@ -28,10 +29,10 @@ public class GameTree {
     private int nodeIntCounter;
 
     /**
-     * Adds game to tree.
-     * @param g Game to add to tree.
+     * Adds a game to the tree.
+     * @param gameTreeNodes
      */
-    public void addGame(Game g) {
+    public void addGame(List<GameTreeNode> gameTreeNodes) {
         // TODO
     }
 

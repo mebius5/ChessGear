@@ -37,11 +37,22 @@ public class GameTreeBuilder {
         if (this.nodes != null) return this.nodes;
 
         this.nodes = new ArrayList<>();
+        int counter = 0;
         for (BoardState b : this.boardStateList) {
             // Let the data structure assign ids. For now, set to 0.
             GameTreeNode currentNode = new GameTreeNode(0);
-
-
+            currentNode.setBoardState(b);
+            if (counter != 0) {
+                int index = (counter - 1) / 2;
+                // White's last move was this.
+                if (counter % 2 != 0) {
+                    currentNode.setLastMoveMade(this.whiteHalfMoves.get(index));
+                } else {
+                    currentNode.setLastMoveMade(this.blackHalfMoves.get(index));
+                }
+            }
+            this.nodes.add(currentNode);
+            counter++;
         }
 
         return this.nodes;
