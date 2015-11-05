@@ -171,8 +171,15 @@ public class PGNParseTest {
             PGNParser parser = new PGNParser(this.testString);
             int gameLength = parser.getGameLength();
             Move whiteHalfMove = parser.getHalfMove(Player.WHITE, gameLength);
+            assertEquals(whiteHalfMove.getOrigin(), "b7");
+            assertEquals(whiteHalfMove.getDestination(), "c8");
+            assertEquals(whiteHalfMove.getPieceType(), PieceType.KING);
+            assertEquals(whiteHalfMove.getWhoMoved(), Player.WHITE);
             Move blackHalfMove = parser.getHalfMove(Player.BLACK, gameLength);
-
+            assertEquals(blackHalfMove.getOrigin(), "a5");
+            assertEquals(blackHalfMove.getDestination(), "b6");
+            assertEquals(blackHalfMove.getPieceType(), PieceType.QUEEN);
+            assertEquals(blackHalfMove.getWhoMoved(), Player.BLACK);
 
         } catch (PGNParseException e) {
             System.err.println(e.getMessage());
