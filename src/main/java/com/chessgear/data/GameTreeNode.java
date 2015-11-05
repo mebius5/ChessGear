@@ -45,6 +45,11 @@ public class GameTreeNode {
     private String engineLine;
 
     /**
+     * Counts the number of times this node has occurred.
+     */
+    private int multiplicity;
+
+    /**
      * The last move that was made before this position was achieved.
      */
     private Move lastMoveMade;
@@ -57,6 +62,23 @@ public class GameTreeNode {
         this.previous = null;
         this.children = new ArrayList<>();
         this.id = id;
+        this.multiplicity = 1;
+    }
+
+    /**
+     * Accessor for multiplicity.
+     * @return Multiplicity of this node.
+     */
+    public int getMultiplicity() {
+        return this.multiplicity;
+    }
+
+    /**
+     * Mutator for multiplicity.
+     * @param multiplicity Multiplicity of this node.
+     */
+    public void setMultiplicity(int multiplicity) {
+        this.multiplicity = multiplicity;
     }
 
     /**
