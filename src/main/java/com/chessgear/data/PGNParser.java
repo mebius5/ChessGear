@@ -111,6 +111,15 @@ public class PGNParser {
     }
 
     /**
+     * Returns the number of full moves in the game.
+     * @return Number of full moves in the game.
+     */
+    public int getGameLength() {
+        if (this.boardStates == null) this.parseMoves(this.pgn);
+        return this.boardStates.size() / 2;
+    }
+
+    /**
      * Retrieves a particular half move.
      * @param player Player who made the move.
      * @param fullMoveNumber Full move number of the move.
@@ -120,9 +129,18 @@ public class PGNParser {
         if (this.boardStates == null) this.parseMoves(this.pgn);
         switch (player) {
             case BLACK:
-                return this.blackHalfMoves.get(fullMoveNumber);
+                if (this.blackHalfMoves.size() >= fullMoveNumber) {
+                    return this.blackHalfMoves.get(fullMoveNumber - 1);
+                } else {
+                    return null;
+                }
+
             case WHITE:
-                return this.whiteHalfMoves.get(fullMoveNumber);
+                if (this.whiteHalfMoves.size() >= fullMoveNumber) {
+                    return this.whiteHalfMoves.get(fullMoveNumber - 1);
+                } else {
+                    return null;
+                }
             default:
                 return null;
         }

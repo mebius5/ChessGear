@@ -152,8 +152,32 @@ public class PGNParseTest {
             System.err.println(e.getMessage());
             fail();
         }
+    }
+
+    @Test
+    public void testGetGameLength() {
+        try {
+            PGNParser parser = new PGNParser(this.testString);
+            assertEquals(parser.getGameLength(), 47);
+        } catch (PGNParseException e) {
+            System.err.println(e.getMessage());
+            fail();
+        }
+    }
+
+    @Test
+    public void testGetHalfMove() {
+        try {
+            PGNParser parser = new PGNParser(this.testString);
+            int gameLength = parser.getGameLength();
+            Move whiteHalfMove = parser.getHalfMove(Player.WHITE, gameLength);
+            Move blackHalfMove = parser.getHalfMove(Player.BLACK, gameLength);
 
 
+        } catch (PGNParseException e) {
+            System.err.println(e.getMessage());
+            fail();
+        }
     }
 
 }
