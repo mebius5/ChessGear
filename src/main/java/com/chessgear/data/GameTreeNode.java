@@ -27,12 +27,12 @@ public class GameTreeNode {
     /**
      * List of child nodes.
      */
-    private final List<GameTreeNode> children;
+    private List<GameTreeNode> children;
 
     /**
      * Id of this node.
      */
-    private final int id;
+    private int id;
 
     /**
      * Engine eval of the position.
@@ -48,29 +48,70 @@ public class GameTreeNode {
      * The last move that was made before this position was achieved.
      */
     private Move lastMoveMade;
-    
-    
-    
-    //TODO: create a real constructor
+
+    /**
+     * Constructs a node with integer id.
+     * @param id Id of this node.
+     */
     public GameTreeNode(int id){
         this.previous = null;
         this.children = new ArrayList<>();
         this.id = id;
     }
-    
+
+    /**
+     * Mutator for id.
+     * @param id New id for node.
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * Adds a child node.
+     * @param child Child node.
+     */
     public void addChild(GameTreeNode child){
         children.add(child);
         child.setParent(this);
     }
-    
+
+    /**
+     * Mutator for parent reference.
+     * @param parent Parent node of this node.
+     */
     public void setParent(GameTreeNode parent){
         this.previous = parent;
     }
-    
+
+    /**
+     * Mutator for boardstate.
+     * @param b New boardstate for this node.
+     */
+    public void setBoardState(BoardState b) {
+        this.boardState = b;
+    }
+
+    /**
+     * Mutator for last move made.
+     * @param m Last move made for this node.
+     */
+    public void setLastMoveMade(Move m) {
+        this.lastMoveMade = m;
+    }
+
+    /**
+     * Checks if this is the root node.
+     * @return True if root node, else false.
+     */
     public boolean isRoot(){
         return previous == null;
     }
-    
+
+    /**
+     * Checks if this is a leaf node.
+     * @return True if this is a leaf node, else false.
+     */
     public boolean isLeaf(){
         return children.size() == 0;
     }

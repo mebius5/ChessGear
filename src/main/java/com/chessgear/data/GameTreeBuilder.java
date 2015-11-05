@@ -1,0 +1,49 @@
+package com.chessgear.data;
+
+import com.chessgear.game.BoardState;
+import com.chessgear.game.Move;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * GameTree builder helper class.
+ * Created by Ran on 11/5/2015.
+ */
+public class GameTreeBuilder {
+
+    private List<BoardState> boardStateList;
+    private List<Move> whiteHalfMoves;
+    private List<Move> blackHalfMoves;
+    private List<GameTreeNode> nodes;
+
+    /**
+     * Constructor. We pass the list of boardstates encountered over the course of a game, a list of white's half moves, and a list of black's half moves.
+     * @param boardStateList List of board states.
+     * @param whiteHalfMoves List of white's half moves.
+     * @param blackHalfMoves List of black's half moves.
+     */
+    public GameTreeBuilder(List<BoardState> boardStateList, List<Move> whiteHalfMoves, List<Move> blackHalfMoves) {
+        this.boardStateList = boardStateList;
+        this.whiteHalfMoves = whiteHalfMoves;
+        this.blackHalfMoves = blackHalfMoves;
+    }
+
+    /**
+     * Output of our class. Returns a list of nodes that represents the game.
+     * @return List of GameTreeNodes containing the boardstates of the game and the last moves made.
+     */
+    public List<GameTreeNode> getListOfNodes() {
+        if (this.nodes != null) return this.nodes;
+
+        this.nodes = new ArrayList<>();
+        for (BoardState b : this.boardStateList) {
+            // Let the data structure assign ids. For now, set to 0.
+            GameTreeNode currentNode = new GameTreeNode(0);
+
+
+        }
+
+        return this.nodes;
+    }
+}
