@@ -28,6 +28,7 @@ public class BootStrapTest {
         JsonObject ret = test.createUser(temp);
         assertEquals(ret.get("email").getAsString(), "nfendle1@jhu.edu");
         ret = test.createUser(temp);
+        //asserts
         assertEquals(ret.get("why").getAsString(), "User already exists");
         assertEquals(ret.get("status").getAsInt(), 409);
     }
