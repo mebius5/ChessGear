@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,25 +61,32 @@ public class DatabaseService {
 
         Sql2o toReturn = new Sql2o(source);
         
-        //Schema for user table
+        //Schema for user table: User - (email, ... properties ...)
         StringBuilder builderUserSpec = new StringBuilder("CREATE TABLE IF NOT EXISTS User(email TEXT PRIMARY KEY");
         for(User.Property P : User.Property.values())
             builderUserSpec.append(", "+P.name().toLowerCase()+" TEXT");
         builderUserSpec.append(")");
         String userSpec = builderUserSpec.toString();
         
-        /*
-         *  create more specifications here!
-         */
+        //Schema for nodes tables: Node - (email, nodeId, ... properties ...)        
+        StringBuilder builderNodeSpec = new StringBuilder("CREATE TABLE IF NOT EXISTS Node(email TEXT, nodeId INTEGER");
+        for(GameTreeNode.NodeProperties P : GameTreeNode.NodeProperties.values())
+            builderNodeSpec.append(", "+P.name().toLowerCase()+" TEXT");
+        builderNodeSpec.append(", PRIMARY KEY (email, nodeId))");
+        String nodeSpec = builderNodeSpec.toString();
         
-        //Create the schema for the database if necessary.
+        //Schema for table storing trees: Tree - (email, rootId)
+        String treeSpec = "CREATE TABLE IF NOT EXISTS Tree(email TEXT PRIMARY KEY, rootNodeId INTEGER)";
+        
+        //Schema for nodes relation: ParentOf - (email, parentId, childId) -- remember, in a tree child has only one parent
+        String parentOfSpec = "CREATE TABLE IF NOT EXISTS ParentOf(email TEXT, parentId, childId INTEGER, PRIMARY KEY (email, childId))";
+        
+        //run all commands
         Connection conn = toReturn.open();
         conn.createQuery(userSpec).executeUpdate();
-        
-        /*
-         * execute more creating table querry here!
-         */
-        
+        conn.createQuery(treeSpec).executeUpdate();
+        conn.createQuery(nodeSpec).executeUpdate();
+        conn.createQuery(parentOfSpec).executeUpdate();
         conn.close();
 
         return toReturn;
@@ -187,6 +195,19 @@ public class DatabaseService {
         return !boh.isEmpty();
     }
 
+    public boolean nodeExists(String email, int nodeId){
+        if(!userExists(email))
+            return false;
+        
+        String cmd = "SELECT * FROM Node as N WHERE N.email = '" + email + "' and N.nodeId = " + nodeId;
+        
+        Connection conn = database.open();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        conn.close();
+        
+        return !boh.isEmpty(); 
+    }
+     
     /**
      * This method fetches all the property of the user specified by it's email
      * 
@@ -231,29 +252,95 @@ public class DatabaseService {
      * @param email The unique identifier of the player
      * @param rootID The unique ID of the root (has only to be unique across nodes of the user)
      */
-    public void addTree(String email, int rootID){
-        /*
-         * IDEA:
-         * 
-         * insert into Tree
-         *    values ('email', rootID) 
-         */
+    public void addTree(String email, int rootId){
+        if(!nodeExists(email, rootId))
+            throw new IllegalArgumentException("Node does not exists in the database");
+        
+        //check that the user has not already a tree TODO: use SQL trigger mechansim to make it better
+        String cmd = "SELECT * FROM Tree as T where T.email = '"+email+"'";
+        
+        Connection conn = database.open();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        conn.close();
+        
+        if(!boh.isEmpty())
+            throw new IllegalArgumentException("The user already has a game tree");
+        
+        //finally execute command
+        cmd = "INSERT INTO Tree Values('"+email+"', "+rootId+")";
+        
+        conn = database.open();
+        conn.createQuery(cmd).executeUpdate();
+        conn.close();        
+    }
+    
+    /**
+     * This methods adds a node to the database. The primary keys of the node are it's email (the user to whom
+     * the node belongs to), and nodeId the id of the node (note that the nodeId has only to be unique for a particular
+     * user.)
+     * 
+     * @param email The email of the user to whom the node belongs.
+     * @param nodeId The id of the node. (has to be unique for the player)
+     * @param properties A Map of properties that the node has (if some attributes are non specified, they will be
+     * stored as NULL)
+     * 
+     * @throws IllegalArgumentException If the node already exists or if the user does not exists.
+     */
+    public void addNode(String email, int nodeId, Map<GameTreeNode.NodeProperties, String> properties){
+        if(nodeExists(email, nodeId))
+            throw new IllegalArgumentException("Node already exists in database");
+        else if(!userExists(email))
+            throw new IllegalArgumentException("User does not exists");
+        else if(properties == null)
+            throw new IllegalArgumentException("properties cannot be null");
+
+        //constructing the sql command
+        StringBuilder cmdBuilder = new StringBuilder("INSERT INTO Node Values('"+email+"', "+nodeId);
+        for(GameTreeNode.NodeProperties P : GameTreeNode.NodeProperties.values()){
+            cmdBuilder.append(", ");
+            
+            //if property not availaible, should put NULL into database
+            if(!properties.containsKey(P))
+                cmdBuilder.append("NULL");
+            else
+                cmdBuilder.append("'" + properties.get(P) + "'");
+        }
+        cmdBuilder.append(");");
+        String cmd = cmdBuilder.toString();
+        
+        Connection conn = database.open();
+        conn.createQuery(cmd).executeUpdate();
+        conn.close();
     }
 
     /**
-     * This method adds ad child node to a node
+     * This method adds a child node to a node
      * 
      * @param email The unique identifier of the player
-     * @param parentID The unique ID of the parent (has only to be unique across nodes of the user)
-     * @param childID The unique ID of the child (has only to be unique across nodes of the user)
+     * @param parentId The unique ID of the parent (has only to be unique across nodes of the user)
+     * @param childId The unique ID of the child (has only to be unique across nodes of the user)
+     * 
+     * @throws IllegalArgumentException if the child already has a parent. (In a tree, there is only one parent)
      */
-    public void addChild(String email, int parentID, int childID){
-        /*
-         * IDEA:
-         * 
-         * insert into Node
-         *    values ('email', parentID, childID)
-         */
+    public void addChild(String email, int parentId, int childId){        
+        if(!nodeExists(email, parentId) || !nodeExists(email, childId))
+            throw new IllegalArgumentException("parent or child not present in database");
+        if(parentId == childId)
+            throw new IllegalArgumentException("parent cannot be it's own child (and vice-versa)");
+        
+        
+        //check that the child has no parent yet
+        String cmd = "SELECT * FROM ParentOf as P WHERE P.childId = "+childId;
+        Connection conn = database.open();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        
+        if(!boh.isEmpty())
+            throw new IllegalArgumentException("this child already has a parent!");
+
+        //now we can execute the command
+        cmd = "INSERT INTO ParentOf Values('"+email+"', "+parentId+", "+childId+")";
+        conn.createQuery(cmd).executeUpdate();
+        conn.close();   
     }
 
     /**
@@ -264,16 +351,21 @@ public class DatabaseService {
      * @return The id of player game tree's roote.
      */
     public int getRoot(String email){
-        /*
-         * IDEA:
-         * 
-         * select T.rootid
-         * from Tree as T
-         * where T.email = 'email'
-         * 
-         */
-
-        throw new UnsupportedOperationException();
+        if(!userExists(email))
+            throw new IllegalArgumentException("Use does not exists in the database");
+        
+        
+        String cmd = "SELECT rootNodeId FROM Tree as T where T.email = '"+email+"'";
+        
+        
+        Connection conn = database.open();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        conn.close();
+                
+        if(boh.size() == 0)
+            throw new IllegalArgumentException("This user has no gametree yet");
+  
+        return (Integer) boh.get(0).get("rootnodeid");
     }
 
     /**
@@ -284,15 +376,21 @@ public class DatabaseService {
      * 
      * @return a list of children id
      */
-    public List<Integer> childrenFrom(String email, int parentID){
-        /*
-         * IDEA:
-         * 
-         * select N.Children
-         * Nodes as N
-         * where N.PlayerID = PlayerID and N.Node = parentID
-         */
-        throw new UnsupportedOperationException();
+    public List<Integer> childrenFrom(String email, int parentId){
+        if(!nodeExists(email, parentId))
+            throw new IllegalArgumentException("Use does not exists in the database");
+        
+        String cmd = "SELECT childId FROM ParentOf as P where P.email = '"+email+"' and P.parentId = "+parentId;
+        
+        Connection conn = database.open();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        conn.close();
+        
+        ArrayList<Integer> toReturn = new ArrayList<Integer>();
+        for(Map<String, Object> m: boh)
+            toReturn.add((Integer)m.get("childid"));
+        
+        return toReturn;
     }
 
     /**
@@ -303,14 +401,19 @@ public class DatabaseService {
      * 
      * @return the node from the parent
      */
-    public int parentFrom(String email, int childID){
-        /*
-         * IDEA:
-         * 
-         * select
-         * Nodes as N
-         * where N.PlayerID = playerID and N.Children = childID
-         */
-        throw new UnsupportedOperationException();
+    public int parentFrom(String email, int childId){
+        if(!nodeExists(email, childId))
+            throw new IllegalArgumentException("node does not exists in the database");
+        
+        String cmd = "SELECT parentId FROM ParentOf as P where P.email = '"+email+"' and P.childId = "+childId;
+        
+        Connection conn = database.open();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        conn.close();
+        
+        if(boh.isEmpty())
+            throw new IllegalArgumentException("this node has no parent! (it's a root node)");
+        
+        return (Integer) boh.get(0).get("parentid");
     }
 }
