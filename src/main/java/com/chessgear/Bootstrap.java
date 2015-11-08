@@ -27,27 +27,41 @@ public class Bootstrap {
     /**
      * The Database for the program
      */
-    private DatabaseService database;
+    private static DatabaseService database;
 
-
+    public Bootstrap() {
+        dirty();
+    }
     /**
      * Address of server.
      */
     private static final String ADDRESS = "localhost";
 
-    static public DatabaseService dirty() {
-        DatabaseService data = null;
+    public void dirty() {
+        database = null;
         try {
-            data = new DatabaseService("neiltest");
+            database = new DatabaseService("neiltest");
         } catch (IOException | IllegalArgumentException b) {
             System.out.println("Failure to connect to database");
         }
-
-        return data;
     }
 
-
-
+    /**
+     * Clearing the Database
+     */
+    public boolean clearDatabase() {
+        try {
+            database.eraseDatabaseFile();
+        } catch (IOException e) {
+            System.out.println("Failed Deleting database");
+            return false;
+        }
+        return true;
+    }
+    /**
+     * The Main Server
+     * @param args this is the main
+     */
     public static void main (String[] args) {
 
         // Initialize server state
@@ -56,7 +70,6 @@ public class Bootstrap {
         port(PORT);
         ipAddress(ADDRESS);
         //neiltest
-        final DatabaseService data = dirty();
         HashMap<User.Property, String > map = new HashMap<>();
         //data.addUser("email@email.com", map);
         // Handle login
@@ -65,10 +78,10 @@ public class Bootstrap {
             JsonParser parsed = new JsonParser();
             JsonObject user = parsed.parse(temp).getAsJsonObject();
             String email = user.get("email").getAsString();
-            if (data.userExists(email)) {
+            if (database.userExists(email)) {
                 String pass = user.get("password").getAsString();
                 System.out.println(pass);
-                Map<User.Property, String> maps = data.fetchUserProperties(email);
+                Map<User.Property, String> maps = database.fetchUserProperties(email);
                 String corr = maps.get(User.Property.PASSWORD);
                 System.out.println(corr);
                 if (corr.equals(pass)) {
@@ -94,12 +107,12 @@ public class Bootstrap {
             JsonParser parsed = new JsonParser();
             JsonObject user = parsed.parse(temp).getAsJsonObject();
             String email = user.get("email").getAsString();
-            if(!data.userExists(email)) {
+            if(!database.userExists(email)) {
                 String pass = user.get("password").getAsString();
                 HashMap<User.Property, String> prop = new HashMap<>();
                 prop.put(User.Property.PASSWORD, pass);
                 try {
-                    data.addUser(email, prop);
+                    database.addUser(email, prop);
                 } catch (IllegalArgumentException e) {
                     response.status(409);
                     JsonObject error = new JsonObject();
@@ -118,7 +131,18 @@ public class Bootstrap {
         });
 
         // Handle tree retrieval
-        get("/chessgear/api/games/tree", (request, response) -> {
+        get("/chessgear/api/games/tree/:email/:nodeid", (request, response) -> {
+            String email = request.params(":email");
+            try {
+                int nodeid = Integer.parseInt(request.params(":nodeid"));
+            } catch (NumberFormatException e) {
+                response.status(404);
+                JsonObject error = new JsonObject();
+                error.addProperty("why", "not an int");
+                return error;
+            }
+
+            System.out.println(email);
             return ""; // TODO
         });
 
@@ -131,6 +155,40 @@ public class Bootstrap {
         put("/chessgear/api/games/import", (request, response) -> {
             return ""; // TODO
         });
+
+    }
+    /**
+     * Here are the functions that are copies of the put,pull get etc but take a Json Object isntead, for testing.
+     */
+    public JsonObject createUser(JsonObject request) {
+        int status;
+        String temp = request.toString();
+        JsonParser parsed = new JsonParser();
+        JsonObject user = parsed.parse(temp).getAsJsonObject();
+        String email = user.get("email").getAsString();
+        if(!database.userExists(email)) {
+            String pass = user.get("password").getAsString();
+            HashMap<User.Property, String> prop = new HashMap<>();
+            prop.put(User.Property.PASSWORD, pass);
+            try {
+                database.addUser(email, prop);
+            } catch (IllegalArgumentException e) {
+                status = 409;
+                JsonObject error = new JsonObject();
+                error.addProperty("why", "Incorrect Format");
+                error.addProperty("status", status);
+                return error;
+            }
+            JsonObject ret = new JsonObject();
+            ret.addProperty("email", email);
+            return ret;
+        } else {
+            status = 409;
+            JsonObject error = new JsonObject();
+            error.addProperty("why", "User already exists");
+            error.addProperty("status", status);
+            return error;
+        }
 
     }
 }
