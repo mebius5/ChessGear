@@ -2,17 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="Adding logging in">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/BootStrapTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_2_4.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/game/BoardState.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/game/BoardState.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/Bootstrap.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/Bootstrap.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/data/PGNParser.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/data/PGNParser.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/game/PieceType.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/game/PieceType.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/server/User.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/server/User.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/Bootstrap.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/Bootstrap.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChessGear.iml" afterPath="$PROJECT_DIR$/ChessGear.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/ConfigFile.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/ConfigFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ChessGear.iws" />
@@ -1098,7 +1092,13 @@
       <option name="project" value="LOCAL" />
       <updated>1446762858450</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="Adding logging in">
+      <created>1447014693200</created>
+      <option name="number" value="00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1447014693200</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TodoView">
