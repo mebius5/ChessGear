@@ -147,6 +147,24 @@ public class PGNParser {
     }
 
     /**
+     * Accessor for black's half moves.
+     * @return List of black's half moves.
+     */
+    public List<Move> getBlackHalfMoves() {
+        if (this.blackHalfMoves == null) this.parseMoves(this.pgn);
+        return this.blackHalfMoves;
+    }
+
+    /**
+     * Accessor for white's half moves.
+     * @return List of white's half moves.
+     */
+    public List<Move> getWhiteHalfMoves() {
+        if (this.whiteHalfMoves == null) this.parseMoves(this.pgn);
+        return this.whiteHalfMoves;
+    }
+
+    /**
      * Returns the game represented as a list of board states. 0 indexed at the starting position.
      * @return List of board states containing game progression.
      */

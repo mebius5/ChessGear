@@ -42,7 +42,38 @@ public class GameTree {
      * @param gameTreeNodes
      */
     public void addGame(List<GameTreeNode> gameTreeNodes) {
-        // TODO
+
+        if (this.root == null) {
+            this.root = gameTreeNodes.get(0);
+            this.root.setMultiplicity(1);
+            this.root.setId(this.nodeIdCounter++);
+        }
+
+        GameTreeNode currentNode = this.root;
+        for (int c = 1; c < gameTreeNodes.size(); c++) {
+            GameTreeNode candidateChildNode = gameTreeNodes.get(c);
+
+            boolean childFound = false;
+            List<GameTreeNode> currentChildren = currentNode.getChildren();
+            for (GameTreeNode n : currentChildren) {
+                if (n.getBoardState().equals(candidateChildNode.getBoardState())) {
+                    n.incrementMultiplicity();
+                    currentNode = n;
+                    childFound = true;
+                    break;
+                }
+            }
+
+            // If we didn't find it, then we make a new node.
+            if (!childFound) {
+                candidateChildNode.setMultiplicity(1);
+                candidateChildNode.setId(this.nodeIdCounter++);
+                currentNode.addChild(candidateChildNode);
+                currentNode = candidateChildNode;
+            }
+
+        }
+
     }
 
     /**

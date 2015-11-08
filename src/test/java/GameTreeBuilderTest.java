@@ -1,7 +1,14 @@
+import com.chessgear.data.GameTreeBuilder;
+import com.chessgear.data.GameTreeNode;
 import com.chessgear.data.PGNParseException;
 import com.chessgear.data.PGNParser;
+import com.chessgear.game.BoardState;
+import com.chessgear.game.PieceType;
+import com.chessgear.game.Player;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -40,7 +47,17 @@ public class GameTreeBuilderTest {
         try {
 
             PGNParser parser = new PGNParser(this.testPGN);
+            GameTreeBuilder testBuilder = new GameTreeBuilder(parser.getListOfBoardStates(), parser.getWhiteHalfMoves(), parser.getBlackHalfMoves());
 
+            List<GameTreeNode> gameTreeNodes = testBuilder.getListOfNodes();
+            assertEquals(gameTreeNodes.size(), 129);
+            BoardState startingBoardState = gameTreeNodes.get(0).getBoardState();
+            assertEquals(startingBoardState, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+
+            assertEquals(gameTreeNodes.get(1).getBoardState(), "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1");
+            assertEquals(gameTreeNodes.get(1).getLastMoveMade().getWhoMoved(), Player.WHITE);
+            assertEquals(gameTreeNodes.get(1).getLastMoveMade().getPieceType(), PieceType.KNIGHT);
+            assertEquals(gameTreeNodes.get(1).getLastMoveMade().getDestination(), "f3");
 
         } catch (PGNParseException e) {
             fail();

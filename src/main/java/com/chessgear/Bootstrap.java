@@ -13,7 +13,7 @@ public class Bootstrap {
     /**
      * Port for server to listen on.
      */
-    private static final int PORT = 80;
+    private static final int PORT = 8080;
 
     /**s
      * Address of server.
