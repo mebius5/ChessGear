@@ -367,6 +367,10 @@ public class DatabaseService {
   
         return (Integer) boh.get(0).get("rootnodeid");
     }
+    
+    public Map<GameTreeNode.NodeProperties, String> fetchNodeProperty(String email, int nodeid){
+        throw new UnsupportedOperationException("not implemented yet");
+    }
 
     /**
      * This methods list the children of a node
