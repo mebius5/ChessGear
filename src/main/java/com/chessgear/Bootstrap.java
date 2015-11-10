@@ -1,6 +1,7 @@
 package com.chessgear;
 
 import com.chessgear.data.DatabaseService;
+import com.chessgear.data.PGNParser;
 import com.chessgear.server.ChessGearServer;
 import com.chessgear.server.User;
 import com.google.gson.Gson;
@@ -133,8 +134,9 @@ public class Bootstrap {
         // Handle tree retrieval
         get("/chessgear/api/games/tree/:email/:nodeid", (request, response) -> {
             String email = request.params(":email");
+            int nodeid = 0;
             try {
-                int nodeid = Integer.parseInt(request.params(":nodeid"));
+                nodeid = Integer.parseInt(request.params(":nodeid"));
             } catch (NumberFormatException e) {
                 response.status(404);
                 JsonObject error = new JsonObject();
@@ -142,7 +144,6 @@ public class Bootstrap {
                 return error;
             }
 
-            System.out.println(email);
             return ""; // TODO
         });
 
@@ -152,7 +153,14 @@ public class Bootstrap {
         });
 
         // Handle game import
-        put("/chessgear/api/games/import", (request, response) -> {
+        put(" /chessgear/api/games/import/:email", (request, response) -> {
+            String email = request.params(":email");
+            String temp = request.body();
+            JsonParser parsed = new JsonParser();
+            JsonObject user = parsed.parse(temp).getAsJsonObject();
+            String PGN = user.get("pgn").getAsString();
+            PGNParser parse = new PGNParser(PGN);
+            parse.getListOfBoardStates();
             return ""; // TODO
         });
 
