@@ -1,7 +1,5 @@
 package com.chessgear.data;
 
-import com.chessgear.game.Game;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -92,4 +90,6 @@ public class GameTree {
     public GameTreeNode getNodeWithId(int id) {
         return nodeMapping.get(id);
     }
+
+
 }
