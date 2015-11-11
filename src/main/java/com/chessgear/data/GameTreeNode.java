@@ -169,5 +169,9 @@ public class GameTreeNode {
         return children.size() == 0;
     }
     
+    public enum NodeProperties{
+        EVAL
+    }
+    
 
 }

@@ -15,7 +15,10 @@ public class User {
      * User's username.
      */
     private String username;
-
+    /**
+     * User's email.
+     */
+    private String email;
     /**
      * User's password.
      */
@@ -31,8 +34,8 @@ public class User {
      */
     private List<Game> games;
 
-    public static enum Property {
-        USERNAME, PASSWORD
+    public enum Property {
+        EMAIL, USERNAME, PASSWORD
     }
 
 }
