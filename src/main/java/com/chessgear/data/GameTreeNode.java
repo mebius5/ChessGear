@@ -155,7 +155,7 @@ public class GameTreeNode {
     }
     
     public enum NodeProperties{
-        EVAL
+        EVAL, BOARDSTATE
     }
     
 

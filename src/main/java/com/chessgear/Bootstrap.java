@@ -108,10 +108,12 @@ public class Bootstrap {
             JsonParser parsed = new JsonParser();
             JsonObject user = parsed.parse(temp).getAsJsonObject();
             String email = user.get("email").getAsString();
+            String username = user.get("username").getAsString();
             if(!database.userExists(email)) {
                 String pass = user.get("password").getAsString();
                 HashMap<User.Property, String> prop = new HashMap<>();
                 prop.put(User.Property.PASSWORD, pass);
+                prop.put(User.Property.USERNAME, username);
                 try {
                     database.addUser(email, prop);
                 } catch (IllegalArgumentException e) {
