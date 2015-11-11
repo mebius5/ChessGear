@@ -1,5 +1,7 @@
 package com.chessgear.server;
 
+import com.chessgear.data.DatabaseService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +21,9 @@ public class ChessGearServer {
      * Adding a user to the cached user
      * @param user the user to be stored
      */
-    public void addUser(User user) {
+    public void addUser(User user, DatabaseService db) {
         users.add(user);
+
     }
 
     /**
@@ -34,4 +37,5 @@ public class ChessGearServer {
      * List of users.
      */
     private List<User> users;
+
 }

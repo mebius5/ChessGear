@@ -10,7 +10,14 @@ import java.util.List;
  * Created by Ran on 10/8/2015.
  */
 public class User {
-
+    /**
+     * Constructor
+     */
+    public User(String usernam, String em, String passw) {
+        username = usernam;
+        email = em;
+        password = passw;
+    }
     /**
      * User's username.
      */

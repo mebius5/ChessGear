@@ -19,6 +19,7 @@ import static spark.Spark.*;
  * Created by Ran on 10/8/2015.
  */
 public class Bootstrap {
+    public static DatabaseService database;
 
     /**
      * Port for server to listen on.
@@ -26,31 +27,26 @@ public class Bootstrap {
     private static final int PORT = 8080;
 
     /**
-     * The Database for the program
-     */
-    private static DatabaseService database;
-
-    public Bootstrap() {
-        dirty();
-    }
-    /**
      * Address of server.
      */
     private static final String ADDRESS = "localhost";
 
-    public void dirty() {
+    public static void dirty() {
         database = null;
         try {
-            database = new DatabaseService("neiltest");
+            database = new DatabaseService("neil");
+            System.out.println("Connected");
+
         } catch (IOException | IllegalArgumentException b) {
             System.out.println("Failure to connect to database");
+            System.exit(0);
         }
     }
 
     /**
      * Clearing the Database
      */
-    public boolean clearDatabase() {
+    public boolean clearDatabase(DatabaseService database) {
         try {
             database.eraseDatabaseFile();
         } catch (IOException e) {
@@ -64,6 +60,12 @@ public class Bootstrap {
      * @param args this is the main
      */
     public static void main (String[] args) {
+        /**
+         * The Database for the program
+         */
+        //dirty();
+
+        //initializing the database
 
         // Initialize server state
         ChessGearServer server = new ChessGearServer();
@@ -84,9 +86,12 @@ public class Bootstrap {
                 System.out.println(pass);
                 Map<User.Property, String> maps = database.fetchUserProperties(email);
                 String corr = maps.get(User.Property.PASSWORD);
+                String username = maps.get(User.Property.USERNAME);
                 System.out.println(corr);
                 if (corr.equals(pass)) {
                     response.status(200);
+                    User use = new User(username, email, pass);
+                    server.addUser(use, database);
                 } else {
                     JsonObject error = new JsonObject();
                     error.addProperty("why", "Incorrect Password");
@@ -108,9 +113,9 @@ public class Bootstrap {
             JsonParser parsed = new JsonParser();
             JsonObject user = parsed.parse(temp).getAsJsonObject();
             String email = user.get("email").getAsString();
-            String username = user.get("username").getAsString();
             if(!database.userExists(email)) {
                 String pass = user.get("password").getAsString();
+                String username = user.get("username").getAsString();
                 HashMap<User.Property, String> prop = new HashMap<>();
                 prop.put(User.Property.PASSWORD, pass);
                 prop.put(User.Property.USERNAME, username);
@@ -169,7 +174,7 @@ public class Bootstrap {
     }
     /**
      * Here are the functions that are copies of the put,pull get etc but take a Json Object isntead, for testing.
-     */
+
     public JsonObject createUser(JsonObject request) {
         int status;
         String temp = request.toString();
@@ -200,5 +205,5 @@ public class Bootstrap {
             return error;
         }
 
-    }
+    }*/
 }
