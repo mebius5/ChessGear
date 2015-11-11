@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.chessgear.data.DatabaseService;
 import com.chessgear.data.GameTreeNode;
+import com.chessgear.data.GameTreeNode.NodeProperties;
 import com.chessgear.server.User.Property;
 
 /*
@@ -112,6 +113,23 @@ public class DatabaseServiceNodeTest {
         finally{
             destroyDatabase(db); 
         } 
+    }
+    
+    @Test
+    public void testFetchPropertiesNodeWorks(){
+        DatabaseService db = createDatabase();
+        
+        HashMap<GameTreeNode.NodeProperties, String> prop = new HashMap<>();
+        prop.put(NodeProperties.EVAL, "0.78");
+        
+        db.addNode("gogol@gmail.com", 1, prop);
+        assertEquals(db.fetchNodeProperty("gogol@gmail.com", 1).get(NodeProperties.EVAL), "0.78");
+        
+        //a second example with null value
+        db.addNode("gogol@gmail.com", 2, Collections.emptyMap());
+        assertTrue(db.fetchNodeProperty("gogol@gmail.com", 2).get(NodeProperties.EVAL) == null);
+        
+        destroyDatabase(db);
     }
     
 }
