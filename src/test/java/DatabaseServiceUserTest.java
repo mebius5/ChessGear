@@ -61,11 +61,18 @@ public class DatabaseServiceUserTest {
         }
     }
         
-    @Test (expected = IllegalArgumentException.class)
     public void testAddUserFailsOnNullUser(){
         DatabaseService yeh = createDatabase();
-        yeh.addUser(null, Collections.emptyMap());
-        destroyDatabase(yeh);
+        
+        try{
+            yeh.addUser(null, Collections.emptyMap());
+        }
+        catch(IllegalArgumentException e){
+            
+        }
+        finally{
+            destroyDatabase(yeh);
+        }
     }
     
     @Test
@@ -110,11 +117,18 @@ public class DatabaseServiceUserTest {
         destroyDatabase(yeh);
     }
     
-    @Test (expected = IllegalArgumentException.class)
     public void testFetchUserPropertiesFailsOnNullUser(){
         DatabaseService yeh = createDatabase();
-        yeh.fetchUserProperties(null);
-        destroyDatabase(yeh);
+        try{
+            yeh.fetchUserProperties(null);
+            fail();
+        }
+        catch(IllegalArgumentException e){
+            
+        }
+        finally{
+            destroyDatabase(yeh);
+        }
     }
     
     @Test
@@ -163,25 +177,46 @@ public class DatabaseServiceUserTest {
         destroyDatabase(yeh);
     }
     
-    @Test (expected = IllegalArgumentException.class)
     public void testUpdatePropertyFailsOnNonexistentKey(){
         DatabaseService yeh = createDatabase();
-        yeh.updateUserProperty("non@existent.user", Property.PASSWORD, "smth");
-        destroyDatabase(yeh);
+        try{
+            yeh.updateUserProperty("non@existent.user", Property.PASSWORD, "smth");
+            fail();
+        }
+        catch(IllegalArgumentException e){
+            
+        }
+        finally{
+            destroyDatabase(yeh);   
+        }
     }
     
-    @Test (expected = IllegalArgumentException.class)
     public void testUpdatePropertyFailsOnNullUser(){
         DatabaseService yeh = createDatabase();
-        yeh.updateUserProperty(null, Property.PASSWORD, "smth");
-        destroyDatabase(yeh);
+        try{
+            yeh.updateUserProperty(null, Property.PASSWORD, "smth");
+            fail();
+        }
+        catch(IllegalArgumentException e){
+            
+        }
+        finally{
+            destroyDatabase(yeh);
+        }
     }
     
-    @Test (expected = IllegalArgumentException.class)
     public void testUpdatePropertyFailsOnNullProperty(){
         DatabaseService yeh = createDatabase();
-        yeh.updateUserProperty("smth", Property.PASSWORD, null);
-        destroyDatabase(yeh);
+        try{
+            yeh.updateUserProperty(null, Property.PASSWORD, "smth");
+            fail();
+        }
+        catch(IllegalArgumentException e){
+            
+        }
+        finally{
+            destroyDatabase(yeh);
+        }
     }
     
     @Test
@@ -197,18 +232,34 @@ public class DatabaseServiceUserTest {
         destroyDatabase(yeh);
     }
     
-    @Test (expected = IllegalArgumentException.class)
     public void testDeleteUserFailsOnNonexistentKey(){
+        
         DatabaseService yeh = createDatabase();
-        yeh.deleteUser("non@existent.user");
-        destroyDatabase(yeh);
+        try{
+            yeh.deleteUser("non@existent.user");
+            fail();
+        }
+        catch(IllegalArgumentException e){
+        }
+        finally{
+            destroyDatabase(yeh);
+        }
     }
     
-    @Test (expected = IllegalArgumentException.class)
     public void testDeleteuserFailsOnNullUser(){
+        
+        
         DatabaseService yeh = createDatabase();
-        yeh.deleteUser(null);
-        destroyDatabase(yeh);
+        try{
+            yeh.deleteUser(null);
+            fail();
+        }
+        catch(IllegalArgumentException e){
+            
+        }
+        finally{
+            destroyDatabase(yeh);
+        }
     }
     
 }
