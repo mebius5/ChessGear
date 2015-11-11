@@ -669,6 +669,9 @@ public class BoardState {
         if (o instanceof BoardState) {
             BoardState other = (BoardState)o;
             if (other.toFEN().equals(this.toFEN())) return true;
+        } else if (o instanceof String) {
+            String other = (String)o;
+            if (other.equals(this.toFEN())) return true;
         }
         return false;
     }

@@ -10,5 +10,9 @@ import org.junit.Test;
 
 public class GameTreeTest {
 
+    public void buildGameTreeTest() {
+
+    }
+
 
 }

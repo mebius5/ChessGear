@@ -4,6 +4,7 @@ import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**

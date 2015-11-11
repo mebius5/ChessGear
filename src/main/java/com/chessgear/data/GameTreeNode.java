@@ -66,6 +66,14 @@ public class GameTreeNode {
     }
 
     /**
+     * Accessor for the children of this node.
+     * @return
+     */
+    public List<GameTreeNode> getChildren() {
+        return this.children;
+    }
+
+    /**
      * Accessor for multiplicity.
      * @return Multiplicity of this node.
      */
@@ -79,6 +87,13 @@ public class GameTreeNode {
      */
     public void setMultiplicity(int multiplicity) {
         this.multiplicity = multiplicity;
+    }
+
+    /**
+     * Increments multiplicity.
+     */
+    public void incrementMultiplicity() {
+        this.multiplicity++;
     }
 
     /**
