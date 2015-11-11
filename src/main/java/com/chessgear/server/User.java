@@ -41,6 +41,12 @@ public class User {
      */
     private List<Game> games;
 
+    /**
+     * Getting the username
+     */
+    public String getEmail() {
+        return email;
+    }
     public enum Property {
         EMAIL, USERNAME, PASSWORD
     }

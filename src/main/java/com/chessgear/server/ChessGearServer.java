@@ -22,6 +22,8 @@ public class ChessGearServer {
      * @param user the user to be stored
      */
     public void addUser(User user, DatabaseService db) {
+        int rootid = db.getRoot(user.getEmail());
+
         users.add(user);
 
     }
