@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.chessgear.data.GameTreeNode.NodeProperties;
 import com.chessgear.game.Game;
 import com.chessgear.server.User;
 import com.chessgear.server.User.Property;
@@ -369,7 +370,28 @@ public class DatabaseService {
     }
     
     public Map<GameTreeNode.NodeProperties, String> fetchNodeProperty(String email, int nodeid){
-        throw new UnsupportedOperationException("not implemented yet");
+
+        if(!nodeExists(email, nodeid))
+            throw new IllegalArgumentException("The user or node does not exists");
+        
+        String cmd = "SELECT * FROM Node as N where N.email = '"+email+"' and N.nodeid = '"+nodeid+"'";
+        
+        Connection conn = database.open();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        conn.close();
+                
+        HashMap<NodeProperties, String> toReturn = new HashMap<>();
+        
+        for(GameTreeNode.NodeProperties pr: GameTreeNode.NodeProperties.values()){
+            //has to be flexible with NULL values
+            String value = (boh.get(0).get(pr.toString().toLowerCase()) == null)? 
+                    null :
+                    boh.get(0).get(pr.toString().toLowerCase()).toString();
+            
+            toReturn.put(pr, value);
+        }
+
+        return toReturn;
     }
 
     /**
