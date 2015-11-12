@@ -156,6 +156,8 @@
                 // Request default board state from tree
                 var boardStateRequest = $.get("chessgear/api/games/tree/0", function(data) {
                     alert(data);
+                    var parsedResponse = jQuery.parseJSON(data);
+                    alert(parsedResponse.boardstate);
                 });
             });
 

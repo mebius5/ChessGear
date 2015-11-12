@@ -4,6 +4,7 @@
         <title>ChessGear</title>
         <link href="css/normalize.css" rel="stylesheet" type="text/css">
         <link href="css/style.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     </head>
     <body>
 
@@ -33,8 +34,7 @@
                         <input type="file">
                         <p style="color: #aaa; font-weight: bold;">or</p>
                         <h3>Paste in your PGN</h3>
-                        <textarea rows="8" cols="80">
-                        </textarea><br>
+                        <textarea rows="8" cols="80" id="pgn-submit-body"></textarea><br>
                         <input type="submit" style="color: #000;">
                     </form>
 
@@ -50,8 +50,10 @@
         </div>
 
         <script type="text/javascript">
-            $("#pgn-submit").submit(function(e) {
-
+            $("#pgn-submit").submit(function (e) {
+                e.preventDefault();
+                var pgn = $("#pgn-submit-body").val();
+                alert("Submitted! Pgn:" + pgn);
             });
         </script>
 

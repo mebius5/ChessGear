@@ -44,7 +44,8 @@ public class GameTree {
         if (this.root == null) {
             this.root = gameTreeNodes.get(0);
             this.root.setMultiplicity(1);
-            this.root.setId(this.nodeIdCounter++);
+            this.root.setId(this.nodeIdCounter);
+            this.nodeMapping.put(this.nodeIdCounter++, this.root); // Add to hashmapping.
         }
 
         GameTreeNode currentNode = this.root;
@@ -65,7 +66,8 @@ public class GameTree {
             // If we didn't find it, then we make a new node.
             if (!childFound) {
                 candidateChildNode.setMultiplicity(1);
-                candidateChildNode.setId(this.nodeIdCounter++);
+                candidateChildNode.setId(this.nodeIdCounter);
+                this.nodeMapping.put(this.nodeIdCounter++, candidateChildNode);
                 currentNode.addChild(candidateChildNode);
                 currentNode = candidateChildNode;
             }
@@ -89,6 +91,15 @@ public class GameTree {
      */
     public GameTreeNode getNodeWithId(int id) {
         return nodeMapping.get(id);
+    }
+
+    /**
+     * Determines whether or not the tree contains a node with a particular id.
+     * @param id Id of node to check for.
+     * @return True if contained in tree, else false.
+     */
+    public boolean containsNode(int id) {
+        return nodeMapping.containsKey(id);
     }
 
 }
