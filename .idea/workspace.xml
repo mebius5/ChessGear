@@ -1,35 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="Adding demo for iteration 4.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/img/black_bishop.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/img/black_king.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/img/black_knight.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/img/black_pawn.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/img/black_queen.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/img/black_rook.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/img/white_bishop.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/img/white_king.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/img/white_knight.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/img/white_pawn.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/img/white_queen.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/img/white_rook.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/DemoBootStrap.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/import.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/js/jquery-2.1.4.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/css/normalize.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/Bootstrap.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/Bootstrap.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/data/DatabaseService.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/data/DatabaseService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/DatabaseServiceUserTest.class" afterPath="$PROJECT_DIR$/target/test-classes/DatabaseServiceUserTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/data/GameTree.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/data/GameTree.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/data/GameTreeNode.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/data/GameTreeNode.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/GameTreeTest.class" afterPath="$PROJECT_DIR$/target/test-classes/GameTreeTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/server/User$Property.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/server/User$Property.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/server/User.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/server/User.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseService.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTree.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTree.java" />
+    <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ChessGear.iws" />
@@ -926,7 +898,13 @@
       <option name="project" value="LOCAL" />
       <updated>1446965175935</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Adding demo for iteration 4.">
+      <created>1447307121141</created>
+      <option name="number" value="00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1447307121141</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TodoView">
