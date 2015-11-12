@@ -84,12 +84,11 @@ public class GameTree {
 
     /**
      * Gets the node with the specified id.
-     * @param id
+     * @param id Id to get node for.
      * @return
      */
     public GameTreeNode getNodeWithId(int id) {
         return nodeMapping.get(id);
     }
-
 
 }

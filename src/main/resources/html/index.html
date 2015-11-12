@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ChessGear</title>
+        <link href="css/normalize.css" rel="stylesheet" type="text/css">
+        <link href="css/style.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    </head>
+    <body>
+
+        <div id="main-wrapper">
+
+            <header>
+                <div id="wordmark">
+                    ChessGear v1.0
+                </div>
+                <div id="current-user">
+                    not signed in
+                </div>
+                <div id="nav">
+                    <ul>
+                        <li class="active-nav"><a href="#">Home</a></li>
+                        <li class="inactive-nav"><a href="import.html">Import</a></li>
+                        <li class="inactive-nav"><a href="#">Account</a></li>
+                        <div class="clear"></div>
+                    </ul>
+                </div>
+            </header>
+            <main>
+                
+                <div id="board-wrapper">
+                    <div id="rank-8-wrapper">
+                        <div class="board-square" id="square-a8"></div>
+                        <div class="board-square" id="square-b8"></div>
+                        <div class="board-square" id="square-c8"></div>
+                        <div class="board-square" id="square-d8"></div>
+                        <div class="board-square" id="square-e8"></div>
+                        <div class="board-square" id="square-f8"></div>
+                        <div class="board-square" id="square-g8"></div>
+                        <div class="board-square" id="square-h8"></div>
+                    </div>
+                    <div id="rank-7-wrapper">
+                        <div class="board-square" id="square-a7"></div>
+                        <div class="board-square" id="square-b7"></div>
+                        <div class="board-square" id="square-c7"></div>
+                        <div class="board-square" id="square-d7"></div>
+                        <div class="board-square" id="square-e7"></div>
+                        <div class="board-square" id="square-f7"></div>
+                        <div class="board-square" id="square-g7"></div>
+                        <div class="board-square" id="square-h7"></div>
+                    </div>
+                    <div id="rank-6-wrapper">
+                        <div class="board-square" id="square-a6"></div>
+                        <div class="board-square" id="square-b6"></div>
+                        <div class="board-square" id="square-c6"></div>
+                        <div class="board-square" id="square-d6"></div>
+                        <div class="board-square" id="square-e6"></div>
+                        <div class="board-square" id="square-f6"></div>
+                        <div class="board-square" id="square-g6"></div>
+                        <div class="board-square" id="square-h6"></div>
+                    </div>
+                    <div id="rank-5-wrapper">
+                        <div class="board-square" id="square-a5"></div>
+                        <div class="board-square" id="square-b5"></div>
+                        <div class="board-square" id="square-c5"></div>
+                        <div class="board-square" id="square-d5"></div>
+                        <div class="board-square" id="square-e5"></div>
+                        <div class="board-square" id="square-f5"></div>
+                        <div class="board-square" id="square-g5"></div>
+                        <div class="board-square" id="square-h5"></div>
+                    </div>
+                    <div id="rank-4-wrapper">
+                        <div class="board-square" id="square-a4"></div>
+                        <div class="board-square" id="square-b4"></div>
+                        <div class="board-square" id="square-c4"></div>
+                        <div class="board-square" id="square-d4"></div>
+                        <div class="board-square" id="square-e4"></div>
+                        <div class="board-square" id="square-f4"></div>
+                        <div class="board-square" id="square-g4"></div>
+                        <div class="board-square" id="square-h4"></div>
+                    </div>
+                    <div id="rank-3-wrapper">
+                        <div class="board-square" id="square-a3"></div>
+                        <div class="board-square" id="square-b3"></div>
+                        <div class="board-square" id="square-c3"></div>
+                        <div class="board-square" id="square-d3"></div>
+                        <div class="board-square" id="square-e3"></div>
+                        <div class="board-square" id="square-f3"></div>
+                        <div class="board-square" id="square-g3"></div>
+                        <div class="board-square" id="square-h3"></div>
+                    </div>
+                    <div id="rank-2-wrapper">
+                        <div class="board-square" id="square-a2"></div>
+                        <div class="board-square" id="square-b2"></div>
+                        <div class="board-square" id="square-c2"></div>
+                        <div class="board-square" id="square-d2"></div>
+                        <div class="board-square" id="square-e2"></div>
+                        <div class="board-square" id="square-f2"></div>
+                        <div class="board-square" id="square-g2"></div>
+                        <div class="board-square" id="square-h2"></div>
+                    </div>
+                    <div id="rank-1-wrapper">
+                        <div class="board-square" id="square-a1"></div>
+                        <div class="board-square" id="square-b1"></div>
+                        <div class="board-square" id="square-c1"></div>
+                        <div class="board-square" id="square-d1"></div>
+                        <div class="board-square" id="square-e1"></div>
+                        <div class="board-square" id="square-f1"></div>
+                        <div class="board-square" id="square-g1"></div>
+                        <div class="board-square" id="square-h1"></div>
+                    </div>
+
+
+                </div>
+
+                <center><input type="button" value="Flip Board" id="flipButton"></center>
+                <br>
+
+            </main>
+
+            <footer>
+                &copy;ChessGear 2015
+            </footer>
+
+        </div>
+
+        <script type="text/javascript">
+            var toggle = 1;
+
+            $(document).ready(function() {
+                // Set the board squares colors
+                for (c = 1; c <= 8; c++) { // Iterate along rank
+                    if (c % 2 == 0) { // If even row: white, then black
+                        
+                        $("#square-a" + c).css({backgroundColor : 'white'});
+                        $("#square-b" + c).css({backgroundColor : 'black'});
+                        $("#square-c" + c).css({backgroundColor : 'white'});
+                        $("#square-d" + c).css({backgroundColor : 'black'});
+                        $("#square-e" + c).css({backgroundColor : 'white'});
+                        $("#square-f" + c).css({backgroundColor : 'black'});
+                        $("#square-g" + c).css({backgroundColor : 'white'});
+                        $("#square-h" + c).css({backgroundColor : 'black'});
+
+                    } else { // If odd row: black, then white.
+                        $("#square-a" + c).css({backgroundColor : 'black'});
+                        $("#square-b" + c).css({backgroundColor : 'white'});
+                        $("#square-c" + c).css({backgroundColor : 'black'});
+                        $("#square-d" + c).css({backgroundColor : 'white'});
+                        $("#square-e" + c).css({backgroundColor : 'black'});
+                        $("#square-f" + c).css({backgroundColor : 'white'});
+                        $("#square-g" + c).css({backgroundColor : 'black'});
+                        $("#square-h" + c).css({backgroundColor : 'white'});
+                    }
+                }
+
+                // Request default board state from tree
+                var boardStateRequest = $.get("chessgear/api/games/tree/0", function(data) {
+                    alert(data);
+                });
+            });
+
+            $("#flipButton").click(function(e) {
+                rotateBoard();
+            });
+
+            // Rotates the board
+            function rotateBoard() {
+                if (toggle == 1) {
+                    $("#board-wrapper").css({transform : 'rotate(180deg)', transition : 'transform 1s ease-in-out'});
+                } else {
+                    $("#board-wrapper").css({transform : 'rotate(0deg)', transition : 'transform 1s ease-in-out'});
+                }
+                toggle = -toggle;
+                
+            }
+        </script>
+
+    </body>
+
+</html>
