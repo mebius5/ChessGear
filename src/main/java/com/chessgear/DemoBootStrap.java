@@ -16,6 +16,8 @@ public class DemoBootStrap {
     private static final String ADDRESS = "localhost";
 
     static String sampleGame = "e4 e5 Nf3";
+    static String sampleGame2 = "d4 e6";
+    static String sampleGame3 = "e4 c5 Nf3";
 
     public static void main(String[] args) {
 
@@ -28,6 +30,12 @@ public class DemoBootStrap {
             PGNParser parser = new PGNParser(sampleGame);
             GameTreeBuilder b = new GameTreeBuilder(parser.getListOfBoardStates(), parser.getWhiteHalfMoves(), parser.getBlackHalfMoves());
             tree.addGame(b.getListOfNodes());
+            PGNParser parser2 = new PGNParser(sampleGame2);
+            GameTreeBuilder b2 = new GameTreeBuilder(parser2.getListOfBoardStates(), parser2.getWhiteHalfMoves(), parser2.getBlackHalfMoves());
+            tree.addGame(b2.getListOfNodes());
+            PGNParser parser3 = new PGNParser(sampleGame3);
+            GameTreeBuilder b3 = new GameTreeBuilder(parser3.getListOfBoardStates(), parser3.getWhiteHalfMoves(), parser3.getBlackHalfMoves());
+            tree.addGame(b3.getListOfNodes());
 
             get("chessgear/api/games/tree/:nodeid", "application/json", (request, response) -> {
                 int nodeId = Integer.parseInt(request.params("nodeid"));
