@@ -141,10 +141,34 @@ footer {
 }
 
 #board-wrapper {
-    padding-top: 50px;
-    padding-bottom: 50px;
     text-align: center;
     font-size: 0;
     display: inline-block;
-    margin-left: 20px;
+    margin-left: 50px;
+}
+
+#application-wrapper {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 0;
+}
+
+#children-wrapper {
+    vertical-align: top;
+    display: inline-block;
+    background-color: #aaa;
+    width: 234px;
+    height: 640px;
+    margin-left: 50px;
+    font-size: 12pt;
+}
+
+#children-wrapper > ul {
+    margin: 25px 0px 0px 25px;
+    padding: 0px;
+    list-style-type: none;
+}
+
+.clear {
+    clear: both;
 }

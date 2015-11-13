@@ -63,6 +63,7 @@ public class DemoBootStrap {
                     }
                     result.append(" }");
 
+                    System.out.println(result.toString());
                     return result.toString();
 
                 } else {
