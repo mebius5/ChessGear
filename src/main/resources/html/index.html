@@ -133,32 +133,40 @@
                     if (c % 2 == 0) { // If even row: white, then black
                         
                         $("#square-a" + c).css({backgroundColor : 'white'});
-                        $("#square-b" + c).css({backgroundColor : 'black'});
+                        $("#square-b" + c).css({backgroundColor : '#d85000'});
                         $("#square-c" + c).css({backgroundColor : 'white'});
-                        $("#square-d" + c).css({backgroundColor : 'black'});
+                        $("#square-d" + c).css({backgroundColor : '#d85000'});
                         $("#square-e" + c).css({backgroundColor : 'white'});
-                        $("#square-f" + c).css({backgroundColor : 'black'});
+                        $("#square-f" + c).css({backgroundColor : '#d85000'});
                         $("#square-g" + c).css({backgroundColor : 'white'});
-                        $("#square-h" + c).css({backgroundColor : 'black'});
+                        $("#square-h" + c).css({backgroundColor : '#d85000'});
 
                     } else { // If odd row: black, then white.
-                        $("#square-a" + c).css({backgroundColor : 'black'});
+                        $("#square-a" + c).css({backgroundColor : '#d85000'});
                         $("#square-b" + c).css({backgroundColor : 'white'});
-                        $("#square-c" + c).css({backgroundColor : 'black'});
+                        $("#square-c" + c).css({backgroundColor : '#d85000'});
                         $("#square-d" + c).css({backgroundColor : 'white'});
-                        $("#square-e" + c).css({backgroundColor : 'black'});
+                        $("#square-e" + c).css({backgroundColor : '#d85000'});
                         $("#square-f" + c).css({backgroundColor : 'white'});
-                        $("#square-g" + c).css({backgroundColor : 'black'});
+                        $("#square-g" + c).css({backgroundColor : '#d85000'});
                         $("#square-h" + c).css({backgroundColor : 'white'});
                     }
                 }
 
+                var nodeId = getUrlParameter("node");
+                if (nodeId === undefined) {
+                    nodeId = 0;
+                }
+
                 // Request default board state from tree
-                var boardStateRequest = $.get("chessgear/api/games/tree/0", function(data) {
-                    alert(data);
+                var boardStateRequest = $.get("chessgear/api/games/tree/" + nodeId, function(data) {
                     var parsedResponse = jQuery.parseJSON(data);
-                    alert(parsedResponse.boardstate);
+                    var boardState = parsedResponse.boardstate;
+                    var splitIndex = boardState.indexOf(" ");
+                    var trimmedBoardState = boardState.substring(0, splitIndex);
+                    displayBoard(trimmedBoardState)
                 });
+
             });
 
             $("#flipButton").click(function(e) {
@@ -168,12 +176,109 @@
             // Rotates the board
             function rotateBoard() {
                 if (toggle == 1) {
-                    $("#board-wrapper").css({transform : 'rotate(180deg)', transition : 'transform 1s ease-in-out'});
+                    $("#board-wrapper").css({transform : 'rotate(180deg)', transition : 'transform 1s linear'});
+                    $(".board-square > img").each(function(index) {
+                        $(this).css({transform : 'rotate(-180deg)', transition : 'transform 1s linear'});
+                    });
                 } else {
-                    $("#board-wrapper").css({transform : 'rotate(0deg)', transition : 'transform 1s ease-in-out'});
+                    $("#board-wrapper").css({transform : 'rotate(0deg)', transition : 'transform 1s linear'});
+                    $(".board-square > img").each(function(index) {
+                        $(this).css({transform : 'rotate(0deg)', transition : 'transform 1s linear'});
+                    });
+                    
                 }
                 toggle = -toggle;
                 
+            }
+
+            function displayBoard(boardState) {
+
+                var tokenizedRows = boardState.split("/");
+
+                for (var c = 0; c < 8; c++) {
+
+                    var currentRow = 8 - c;
+                    var currentFile = 0;
+
+                    var currentRowFEN = tokenizedRows[c];
+
+                    for (var d = 0; d < currentRowFEN.length; d++) {
+
+                        var currentChar = currentRowFEN.charAt(d);
+                        var numSpaces = parseInt(currentChar);
+                        // If numeric
+                        if (isNaN(numSpaces)) {
+                            var fileChar = numberToFile(currentFile);
+                            var imgSrc = getPieceFromChar(currentChar);
+                            var square = "#square-" + fileChar + currentRow;
+                            //alert(square);
+                            var img = "<img src=\"img/" + imgSrc +"\">";
+                            //alert(img);
+                            $(square).html(img);
+
+                            currentFile++;
+                        } else {
+                            currentFile += numSpaces;
+                        }
+
+                    }
+                }
+            }
+
+            /**
+             * 0=a, 1=b, etc.
+             */
+            function numberToFile(number) {
+                return String.fromCharCode(97 + number);
+            }
+
+            function getPieceFromChar(piece) {
+
+                switch (piece) {
+                    case "p":
+                        return "black_pawn.png";
+                    case "r":
+                        return "black_rook.png";
+                    case "n":
+                        return "black_knight.png";
+                    case "b":
+                        return "black_bishop.png";
+                    case "q":
+                        return "black_queen.png";
+                    case "k":
+                        return "black_king.png";
+                    case "P":
+                        return "white_pawn.png";
+                    case "R":
+                        return "white_rook.png";
+                    case "N":
+                        return "white_knight.png";
+                    case "B":
+                        return "white_bishop.png";
+                    case "Q":
+                        return "white_queen.png";
+                    case "K":
+                        return "white_king.png";
+
+                }
+
+                return null;
+
+            }
+
+            function getUrlParameter(sParam) {
+                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                    sURLVariables = sPageURL.split('&'),
+                    sParameterName,
+                    i;
+
+                for (i = 0; i < sURLVariables.length; i++) {
+                    sParameterName = sURLVariables[i].split('=');
+
+                    if (sParameterName[0] === sParam) {
+                        return sParameterName[1] === undefined ? true : sParameterName[1];
+                    }
+                }
             }
         </script>
 
