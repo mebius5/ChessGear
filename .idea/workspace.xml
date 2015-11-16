@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/analysis/Engine.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/analysis/Engine.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/analysis/Engine.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/analysis/Engine.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/EngineTest.java" afterPath="$PROJECT_DIR$/src/test/java/EngineTest.java" />
     </list>
     <ignored path="ChessGear.iws" />
@@ -69,8 +67,8 @@
       <file leaf-file-name="EngineTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/EngineTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.42056075">
-              <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.66588783">
+              <caret line="38" column="14" selection-start-line="38" selection-start-column="14" selection-end-line="38" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -80,7 +78,7 @@
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
+              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -700,12 +698,6 @@
       <option name="number" value="Default" />
       <updated>1443206600718</updated>
     </task>
-    <task id="LOCAL-00008" summary="Periodic commit.">
-      <created>1444843762232</created>
-      <option name="number" value="00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1444843762232</updated>
-    </task>
     <task id="LOCAL-00009" summary="Periodic commit.">
       <created>1444844047727</created>
       <option name="number" value="00009" />
@@ -994,13 +986,16 @@
       <option name="project" value="LOCAL" />
       <updated>1447700776149</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Corrected EngineTest.java to accept multiple possibilities instead of just one.">
+      <created>1447705577795</created>
+      <option name="number" value="00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1447705577795</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="EngineTest - 2015.11.16 at 15h 09m 13s.xml">
-      <configuration name="EngineTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="EngineTest - 2015.11.16 at 15h 09m 32s.xml">
       <configuration name="EngineTest" configurationId="JUnit" />
     </history-entry>
@@ -1026,6 +1021,9 @@
       <configuration name="EngineTest" configurationId="JUnit" />
     </history-entry>
     <history-entry file="EngineTest - 2015.11.16 at 15h 25m 39s.xml">
+      <configuration name="EngineTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="EngineTest - 2015.11.16 at 15h 30m 20s.xml">
       <configuration name="EngineTest" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -1081,7 +1079,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="PGN Parsing code." />
     <MESSAGE value="PGN Parsing code. Boardstate code." />
     <MESSAGE value="Made progress on:&#10;PGN Parsing code. Boardstate code. Associated unit tests." />
     <MESSAGE value="Added GameTest.java to test the Game.java&#10;Added GameTreeTest.java to test the GameTree.java" />
@@ -1106,7 +1103,8 @@
     <MESSAGE value="Adding some test functionality" />
     <MESSAGE value="Adding demo for iteration 4." />
     <MESSAGE value="Added startEngine() and terminateEngine() to Engine.java and add respective test. Modified .travis.yml to build C++ before running java." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added startEngine() and terminateEngine() to Engine.java and add respective test. Modified .travis.yml to build C++ before running java." />
+    <MESSAGE value="Corrected EngineTest.java to accept multiple possibilities instead of just one." />
+    <option name="LAST_COMMIT_MESSAGE" value="Corrected EngineTest.java to accept multiple possibilities instead of just one." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1460,7 +1458,7 @@
     <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1478,8 +1476,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/EngineTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42056075">
-          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.66588783">
+          <caret line="38" column="14" selection-start-line="38" selection-start-column="14" selection-end-line="38" selection-end-column="14" />
           <folding />
         </state>
       </provider>

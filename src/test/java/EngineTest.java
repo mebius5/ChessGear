@@ -36,7 +36,9 @@ public class EngineTest {
                 result = true;
             }
 
-            assertEquals(result, true);
+            //assertEquals(engine.analyseFEN(fen, moveTime).getBestMove(), "f3e5");
+            assertEquals(engine.analyseFEN(fen2,moveTime).getBestMove(), "e2e4");
+            //assertEquals(result, true);
 
         } catch(Exception e){
             fail("Exception should not be thrown during FEN analysis");
