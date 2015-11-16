@@ -9,4 +9,4 @@ before_script:
     - cd ./stockfish-6-src/src/
     - make clean
     - make build ARCH=x86-32
-    - cd ../../../
+    - cd ../../
