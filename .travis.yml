@@ -4,11 +4,9 @@ jdk:
 
 sudo: required
 
-before_install:
-    - sudo apt-get install build-essential
-
 before_script:
+    - sudo apt-get install build-essential
     - cd ./stockfish-6-src/src/
-    - make build ARCH=x86-64
-    - make install
-    - cd ../../../
+    - make clean
+    - make build ARCH=x86-32
+    - cd ../../
