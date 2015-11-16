@@ -34,10 +34,15 @@ public class GameTree {
         this.nodeMapping = new HashMap<>();
         this.root = null;
     }
+    public GameTree(GameTreeNode newroot) {
+        this.nodeIdCounter = 0;
+        this.nodeMapping = new HashMap<>();
+        this.root = newroot;
+    }
 
     /**
      * Adds a game to the tree.
-     * @param gameTreeNodes
+     * @param gameTreeNodes The nodes
      */
     public void addGame(List<GameTreeNode> gameTreeNodes) {
 
@@ -87,7 +92,7 @@ public class GameTree {
     /**
      * Gets the node with the specified id.
      * @param id Id to get node for.
-     * @return
+     * @return the node
      */
     public GameTreeNode getNodeWithId(int id) {
         return nodeMapping.get(id);

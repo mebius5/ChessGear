@@ -51,4 +51,10 @@ public class User {
         USERNAME, PASSWORD
     }
 
+    /**
+     * Setting the game tree
+     */
+    public void setGameTree(GameTree tree) {
+        gameTree = tree;
+    }
 }

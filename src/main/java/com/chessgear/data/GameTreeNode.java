@@ -184,7 +184,7 @@ public class GameTreeNode {
     }
     
     public enum NodeProperties{
-        EVAL, BOARDSTATE
+        EVAL, BOARDSTATE, MULTIPLICITY
     }
     
 
