@@ -251,7 +251,7 @@ public class DatabaseService {
      * This method creates a GameTree for the player in the database
      * 
      * @param email The unique identifier of the player
-     * @param rootID The unique ID of the root (has only to be unique across nodes of the user)
+     * @param rootId The unique ID of the root (has only to be unique across nodes of the user)
      */
     public void addTree(String email, int rootId){
         if(!nodeExists(email, rootId))

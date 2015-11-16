@@ -6,8 +6,6 @@ import com.chessgear.game.Move;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.chessgear.data.GameTree.END_OF_CHILDREN;
-
 /**
  * Node class for GameTree.
  * Created by Ran on 10/8/2015.
@@ -105,12 +103,28 @@ public class GameTreeNode {
     }
 
     /**
+     * Accessor for id.
+     * @return Id of node.
+     */
+    public int getId() {
+        return this.id;
+    }
+
+    /**
      * Adds a child node.
      * @param child Child node.
      */
     public void addChild(GameTreeNode child){
         children.add(child);
         child.setParent(this);
+    }
+
+    /**
+     * Accessor for parent of this node.
+     * @return Parent of the current node.
+     */
+    public GameTreeNode getParent() {
+        return this.previous;
     }
 
     /**

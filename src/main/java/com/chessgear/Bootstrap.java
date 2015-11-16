@@ -91,7 +91,7 @@ public class Bootstrap {
                 if (corr.equals(pass)) {
                     response.status(200);
                     User use = new User(username, email, pass);
-                    server.addUser(use, database);
+                    server.addOnlineUser(use, database);
                 } else {
                     JsonObject error = new JsonObject();
                     error.addProperty("why", "Incorrect Password");

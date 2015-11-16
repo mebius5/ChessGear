@@ -1,9 +1,11 @@
 package com.chessgear.server;
 
 import com.chessgear.data.DatabaseService;
+import com.chessgear.data.GameTreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Object representation of the chessgear server.
@@ -21,8 +23,10 @@ public class ChessGearServer {
      * Adding a user to the cached user
      * @param user the user to be stored
      */
-    public void addUser(User user, DatabaseService db) {
-        int rootid = db.getRoot(user.getEmail());
+    public void addOnlineUser(User user, DatabaseService db) {
+        String email = user.getEmail();
+        int rootid = db.getRoot(email);
+        Map<GameTreeNode.NodeProperties, String> map = db.fetchNodeProperty(email, rootid);
 
         users.add(user);
 
