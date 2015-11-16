@@ -93,6 +93,7 @@ public class Engine {
             }
             scanner.close();
         } catch (Exception e){
+            //e.printStackTrace();
             throw e;
         }
         return this.engineResult;
