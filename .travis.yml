@@ -6,10 +6,6 @@ sudo: required
 
 before_install:
     - sudo apt-get install build-essential
-    - export COMPILER=g++-4.8
-    - export COMP=gcc
-
-before_script:
     - cd ./stockfish-6-src/src/
     - make clean
     - make build ARCH=x86-32
