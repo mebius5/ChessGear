@@ -11,5 +11,6 @@ before_install:
 
 before_script:
     - cd ./stockfish-6-src/src/
-    - make build ARCH=x86-64
+    - make clean
+    - make build ARCH=x86-32
     - cd ../../../
