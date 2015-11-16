@@ -26,8 +26,12 @@ public class EngineTest {
                 i++;
             }
 
+            //System.out.println(engine.analyseFEN(fen, moveTime).getBestMove());
+            //System.out.println(engine.analyseFEN(fen2, moveTime).getBestMove());
+
             if(engine.analyseFEN(fen2,moveTime).getBestMove().equals("e2e4")||
-             engine.analyseFEN(fen2,moveTime).getBestMove().equals("g1f3")){
+             engine.analyseFEN(fen2,moveTime).getBestMove().equals("g1f3") ||
+                    engine.analyseFEN(fen2,moveTime).getBestMove().equals("d2d4")){
                 i++;
             }
 
@@ -36,9 +40,9 @@ public class EngineTest {
                 result = true;
             }
 
-            //assertEquals(engine.analyseFEN(fen, moveTime).getBestMove(), "f3e5");
-            assertEquals(engine.analyseFEN(fen2,moveTime).getBestMove(), "e2e4");
-            //assertEquals(result, true);
+            //assertEqualCorres(engine.analyseFEN(fen, moveTime).getBestMove(), "f3e5");
+            //assertEquals(engine.analyseFEN(fen2,moveTime).getBestMove(), "e2e4");
+            assertEquals(result, true);
 
         } catch(Exception e){
             fail("Exception should not be thrown during FEN analysis");

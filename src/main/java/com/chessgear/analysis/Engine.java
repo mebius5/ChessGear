@@ -15,8 +15,6 @@ public class Engine {
     BufferedReader stdInput; //Input from the Stock engine
     BufferedWriter stdOutput; //Output to the Stockfish engine
 
-    EngineResult engineResult; //Results from the engine analysis
-
     /***
      * Default constructor. Starts the Stockfish engine
      */
@@ -34,7 +32,6 @@ public class Engine {
 
             stdOutput = new BufferedWriter(new OutputStreamWriter(proc.getOutputStream()));
             stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-            engineResult = new EngineResult();
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -48,6 +45,7 @@ public class Engine {
      */
     public EngineResult analyseFEN(String fen,int moveTime) throws Exception{
         try {
+            EngineResult engineResult = new EngineResult(); //Results from the engine analysis
             boolean print = false; //Set to true to print
             String command;
             command="position fen "+fen+"\n";
@@ -92,11 +90,11 @@ public class Engine {
                 System.out.println("Best move was " + engineResult.getBestMove());
             }
             scanner.close();
+            return engineResult;
         } catch (Exception e){
             //e.printStackTrace();
             throw e;
         }
-        return this.engineResult;
     }
 
     /***
