@@ -21,6 +21,13 @@ public class Engine {
      * Default constructor. Starts the Stockfish engine
      */
     public Engine(){
+        startEngine();
+    }
+
+    /****
+     * Start the Engine process and get it ready for Engine analysis
+     */
+    public void startEngine() {
         try {
             rt = Runtime.getRuntime();
             proc = rt.exec(new String[]{"./stockfish-6-src/src/./stockfish"});
@@ -28,7 +35,7 @@ public class Engine {
             stdOutput = new BufferedWriter(new OutputStreamWriter(proc.getOutputStream()));
             stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             engineResult = new EngineResult();
-        }catch(IOException e){
+        } catch (IOException e){
             e.printStackTrace();
         }
     }
@@ -39,7 +46,7 @@ public class Engine {
      * @param moveTime the time for the engine to analyse for in ms
      * @return the EngineResult object containing the result of the analysis
      */
-    public EngineResult analyseFEN(String fen,int moveTime){
+    public EngineResult analyseFEN(String fen,int moveTime) throws Exception{
         try {
             boolean print = false; //Set to true to print
             String command;
@@ -84,13 +91,24 @@ public class Engine {
                 System.out.println("Last pv: " + engineResult.getPv());
                 System.out.println("Best move was " + engineResult.getBestMove());
             }
-
             scanner.close();
-            stdInput.close();
-            stdOutput.close();
         } catch (Exception e){
-            e.printStackTrace();
+            throw e;
         }
         return this.engineResult;
+    }
+
+    /***
+     * Terminate the Engine process and closes the stream buffers
+     * @throws Exception if close is unsuccessful.
+     */
+    public void terminateEngine() throws Exception{
+        try {
+            stdInput.close();
+            stdOutput.close();
+            proc.destroy();
+        }catch (Exception e){
+            throw e;
+        }
     }
 }
