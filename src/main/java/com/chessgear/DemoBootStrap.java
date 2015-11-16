@@ -1,6 +1,9 @@
 package com.chessgear;
 
 import com.chessgear.data.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,13 +83,21 @@ public class DemoBootStrap {
                 }
             });
 
-            put("chessgear/api/games/import", "application/json", (request, response) -> {
-                return ""; // TODO
+            post("chessgear/api/games/import", "application/json", (request, response) -> {
+                System.out.println("Request received for pgn import: " + request.body());
+                JsonParser jsonParser = new JsonParser();
+                JsonElement element = jsonParser.parse(request.body());
+                JsonObject jsonObject = element.getAsJsonObject();
+                String pgn = jsonObject.get("pgn").getAsString();
+
+                PGNParser currentPgnParser = new PGNParser(pgn);
+                GameTreeBuilder currentTreeBuilder = new GameTreeBuilder(currentPgnParser.getListOfBoardStates(), currentPgnParser.getWhiteHalfMoves(), currentPgnParser.getBlackHalfMoves());
+                tree.addGame(currentTreeBuilder.getListOfNodes());
+
+                return "Success"; // TODO
             });
         } catch (PGNParseException e) {
             System.exit(1);
         }
-
-
     }
 }

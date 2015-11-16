@@ -120,7 +120,9 @@
                     <div class="clear"></div>
                 </div>
 
-                <input type="button" value="Flip Board" id="flipButton" style="margin-left: 340px; margin-bottom: 50px;">
+                <input type ="button" value="<<" id="navigate-root" style="margin-left: 300px; margin-bottom: 50px;">
+                <input type="button" value="<" id="navigate-back" style="margin-bttom: 50px;">
+                <input type="button" value="Flip Board" id="flipButton" style="margin-bottom: 50px;">
 
             </main>
 
@@ -132,6 +134,7 @@
 
         <script type="text/javascript">
             var toggle = 1;
+            var back = 0;
 
             $(document).ready(function() {
                 // Set the board squares colors
@@ -167,13 +170,22 @@
                 // Request default board state from tree
                 var boardStateRequest = $.get("chessgear/api/games/tree/" + nodeId, function(data) {
                     var parsedResponse = jQuery.parseJSON(data);
+                    back = parsedResponse.previousNodeId;
                     displayBoard(parsedResponse.boardstate);
                     displayChildren(parsedResponse.children);
                 });
 
             });
 
-            $("#flipButton").click(function(e) {
+            $("#navigate-root").click(function (e) {
+                window.location.href="./?node=0";
+            });
+
+            $("#navigate-back").click(function (e) {
+                window.location.href="./?node=" + back;
+            })
+
+            $("#flipButton").click(function (e) {
                 rotateBoard();
             });
 

@@ -48,7 +48,7 @@ public class User {
         return email;
     }
     public enum Property {
-        EMAIL, USERNAME, PASSWORD
+        USERNAME, PASSWORD
     }
 
 }
