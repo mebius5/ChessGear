@@ -15,20 +15,24 @@ public class Engine {
     BufferedReader stdInput; //Input from the Stock engine
     BufferedWriter stdOutput; //Output to the Stockfish engine
 
-    EngineResult engineResult; //Results from the engine analysis
-
     /***
      * Default constructor. Starts the Stockfish engine
      */
     public Engine(){
+        startEngine();
+    }
+
+    /****
+     * Start the Engine process and get it ready for Engine analysis
+     */
+    public void startEngine() {
         try {
             rt = Runtime.getRuntime();
             proc = rt.exec(new String[]{"./stockfish-6-src/src/./stockfish"});
 
             stdOutput = new BufferedWriter(new OutputStreamWriter(proc.getOutputStream()));
             stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-            engineResult = new EngineResult();
-        }catch(IOException e){
+        } catch (IOException e){
             e.printStackTrace();
         }
     }
@@ -39,8 +43,9 @@ public class Engine {
      * @param moveTime the time for the engine to analyse for in ms
      * @return the EngineResult object containing the result of the analysis
      */
-    public EngineResult analyseFEN(String fen,int moveTime){
+    public EngineResult analyseFEN(String fen,int moveTime) throws Exception{
         try {
+            EngineResult engineResult = new EngineResult(); //Results from the engine analysis
             boolean print = false; //Set to true to print
             String command;
             command="position fen "+fen+"\n";
@@ -84,13 +89,25 @@ public class Engine {
                 System.out.println("Last pv: " + engineResult.getPv());
                 System.out.println("Best move was " + engineResult.getBestMove());
             }
-
             scanner.close();
+            return engineResult;
+        } catch (Exception e){
+            //e.printStackTrace();
+            throw e;
+        }
+    }
+
+    /***
+     * Terminate the Engine process and closes the stream buffers
+     * @throws Exception if close is unsuccessful.
+     */
+    public void terminateEngine() throws Exception{
+        try {
             stdInput.close();
             stdOutput.close();
-        } catch (Exception e){
-            e.printStackTrace();
+            proc.destroy();
+        }catch (Exception e){
+            throw e;
         }
-        return this.engineResult;
     }
 }
