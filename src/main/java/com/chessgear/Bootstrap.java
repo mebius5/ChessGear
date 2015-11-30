@@ -1,10 +1,11 @@
 package com.chessgear;
 
-import com.chessgear.data.DatabaseService;
-import com.chessgear.data.PGNParser;
+import com.chessgear.data.*;
+import com.chessgear.game.Game;
 import com.chessgear.server.ChessGearServer;
 import com.chessgear.server.User;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -24,7 +25,6 @@ import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.Part;
 
 import com.chessgear.data.DatabaseService;
-import com.chessgear.data.FileStorageService;
 
 /**
  * ChessGear main class.
@@ -100,9 +100,12 @@ public class Bootstrap {
                 System.out.println(pass);
                 Map<User.Property, String> maps = database.fetchUserProperties(email);
                 String corr = maps.get(User.Property.PASSWORD);
+                String username = maps.get(User.Property.USERNAME);
                 System.out.println(corr);
                 if (corr.equals(pass)) {
                     response.status(200);
+                    User use = new User(username, email, pass);
+                    server.addOnlineUser(use, database);
                 } else {
                     JsonObject error = new JsonObject();
                     error.addProperty("why", "Incorrect Password");
@@ -124,10 +127,12 @@ public class Bootstrap {
             JsonParser parsed = new JsonParser();
             JsonObject user = parsed.parse(temp).getAsJsonObject();
             String email = user.get("email").getAsString();
-            if(!database.userExists(email)) {
+            if (!(database.userExists(email))) {
                 String pass = user.get("password").getAsString();
+                String username = user.get("username").getAsString();
                 HashMap<User.Property, String> prop = new HashMap<>();
                 prop.put(User.Property.PASSWORD, pass);
+                prop.put(User.Property.USERNAME, username);
                 try {
                     database.addUser(email, prop);
                 } catch (IllegalArgumentException e) {
@@ -138,6 +143,7 @@ public class Bootstrap {
                 }
                 JsonObject ret = new JsonObject();
                 ret.addProperty("email", email);
+                database.addTree(email, 0);
                 return ret;
             } else {
                 response.status(409);
@@ -148,26 +154,176 @@ public class Bootstrap {
         });
 
         // Handle tree retrieval
-        get("/chessgear/api/games/tree/:email/:nodeid", (request, response) -> {
-            String email = request.params(":email");
-            int nodeid = 0;
-            try {
-                nodeid = Integer.parseInt(request.params(":nodeid"));
-            } catch (NumberFormatException e) {
+        get("chessgear/api/games/tree/:nodeid", "application/json", (request, response) -> {
+            int nodeId = Integer.parseInt(request.params("nodeid"));
+            System.out.println("Request received for node " + nodeId);
+            String temp = request.body();
+            JsonParser parsed = new JsonParser();
+            JsonObject user = parsed.parse(temp).getAsJsonObject();
+            String email = user.get("email").getAsString();
+            User uses = server.getUser(email);
+            GameTree tree = uses.getGameTree();
+            if (tree.containsNode(nodeId)) {
+                GameTreeNode currentNode = tree.getNodeWithId(nodeId);
+                String boardState = currentNode.getBoardState().toFEN();
+                List<GameTreeNode> children = currentNode.getChildren();
+                GameTreeNode parent = currentNode.getParent();
+
+                List<Integer> childIds = new ArrayList<>();
+                for (GameTreeNode currentChildNode : children) {
+                    childIds.add(currentChildNode.getId());
+                }
+
+                StringBuilder result = new StringBuilder();
+                result.append("{ \"boardstate\" : \"");
+                result.append(boardState);
+                result.append("\", \"children\" : [");
+                for (int c = 0; c < childIds.size(); c++) {
+                    result.append(childIds.get(c));
+                    if (c + 1 != childIds.size()) {
+                        result.append(", ");
+                    }
+                }
+                result.append("], \"previousNodeId\" : ");
+
+                if (parent != null) {
+                    result.append(parent.getId());
+                } else {
+                    result.append("null");
+                }
+                result.append(" }");
+
+                System.out.println(result.toString());
+                return result.toString();
+
+            } else {
                 response.status(404);
-                JsonObject error = new JsonObject();
-                error.addProperty("why", "not an int");
-                return error;
+                return "Node does not exist!";
             }
-
-            return ""; // TODO
         });
-
         // Handle list retrieval
         get("/chessgear/api/games/list", (request, response) -> {
             return ""; // TODO
         });
+        //Pgn input
+        post("chessgear/api/games/import", "application/json", (request, response) -> {
+            System.out.println("Request received for pgn import: " + request.body());
+            String temp = request.body();
+            JsonParser parsed = new JsonParser();
+            JsonObject user = parsed.parse(temp).getAsJsonObject();
+            String email = user.get("email").getAsString();
+            User uses = server.getUser(email);
+            GameTree tree = uses.getGameTree();
+            JsonElement element = parsed.parse(request.body());
+            JsonObject jsonObject = element.getAsJsonObject();
+            String pgn = jsonObject.get("pgn").getAsString();
+            PGNParser currentPgnParser = new PGNParser(pgn);
+            Game game = new Game(currentPgnParser.getWhitePlayerName(), currentPgnParser.getBlackPlayerName(), null, pgn, currentPgnParser.getResult(), uses.getNumgames());
+            uses.addGame(game);
+            GameTreeBuilder currentTreeBuilder = new GameTreeBuilder(currentPgnParser.getListOfBoardStates(), currentPgnParser.getWhiteHalfMoves(), currentPgnParser.getBlackHalfMoves());
+            tree.addGame(currentTreeBuilder.getListOfNodes());
+            return "Success"; // TODO
+        });
 
+        get("/chessgear/api/games/tree/:email/:nodeid", (request, response) -> {
+            String email = request.params("email");
+            int nodeid;
+            try {
+                nodeid = Integer.parseInt((request.params("nodeid")));
+            } catch (NumberFormatException e) {
+                response.status(404);
+                return errorReturn("Node not found");
+            }
+            User uses = server.getUser(email);
+            if (uses == null) {
+                response.status(405);
+                return errorReturn("User not logged in");
+            }
+            GameTree tree = uses.getGameTree();
+            GameTreeNode node = tree.getNodeWithId(nodeid);
+            if (node == null) {
+                response.status(404);
+                return errorReturn("Node not found");
+            }
+            String boardstate = node.getBoardState().toFEN();
+            int previous = node.getParent().getId();
+            JsonObject ret = new JsonObject();
+            ret.addProperty("boardstate", boardstate);
+            ret.addProperty("previous", previous);
+            return "";
+        });
+        //slightly changed, pass an email instead of username, is now a put request so I can get parameters
+
+        put(" /chessgear/api/:email/property", (request, response) -> {
+            String email = request.params("email");
+
+            Map<User.Property, String> maps = database.fetchUserProperties(email);
+            if (maps == null) {
+                response.status(405);
+                return errorReturn("User does not exist");
+
+            }
+            if (server.getUser(email) == null) {
+                response.status(405);
+                return errorReturn("User is not logged in");
+            }
+            String temp = request.body();
+            JsonParser parsed = new JsonParser();
+            JsonObject user = parsed.parse(temp).getAsJsonObject();
+            String prop = user.get("name").getAsString();
+            String value;
+            try {
+                value = maps.get(User.Property.valueOf(prop));
+            } catch (IllegalArgumentException e) {
+                response.status(406);
+                return errorReturn("Bad Property");
+            }
+            response.status(200);
+            JsonObject ret = new JsonObject();
+            ret.addProperty("name", value);
+            return ret;
+        });
+
+        put(" /chessgear/api/:email/property", (request, response) -> {
+            String email = request.params("email");
+            if (server.getUser(email) == null) {
+                response.status(405);
+                return errorReturn("Not Logged In");
+            }
+            String temp = request.body();
+            JsonParser parsed = new JsonParser();
+            JsonObject user = parsed.parse(temp).getAsJsonObject();
+            String prop = user.get("name").getAsString();
+            String value = user.get("value").getAsString();
+            if (prop.equals("EMAIL")) {
+                if (database.userExists(value)) {
+                    response.status(401);
+                    return errorReturn("Email Taken");
+                } else {
+                    Map<User.Property, String> maps = database.fetchUserProperties(email);
+                    database.addUser(value, maps);
+                    database.deleteUser(email);
+                    response.status(200);
+                    return "";
+                }
+            } else {
+                try {
+                    database.updateUserProperty(email, User.Property.valueOf(prop), value);
+                } catch (IllegalArgumentException e) {
+                    response.status(406);
+                    return errorReturn("Property Doesn't exist");
+                }
+            }
+            return "";
+        });
+        put("/chessgear/api/logout", (request, response) -> {
+            String temp = request.body();
+            JsonParser parsed = new JsonParser();
+            JsonObject user = parsed.parse(temp).getAsJsonObject();
+            String email = user.get("email").getAsString();
+            server.logOutUser(email, database);
+            return "";
+        });
 
         /* ---> this is what calls this method
          * <form enctype="multipart/form-data" action="/chessgear/api/games/import/:<useremail>" method="post">
@@ -213,38 +369,9 @@ public class Bootstrap {
         });
 
     }
-    /**
-     * Here are the functions that are copies of the put,pull get etc but take a Json Object isntead, for testing.
-     */
-    public JsonObject createUser(JsonObject request) {
-        int status;
-        String temp = request.toString();
-        JsonParser parsed = new JsonParser();
-        JsonObject user = parsed.parse(temp).getAsJsonObject();
-        String email = user.get("email").getAsString();
-        if(!database.userExists(email)) {
-            String pass = user.get("password").getAsString();
-            HashMap<User.Property, String> prop = new HashMap<>();
-            prop.put(User.Property.PASSWORD, pass);
-            try {
-                database.addUser(email, prop);
-            } catch (IllegalArgumentException e) {
-                status = 409;
-                JsonObject error = new JsonObject();
-                error.addProperty("why", "Incorrect Format");
-                error.addProperty("status", status);
-                return error;
-            }
-            JsonObject ret = new JsonObject();
-            ret.addProperty("email", email);
-            return ret;
-        } else {
-            status = 409;
-            JsonObject error = new JsonObject();
-            error.addProperty("why", "User already exists");
-            error.addProperty("status", status);
-            return error;
-        }
-
+    public static JsonObject errorReturn(String reason) {
+        JsonObject error = new JsonObject();
+        error.addProperty("why", reason);
+        return error;
     }
 }

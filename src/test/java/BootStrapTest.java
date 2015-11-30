@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 /**
  * Created by neil on 11/8/15
  */
+ /*
 public class BootStrapTest {
     private Bootstrap test;
     @Before
@@ -33,4 +34,4 @@ public class BootStrapTest {
         assertEquals(ret.get("status").getAsInt(), 409);
     }
 
-}
+}*/
