@@ -1,5 +1,8 @@
 package com.chessgear.data;
 
+import com.chessgear.analysis.Engine;
+import com.chessgear.analysis.EngineResult;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,7 +42,7 @@ public class GameTree {
      * Adds a game to the tree.
      * @param gameTreeNodes
      */
-    public void addGame(List<GameTreeNode> gameTreeNodes) {
+    public void addGame(List<GameTreeNode> gameTreeNodes) throws Exception {
 
         if (this.root == null) {
             this.root = gameTreeNodes.get(0);
@@ -67,6 +70,10 @@ public class GameTree {
             if (!childFound) {
                 candidateChildNode.setMultiplicity(1);
                 candidateChildNode.setId(this.nodeIdCounter);
+                Engine engine = new Engine("./stockfish-6-src/src/./stockfish");
+                //System.out.println(candidateChildNode.getBoardState().toFEN());
+                EngineResult engineResult = engine.analyseFEN(candidateChildNode.getBoardState().toFEN(), 100);
+                candidateChildNode.setEngineResult(engineResult);
                 this.nodeMapping.put(this.nodeIdCounter++, candidateChildNode);
                 currentNode.addChild(candidateChildNode);
                 currentNode = candidateChildNode;

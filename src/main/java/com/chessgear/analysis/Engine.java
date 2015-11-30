@@ -1,5 +1,7 @@
 package com.chessgear.analysis;
 
+import com.chessgear.data.PGNParseException;
+
 import java.io.*;
 import java.util.Scanner;
 import java.util.regex.MatchResult;
@@ -18,17 +20,17 @@ public class Engine {
     /***
      * Default constructor. Starts the Stockfish engine
      */
-    public Engine(){
-        startEngine();
+    public Engine(String binaryLocation){
+        startEngine(binaryLocation);
     }
 
     /****
      * Start the Engine process and get it ready for Engine analysis
      */
-    public void startEngine() {
+    private void startEngine(String binaryLocation) {
         try {
             rt = Runtime.getRuntime();
-            proc = rt.exec(new String[]{"./stockfish-6-src/src/./stockfish"});
+            proc = rt.exec(binaryLocation);
 
             stdOutput = new BufferedWriter(new OutputStreamWriter(proc.getOutputStream()));
             stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
@@ -68,13 +70,15 @@ public class Engine {
 
                 if(s.contains("cp")){
                     scanner = new Scanner(s);
-                    scanner.findInLine("cp (\\d+)");
+                    scanner.findInLine("cp ([-]*\\d+)");
                     matchResult = scanner.match();
                     engineResult.setCp(Integer.parseInt(matchResult.group(1)));
                 }
+
                 if(s.contains("pv")){
                     engineResult.setPv(s.substring(s.indexOf(" pv ")+4));
                 }
+
                 if(s.contains("bestmove")) {
                     scanner = new Scanner(s);
                     scanner.findInLine("bestmove (\\w+)");
@@ -91,7 +95,7 @@ public class Engine {
             }
             scanner.close();
             return engineResult;
-        } catch (Exception e){
+        } catch (IOException e){
             //e.printStackTrace();
             throw e;
         }

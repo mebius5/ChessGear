@@ -4,7 +4,7 @@ package com.chessgear.analysis;
  * Created by GradyXiao on 11/8/15.
  */
 public class EngineResult {
-    private int cp; //Stores the score returned by the Stockfish engine in centipawns
+    private double cp; //Stores the score returned by the Stockfish engine in centipawns
     private String pv; //Stores the best line returned by the Stockfish engine
     private String bestMove; //Stores the best move returned by the Stockfish engine
 
@@ -21,7 +21,7 @@ public class EngineResult {
      * Function to set the Cp for EngineResult
      * @param cp the result of the engine in centipawns
      */
-    public void setCp(int cp){
+    public void setCp(double cp){
         this.cp=cp;
     }
 
@@ -45,7 +45,7 @@ public class EngineResult {
      * Accessor for the Cp
      * @return the score of engine result in centipawns
      */
-    public int getCp(){
+    public double getCp(){
         return this.cp;
     }
 

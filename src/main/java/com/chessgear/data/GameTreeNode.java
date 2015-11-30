@@ -1,5 +1,6 @@
 package com.chessgear.data;
 
+import com.chessgear.analysis.EngineResult;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
 
@@ -32,15 +33,10 @@ public class GameTreeNode {
      */
     private int id;
 
-    /**
-     * Engine eval of the position.
+    /***
+     * Engine result of the node returned by the stockfish engine
      */
-    private double eval;
-
-    /**
-     * Engine continuation.
-     */
-    private String engineLine;
+    private EngineResult engineResult;
 
     /**
      * Counts the number of times this node has occurred.
@@ -165,6 +161,23 @@ public class GameTreeNode {
      */
     public Move getLastMoveMade() {
         return this.lastMoveMade;
+    }
+
+    /***
+     * Mutator for the engine result of the node
+     * @param engineResult the engine result of the boardstate of the node by the Stockfish engine
+     */
+    public void setEngineResult(EngineResult engineResult) {
+        this.engineResult = engineResult;
+    }
+
+    /***
+     * Accessor for the engine result of the node
+     * @param engineResult the engine result of the node
+     * @return the engineResult of the node
+     */
+    public EngineResult getEngineResult(EngineResult engineResult){
+        return this.engineResult;
     }
 
     /**
