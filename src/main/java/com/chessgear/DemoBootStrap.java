@@ -89,7 +89,6 @@ public class DemoBootStrap {
                 JsonElement element = jsonParser.parse(request.body());
                 JsonObject jsonObject = element.getAsJsonObject();
                 String pgn = jsonObject.get("pgn").getAsString();
-
                 PGNParser currentPgnParser = new PGNParser(pgn);
                 GameTreeBuilder currentTreeBuilder = new GameTreeBuilder(currentPgnParser.getListOfBoardStates(), currentPgnParser.getWhiteHalfMoves(), currentPgnParser.getBlackHalfMoves());
                 tree.addGame(currentTreeBuilder.getListOfNodes());

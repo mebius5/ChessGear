@@ -165,10 +165,9 @@ public class DatabaseService {
     public void updateUserProperty(String email, Property p, String v) throws IllegalArgumentException{
         if(!userExists(email))
             throw new IllegalArgumentException("specified user does not exists in database");
-        
         if(v == null)
             throw new IllegalArgumentException("args should not be null");
-        
+
         String cmd = "UPDATE User SET "+p.toString().toLowerCase()+"='"+v+"' WHERE email = '"+email+"';";
         
         Connection conn = database.open();
@@ -254,7 +253,7 @@ public class DatabaseService {
      * @param rootId The unique ID of the root (has only to be unique across nodes of the user)
      */
     public void addTree(String email, int rootId){
-        if(!nodeExists(email, rootId))
+        if(nodeExists(email, rootId))
             throw new IllegalArgumentException("Node does not exists in the database");
         
         //check that the user has not already a tree TODO: use SQL trigger mechansim to make it better

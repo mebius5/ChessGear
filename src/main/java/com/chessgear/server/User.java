@@ -47,10 +47,18 @@ public class User {
     public String getEmail() {
         return email;
     }
+
+    /**
+     * List of the User Properties
+     */
     public enum Property {
         USERNAME, PASSWORD
     }
 
+    /**
+     * Way to get the tree
+     */
+    public GameTree getGameTree() { return gameTree; }
     /**
      * Setting the game tree
      */
