@@ -14,11 +14,27 @@ import java.util.*;
 
 import static spark.Spark.*;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.util.Scanner;
+
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.http.Part;
+
+import com.chessgear.data.DatabaseService;
+import com.chessgear.data.FileStorageService;
+
 /**
  * ChessGear main class.
  * Created by Ran on 10/8/2015.
  */
 public class Bootstrap {
+
+    DatabaseService db = null;
+    private final static FileStorageService fss = null;
+
 
     /**
      * Port for server to listen on.
@@ -152,15 +168,47 @@ public class Bootstrap {
             return ""; // TODO
         });
 
-        // Handle game import
-        put(" /chessgear/api/games/import/:email", (request, response) -> {
-            String email = request.params(":email");
-            String temp = request.body();
-            JsonParser parsed = new JsonParser();
-            JsonObject user = parsed.parse(temp).getAsJsonObject();
-            String PGN = user.get("pgn").getAsString();
-            PGNParser parse = new PGNParser(PGN);
-            parse.getListOfBoardStates();
+
+        /* ---> this is what calls this method
+         * <form enctype="multipart/form-data" action="/chessgear/api/games/import/:<useremail>" method="post">
+         *   <input id="PGN-FILE" type="file" />
+         * </form>
+         * 
+         * --> we assign ourselves atomic names to the files, to avoid possible conflicts
+         */  
+        post("/chessgear/api/games/import/:email", (request, response) -> {
+            MultipartConfigElement multipartConfigElement = new MultipartConfigElement("/tmp");
+            request.raw().setAttribute("org.eclipse.multipartConfig", multipartConfigElement);
+            Part file = request.raw().getPart("PGN-FILE"); //file is name of the upload form
+
+            String useremail = request.params(":email");
+            if(useremail == null){
+                response.status(400);
+            }
+            else{
+
+                InputStream is = file.getInputStream();
+                Scanner s = new Scanner(is, "UTF-8").useDelimiter("\\A");
+                String fileAsString = s.hasNext() ? s.next() : "";
+                s.close();
+                is.close();
+                
+                //TODO: check that those method indeed add node to the tree
+                PGNParser parse = new PGNParser(fileAsString);
+                parse.getListOfBoardStates();
+               
+                try{
+                    fss.addFile(useremail, useremail+"@"+System.currentTimeMillis()+".pgn", file.getInputStream());
+                    response.status(201);
+                }
+                catch(IOException e){
+                    response.status(400);
+                }
+                catch(IllegalArgumentException w){
+                    response.status(400);
+                }
+            }
+            
             return ""; // TODO
         });
 
