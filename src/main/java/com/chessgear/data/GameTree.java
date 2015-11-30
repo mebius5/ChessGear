@@ -40,7 +40,7 @@ public class GameTree {
 
     /**
      * Adds a game to the tree.
-     * @param gameTreeNodes
+     * @param gameTreeNodes a list of game tree node
      */
     public void addGame(List<GameTreeNode> gameTreeNodes) throws Exception {
 
@@ -94,7 +94,7 @@ public class GameTree {
     /**
      * Gets the node with the specified id.
      * @param id Id to get node for.
-     * @return
+     * @return game tree node with the Id requrested
      */
     public GameTreeNode getNodeWithId(int id) {
         return nodeMapping.get(id);

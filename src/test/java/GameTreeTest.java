@@ -53,7 +53,7 @@ public class GameTreeTest {
             gameTree.addGame(gameTreeNodes);
 
             BoardState startingBoardState = gameTree.getRoot().getBoardState();
-            assertEquals(startingBoardState, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+            assertEquals(startingBoardState.toFEN(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 
             //assertEquals(gameTree.getNodeWithId(1).getBoardState(), "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1");
             //assertEquals(gameTree.getNodeWithId(1).getLastMoveMade().getWhoMoved(), Player.WHITE);

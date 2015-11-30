@@ -61,7 +61,7 @@ public class GameTreeNode {
 
     /**
      * Accessor for the children of this node.
-     * @return
+     * @return children of this node
      */
     public List<GameTreeNode> getChildren() {
         return this.children;
