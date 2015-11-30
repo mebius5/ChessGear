@@ -1,6 +1,7 @@
 package com.chessgear;
 
 import com.chessgear.data.*;
+import com.chessgear.game.Game;
 import com.chessgear.server.ChessGearServer;
 import com.chessgear.server.User;
 import com.google.gson.Gson;
@@ -218,6 +219,8 @@ public class Bootstrap {
             JsonObject jsonObject = element.getAsJsonObject();
             String pgn = jsonObject.get("pgn").getAsString();
             PGNParser currentPgnParser = new PGNParser(pgn);
+            Game game = new Game(currentPgnParser.getWhitePlayerName(), currentPgnParser.getBlackPlayerName(), null, pgn, currentPgnParser.getResult(), uses.getNumgames());
+            uses.addGame(game);
             GameTreeBuilder currentTreeBuilder = new GameTreeBuilder(currentPgnParser.getListOfBoardStates(), currentPgnParser.getWhiteHalfMoves(), currentPgnParser.getBlackHalfMoves());
             tree.addGame(currentTreeBuilder.getListOfNodes());
             return "Success"; // TODO
@@ -261,14 +264,14 @@ public class Bootstrap {
                 return errorReturn("User does not exist");
 
             }
-            if(server.getUser(email) == null) {
+            if (server.getUser(email) == null) {
                 response.status(405);
                 return errorReturn("User is not logged in");
             }
             String temp = request.body();
             JsonParser parsed = new JsonParser();
             JsonObject user = parsed.parse(temp).getAsJsonObject();
-            String prop  = user.get("name").getAsString();
+            String prop = user.get("name").getAsString();
             String value;
             try {
                 value = maps.get(User.Property.valueOf(prop));
@@ -284,17 +287,17 @@ public class Bootstrap {
 
         put(" /chessgear/api/:email/property", (request, response) -> {
             String email = request.params("email");
-            if(server.getUser(email) == null) {
+            if (server.getUser(email) == null) {
                 response.status(405);
                 return errorReturn("Not Logged In");
             }
             String temp = request.body();
             JsonParser parsed = new JsonParser();
             JsonObject user = parsed.parse(temp).getAsJsonObject();
-            String prop  = user.get("name").getAsString();
+            String prop = user.get("name").getAsString();
             String value = user.get("value").getAsString();
-            if(prop.equals("EMAIL")) {
-                if(database.userExists(value)) {
+            if (prop.equals("EMAIL")) {
+                if (database.userExists(value)) {
                     response.status(401);
                     return errorReturn("Email Taken");
                 } else {
@@ -306,7 +309,7 @@ public class Bootstrap {
                 }
             } else {
                 try {
-                    database.updateUserProperty(email, User.Property.valueOf(prop), value );
+                    database.updateUserProperty(email, User.Property.valueOf(prop), value);
                 } catch (IllegalArgumentException e) {
                     response.status(406);
                     return errorReturn("Property Doesn't exist");
@@ -319,7 +322,7 @@ public class Bootstrap {
             JsonParser parsed = new JsonParser();
             JsonObject user = parsed.parse(temp).getAsJsonObject();
             String email = user.get("email").getAsString();
-            server.logOutUser(email);
+            server.logOutUser(email, database);
             return "";
         });
 
