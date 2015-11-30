@@ -54,6 +54,7 @@ public class ChessGearServer {
             boardstate = new BoardState(board);
         } else {
             boardstate = new BoardState();
+            boardstate.setToDefaultPosition();
         }
         root.setBoardState(boardstate);
         makeTree(root, db, email);
