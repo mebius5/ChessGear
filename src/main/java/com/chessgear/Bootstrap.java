@@ -214,8 +214,7 @@ public class Bootstrap {
             String email = user.get("email").getAsString();
             User uses = server.getUser(email);
             GameTree tree = uses.getGameTree();
-            JsonParser jsonParser = new JsonParser();
-            JsonElement element = jsonParser.parse(request.body());
+            JsonElement element = parsed.parse(request.body());
             JsonObject jsonObject = element.getAsJsonObject();
             String pgn = jsonObject.get("pgn").getAsString();
             PGNParser currentPgnParser = new PGNParser(pgn);
