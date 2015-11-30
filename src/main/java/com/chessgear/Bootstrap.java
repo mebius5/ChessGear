@@ -202,6 +202,7 @@ public class Bootstrap {
             tree.addGame(currentTreeBuilder.getListOfNodes());
             return "Success"; // TODO
         });
+
         get("/chessgear/api/games/tree/:email/:nodeid", (request,response)-> {
             String email = request.params("email");
             int nodeid;
@@ -235,7 +236,7 @@ public class Bootstrap {
             JsonObject user = parsed.parse(temp).getAsJsonObject();
             String email = user.get("email").getAsString();
             server.logOutUser(email);
-           return "";
+            return "";
         });
         //slightly changed, pass an email instead of username, is now a put request so I can get parameters
 

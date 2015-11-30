@@ -1,6 +1,7 @@
 package com.chessgear.server;
 
 import com.chessgear.data.DatabaseService;
+import com.chessgear.data.GameTree;
 import com.chessgear.data.GameTreeNode;
 import com.chessgear.game.BoardState;
 
@@ -20,7 +21,12 @@ public class ChessGearServer {
     public ChessGearServer() {
         users = new ArrayList<>();
     }
-
+    /**
+     * Store tree
+     */
+    public void storeTree(String email, GameTree n, DatabaseService db) {
+        //insert here
+    }
     /**
      * Adding a user to the stored user Bases
      * @param user the user to be stored
