@@ -87,16 +87,19 @@ public class ChessGearServer {
     }
     /**
      * Removes a user when we no longer need its memory
-     * @param user the user to be logged out
+     * @param email the user to be logged out
      */
-    public void logOutUser(String email) {
+    public void logOutUser(String email, DatabaseService db) {
+        User temp = null;
         for (int i = 0; i < users.size(); i++) {
             if (email.equals(users.get(i).getEmail())) {
+                temp = users.get(i);
                 users.remove(i);
             }
         }
+        GameTree tree = temp.getGameTree();
+        tree.getRoot().getId();
     }
-
     /**
      * Gets a User
      * @param email

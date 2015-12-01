@@ -1,5 +1,8 @@
 package com.chessgear.data;
 
+import com.chessgear.analysis.Engine;
+import com.chessgear.analysis.EngineResult;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,18 +37,13 @@ public class GameTree {
         this.nodeMapping = new HashMap<>();
         this.root = null;
     }
-    public GameTree(GameTreeNode newroot) {
-        this.nodeIdCounter = 0;
-        this.nodeMapping = new HashMap<>();
-        this.root = newroot;
-    }
 
     /**
      * Adds a game to the tree.
-     * @param gameTreeNodes The nodes
+     * @param gameTreeNodes a list of game tree node
      */
-    public void addGame(List<GameTreeNode> gameTreeNodes) {
-
+    public void addGame(List<GameTreeNode> gameTreeNodes) throws Exception {
+        Engine engine = new Engine("./stockfish-6-src/src/./stockfish");
         if (this.root == null) {
             this.root = gameTreeNodes.get(0);
             this.root.setMultiplicity(1);
@@ -72,13 +70,16 @@ public class GameTree {
             if (!childFound) {
                 candidateChildNode.setMultiplicity(1);
                 candidateChildNode.setId(this.nodeIdCounter);
+                //System.out.println(candidateChildNode.getBoardState().toFEN());
+                EngineResult engineResult = engine.analyseFEN(candidateChildNode.getBoardState().toFEN(), 100);
+                candidateChildNode.setEngineResult(engineResult);
                 this.nodeMapping.put(this.nodeIdCounter++, candidateChildNode);
                 currentNode.addChild(candidateChildNode);
                 currentNode = candidateChildNode;
             }
 
         }
-
+        engine.terminateEngine();
     }
 
     /**
@@ -92,7 +93,7 @@ public class GameTree {
     /**
      * Gets the node with the specified id.
      * @param id Id to get node for.
-     * @return the node
+     * @return game tree node with the Id requrested
      */
     public GameTreeNode getNodeWithId(int id) {
         return nodeMapping.get(id);

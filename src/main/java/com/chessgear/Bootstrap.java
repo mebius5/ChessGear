@@ -1,6 +1,7 @@
 package com.chessgear;
 
 import com.chessgear.data.*;
+import com.chessgear.game.Game;
 import com.chessgear.server.ChessGearServer;
 import com.chessgear.server.User;
 import com.google.gson.Gson;
@@ -14,12 +15,26 @@ import java.util.*;
 
 import static spark.Spark.*;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.util.Scanner;
+
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.http.Part;
+
+import com.chessgear.data.DatabaseService;
+
 /**
  * ChessGear main class.
  * Created by Ran on 10/8/2015.
  */
 public class Bootstrap {
-    public static DatabaseService database;
+
+    DatabaseService db = null;
+    private final static FileStorageService fss = null;
+
 
     /**
      * Port for server to listen on.
@@ -27,26 +42,31 @@ public class Bootstrap {
     private static final int PORT = 8080;
 
     /**
+     * The Database for the program
+     */
+    private static DatabaseService database;
+
+    public Bootstrap() {
+        dirty();
+    }
+    /**
      * Address of server.
      */
     private static final String ADDRESS = "localhost";
 
-    public static void dirty() {
+    public void dirty() {
         database = null;
         try {
-            database = new DatabaseService("neil");
-            System.out.println("Connected");
-
+            database = new DatabaseService("neiltest");
         } catch (IOException | IllegalArgumentException b) {
             System.out.println("Failure to connect to database");
-            System.exit(0);
         }
     }
 
     /**
      * Clearing the Database
      */
-    public boolean clearDatabase(DatabaseService database) {
+    public boolean clearDatabase() {
         try {
             database.eraseDatabaseFile();
         } catch (IOException e) {
@@ -60,18 +80,15 @@ public class Bootstrap {
      * @param args this is the main
      */
     public static void main (String[] args) {
-        /**
-         * The Database for the program
-         */
-        dirty();
-
-        //initializing the database
 
         // Initialize server state
         ChessGearServer server = new ChessGearServer();
 
         port(PORT);
         ipAddress(ADDRESS);
+        //neiltest
+        HashMap<User.Property, String > map = new HashMap<>();
+        //data.addUser("email@email.com", map);
         // Handle login
         post("/chessgear/api/login", (request, response) -> {
             String temp = request.body();
@@ -184,7 +201,11 @@ public class Bootstrap {
                 return "Node does not exist!";
             }
         });
-
+        // Handle list retrieval
+        get("/chessgear/api/games/list", (request, response) -> {
+            return ""; // TODO
+        });
+        //Pgn input
         post("chessgear/api/games/import", "application/json", (request, response) -> {
             System.out.println("Request received for pgn import: " + request.body());
             String temp = request.body();
@@ -193,17 +214,18 @@ public class Bootstrap {
             String email = user.get("email").getAsString();
             User uses = server.getUser(email);
             GameTree tree = uses.getGameTree();
-            JsonParser jsonParser = new JsonParser();
-            JsonElement element = jsonParser.parse(request.body());
+            JsonElement element = parsed.parse(request.body());
             JsonObject jsonObject = element.getAsJsonObject();
             String pgn = jsonObject.get("pgn").getAsString();
             PGNParser currentPgnParser = new PGNParser(pgn);
+            Game game = new Game(currentPgnParser.getWhitePlayerName(), currentPgnParser.getBlackPlayerName(), null, pgn, currentPgnParser.getResult(), uses.getNumgames());
+            uses.addGame(game);
             GameTreeBuilder currentTreeBuilder = new GameTreeBuilder(currentPgnParser.getListOfBoardStates(), currentPgnParser.getWhiteHalfMoves(), currentPgnParser.getBlackHalfMoves());
             tree.addGame(currentTreeBuilder.getListOfNodes());
             return "Success"; // TODO
         });
 
-        get("/chessgear/api/games/tree/:email/:nodeid", (request,response)-> {
+        get("/chessgear/api/games/tree/:email/:nodeid", (request, response) -> {
             String email = request.params("email");
             int nodeid;
             try {
@@ -213,13 +235,13 @@ public class Bootstrap {
                 return errorReturn("Node not found");
             }
             User uses = server.getUser(email);
-            if(uses == null) {
+            if (uses == null) {
                 response.status(405);
                 return errorReturn("User not logged in");
             }
             GameTree tree = uses.getGameTree();
             GameTreeNode node = tree.getNodeWithId(nodeid);
-            if(node == null) {
+            if (node == null) {
                 response.status(404);
                 return errorReturn("Node not found");
             }
@@ -230,33 +252,25 @@ public class Bootstrap {
             ret.addProperty("previous", previous);
             return "";
         });
-        put("/chessgear/api/logout", (request, response) -> {
-            String temp = request.body();
-            JsonParser parsed = new JsonParser();
-            JsonObject user = parsed.parse(temp).getAsJsonObject();
-            String email = user.get("email").getAsString();
-            server.logOutUser(email);
-            return "";
-        });
         //slightly changed, pass an email instead of username, is now a put request so I can get parameters
 
         put(" /chessgear/api/:email/property", (request, response) -> {
             String email = request.params("email");
 
             Map<User.Property, String> maps = database.fetchUserProperties(email);
-            if(maps ==null) {
+            if (maps == null) {
                 response.status(405);
                 return errorReturn("User does not exist");
 
             }
-            if(server.getUser(email) == null) {
+            if (server.getUser(email) == null) {
                 response.status(405);
-               return errorReturn("User is not logged in");
+                return errorReturn("User is not logged in");
             }
             String temp = request.body();
             JsonParser parsed = new JsonParser();
             JsonObject user = parsed.parse(temp).getAsJsonObject();
-            String prop  = user.get("name").getAsString();
+            String prop = user.get("name").getAsString();
             String value;
             try {
                 value = maps.get(User.Property.valueOf(prop));
@@ -272,35 +286,86 @@ public class Bootstrap {
 
         put(" /chessgear/api/:email/property", (request, response) -> {
             String email = request.params("email");
-            if(server.getUser(email) == null) {
+            if (server.getUser(email) == null) {
                 response.status(405);
                 return errorReturn("Not Logged In");
             }
             String temp = request.body();
             JsonParser parsed = new JsonParser();
             JsonObject user = parsed.parse(temp).getAsJsonObject();
-            String prop  = user.get("name").getAsString();
+            String prop = user.get("name").getAsString();
             String value = user.get("value").getAsString();
-            if(prop.equals("EMAIL")) {
-                if(database.userExists(value)) {
+            if (prop.equals("EMAIL")) {
+                if (database.userExists(value)) {
                     response.status(401);
                     return errorReturn("Email Taken");
                 } else {
-                    Map<User.Property, String> map = database.fetchUserProperties(email);
-                    database.addUser(value, map);
+                    Map<User.Property, String> maps = database.fetchUserProperties(email);
+                    database.addUser(value, maps);
                     database.deleteUser(email);
                     response.status(200);
                     return "";
                 }
             } else {
                 try {
-                    database.updateUserProperty(email, User.Property.valueOf(prop), value );
+                    database.updateUserProperty(email, User.Property.valueOf(prop), value);
                 } catch (IllegalArgumentException e) {
                     response.status(406);
                     return errorReturn("Property Doesn't exist");
                 }
             }
             return "";
+        });
+        put("/chessgear/api/logout", (request, response) -> {
+            String temp = request.body();
+            JsonParser parsed = new JsonParser();
+            JsonObject user = parsed.parse(temp).getAsJsonObject();
+            String email = user.get("email").getAsString();
+            server.logOutUser(email, database);
+            return "";
+        });
+
+        /* ---> this is what calls this method
+         * <form enctype="multipart/form-data" action="/chessgear/api/games/import/:<useremail>" method="post">
+         *   <input id="PGN-FILE" type="file" />
+         * </form>
+         * 
+         * --> we assign ourselves atomic names to the files, to avoid possible conflicts
+         */  
+        post("/chessgear/api/games/import/:email", (request, response) -> {
+            MultipartConfigElement multipartConfigElement = new MultipartConfigElement("/tmp");
+            request.raw().setAttribute("org.eclipse.multipartConfig", multipartConfigElement);
+            Part file = request.raw().getPart("PGN-FILE"); //file is name of the upload form
+
+            String useremail = request.params(":email");
+            if(useremail == null){
+                response.status(400);
+            }
+            else{
+
+                InputStream is = file.getInputStream();
+                Scanner s = new Scanner(is, "UTF-8").useDelimiter("\\A");
+                String fileAsString = s.hasNext() ? s.next() : "";
+                s.close();
+                is.close();
+                
+                //TODO: check that those method indeed add node to the tree
+                PGNParser parse = new PGNParser(fileAsString);
+                parse.getListOfBoardStates();
+               
+                try{
+                    fss.addFile(useremail, useremail+"@"+System.currentTimeMillis()+".pgn", file.getInputStream());
+                    response.status(201);
+                }
+                catch(IOException e){
+                    response.status(400);
+                }
+                catch(IllegalArgumentException w){
+                    response.status(400);
+                }
+            }
+            
+            return ""; // TODO
         });
 
     }

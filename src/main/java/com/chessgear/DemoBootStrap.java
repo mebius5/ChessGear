@@ -95,7 +95,7 @@ public class DemoBootStrap {
 
                 return "Success"; // TODO
             });
-        } catch (PGNParseException e) {
+        } catch (Exception e) {
             System.exit(1);
         }
     }

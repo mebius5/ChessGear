@@ -26,6 +26,11 @@ public class User {
      * User's email.
      */
     private String email;
+
+    /**
+     * Number of games
+     */
+    private int numgames;
     /**
      * User's password.
      */
@@ -55,6 +60,22 @@ public class User {
         USERNAME, PASSWORD
     }
 
+    /**
+     * Adding a game
+     * @param game the game
+     */
+    public void addGame(Game game) {
+        games.add(game);
+        numgames++;
+    }
+
+    /**
+     * returning the games
+     * @return the num of games
+     */
+    public int getNumgames() {
+        return numgames;
+    }
     /**
      * Way to get the tree
      */
