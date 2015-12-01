@@ -43,7 +43,7 @@ public class GameTree {
      * @param gameTreeNodes a list of game tree node
      */
     public void addGame(List<GameTreeNode> gameTreeNodes) throws Exception {
-
+        Engine engine = new Engine("./stockfish-6-src/src/./stockfish");
         if (this.root == null) {
             this.root = gameTreeNodes.get(0);
             this.root.setMultiplicity(1);
@@ -70,7 +70,6 @@ public class GameTree {
             if (!childFound) {
                 candidateChildNode.setMultiplicity(1);
                 candidateChildNode.setId(this.nodeIdCounter);
-                Engine engine = new Engine("./stockfish-6-src/src/./stockfish");
                 //System.out.println(candidateChildNode.getBoardState().toFEN());
                 EngineResult engineResult = engine.analyseFEN(candidateChildNode.getBoardState().toFEN(), 100);
                 candidateChildNode.setEngineResult(engineResult);
@@ -80,7 +79,7 @@ public class GameTree {
             }
 
         }
-
+        engine.terminateEngine();
     }
 
     /**

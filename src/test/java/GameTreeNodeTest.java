@@ -1,22 +1,20 @@
 /**
- * Created by GradyXiao on 10/24/15.
- * JUnit Test for GameTree.java
+ * Created by GradyXiao on 12/1/15.
  */
 import static org.junit.Assert.*;
 
-import com.chessgear.data.*;
+import com.chessgear.analysis.EngineResult;
+import com.chessgear.data.GameTreeNode;
+import com.chessgear.data.PGNParser;
 import com.chessgear.game.BoardState;
-import com.chessgear.game.PieceType;
-import com.chessgear.game.Player;
+import com.chessgear.game.Move;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-
 /***
- * Test for GameTree.java
+ * Test for GameTreeNode.java
  */
-public class GameTreeTest {
+public class GameTreeNodeTest {
     private String testPGN;
 
     @Before
@@ -41,27 +39,51 @@ public class GameTreeTest {
     }
 
     @Test
-    public void testGameTree() {
+    public void testGameTreeNode(){
         try {
-            GameTree gameTree = new GameTree(); //Tests GameTree constructor
-            assertEquals(gameTree.getRoot(),null);
             PGNParser parser = new PGNParser(this.testPGN);
-            GameTreeBuilder testBuilder = new GameTreeBuilder(parser.getListOfBoardStates(), parser.getWhiteHalfMoves(), parser.getBlackHalfMoves());
-            List<GameTreeNode> gameTreeNodes = testBuilder.getListOfNodes();
+            BoardState startingBoardState = parser.getListOfBoardStates().get(0);
+            BoardState nextBoardState = parser.getListOfBoardStates().get(1);
+            Move lastMove = parser.getBlackHalfMoves().get(0);
+            EngineResult engineResult = new EngineResult();
+            int id = 0;
+            int multiplicity = 0;
 
-            gameTree.addGame(gameTreeNodes);
+            GameTreeNode gameTreeNode = new GameTreeNode(id);
+            assertEquals(gameTreeNode.getId(),id);
+            assertEquals(gameTreeNode.isRoot(),true);
 
-            BoardState startingBoardState = gameTree.getRoot().getBoardState();
-            assertEquals(startingBoardState.toFEN(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+            gameTreeNode.setBoardState(startingBoardState);
+            assertEquals(gameTreeNode.getBoardState().toFEN(), startingBoardState.toFEN());
 
-            assertEquals(gameTree.containsNode(1), true);
-            assertEquals(gameTree.getNodeWithId(1).getBoardState().toFEN(), "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1");
-            assertEquals(gameTree.getNodeWithId(1).getLastMoveMade().getWhoMoved(), Player.WHITE);
-            assertEquals(gameTree.getNodeWithId(1).getLastMoveMade().getPieceType(), PieceType.KNIGHT);
-            assertEquals(gameTree.getNodeWithId(1).getLastMoveMade().getDestination().toString(), "f3");
-        } catch (Exception e) {
+            gameTreeNode.setLastMoveMade(lastMove);
+            assertEquals(gameTreeNode.getLastMoveMade(),lastMove);
+
+            id++;
+            gameTreeNode.setId(id);
+            assertEquals(gameTreeNode.getId(),id);
+
+            gameTreeNode.setEngineResult(engineResult);
+            assertEquals(gameTreeNode.getEngineResult(),engineResult);
+
+            gameTreeNode.setMultiplicity(multiplicity);
+            assertEquals(gameTreeNode.getMultiplicity(), multiplicity);
+            gameTreeNode.incrementMultiplicity();
+            assertEquals(gameTreeNode.getMultiplicity(), ++multiplicity);
+
+            GameTreeNode parentNode = new GameTreeNode(0);
+            GameTreeNode childNode = new GameTreeNode(2);
+            gameTreeNode.setParent(parentNode);
+            gameTreeNode.addChild(childNode);
+            assertEquals(gameTreeNode.isLeaf(), false);
+            assertEquals(gameTreeNode.isRoot(), false);
+            assertEquals(gameTreeNode.getParent(),parentNode);
+            assertEquals(gameTreeNode.getChildren().get(0),childNode);
+
+        }
+        catch (Exception e){
             e.printStackTrace();
-            fail();
+            fail("Should not have thrown exception during testGameTreeNode. ");
         }
     }
 }

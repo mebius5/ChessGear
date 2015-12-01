@@ -173,10 +173,9 @@ public class GameTreeNode {
 
     /***
      * Accessor for the engine result of the node
-     * @param engineResult the engine result of the node
      * @return the engineResult of the node
      */
-    public EngineResult getEngineResult(EngineResult engineResult){
+    public EngineResult getEngineResult(){
         return this.engineResult;
     }
 
