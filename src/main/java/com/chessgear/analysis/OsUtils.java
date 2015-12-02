@@ -7,6 +7,7 @@ package com.chessgear.analysis;
 public class OsUtils {
 
     private boolean isWindows; //Determines whether the system is a Windows computer
+    private boolean is64; //Determines whether the system is a 32-bit or 64-bit architecture
     private String binaryLocation; //The location of the binary file of the system type
 
     /**
@@ -21,9 +22,13 @@ public class OsUtils {
      * Determines the binary location of the file based on whether the system isWindows or not.
      */
     private void determineBinaryLocation(){
-        if(checkIsWindows()){
-            this.binaryLocation= "./stockfish-6-src/src/./stockfish.exe";
-        } else{
+        if(checkIsWindows()){ //Windows
+            if(checkIs64()){
+                this.binaryLocation= "./stockfish-6-src/src/./stockfish-6-32.exe";
+            } else{
+                this.binaryLocation= "./stockfish-6-src/src/./stockfish-6-64.exe";
+            }
+        } else{ //Mac or Unix
             this.binaryLocation= "./stockfish-6-src/src/./stockfish";
         }
     }
@@ -37,14 +42,26 @@ public class OsUtils {
     }
 
     /**
-     * Accessor for isWindows
+     * Mutator and Accessor for isWindows
      * @return True if the system is a Windows machine or else False
      */
     public boolean checkIsWindows(){
         if(binaryLocation==null){
-            String OS = System.getProperty("os.name");
-            isWindows = OS.startsWith("Windows");
+            String os = System.getProperty("os.name");
+            isWindows = os.startsWith("Windows");
         }
         return this.isWindows;
+    }
+
+    /**
+     * Mutator and Accessor for is64
+     * @return True if the system is a 64-bit architecture or else False
+     */
+    public boolean checkIs64(){
+        if(binaryLocation==null){
+            String arch = System.getProperty("os.arch");
+            is64 = arch.endsWith("64");
+        }
+        return this.is64;
     }
 }

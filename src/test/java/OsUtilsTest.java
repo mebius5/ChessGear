@@ -8,15 +8,26 @@ import org.junit.Test;
 
 public class OsUtilsTest {
     private final String unixBinaryLocation = "./stockfish-6-src/src/./stockfish"; //Location for mac or unix binary file
-    private final String windowsBinaryLocation = "./stockfish-6-src/src/./stockfish.exe"; //Location for windows binary file
+    private final String windows32BinaryLocation = "./stockfish-6-src/src/./stockfish-6-32.exe"; //Location for 32 bit windows binary file
+    private final String windows64BinaryLocation = "./stockfish-6-src/src/./stockfish-6-64.exe"; //Location for 64 bit windows binary file
 
     @Test
     public void testOsUtils(){
         OsUtils osUtils = new OsUtils();
         if(osUtils.checkIsWindows()){
-            assertEquals(osUtils.getBinaryLocation(),windowsBinaryLocation);
+            if(osUtils.checkIs64()){ //64-bit Windows
+                assertEquals(osUtils.getBinaryLocation(),windows64BinaryLocation);
+            }
+            else { //32-bit Windows
+                assertEquals(osUtils.getBinaryLocation(),windows32BinaryLocation);
+            }
         } else {
-            assertEquals(osUtils.getBinaryLocation(),unixBinaryLocation);
+            if(osUtils.checkIs64()){ //64-bit Mac or Unix
+                assertEquals(osUtils.getBinaryLocation(),unixBinaryLocation);
+            }
+            else{ //32-bit Mac or Unix
+                assertEquals(osUtils.getBinaryLocation(),unixBinaryLocation);
+            }
         }
     }
 
