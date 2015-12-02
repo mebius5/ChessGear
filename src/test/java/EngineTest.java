@@ -63,7 +63,7 @@ public class EngineTest {
     @Test
     public void testTerminateEngine() { //Should catch IOException since you terminated Engine before analysis
         try {
-            Engine engine = new Engine("./stockfish-6-src/src/./stockfish");
+            Engine engine = new Engine(osUtils.getBinaryLocation());
             engine.terminateEngine();
             engine.analyseFEN(fen, moveTime);
             fail("Exception not thrown even though Engine was terminated");

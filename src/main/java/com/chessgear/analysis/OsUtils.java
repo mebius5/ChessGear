@@ -24,9 +24,9 @@ public class OsUtils {
     private void determineBinaryLocation(){
         if(checkIsWindows()){ //Windows
             if(checkIs64()){
-                this.binaryLocation= "./stockfish-6-src/src/./stockfish-6-32.exe";
-            } else{
                 this.binaryLocation= "./stockfish-6-src/src/./stockfish-6-64.exe";
+            } else{
+                this.binaryLocation= "./stockfish-6-src/src/./stockfish-6-32.exe";
             }
         } else{ //Mac or Unix
             this.binaryLocation= "./stockfish-6-src/src/./stockfish";
@@ -48,7 +48,7 @@ public class OsUtils {
     public boolean checkIsWindows(){
         if(binaryLocation==null){
             String os = System.getProperty("os.name");
-            isWindows = os.startsWith("Windows");
+            this.isWindows = os.startsWith("Windows");
         }
         return this.isWindows;
     }
@@ -60,7 +60,7 @@ public class OsUtils {
     public boolean checkIs64(){
         if(binaryLocation==null){
             String arch = System.getProperty("os.arch");
-            is64 = arch.endsWith("64");
+            this.is64 = arch.endsWith("64");
         }
         return this.is64;
     }
