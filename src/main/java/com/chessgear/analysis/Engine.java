@@ -11,11 +11,11 @@ import java.util.regex.MatchResult;
  * Created by Ran on 10/24/2015.
  */
 public class Engine {
-    Runtime rt; //Java runtime
-    Process proc; //Java process
+    private Runtime rt; //Java runtime
+    private Process proc; //Java process
 
-    BufferedReader stdInput; //Input from the Stock engine
-    BufferedWriter stdOutput; //Output to the Stockfish engine
+    private BufferedReader stdInput; //Input from the Stock engine
+    private BufferedWriter stdOutput; //Output to the Stockfish engine
 
     /***
      * Default constructor. Starts the Stockfish engine
@@ -96,7 +96,7 @@ public class Engine {
             scanner.close();
             return engineResult;
         } catch (IOException e){
-            //e.printStackTrace();
+            e.printStackTrace();
             throw e;
         }
     }
@@ -111,6 +111,7 @@ public class Engine {
             stdOutput.close();
             proc.destroy();
         }catch (Exception e){
+            e.printStackTrace();
             throw e;
         }
     }

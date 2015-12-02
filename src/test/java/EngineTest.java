@@ -4,24 +4,36 @@
 import static org.junit.Assert.*;
 
 import com.chessgear.analysis.Engine;
+import com.chessgear.analysis.OsUtils;
 import com.chessgear.data.PGNParseException;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.theories.internal.BooleanSupplier;
 
 import java.io.IOException;
 
 
 public class EngineTest {
 
-    private String fen = "rnbqk1r1/ppppbppp/5n2/4p3/4P3/5N2/PPPPBPPP/RNBQ1RK1 w q - 6 5";
-    private String fen2 = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-    private String fen3 = "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1";
+    private String fen;
+    private String fen2;
+    private String fen3;
+    private OsUtils osUtils;
+
     private final int moveTime = 5000;
-    private final String binaryLocation = "./stockfish-6-src/src/./stockfish";
+    @Before
+    public void initialize(){
+        fen = "rnbqk1r1/ppppbppp/5n2/4p3/4P3/5N2/PPPPBPPP/RNBQ1RK1 w q - 6 5";
+        fen2 = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+        fen3 = "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1";
+        osUtils = new OsUtils();
+    }
 
     @Test
     public void testAnalyseFEN(){
         try {
-            Engine engine = new Engine(binaryLocation);
+            Engine engine = new Engine(osUtils.getBinaryLocation());
+
             int i = 0;
             boolean result = false;
 
