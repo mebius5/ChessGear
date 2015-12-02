@@ -55,6 +55,10 @@ public class PGNParser {
      * @throws PGNParseException PGN couldn't be parsed.
      */
     public PGNParser(String pgn) throws PGNParseException {
+        if(pgn==null){
+            PGNParseException e = new PGNParseException("Null PGN string.");
+            throw e;
+        }
         this.pgn = pgn;
     }
 
@@ -313,9 +317,9 @@ public class PGNParser {
     }
 
     /**
-     *
-     * @param token
-     * @return
+     * Method to extract Square target from String token
+     * @param token the string token passed in to retrieve target
+     * @return a new Square that matches the String token
      */
     public static Square extractTarget(String token) {
         int lastIndex = getLastNumericIndex(token);

@@ -56,8 +56,7 @@ public class Piece {
      * @return Deep copy of this piece.
      */
     public Piece clone() {
-        Piece clone = new Piece(this.type, this.owner, this.location);
-        return clone;
+        return new Piece(this.type, this.owner, this.location);
     }
 
     /**

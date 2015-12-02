@@ -30,6 +30,7 @@ public class ChessGearServer {
     /**
      * Adding a user to the stored user Bases
      * @param user the user to be stored
+     * @param db the database that will be modified
      */
     public void addOnlineUser(User user, DatabaseService db) {
         String email = user.getEmail();
@@ -88,6 +89,7 @@ public class ChessGearServer {
     /**
      * Removes a user when we no longer need its memory
      * @param email the user to be logged out
+     * @param db the database that will be modified
      */
     public void logOutUser(String email, DatabaseService db) {
         User temp = null;
@@ -101,9 +103,9 @@ public class ChessGearServer {
         tree.getRoot().getId();
     }
     /**
-     * Gets a User
-     * @param email
-     * @return
+     * Gets a User from an email address
+     * @param email email address of user requested
+     * @return the requrested user with the same email address
      */
     public User getUser(String email) {
         for (int i = 0; i < users.size(); i++) {

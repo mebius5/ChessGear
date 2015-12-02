@@ -11,14 +11,14 @@ import java.util.regex.MatchResult;
  * Created by Ran on 10/24/2015.
  */
 public class Engine {
-    Runtime rt; //Java runtime
-    Process proc; //Java process
+    private Process proc; //Java process
 
-    BufferedReader stdInput; //Input from the Stock engine
-    BufferedWriter stdOutput; //Output to the Stockfish engine
+    private BufferedReader stdInput; //Input from the Stock engine
+    private BufferedWriter stdOutput; //Output to the Stockfish engine
 
     /***
-     * Default constructor. Starts the Stockfish engine
+     * Default constructor. Starts the Stockfish engine.
+     * @param binaryLocation the location of the Stockfish binary file
      */
     public Engine(String binaryLocation){
         startEngine(binaryLocation);
@@ -26,10 +26,11 @@ public class Engine {
 
     /****
      * Start the Engine process and get it ready for Engine analysis
+     * @param binaryLocation the location of the Stockfish binary file
      */
     private void startEngine(String binaryLocation) {
         try {
-            rt = Runtime.getRuntime();
+            Runtime rt = Runtime.getRuntime();
             proc = rt.exec(binaryLocation);
 
             stdOutput = new BufferedWriter(new OutputStreamWriter(proc.getOutputStream()));
@@ -44,6 +45,7 @@ public class Engine {
      * @param fen the FEN string passed in
      * @param moveTime the time for the engine to analyse for in ms
      * @return the EngineResult object containing the result of the analysis
+     * @throws Exception throws an error if something wrong happens during analyseFEN()
      */
     public EngineResult analyseFEN(String fen,int moveTime) throws Exception{
         try {
@@ -96,7 +98,7 @@ public class Engine {
             scanner.close();
             return engineResult;
         } catch (IOException e){
-            //e.printStackTrace();
+            e.printStackTrace();
             throw e;
         }
     }
@@ -111,6 +113,7 @@ public class Engine {
             stdOutput.close();
             proc.destroy();
         }catch (Exception e){
+            e.printStackTrace();
             throw e;
         }
     }

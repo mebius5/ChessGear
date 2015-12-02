@@ -63,8 +63,7 @@ public class Square {
     public boolean isOnDiagonal(Square other) {
         int xDisplace = this.getXDisplacement(other);
         int yDisplace = this.getYDisplacement(other);
-        if (Math.abs(xDisplace) == Math.abs(yDisplace)) return true;
-        return false;
+        return Math.abs(xDisplace) == Math.abs(yDisplace);
     }
 
     /**
@@ -74,8 +73,7 @@ public class Square {
      */
     public boolean isOnSameFile(Square other) {
         int xDisplace = this.getXDisplacement(other);
-        if (xDisplace == 0) return true;
-        return false;
+        return xDisplace == 0;
     }
 
     /**
@@ -85,8 +83,7 @@ public class Square {
      */
     public boolean isOnSameRank(Square other) {
         int yDisplace = this.getYDisplacement(other);
-        if (yDisplace == 0) return true;
-        return false;
+        return yDisplace == 0;
     }
 
     /**

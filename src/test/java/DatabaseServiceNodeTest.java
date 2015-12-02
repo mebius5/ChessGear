@@ -132,4 +132,110 @@ public class DatabaseServiceNodeTest {
         destroyDatabase(db);
     }
     
+    @Test
+    public void testUpdatePropertyWorks(){
+        DatabaseService db = createDatabase();
+        
+        HashMap<GameTreeNode.NodeProperties, String> prop = new HashMap<>();
+        prop.put(NodeProperties.EVAL, "0.78");
+        
+        db.addNode("gogol@gmail.com", 1, prop);
+        assertEquals(db.fetchNodeProperty("gogol@gmail.com", 1).get(NodeProperties.EVAL), "0.78");
+        
+        db.updateNodeProperty("gogol@gmail.com", 1, GameTreeNode.NodeProperties.EVAL, "0.333");
+        assertEquals(db.fetchNodeProperty("gogol@gmail.com", 1).get(NodeProperties.EVAL), "0.333");
+        
+        destroyDatabase(db);
+        
+    }
+    
+    @Test
+    public void testUpdatePropertyThrowsException(){
+        DatabaseService db = createDatabase();
+        
+        try{
+            db.updateNodeProperty("inexistant@user.com", 1, GameTreeNode.NodeProperties.EVAL, "0.333");
+            fail();
+        }
+        catch(IllegalArgumentException e){
+            
+        }
+        finally{
+            destroyDatabase(db); 
+        } 
+    }
+    
+    @Test
+    public void testRemoveWorks(){
+        DatabaseService db = createDatabase();
+        
+        HashMap<GameTreeNode.NodeProperties, String> prop = new HashMap<>();
+        prop.put(NodeProperties.EVAL, "0.78");
+        db.addNode("gogol@gmail.com", 1, prop);
+        
+        assertTrue(db.nodeExists("gogol@gmail.com", 1));
+        
+        db.deleteNode("gogol@gmail.com", 1);
+        
+        assertFalse(db.nodeExists("gogol@gmail.com", 1));
+        
+        destroyDatabase(db);
+    }
+    
+    @Test
+    public void testRemoveThrowsException(){
+        DatabaseService db = createDatabase();
+        
+        try{
+            db.deleteNode("inexistant@user.com", 1);
+            fail();
+        }
+        catch(IllegalArgumentException e){
+            
+        }
+        finally{
+            destroyDatabase(db); 
+        } 
+    }
+    
+    @Test
+    public void testRemoveWithChildrenThrowsException(){
+        /*
+         *         1
+         *        / \
+         *       /   \
+         *      2     3
+         *      |     |
+         *      5     4
+         */
+        
+        DatabaseService db = createDatabase();
+        db.addNode("jean@jean.fr", 1, Collections.emptyMap()); 
+        db.addNode("jean@jean.fr", 2, Collections.emptyMap()); 
+        db.addNode("jean@jean.fr", 3, Collections.emptyMap()); 
+        db.addNode("jean@jean.fr", 4, Collections.emptyMap()); 
+        db.addNode("jean@jean.fr", 5, Collections.emptyMap()); 
+        
+        db.addChild("jean@jean.fr", 1, 2);
+        db.addChild("jean@jean.fr", 1, 3);
+        db.addChild("jean@jean.fr", 3, 4);
+        db.addChild("jean@jean.fr", 2, 5);
+        
+        // a positive test
+        db.deleteNode("jean@jean.fr", 5);
+        db.deleteNode("jean@jean.fr", 2);
+       
+        //this one should fail!
+        try{
+            db.deleteNode("jean@jean.fr", 3);
+            fail();
+        }
+        catch(IllegalArgumentException e){
+            
+        }
+        finally{
+            destroyDatabase(db); 
+        }
+    }
+    
 }

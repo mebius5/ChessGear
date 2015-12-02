@@ -2,6 +2,7 @@ package com.chessgear.data;
 
 import com.chessgear.analysis.Engine;
 import com.chessgear.analysis.EngineResult;
+import com.chessgear.analysis.OsUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,9 +42,11 @@ public class GameTree {
     /**
      * Adds a game to the tree.
      * @param gameTreeNodes a list of game tree node
+     * @throws Exception if error occurs while adding a game to gameTree
      */
     public void addGame(List<GameTreeNode> gameTreeNodes) throws Exception {
-        Engine engine = new Engine("./stockfish-6-src/src/./stockfish");
+        OsUtils osUtils = new OsUtils();
+        Engine engine = new Engine(osUtils.getBinaryLocation());
         if (this.root == null) {
             this.root = gameTreeNodes.get(0);
             this.root.setMultiplicity(1);

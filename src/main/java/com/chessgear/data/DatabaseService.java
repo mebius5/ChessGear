@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.chessgear.data.GameTreeNode.NodeProperties;
-import com.chessgear.game.Game;
 import com.chessgear.server.User;
 import com.chessgear.server.User.Property;
 
@@ -19,14 +18,17 @@ import org.sql2o.Sql2o;
 import org.sqlite.SQLiteDataSource;
 
 /**
- * @author gilbert
- * 
- * Superkey of an user is it's e-mail adress
- * 
- * This class doesn't build user neither does it handle who is logged or encryption properties.
+ * Here are some important things to keep in mind when using this class: 
+ * <ul>
+ *  <li> This is a dumb class it does not handle who is logged in or any encryption properties.
+ *  <li> It just hides SQL implentation details.
+ *  <li> The superkey (unique identifier) of an user is it's e-mail adress.
+ *  <li> The superkey of a node is the combination of it's owner and an unique integer id.
+ * </ul>
  */
 public class DatabaseService {
 
+    //TODO: check the soundness of having a private static final modifier for this field.
     private static final String CANONICAL_DB_NAME = "chessgear.sql";
 
     private final Sql2o database;    
@@ -96,7 +98,7 @@ public class DatabaseService {
     /**
      * WARNING: ONLY FOR TESTING PURPOSE
      * 
-     * @throws IOException 
+     * @throws IOException if eraseDatabaseFile fails
      */
     public void eraseDatabaseFile() throws IOException{
         Files.delete(Paths.get(databasePath + CANONICAL_DB_NAME));
@@ -195,6 +197,14 @@ public class DatabaseService {
         return !boh.isEmpty();
     }
 
+    /**
+     * This methods tells wether a node exists or not.
+     * 
+     * @param email The e-mail of the user.
+     * @param nodeId The interger id of the node.
+     * 
+     * @return true if the node exists, else false.
+     */
     public boolean nodeExists(String email, int nodeId){
         if(!userExists(email))
             return false;
@@ -207,7 +217,34 @@ public class DatabaseService {
         
         return !boh.isEmpty(); 
     }
-     
+    
+    /**
+     * Deletes a node in the database
+     * 
+     * @param email The e-mail of the user. (it is the attribute that represent an user!)
+     * @param nodeId the id of the node
+     * 
+     * @throws IllegalArgumentException If the node does not exist in the database or the node has children
+     */
+    public void deleteNode(String email, int nodeId) throws IllegalArgumentException{        
+        if(!nodeExists(email, nodeId))
+            throw new IllegalArgumentException("Node does not exists");
+        
+        if(childrenFrom(email, nodeId).size() != 0)
+            throw new IllegalArgumentException("Node has children!");
+        
+        String cmd = "DELETE FROM Node Where email='"+email+"' and nodeid="+nodeId+";";
+        Connection conn = database.open();
+        conn.createQuery(cmd).executeUpdate();
+        
+        cmd = "DELETE FROM ParentOf Where email='"+email+"' and childid="+nodeId+";";
+        conn.createQuery(cmd).executeUpdate();
+        
+        conn.close();
+        
+
+    }
+    
     /**
      * This method fetches all the property of the user specified by it's email
      * 
@@ -242,8 +279,26 @@ public class DatabaseService {
         return toReturn;
     }
 
-    public void addGame(User u, Game g){
+    /**
+     * Updates the a field of the property of an user.
+     * 
+     * @param email The e-mail of the user. (it is the attribute that represent an user!).
+     * @param nodeId the id of the node
+     * @param p The field to modify.
+     * @param v The value to put in place.
+     * @throws IllegalArgumentException If the user does not exists in the database or if the value is null.
+     */
+    public void updateNodeProperty(String email, int nodeId, NodeProperties p, String v) throws IllegalArgumentException{
+        if(!nodeExists(email, nodeId))
+            throw new IllegalArgumentException("specified node does not exists in database");
+        if(v == null)
+            throw new IllegalArgumentException("args should not be null");
 
+        String cmd = "UPDATE Node SET "+p.toString().toLowerCase()+"='"+v+"' WHERE email = '"+email+"' AND nodeid="+nodeId+";";
+        
+        Connection conn = database.open();
+        conn.createQuery(cmd).executeUpdate();
+        conn.close();
     }
 
     /**
@@ -253,7 +308,7 @@ public class DatabaseService {
      * @param rootId The unique ID of the root (has only to be unique across nodes of the user)
      */
     public void addTree(String email, int rootId){
-        if(nodeExists(email, rootId))
+        if(!nodeExists(email, rootId))
             throw new IllegalArgumentException("Node does not exists in the database");
         
         //check that the user has not already a tree TODO: use SQL trigger mechansim to make it better
@@ -368,6 +423,16 @@ public class DatabaseService {
         return (Integer) boh.get(0).get("rootnodeid");
     }
     
+    /**
+     * This method fetch all the properties for the node. If a property was not specified, null is given as value.
+     * 
+     * @param email The e-mail of the user.
+     * @param nodeid The integer identifier.
+     * 
+     * @return A map containing the value for all properties.
+     * 
+     * @throws IllegalArgumentException if the node does not exist.
+     */
     public Map<GameTreeNode.NodeProperties, String> fetchNodeProperty(String email, int nodeid){
 
         if(!nodeExists(email, nodeid))
@@ -397,7 +462,7 @@ public class DatabaseService {
      * This methods list the children of a node
      * 
      * @param email The unique identifier of the player
-     * @param parentID The unique ID of the parent (has only to be unique across nodes of the user)
+     * @param parentId The unique ID of the parent (has only to be unique across nodes of the user)
      * 
      * @return a list of children id
      */
@@ -422,8 +487,7 @@ public class DatabaseService {
      * This method finds the parent of a child node.
      * 
      * @param email The unique identifier of the player
-     * @param childID The unique ID of the child (has only to be unique across nodes of the user)
-     * 
+     * @param childId The unique ID of the child (has only to be unique across nodes of the user)
      * @return the node from the parent
      */
     public int parentFrom(String email, int childId){
@@ -441,4 +505,5 @@ public class DatabaseService {
         
         return (Integer) boh.get(0).get("parentid");
     }
+
 }
