@@ -22,7 +22,7 @@ public class OsUtils {
      */
     private void determineBinaryLocation(){
         if(checkIsWindows()){
-            this.binaryLocation= "./stockfish-6-src/src/./stockfish2";
+            this.binaryLocation= "./stockfish-6-src/src/./stockfish.exe";
         } else{
             this.binaryLocation= "./stockfish-6-src/src/./stockfish";
         }

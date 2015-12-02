@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class OsUtilsTest {
     private final String unixBinaryLocation = "./stockfish-6-src/src/./stockfish"; //Location for mac or unix binary file
-    private final String windowsBinaryLocation = "./stockfish-6-src/src/./stockfish2"; //Location for windows binary file
+    private final String windowsBinaryLocation = "./stockfish-6-src/src/./stockfish.exe"; //Location for windows binary file
 
     @Test
     public void testOsUtils(){
