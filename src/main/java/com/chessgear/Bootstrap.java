@@ -35,7 +35,6 @@ public class Bootstrap {
     DatabaseService db = null;
     private final static FileStorageService fss = null;
 
-
     /**
      * Port for server to listen on.
      */
@@ -251,7 +250,7 @@ public class Bootstrap {
             ret.addProperty("boardstate", boardstate);
             ret.addProperty("previous", previous);
             return "";
-        });
+    });
         //slightly changed, pass an email instead of username, is now a put request so I can get parameters
 
         put(" /chessgear/api/:email/property", (request, response) -> {
