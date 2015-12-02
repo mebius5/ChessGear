@@ -5,8 +5,6 @@ package com.chessgear.analysis;
  * Used to determine the OS of the system and find location of the Stockfile binary file that corresponds to the OS system
  */
 public class OsUtils {
-    private final String unixBinaryLocation = "./stockfish-6-src/src/./stockfish"; //Location for mac or unix binary file
-    private final String windowsBinaryLocation = "./stockfish-6-src/src/./stockfish2"; //Location for windows binary file
 
     private boolean isWindows; //Determines whether the system is a Windows computer
     private String binaryLocation; //The location of the binary file of the system type
@@ -24,9 +22,9 @@ public class OsUtils {
      */
     private void determineBinaryLocation(){
         if(checkIsWindows()){
-            this.binaryLocation=windowsBinaryLocation;
+            this.binaryLocation= "./stockfish-6-src/src/./stockfish2";
         } else{
-            this.binaryLocation=unixBinaryLocation;
+            this.binaryLocation= "./stockfish-6-src/src/./stockfish";
         }
     }
 

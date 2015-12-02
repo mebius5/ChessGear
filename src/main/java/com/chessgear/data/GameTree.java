@@ -42,6 +42,7 @@ public class GameTree {
     /**
      * Adds a game to the tree.
      * @param gameTreeNodes a list of game tree node
+     * @throws Exception if error occurs while adding a game to gameTree
      */
     public void addGame(List<GameTreeNode> gameTreeNodes) throws Exception {
         OsUtils osUtils = new OsUtils();

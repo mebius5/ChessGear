@@ -10,8 +10,12 @@ import java.util.List;
  * Created by Ran on 10/8/2015.
  */
 public class User {
+
     /**
-     * Constructor
+     * Default constructor
+     * @param usernam the username of the User
+     * @param em the email of the User
+     * @param passw the password of the User
      */
     public User(String usernam, String em, String passw) {
         username = usernam;
@@ -47,7 +51,8 @@ public class User {
     private List<Game> games;
 
     /**
-     * Getting the username
+     * Getting the email of the User
+     * @return the email of the User
      */
     public String getEmail() {
         return email;
@@ -78,12 +83,14 @@ public class User {
     }
     /**
      * Way to get the tree
+     * @return the gameTree of the User
      */
     public GameTree getGameTree() { return gameTree; }
     /**
      * Setting the game tree
+     * @param tree set the gameTree of the User to tree
      */
     public void setGameTree(GameTree tree) {
-        gameTree = tree;
+        this.gameTree = tree;
     }
 }

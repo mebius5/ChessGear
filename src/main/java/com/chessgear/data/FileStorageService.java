@@ -97,11 +97,11 @@ public class FileStorageService {
      * 
      * @param email The email of the user
      * @param fileName The name of the file to store
-     * 
+     * @throws Exception throws exception if error occurs during removeFile
      * @throws IllegalArgumentException if the user or the file does not exists
      * @throws IOException if there was a problem while removing the file
      */
-    public void removeFile(String email, String fileName) throws IOException{
+    public void removeFile(String email, String fileName) throws Exception{
         if(!db.userExists(email))
             throw new IllegalArgumentException("User is not in database");
         

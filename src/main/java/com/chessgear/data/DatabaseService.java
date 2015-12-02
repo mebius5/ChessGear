@@ -98,7 +98,7 @@ public class DatabaseService {
     /**
      * WARNING: ONLY FOR TESTING PURPOSE
      * 
-     * @throws IOException 
+     * @throws IOException if eraseDatabaseFile fails
      */
     public void eraseDatabaseFile() throws IOException{
         Files.delete(Paths.get(databasePath + CANONICAL_DB_NAME));
@@ -283,9 +283,9 @@ public class DatabaseService {
      * Updates the a field of the property of an user.
      * 
      * @param email The e-mail of the user. (it is the attribute that represent an user!).
+     * @param nodeId the id of the node
      * @param p The field to modify.
      * @param v The value to put in place.
-     * 
      * @throws IllegalArgumentException If the user does not exists in the database or if the value is null.
      */
     public void updateNodeProperty(String email, int nodeId, NodeProperties p, String v) throws IllegalArgumentException{
@@ -462,7 +462,7 @@ public class DatabaseService {
      * This methods list the children of a node
      * 
      * @param email The unique identifier of the player
-     * @param parentID The unique ID of the parent (has only to be unique across nodes of the user)
+     * @param parentId The unique ID of the parent (has only to be unique across nodes of the user)
      * 
      * @return a list of children id
      */
@@ -487,8 +487,7 @@ public class DatabaseService {
      * This method finds the parent of a child node.
      * 
      * @param email The unique identifier of the player
-     * @param childID The unique ID of the child (has only to be unique across nodes of the user)
-     * 
+     * @param childId The unique ID of the child (has only to be unique across nodes of the user)
      * @return the node from the parent
      */
     public int parentFrom(String email, int childId){

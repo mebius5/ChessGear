@@ -5,10 +5,8 @@ import static org.junit.Assert.*;
 
 import com.chessgear.analysis.Engine;
 import com.chessgear.analysis.OsUtils;
-import com.chessgear.data.PGNParseException;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.theories.internal.BooleanSupplier;
 
 import java.io.IOException;
 
@@ -56,6 +54,7 @@ public class EngineTest {
             assertEquals(result, true);
 
         } catch(Exception e){
+            e.printStackTrace();
             fail("Exception should not be thrown during FEN analysis");
         }
     }

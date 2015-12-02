@@ -65,6 +65,7 @@ public class Bootstrap {
 
     /**
      * Clearing the Database
+     * @return false if error occurs while deleting database. Else, true
      */
     public boolean clearDatabase() {
         try {
