@@ -1,6 +1,7 @@
 package com.chessgear;
 
 import com.chessgear.data.*;
+import com.chessgear.game.BoardState;
 import com.chessgear.game.Game;
 import com.chessgear.server.ChessGearServer;
 import com.chessgear.server.User;
@@ -53,7 +54,7 @@ public class Bootstrap {
      */
     private static final String ADDRESS = "localhost";
 
-    public void dirty() {
+    static public void dirty() {
         database = null;
         try {
             database = new DatabaseService("neiltest");
@@ -75,14 +76,14 @@ public class Bootstrap {
         return true;
     }
     /**
-     * The Main Server
+     * The Main Server asdf
      * @param args this is the main
      */
     public static void main (String[] args) {
 
         // Initialize server state
         ChessGearServer server = new ChessGearServer();
-
+        dirty();
         port(PORT);
         ipAddress(ADDRESS);
         //neiltest
@@ -142,6 +143,12 @@ public class Bootstrap {
                 }
                 JsonObject ret = new JsonObject();
                 ret.addProperty("email", email);
+                Map<GameTreeNode.NodeProperties,String> props = new HashMap<>();
+                BoardState def = new BoardState();
+                def.setToDefaultPosition();
+                props.put(GameTreeNode.NodeProperties.BOARDSTATE, def.toFEN());
+                props.put(GameTreeNode.NodeProperties.MULTIPLICITY, "1");
+                database.addNode(email, 0,props);
                 database.addTree(email, 0);
                 return ret;
             } else {
