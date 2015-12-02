@@ -207,6 +207,26 @@ public class DatabaseService {
         
         return !boh.isEmpty(); 
     }
+    
+    /**
+     * Deletes an user in the database
+     * 
+     * @param email The e-mail of the user. (it is the attribute that represent an user!)
+     * 
+     * @throws IllegalArgumentException If the specified user does not exist in the database
+     */
+    public void deleteNode(String email, int nodeId) throws IllegalArgumentException{        
+        if(!nodeExists(email, nodeId))
+            throw new IllegalArgumentException("Node does not exists");
+        
+        if(childrenFrom(email, nodeId).size() != 0)
+            throw new IllegalArgumentException("Node has children!");
+        
+        String cmd = "DELETE FROM Node Where email='"+email+"' and nodeid="+nodeId+";";
+        Connection conn = database.open();
+        conn.createQuery(cmd).executeUpdate();
+        conn.close(); 
+    }
      
     /**
      * This method fetches all the property of the user specified by it's email
@@ -253,7 +273,7 @@ public class DatabaseService {
      * @param rootId The unique ID of the root (has only to be unique across nodes of the user)
      */
     public void addTree(String email, int rootId){
-        if(nodeExists(email, rootId))
+        if(!nodeExists(email, rootId))
             throw new IllegalArgumentException("Node does not exists in the database");
         
         //check that the user has not already a tree TODO: use SQL trigger mechansim to make it better
