@@ -209,11 +209,12 @@ public class DatabaseService {
     }
     
     /**
-     * Deletes an user in the database
+     * Deletes a node in the database
      * 
      * @param email The e-mail of the user. (it is the attribute that represent an user!)
+     * @param nodeId the id of the node
      * 
-     * @throws IllegalArgumentException If the specified user does not exist in the database
+     * @throws IllegalArgumentException If the node does not exist in the database or the node has children
      */
     public void deleteNode(String email, int nodeId) throws IllegalArgumentException{        
         if(!nodeExists(email, nodeId))
@@ -227,6 +228,8 @@ public class DatabaseService {
         conn.createQuery(cmd).executeUpdate();
         conn.close(); 
     }
+    
+    
      
     /**
      * This method fetches all the property of the user specified by it's email
@@ -262,8 +265,26 @@ public class DatabaseService {
         return toReturn;
     }
 
-    public void addGame(User u, Game g){
+    /**
+     * Updates the a field of the property of an user.
+     * 
+     * @param email The e-mail of the user. (it is the attribute that represent an user!).
+     * @param p The field to modify.
+     * @param v The value to put in place.
+     * 
+     * @throws IllegalArgumentException If the user does not exists in the database or if the value is null.
+     */
+    public void updateNodeProperty(String email, int nodeId, NodeProperties p, String v) throws IllegalArgumentException{
+        if(!nodeExists(email, nodeId))
+            throw new IllegalArgumentException("specified node does not exists in database");
+        if(v == null)
+            throw new IllegalArgumentException("args should not be null");
 
+        String cmd = "UPDATE Node SET "+p.toString().toLowerCase()+"='"+v+"' WHERE email = '"+email+"' AND nodeid="+nodeId+";";
+        
+        Connection conn = database.open();
+        conn.createQuery(cmd).executeUpdate();
+        conn.close();
     }
 
     /**
