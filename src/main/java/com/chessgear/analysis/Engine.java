@@ -98,7 +98,7 @@ public class Engine {
             scanner.close();
             return engineResult;
         } catch (IOException e){
-            e.printStackTrace();
+            //e.printStackTrace();
             throw e;
         }
     }
