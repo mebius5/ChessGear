@@ -30,9 +30,9 @@ public class OsUtils {
             }
         } else{ //Mac or Unix
             if(checkIs64()){
-                this.binaryLocation= "./stockfish-6-src/src/./stockfish-64";
-            } else{
                 this.binaryLocation= "./stockfish-6-src/src/./stockfish";
+            } else{
+                this.binaryLocation= "./stockfish-6-src/src/./stockfish-32";
             }
         }
     }

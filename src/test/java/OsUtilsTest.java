@@ -6,8 +6,8 @@ import com.chessgear.analysis.OsUtils;
 import org.junit.Test;
 
 public class OsUtilsTest {
-    private final String unix32BinaryLocation = "./stockfish-6-src/src/./stockfish"; //Location for 32 bit mac or unix binary file
-    private final String unix64BinaryLocation = "./stockfish-6-src/src/./stockfish-64"; //Location for 64 bit mac or unix binary file
+    private final String unix32BinaryLocation = "./stockfish-6-src/src/./stockfish-32"; //Location for 32 bit mac or unix binary file
+    private final String unix64BinaryLocation = "./stockfish-6-src/src/./stockfish"; //Location for 64 bit mac or unix binary file
     private final String windows32BinaryLocation = "./stockfish-6-src/src/./stockfish-6-32.exe"; //Location for 32 bit windows binary file
     private final String windows64BinaryLocation = "./stockfish-6-src/src/./stockfish-6-64.exe"; //Location for 64 bit windows binary file
 
