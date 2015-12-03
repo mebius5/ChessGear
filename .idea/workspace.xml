@@ -6,30 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="Added 32-bit binary file for Mac version of Stockfish binary file. Updated OsUtils.java and OsUtilsTest.java to be able to pick 32-bit binary file and 64-bit binary file for mac as well.">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/benchmark.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/benchmark.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/bitbase.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/bitbase.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/bitboard.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/bitboard.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/endgame.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/endgame.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/evaluate.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/evaluate.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/main.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/main.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/material.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/material.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/misc.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/misc.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/movegen.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/movegen.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/movepick.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/movepick.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/pawns.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/pawns.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/position.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/position.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/search.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/search.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/stockfish" afterPath="$PROJECT_DIR$/stockfish-6-src/src/stockfish" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/syzygy/tbprobe.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/syzygy/tbprobe.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/thread.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/thread.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/timeman.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/timeman.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/tt.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/tt.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/uci.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/uci.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stockfish-6-src/src/ucioption.o" afterPath="$PROJECT_DIR$/stockfish-6-src/src/ucioption.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/analysis/Engine.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/analysis/Engine.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stockfish-6-src/src/stockfish-64" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/analysis/OsUtils.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/analysis/OsUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/OsUtilsTest.java" afterPath="$PROJECT_DIR$/src/test/java/OsUtilsTest.java" />
     </list>
     <ignored path="ChessGear.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -890,12 +868,6 @@
       <option name="number" value="Default" />
       <updated>1443206600718</updated>
     </task>
-    <task id="LOCAL-00020" summary="Made progress on:&#10;PGN Parsing code. Boardstate code. Associated unit tests.">
-      <created>1445450259591</created>
-      <option name="number" value="00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1445450259591</updated>
-    </task>
     <task id="LOCAL-00021" summary="Made progress on:&#10;PGN Parsing code. Boardstate code. Associated unit tests.">
       <created>1445453017452</created>
       <option name="number" value="00021" />
@@ -1184,7 +1156,13 @@
       <option name="project" value="LOCAL" />
       <updated>1449100174243</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="Added 32-bit binary file for Mac version of Stockfish binary file. Updated OsUtils.java and OsUtilsTest.java to be able to pick 32-bit binary file and 64-bit binary file for mac as well.">
+      <created>1449105381922</created>
+      <option name="number" value="00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1449105381941</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1234,7 +1212,7 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32594937" sideWeight="0.49394855" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30963665" sideWeight="0.47579426" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30963665" sideWeight="0.47579426" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30963665" sideWeight="0.11954766" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32714054" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1243,7 +1221,7 @@
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24717286" sideWeight="0.50653595" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32440946" sideWeight="0.4969743" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27059773" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27059773" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.49346405" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
