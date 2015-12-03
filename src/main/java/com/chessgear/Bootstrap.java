@@ -118,7 +118,7 @@ public class Bootstrap {
         });
 
         // Handle register
-        put("/chessgear/api/register", (request, response) -> {
+        post("/chessgear/api/register", (request, response) -> {
             System.out.println("User registration request received: " + request.body());
             String temp = request.body();
             JsonParser parsed = new JsonParser();

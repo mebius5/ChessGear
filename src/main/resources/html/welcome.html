@@ -71,10 +71,12 @@
 
             $("#register-button").click(function (e) {
                 e.preventDefault();
+                alert("Registering user");
                 var loginEmail = $("#username").val();
                 var loginPassword = $("#password").val();
-                var postRequest = jQuery.post("/chessgear/api/register")
-                alert("Registering user");
+                var postRequest = jQuery.post("/chessgear/api/register", JSON.stringify({email : loginEmail, password : loginPassword}), function (data, status) {
+                    alert("Registration success!" + data);
+                });
             });
             
         });
