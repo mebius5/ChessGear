@@ -40,7 +40,7 @@ public class EngineTest {
                 i++;
             }
 
-            if(engine.analyseFEN(fen2,moveTime).getBestMove().equals("e2e4")||
+            if(engine.analyseFEN(fen2,moveTime).getBestMove().equals("e2e4 ponder e7e5")||
              engine.analyseFEN(fen2,moveTime).getBestMove().equals("g1f3") ||
                     engine.analyseFEN(fen2,moveTime).getBestMove().equals("d2d4")){
                 i++;
