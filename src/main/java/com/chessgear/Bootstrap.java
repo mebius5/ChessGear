@@ -5,27 +5,17 @@ import com.chessgear.game.BoardState;
 import com.chessgear.game.Game;
 import com.chessgear.server.ChessGearServer;
 import com.chessgear.server.User;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.http.Part;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 import static spark.Spark.*;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.util.Scanner;
-
-import javax.servlet.MultipartConfigElement;
-import javax.servlet.http.Part;
-
-import com.chessgear.data.DatabaseService;
 
 /**
  * ChessGear main class.
@@ -261,7 +251,7 @@ public class Bootstrap {
     });
         //slightly changed, pass an email instead of username, is now a put request so I can get parameters
 
-        put(" /chessgear/api/:email/property", (request, response) -> {
+        put("/chessgear/api/:email/property", (request, response) -> {
             String email = request.params("email");
 
             Map<User.Property, String> maps = database.fetchUserProperties(email);
