@@ -88,13 +88,15 @@ public class Bootstrap {
             JsonParser parsed = new JsonParser();
             JsonObject user = parsed.parse(temp).getAsJsonObject();
             String email = user.get("email").getAsString();
+
+            System.out.println("Received login request: " + request.body());
+
             if (database.userExists(email)) {
                 String pass = user.get("password").getAsString();
                 System.out.println(pass);
                 Map<User.Property, String> maps = database.fetchUserProperties(email);
                 String corr = maps.get(User.Property.PASSWORD);
                 String username = maps.get(User.Property.USERNAME);
-                System.out.println(corr);
                 if (corr.equals(pass)) {
                     response.status(200);
                     User use = new User(username, email, pass);
@@ -106,8 +108,9 @@ public class Bootstrap {
                     return error;
                 }
             } else {
+                System.out.println("User does not exist");
                 JsonObject error = new JsonObject();
-                error.addProperty("why", "User Does Not exist");
+                error.addProperty("why", "User does not exist");
                 response.status(408);
                 return error;
             }
@@ -116,13 +119,14 @@ public class Bootstrap {
 
         // Handle register
         put("/chessgear/api/register", (request, response) -> {
+            System.out.println("User registration request received: " + request.body());
             String temp = request.body();
             JsonParser parsed = new JsonParser();
             JsonObject user = parsed.parse(temp).getAsJsonObject();
             String email = user.get("email").getAsString();
             if (!(database.userExists(email))) {
                 String pass = user.get("password").getAsString();
-                String username = user.get("username").getAsString();
+                String username = user.get("email").getAsString();
                 HashMap<User.Property, String> prop = new HashMap<>();
                 prop.put(User.Property.PASSWORD, pass);
                 prop.put(User.Property.USERNAME, username);
