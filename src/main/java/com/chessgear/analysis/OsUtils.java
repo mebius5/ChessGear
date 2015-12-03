@@ -29,7 +29,11 @@ public class OsUtils {
                 this.binaryLocation= "./stockfish-6-src/src/./stockfish-6-32.exe";
             }
         } else{ //Mac or Unix
-            this.binaryLocation= "./stockfish-6-src/src/./stockfish";
+            if(checkIs64()){
+                this.binaryLocation= "./stockfish-6-src/src/./stockfish";
+            } else{
+                this.binaryLocation= "./stockfish-6-src/src/./stockfish-32";
+            }
         }
     }
 
