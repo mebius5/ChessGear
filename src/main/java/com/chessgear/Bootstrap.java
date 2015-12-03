@@ -77,6 +77,8 @@ public class Bootstrap {
         dirty();
         port(PORT);
         ipAddress(ADDRESS);
+        staticFileLocation("/html");
+
         //neiltest
         HashMap<User.Property, String > map = new HashMap<>();
         //data.addUser("email@email.com", map);
