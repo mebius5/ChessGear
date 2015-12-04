@@ -228,12 +228,12 @@ public class GameTreeNode {
      * Helper class for converting this class to JSON.
      */
     private static class GameTreeNodeJson {
-        private String boardState;
+        private String boardstate;
         private List<ChildNodeJson> children;
         private Integer previousNodeId;
 
         GameTreeNodeJson(GameTreeNode node) {
-            this.boardState = node.boardState.toFEN();
+            this.boardstate = node.boardState.toFEN();
             this.children = new ArrayList<>();
             for (GameTreeNode n : node.getChildren()) {
                 this.children.add(new ChildNodeJson(n));
