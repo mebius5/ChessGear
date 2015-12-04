@@ -59,8 +59,8 @@ public class GameTreeNode {
         this.multiplicity = 1;
     }
 
-    public static GameTreeNode rootNode() {
-        GameTreeNode result = new GameTreeNode(0);
+    public static GameTreeNode rootNode(int id) {
+        GameTreeNode result = new GameTreeNode(id);
         result.multiplicity = 0;
         result.boardState = new BoardState();
         result.boardState.setToDefaultPosition();

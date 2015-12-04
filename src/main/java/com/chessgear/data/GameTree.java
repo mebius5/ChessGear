@@ -34,9 +34,10 @@ public class GameTree {
      * Initializes a new empty game tree.
      */
     public GameTree() {
-        this.nodeIdCounter = 1;
+        this.nodeIdCounter = 0;
         this.nodeMapping = new HashMap<>();
-        this.root = GameTreeNode.rootNode();
+        this.root = GameTreeNode.rootNode(nodeIdCounter);
+        this.nodeMapping.put(nodeIdCounter++, root);
     }
 
     /**
