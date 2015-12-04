@@ -69,22 +69,20 @@ public class Engine {
                     System.out.println(s);
                 }
 
-                if(s.contains("cp")){
+                if(s.contains(" cp ")){
                     scanner = new Scanner(s);
                     scanner.findInLine("cp ([-]*\\d+)");
                     matchResult = scanner.match();
                     engineResult.setCp(Integer.parseInt(matchResult.group(1)));
                 }
 
-                if(s.contains("pv")){
+                if(s.contains(" pv ")){
                     engineResult.setPv(s.substring(s.indexOf(" pv ")+4));
                 }
 
-                if(s.contains("bestmove")) {
+                if(s.contains("bestmove ")) {
                     scanner = new Scanner(s);
-                    scanner.findInLine("bestmove (\\w+)");
-                    matchResult = scanner.match();
-                    engineResult.setBestMove(matchResult.group(1));
+                    engineResult.setBestMove(s.substring(s.lastIndexOf("bestmove")+9));
                     break;
                 }
             }
@@ -92,7 +90,7 @@ public class Engine {
             if(print) {
                 System.out.println("Last cp: " + engineResult.getCp());
                 System.out.println("Last pv: " + engineResult.getPv());
-                System.out.println("Best move was " + engineResult.getBestMove());
+                System.out.println("Best move: " + engineResult.getBestMove());
             }
             scanner.close();
             return engineResult;
