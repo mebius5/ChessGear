@@ -1,7 +1,5 @@
 package com.chessgear.analysis;
 
-import com.chessgear.data.PGNParseException;
-
 import java.io.*;
 import java.util.Scanner;
 import java.util.regex.MatchResult;
@@ -48,6 +46,7 @@ public class Engine {
      * @throws Exception throws an error if something wrong happens during analyseFEN()
      */
     public EngineResult analyseFEN(String fen,int moveTime) throws Exception{
+        System.out.println("Analyzing fen " + fen);
         try {
             EngineResult engineResult = new EngineResult(); //Results from the engine analysis
             boolean print = false; //Set to true to print

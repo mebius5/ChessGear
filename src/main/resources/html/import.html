@@ -5,6 +5,7 @@
         <link href="css/normalize.css" rel="stylesheet" type="text/css">
         <link href="css/style.css" rel="stylesheet" type="text/css">
         <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="js/js.cookie.js"></script>
     </head>
     <body>
 
@@ -48,14 +49,29 @@
         </div>
 
         <script type="text/javascript">
-            $("#pgn-submit").submit(function(e) {
+
+            $(document).ready(function() {
+                var loggedInUser = Cookies.get('loggedInUser');
+                if (loggedInUser != null) {
+                    $("#current-user").html(loggedInUser);
+                } else {
+                    window.location.replace("welcome.html");
+                }
+
+                $("#pgn-submit").submit(function(e) {
                 alert("Submitted!");
                 e.preventDefault();
                 var pgnBody = $("#pgn-body").val();
-                $.post("chessgear/api/games/import", JSON.stringify({pgn : pgnBody}), function(data) {
+                var postRequest = $.post("chessgear/api/games/import/" + loggedInUser, JSON.stringify({pgn : pgnBody}), function(data) {
                     alert(data);
                 });
+                postRequest.fail(function (data) {
+                    alert("Import failed: " + data.responseText);
+                });
             });
+            });
+
+            
 
         </script>
 

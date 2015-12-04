@@ -99,7 +99,6 @@ public class Bootstrap {
 
             if (database.userExists(email)) {
                 String pass = user.get("password").getAsString();
-                System.out.println(pass);
                 Map<User.Property, String> maps = database.fetchUserProperties(email);
                 String corr = maps.get(User.Property.PASSWORD);
                 String username = maps.get(User.Property.USERNAME);
@@ -235,6 +234,7 @@ public class Bootstrap {
         });
 
         get("/chessgear/api/games/tree/:email/:nodeid", (request, response) -> {
+            System.out.println("Request received for node " + request.params("nodeid") + " for user " + request.params("email"));
             String email = request.params("email");
             int nodeid;
             try {
@@ -249,6 +249,9 @@ public class Bootstrap {
                 return errorReturn("User not logged in");
             }
             GameTree tree = uses.getGameTree();
+            if (tree == null) {
+                return errorReturn("Tree doesn't exist!");
+            }
             GameTreeNode node = tree.getNodeWithId(nodeid);
             if (node == null) {
                 response.status(404);

@@ -15,11 +15,10 @@
                     ChessGear v1.0
                 </div>
                 <div id="current-user">
-                    <!--not signed in-->
                 </div>
                 <div id="nav">
                     <ul>
-                        <li class="active-nav"><a href="#">Home</a></li>
+                        <li class="active-nav"><a href="index.html">Home</a></li>
                         <li class="inactive-nav"><a href="import.html">Import</a></li>
                         <li class="inactive-nav"><a href="#">Account</a></li>
                         <div class="clear"></div>
@@ -60,7 +59,7 @@
                 
                 var loginEmail = $("#username").val();
                 var loginPassword = $("#password").val();
-                var postRequest = jQuery.post("/chessgear/api/login", JSON.stringify({email : loginEmail, password : loginPassword}), function (data, status) {
+                var postRequest = jQuery.post("/chessgear/api/login", JSON.stringify({user : loginEmail, password : loginPassword}), function (data, status) {
                     alert("Login success!" + data);
                     Cookies.set('loggedInUser', loginEmail);
                 });
@@ -74,7 +73,7 @@
                 alert("Registering user");
                 var loginEmail = $("#username").val();
                 var loginPassword = $("#password").val();
-                var postRequest = jQuery.post("/chessgear/api/register", JSON.stringify({email : loginEmail, password : loginPassword}), function (data, status) {
+                var postRequest = jQuery.post("/chessgear/api/register", JSON.stringify({user : loginEmail, password : loginPassword}), function (data, status) {
                     alert("Registration success!" + data);
                 });
             });

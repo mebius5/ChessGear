@@ -1,6 +1,10 @@
 package com.chessgear;
 
-import com.chessgear.data.*;
+import com.chessgear.analysis.EngineResult;
+import com.chessgear.data.GameTree;
+import com.chessgear.data.GameTreeBuilder;
+import com.chessgear.data.GameTreeNode;
+import com.chessgear.data.PGNParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -29,7 +33,9 @@ public class DemoBootStrap {
         staticFileLocation("/html");
 
         try {
+
             GameTree tree = new GameTree();
+            /*
             PGNParser parser = new PGNParser(sampleGame);
             GameTreeBuilder b = new GameTreeBuilder(parser.getListOfBoardStates(), parser.getWhiteHalfMoves(), parser.getBlackHalfMoves());
             tree.addGame(b.getListOfNodes());
@@ -39,6 +45,7 @@ public class DemoBootStrap {
             PGNParser parser3 = new PGNParser(sampleGame3);
             GameTreeBuilder b3 = new GameTreeBuilder(parser3.getListOfBoardStates(), parser3.getWhiteHalfMoves(), parser3.getBlackHalfMoves());
             tree.addGame(b3.getListOfNodes());
+            */
 
             get("chessgear/api/games/tree/:nodeid", "application/json", (request, response) -> {
                 int nodeId = Integer.parseInt(request.params("nodeid"));
@@ -73,6 +80,11 @@ public class DemoBootStrap {
                         result.append("null");
                     }
                     result.append(" }");
+
+                    EngineResult engineResult = currentNode.getEngineResult();
+                    if (engineResult != null) {
+                        System.out.println("Eval " + engineResult.getCp());
+                    }
 
                     System.out.println(result.toString());
                     return result.toString();

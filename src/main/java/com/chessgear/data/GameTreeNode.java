@@ -3,6 +3,8 @@ package com.chessgear.data;
 import com.chessgear.analysis.EngineResult;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
+import com.chessgear.game.Player;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +61,8 @@ public class GameTreeNode {
         this.multiplicity = 1;
     }
 
-    public static GameTreeNode rootNode() {
-        GameTreeNode result = new GameTreeNode(0);
+    public static GameTreeNode rootNode(int id) {
+        GameTreeNode result = new GameTreeNode(id);
         result.multiplicity = 0;
         result.boardState = new BoardState();
         result.boardState.setToDefaultPosition();
@@ -202,7 +204,82 @@ public class GameTreeNode {
     public boolean isLeaf(){
         return children.size() == 0;
     }
-    
+
+    /**
+     * Accessor for JSON string representation of children.
+     * @return
+     */
+    public String getChildrenJson() {
+        List<ChildNodeJson> jsonChildren = new ArrayList<>();
+        for (GameTreeNode n : this.children) {
+            jsonChildren.add(new ChildNodeJson(n));
+        }
+        return new GsonBuilder().serializeNulls().create().toJson(jsonChildren);
+    }
+
+    /**
+     * Gets the JSON for this node.
+     * @return
+     */
+    public String getJson() {
+        return new GsonBuilder().serializeNulls().create().toJson(new GameTreeNodeJson(this));
+    }
+
+    /**
+     * Helper class for converting this class to JSON.
+     */
+    private static class GameTreeNodeJson {
+        private String boardstate;
+        private List<ChildNodeJson> children;
+        private Integer previousNodeId;
+
+
+        GameTreeNodeJson(GameTreeNode node) {
+            this.boardstate = node.boardState.toFEN();
+            this.children = new ArrayList<>();
+            for (GameTreeNode n : node.getChildren()) {
+                this.children.add(new ChildNodeJson(n));
+            }
+            if (node.getParent() != null) {
+                this.previousNodeId = node.getParent().getId();
+            } else {
+                this.previousNodeId = null;
+            }
+        }
+    }
+
+    /**
+     * Container class for conversion of children to JSON.
+     */
+    private static class ChildNodeJson {
+
+        private int id;
+        private String name;
+        private Double eval;
+
+        ChildNodeJson(GameTreeNode node) {
+            this.id = node.getId();
+            if (node.getLastMoveMade() != null) {
+                StringBuilder nameBuilder = new StringBuilder();
+                if (node.getLastMoveMade().getWhoMoved().equals(Player.BLACK)) {
+                    nameBuilder.append("...");
+                }
+                nameBuilder.append(node.getBoardState().getFullMoveCounter());
+                nameBuilder.append(". ");
+                nameBuilder.append(node.getLastMoveMade().toString());
+                this.name = nameBuilder.toString();
+            } else {
+                this.name = null;
+            }
+            if (node.getEngineResult() != null) {
+                this.eval = node.getEngineResult().getCp() / 100;
+                if (node.getLastMoveMade().getWhoMoved().equals(Player.WHITE)) eval = -eval;
+            } else {
+                this.eval = null;
+            }
+        }
+    }
+
     public enum NodeProperties{
         EVAL, BOARDSTATE, MULTIPLICITY
     }
