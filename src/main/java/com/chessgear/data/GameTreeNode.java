@@ -3,6 +3,7 @@ package com.chessgear.data;
 import com.chessgear.analysis.EngineResult;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -202,6 +203,69 @@ public class GameTreeNode {
     public boolean isLeaf(){
         return children.size() == 0;
     }
+
+    /**
+     * Accessor for JSON string representation of children.
+     * @return
+     */
+    public String getChildrenJson() {
+        List<ChildNodeJson> jsonChildren = new ArrayList<>();
+        for (GameTreeNode n : this.children) {
+            jsonChildren.add(new ChildNodeJson(n));
+        }
+        return new GsonBuilder().serializeNulls().create().toJson(jsonChildren);
+    }
+
+    /**
+     * Gets the JSON for this node.
+     * @return
+     */
+    public String getJson() {
+        return new GsonBuilder().serializeNulls().create().toJson(new GameTreeNodeJson(this));
+    }
+
+    /**
+     * Helper class for converting this class to JSON.
+     */
+    private static class GameTreeNodeJson {
+        private String boardState;
+        private List<ChildNodeJson> children;
+        private Integer previousNodeId;
+
+        GameTreeNodeJson(GameTreeNode node) {
+            this.boardState = node.boardState.toFEN();
+            this.children = new ArrayList<>();
+            for (GameTreeNode n : node.getChildren()) {
+                this.children.add(new ChildNodeJson(n));
+            }
+            if (node.getParent() != null) {
+                this.previousNodeId = node.getParent().getId();
+            } else {
+                this.previousNodeId = null;
+            }
+        }
+    }
+
+    /**
+     * Container class for conversion of children to JSON.
+     */
+    private static class ChildNodeJson {
+
+        private int id;
+        private String name;
+
+        ChildNodeJson(GameTreeNode node) {
+            this.id = node.getId();
+            if (node.getLastMoveMade() != null) {
+                this.name = node.getLastMoveMade().toString();
+            } else {
+                this.name = null;
+            }
+
+        }
+
+    }
+
     
     public enum NodeProperties{
         EVAL, BOARDSTATE, MULTIPLICITY
