@@ -6,11 +6,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/game/Move.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/game/Move.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/game/BoardState.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/game/BoardState.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/html/import.html" afterPath="$PROJECT_DIR$/src/main/resources/html/import.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/html/index.html" afterPath="$PROJECT_DIR$/src/main/resources/html/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/html/welcome.html" afterPath="$PROJECT_DIR$/src/main/resources/html/welcome.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ChessGear.iws" />
@@ -84,24 +82,38 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DemoBootStrap.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DemoBootStrap.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/DemoBootStrap.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.1908396">
+            <state vertical-scroll-proportion="0.0">
               <caret line="104" column="16" selection-start-line="104" selection-start-column="16" selection-end-line="104" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameTreeNode.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GameTreeNode.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="234" column="28" selection-start-line="234" selection-start-column="28" selection-end-line="234" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.70801526">
+              <caret line="267" column="41" selection-start-line="267" selection-start-column="41" selection-end-line="267" selection-end-column="41" />
               <folding>
-                <element signature="e#4993#4994#0" expanded="true" />
-                <element signature="e#5094#5095#0" expanded="true" />
+                <element signature="e#5027#5028#0" expanded="true" />
+                <element signature="e#5128#5129#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BoardState.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/game/BoardState.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-14.137931">
+              <caret line="678" column="33" selection-start-line="678" selection-start-column="33" selection-end-line="678" selection-end-column="33" />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#25766#25767#0" expanded="true" />
+                <element signature="e#25809#25810#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -190,7 +202,6 @@
         <option value="$PROJECT_DIR$/src/test/java/MoveTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/SquareTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/PGNParseTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/game/BoardState.java" />
         <option value="$PROJECT_DIR$/src/test/java/BoardStateTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/GameTreeBuilderTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/EngineResultTest.java" />
@@ -221,6 +232,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/game/Move.java" />
         <option value="$PROJECT_DIR$/src/test/java/GameTreeNodeJsonTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/BootstrapNoDb.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/game/BoardState.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java" />
       </list>
     </option>
@@ -395,36 +407,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="html" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="html" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="img" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -924,12 +906,6 @@
       <option name="number" value="Default" />
       <updated>1443206600718</updated>
     </task>
-    <task id="LOCAL-00029" summary="Added TestToggle() to PlayerTest.java">
-      <created>1445739413479</created>
-      <option name="number" value="00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1445739413479</updated>
-    </task>
     <task id="LOCAL-00030" summary="Added getXYTest() to SquareTest.java">
       <created>1445739980012</created>
       <option name="number" value="00030" />
@@ -1218,7 +1194,13 @@
       <option name="project" value="LOCAL" />
       <updated>1449258841453</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="No database front-end, basic functionality complete.">
+      <created>1449260070711</created>
+      <option name="number" value="00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1449260070711</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1306,7 +1288,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added extra unit tests for pgn parser." />
     <MESSAGE value="Added functionality to Engine.java to parse cp, pv, and bestmove from FEN string. Modified the corresponding EngineTest.java as well." />
     <MESSAGE value="Modified Engine.java to make print optional.&#10;Also created EngineResult class to store the result of the Engine analysis from Engine.java.&#10;" />
     <MESSAGE value="Modified Engine.java to make print optional.&#10;Also created EngineResult class to store the result of the Engine analysis from Engine.java.&#10;Added EngineResultTest to test all methods in EngineResult&#10;" />
@@ -1331,7 +1312,8 @@
     <MESSAGE value="Front-end branch." />
     <MESSAGE value="Fixed user registration." />
     <MESSAGE value="Writing no database integration back-end." />
-    <option name="LAST_COMMIT_MESSAGE" value="Writing no database integration back-end." />
+    <MESSAGE value="No database front-end, basic functionality complete." />
+    <option name="LAST_COMMIT_MESSAGE" value="No database front-end, basic functionality complete." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1634,14 +1616,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/server/ServerNoDb.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.4828243">
@@ -1674,14 +1648,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/game/BoardState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="200" column="16" selection-start-line="200" selection-start-column="16" selection-end-line="200" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/game/Move.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.344828">
@@ -1706,15 +1672,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/GameTreeNodeJsonTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/DemoBootStrap.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1547#1548#0" expanded="true" />
-            <element signature="e#1601#1602#0" expanded="true" />
-          </folding>
+          <caret line="104" column="16" selection-start-line="104" selection-start-column="16" selection-end-line="104" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1728,22 +1690,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/server/ServerNoDb.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="234" column="28" selection-start-line="234" selection-start-column="28" selection-end-line="234" selection-end-column="28" />
+          <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/GameTreeNodeJsonTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
           <folding>
-            <element signature="e#4993#4994#0" expanded="true" />
-            <element signature="e#5094#5095#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1547#1548#0" expanded="true" />
+            <element signature="e#1601#1602#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/DemoBootStrap.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/game/BoardState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.1908396">
-          <caret line="104" column="16" selection-start-line="104" selection-start-column="16" selection-end-line="104" selection-end-column="16" />
-          <folding />
+        <state vertical-scroll-proportion="-14.137931">
+          <caret line="678" column="33" selection-start-line="678" selection-start-column="33" selection-end-line="678" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#25766#25767#0" expanded="true" />
+            <element signature="e#25809#25810#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.70801526">
+          <caret line="267" column="41" selection-start-line="267" selection-start-column="41" selection-end-line="267" selection-end-column="41" />
+          <folding>
+            <element signature="e#5027#5028#0" expanded="true" />
+            <element signature="e#5128#5129#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

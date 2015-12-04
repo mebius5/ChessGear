@@ -3,6 +3,7 @@ package com.chessgear.data;
 import com.chessgear.analysis.EngineResult;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
+import com.chessgear.game.Player;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
@@ -232,6 +233,7 @@ public class GameTreeNode {
         private List<ChildNodeJson> children;
         private Integer previousNodeId;
 
+
         GameTreeNodeJson(GameTreeNode node) {
             this.boardstate = node.boardState.toFEN();
             this.children = new ArrayList<>();
@@ -253,20 +255,30 @@ public class GameTreeNode {
 
         private int id;
         private String name;
+        private Double eval;
 
         ChildNodeJson(GameTreeNode node) {
             this.id = node.getId();
             if (node.getLastMoveMade() != null) {
-                this.name = node.getLastMoveMade().toString();
+                StringBuilder nameBuilder = new StringBuilder();
+                if (node.getLastMoveMade().getWhoMoved().equals(Player.BLACK)) {
+                    nameBuilder.append("...");
+                }
+                nameBuilder.append(node.getBoardState().getFullMoveCounter());
+                nameBuilder.append(". ");
+                nameBuilder.append(node.getLastMoveMade().toString());
+                this.name = nameBuilder.toString();
             } else {
                 this.name = null;
             }
-
+            if (node.getEngineResult() != null) {
+                this.eval = node.getEngineResult().getCp() / 100;
+            } else {
+                this.eval = null;
+            }
         }
-
     }
 
-    
     public enum NodeProperties{
         EVAL, BOARDSTATE, MULTIPLICITY
     }

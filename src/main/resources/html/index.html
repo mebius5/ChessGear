@@ -254,7 +254,7 @@
             function displayChildren(children) {
 
                 for (var c = 0; c < children.length; c++) {
-                    $("#children-list").append("<li><a href='./?node=" + children[c].id + "'>" + children[c].name + "</a></li>");
+                    $("#children-list").append("<li><a href='./?node=" + children[c].id + "'>" + children[c].name + "</a> - Eval : " + children[c].eval + "</li>");
                 }
             }
 
