@@ -27,6 +27,7 @@ public class ChessGearServer {
     public void storeTree(String email, GameTree n, DatabaseService db) {
         //insert here
     }
+
     /**
      * Adding a user to the stored user Bases
      * @param user the user to be stored
@@ -58,16 +59,23 @@ public class ChessGearServer {
             boardstate.setToDefaultPosition();
         }
         root.setBoardState(boardstate);
-        makeTree(root, db, email);
+        HashMap<Integer, GameTreeNode> nodemapping = makeTree(root, db, email);
+        GameTree tree = new GameTree();
+        tree.setNodeMapping(nodemapping);
+        tree.setRoot(root);
+        user.setGameTree(tree);
         users.add(user);
     }
     //Makes a tree from the Database with a root node
-    public int makeTree(GameTreeNode base, DatabaseService db, String email) {
+    public HashMap<Integer, GameTreeNode> makeTree(GameTreeNode base, DatabaseService db, String email) {
         List<Integer> children;
+        HashMap<Integer, GameTreeNode> nodemapping = new HashMap<>();
+        System.out.println("hey");
         try {
             children = db.childrenFrom(email, base.getId());
         } catch(IllegalArgumentException e) {
-            return 0;
+            nodemapping.put(base.getId(), base);
+            return nodemapping;
         }
         for (int i = 0; i < children.size(); i++) {
             Map<GameTreeNode.NodeProperties, String> map = db.fetchNodeProperty(email, children.get(i));
@@ -82,9 +90,11 @@ public class ChessGearServer {
             next.setBoardState(boarstate);
             base.addChild(next);
             next.setParent(base);
-            makeTree(next, db, email);
+            nodemapping = makeTree(next, db, email);
+
         }
-        return 1;
+        nodemapping.put(base.getId(), base);
+        return nodemapping;
     }
     /**
      * Removes a user when we no longer need its memory

@@ -86,7 +86,13 @@ public class Bootstrap {
         post("/chessgear/api/login", (request, response) -> {
             String temp = request.body();
             JsonParser parsed = new JsonParser();
-            JsonObject user = parsed.parse(temp).getAsJsonObject();
+            JsonObject user;
+            try {
+                user = parsed.parse(temp).getAsJsonObject();
+            } catch (IllegalStateException e) {
+                response.status(404);
+                return errorReturn("Not Found");
+            }
             String email = user.get("email").getAsString();
 
             System.out.println("Received login request: " + request.body());
@@ -145,7 +151,7 @@ public class Bootstrap {
                 def.setToDefaultPosition();
                 props.put(GameTreeNode.NodeProperties.BOARDSTATE, def.toFEN());
                 props.put(GameTreeNode.NodeProperties.MULTIPLICITY, "1");
-                database.addNode(email, 0,props);
+                database.addNode(email, 0, props);
                 database.addTree(email, 0);
                 return ret;
             } else {
@@ -249,11 +255,16 @@ public class Bootstrap {
                 return errorReturn("Node not found");
             }
             String boardstate = node.getBoardState().toFEN();
-            int previous = node.getParent().getId();
+            int previous;
+            try {
+                previous = node.getParent().getId();
+            } catch (NullPointerException e) {
+                previous = 0;
+            }
             JsonObject ret = new JsonObject();
             ret.addProperty("boardstate", boardstate);
             ret.addProperty("previous", previous);
-            return "";
+            return ret;
     });
         //slightly changed, pass an email instead of username, is now a put request so I can get parameters
 
