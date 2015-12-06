@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import com.chessgear.data.DatabaseService;
@@ -21,8 +22,18 @@ public class DatabaseServiceRelationshipTest {
     //small trick: evaluation of tests seems to be concurent, so this is to ensure that all test are independents.
     static int number = 0;
     Object lock = new Object();
+
+    public static void resetTestEnvironment(){
+        try {
+            Runtime runtime = Runtime.getRuntime();
+            runtime.exec(new String[]{"rm","-rf","erase*?.sql"});
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
     
     public DatabaseService createDatabase(){
+        resetTestEnvironment();
         DatabaseService yeh = null;
         try {
             synchronized(lock){

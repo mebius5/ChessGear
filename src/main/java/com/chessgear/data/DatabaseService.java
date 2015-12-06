@@ -17,6 +17,8 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sqlite.SQLiteDataSource;
 
+import static org.junit.Assert.fail;
+
 /**
  * Here are some important things to keep in mind when using this class: 
  * <ul>
@@ -27,7 +29,6 @@ import org.sqlite.SQLiteDataSource;
  * </ul>
  */
 public class DatabaseService {
-
     //TODO: check the soundness of having a private static final modifier for this field.
     private static final String CANONICAL_DB_NAME = "chessgear.sql";
 
@@ -46,7 +47,7 @@ public class DatabaseService {
     public DatabaseService(String prefix) throws IOException, IllegalArgumentException{
         if(prefix == null)
             throw new IllegalArgumentException();
-        
+
         this.databasePath = prefix;
         this.database = prepareCuteDatabase(prefix);
     }
