@@ -56,10 +56,13 @@ public class DatabaseService {
 
     private void resetTestEnvironment(){
         try {
-            for(int i=0;i<20;i++){
-                File file = new File("."+File.separatorChar+"erase"+i+"chessgear.sql");
-                if(file.delete()){
-                    System.out.println("Delete for erase"+i+"chessgear.sql from previous test run");
+            File file1 = new File("."+File.separatorChar);
+            File[] files = file1.listFiles();
+            for (int i=0;i<file1.listFiles().length;i++){
+                if (files[i].getName().contains("erase")) {
+                    if(files[i].getCanonicalFile().delete()){
+                        System.out.println("Deleted "+files[i].getCanonicalFile().getName()+" from previous test run");
+                    }
                 }
             }
         }catch(Exception e){
