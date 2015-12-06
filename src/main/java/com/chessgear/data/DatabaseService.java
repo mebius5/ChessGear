@@ -1,6 +1,6 @@
 package com.chessgear.data;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -48,8 +48,23 @@ public class DatabaseService {
         if(prefix == null)
             throw new IllegalArgumentException();
 
+        resetTestEnvironment();
+
         this.databasePath = prefix;
         this.database = prepareCuteDatabase(prefix);
+    }
+
+    private void resetTestEnvironment(){
+        try {
+            for(int i=0;i<20;i++){
+                File file = new File("."+File.separatorChar+"erase"+i+"chessgear.sql");
+                if(file.delete()){
+                    System.out.println("Delete for erase"+i+"chessgear.sql from previous test run");
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     private Sql2o prepareCuteDatabase(String databasePath) throws IOException{        

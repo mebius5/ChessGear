@@ -1,6 +1,10 @@
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -9,6 +13,8 @@ import org.junit.Test;
 
 import com.chessgear.data.DatabaseService;
 import com.chessgear.server.User.Property;
+
+import javax.xml.crypto.Data;
 
 /*
  *	Author:      Gilbert Maystre
@@ -23,17 +29,8 @@ public class DatabaseServiceRelationshipTest {
     static int number = 0;
     Object lock = new Object();
 
-    public static void resetTestEnvironment(){
-        try {
-            Runtime runtime = Runtime.getRuntime();
-            runtime.exec(new String[]{"rm","-rf","erase*?.sql"});
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-    
+
     public DatabaseService createDatabase(){
-        resetTestEnvironment();
         DatabaseService yeh = null;
         try {
             synchronized(lock){
