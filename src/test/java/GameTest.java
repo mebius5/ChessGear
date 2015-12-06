@@ -13,11 +13,6 @@ import java.util.Date;
 
 public class GameTest {
     @Test
-    public void testName() throws Exception {
-
-    }
-
-    @Test
     public void GameTreeConstructorTest() {
         String whitePlayerName="David";
         String blackPlayerName="Rob";

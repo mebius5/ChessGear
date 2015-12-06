@@ -3,6 +3,7 @@ package com.chessgear.server;
 import com.chessgear.data.GameTree;
 import com.chessgear.game.Game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ public class User {
         username = usernam;
         email = em;
         password = passw;
+        games = new ArrayList<>();
     }
     /**
      * User's username.
@@ -70,8 +72,8 @@ public class User {
      * @param game the game
      */
     public void addGame(Game game) {
-        games.add(game);
-        numgames++;
+        this.games.add(game);
+        this.numgames++;
     }
 
     /**

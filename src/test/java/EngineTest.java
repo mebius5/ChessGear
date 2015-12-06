@@ -15,7 +15,6 @@ public class EngineTest {
 
     private String fen;
     private String fen2;
-    private String fen3;
     private OsUtils osUtils;
 
     private final int moveTime = 5000;
@@ -23,7 +22,6 @@ public class EngineTest {
     public void initialize(){
         fen = "rnbqk1r1/ppppbppp/5n2/4p3/4P3/5N2/PPPPBPPP/RNBQ1RK1 w q - 6 5";
         fen2 = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-        fen3 = "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1";
         osUtils = new OsUtils();
     }
 
