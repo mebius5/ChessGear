@@ -293,7 +293,14 @@ public class GameTreeNode {
 
         if (o instanceof GameTreeNode) {
             GameTreeNode other = (GameTreeNode)o;
-            return other.boardState.equals(this.boardState);
+            if (this.boardState != null && other.boardState != null) {
+                return other.boardState.equals(this.boardState);
+            } else if (this.boardState == null && other.boardState == null) {
+                return true;
+            } else {
+                return false;
+            }
+
 
         } else {
             return false;
