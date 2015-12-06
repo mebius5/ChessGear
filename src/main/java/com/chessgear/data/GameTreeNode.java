@@ -283,6 +283,23 @@ public class GameTreeNode {
     public enum NodeProperties{
         EVAL, BOARDSTATE, MULTIPLICITY
     }
+
+    /**
+     * Two game tree nodes are equal if their boardstates are equal.
+     * @param o Object to compare to.
+     * @return True if it's a GameTreeNode with equivalent boardstate.
+     */
+    public boolean equals(Object o) {
+
+        if (o instanceof GameTreeNode) {
+            GameTreeNode other = (GameTreeNode)o;
+            return other.boardState.equals(this.boardState);
+
+        } else {
+            return false;
+        }
+
+    }
     
 
 }

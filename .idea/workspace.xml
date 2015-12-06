@@ -6,7 +6,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/GameTreeNodeJsonTest.java" afterPath="$PROJECT_DIR$/src/test/java/GameTreeNodeJsonTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/analysis/Engine.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/analysis/Engine.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/data/PGNParser$1.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/data/PGNParser$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/data/PGNParser$Tag.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/data/PGNParser$Tag.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/data/PGNParser.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/data/PGNParser.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/GameTreeTest.java" afterPath="$PROJECT_DIR$/src/test/java/GameTreeTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ChessGear.iws" />
@@ -58,25 +63,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="BootstrapNoDb.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/BootstrapNoDb.java">
+      <file leaf-file-name="GameTree.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTree.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="92" column="42" selection-start-line="92" selection-start-column="42" selection-end-line="92" selection-end-column="42" />
+              <caret line="78" column="65" selection-start-line="78" selection-start-column="65" selection-end-line="78" selection-end-column="65" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameTreeNodeJsonTest.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test/java/GameTreeNodeJsonTest.java">
+      <file leaf-file-name="GameTreeTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/GameTreeTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2979351">
-              <caret line="34" column="189" selection-start-line="34" selection-start-column="189" selection-end-line="34" selection-end-column="189" />
-              <folding>
-                <element signature="e#1598#1599#0" expanded="true" />
-                <element signature="e#1652#1653#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0">
+              <caret line="50" column="43" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameTreeNode.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.12258065">
+              <caret line="289" column="70" selection-start-line="289" selection-start-column="70" selection-end-line="289" selection-end-column="70" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -147,7 +159,6 @@
         <option value="$PROJECT_DIR$/src/main/resources/html/import.html" />
         <option value="$PROJECT_DIR$/.travis.yml" />
         <option value="$PROJECT_DIR$/src/test/java/GameTreeNodeTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/GameTreeTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/BootStrapTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/game/Square.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/game/Piece.java" />
@@ -169,9 +180,10 @@
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/game/Move.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/BootstrapNoDb.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/game/BoardState.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/test/java/GameTreeNodeJsonTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/GameTreeTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java" />
       </list>
     </option>
   </component>
@@ -531,27 +543,7 @@
       <recent name="$PROJECT_DIR$/stockfish-6-src/src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.GameTreeNodeJsonTest">
-    <configuration default="false" name="DemoBootStrap" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.chessgear.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="com.chessgear.DemoBootStrap" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="ChessGear" />
-      <envs />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="JUnit.GameTreeTest">
     <configuration default="false" name="BootstrapNoDb" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -623,6 +615,27 @@
       <option name="MAIN_CLASS_NAME" value="GameTreeNodeJsonTest" />
       <option name="METHOD_NAME" value="testSelfJson" />
       <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="GameTreeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="ChessGear" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="GameTreeTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -805,19 +818,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Application.DemoBootStrap" />
-      <item index="1" class="java.lang.String" itemvalue="Application.BootstrapNoDb" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.GameTreeNodeJsonTest" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.GameTreeNodeJsonTest.testChildrenJson" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.GameTreeNodeJsonTest.testSelfJson" />
+      <item index="0" class="java.lang.String" itemvalue="Application.BootstrapNoDb" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.GameTreeNodeJsonTest" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.GameTreeNodeJsonTest.testChildrenJson" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.GameTreeNodeJsonTest.testSelfJson" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.GameTreeTest" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.GameTreeNodeJsonTest" />
-        <item index="1" class="java.lang.String" itemvalue="Application.BootstrapNoDb" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.GameTreeNodeJsonTest.testSelfJson" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.GameTreeNodeJsonTest.testChildrenJson" />
-        <item index="4" class="java.lang.String" itemvalue="Application.DemoBootStrap" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.GameTreeTest" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.GameTreeNodeJsonTest" />
+        <item index="2" class="java.lang.String" itemvalue="Application.BootstrapNoDb" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.GameTreeNodeJsonTest.testSelfJson" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.GameTreeNodeJsonTest.testChildrenJson" />
       </list>
     </recent_temporary>
   </component>
@@ -843,12 +856,6 @@
       <created>1443206600718</created>
       <option name="number" value="Default" />
       <updated>1443206600718</updated>
-    </task>
-    <task id="LOCAL-00033" summary="BoardState core functionality should be complete. Added some unit tests. Rebuilt javadoc.">
-      <created>1445894565701</created>
-      <option name="number" value="00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1445894565702</updated>
     </task>
     <task id="LOCAL-00034" summary="BoardState core functionality should be complete. Added some unit tests. Rebuilt javadoc.">
       <created>1445894806190</created>
@@ -1138,7 +1145,13 @@
       <option name="project" value="LOCAL" />
       <updated>1449262185573</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="Build no db bootstrap.">
+      <created>1449366205468</created>
+      <option name="number" value="00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1449366205469</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1194,7 +1207,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32714054" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23307087" sideWeight="0.4789984" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4003268" sideWeight="0.88045233" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4003268" sideWeight="0.88045233" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32440946" sideWeight="0.4969743" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2700454" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1328,13 +1341,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/GameTreeTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4921875">
-          <caret line="60" column="96" selection-start-line="60" selection-start-column="96" selection-end-line="60" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ChessGear.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.9325153">
@@ -1440,13 +1446,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/DatabaseServiceNodeTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46952224">
-          <caret line="126" column="8" selection-start-line="126" selection-start-column="8" selection-end-line="126" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/EngineTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.057142857">
@@ -1531,13 +1530,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6164122">
-          <caret line="78" column="65" selection-start-line="78" selection-start-column="65" selection-end-line="78" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/analysis/Engine.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1549,13 +1541,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5696767">
-          <caret line="270" column="20" selection-start-line="270" selection-start-column="20" selection-end-line="270" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -1611,22 +1596,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/BootstrapNoDb.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/DatabaseServiceNodeTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="92" column="42" selection-start-line="92" selection-start-column="42" selection-end-line="92" selection-end-column="42" />
+        <state vertical-scroll-proportion="3.3184931">
+          <caret line="126" column="8" selection-start-line="126" selection-start-column="8" selection-end-line="126" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/GameTreeNodeJsonTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2979351">
+        <state vertical-scroll-proportion="0.8441781">
           <caret line="34" column="189" selection-start-line="34" selection-start-column="189" selection-end-line="34" selection-end-column="189" />
           <folding>
             <element signature="e#1598#1599#0" expanded="true" />
             <element signature="e#1652#1653#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/BootstrapNoDb.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.83219177">
+          <caret line="92" column="42" selection-start-line="92" selection-start-column="42" selection-end-line="92" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="78" column="65" selection-start-line="78" selection-start-column="65" selection-end-line="78" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/GameTreeTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="50" column="43" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.12258065">
+          <caret line="289" column="70" selection-start-line="289" selection-start-column="70" selection-end-line="289" selection-end-column="70" />
+          <folding />
         </state>
       </provider>
     </entry>
