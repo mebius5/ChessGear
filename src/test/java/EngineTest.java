@@ -64,7 +64,7 @@ public class EngineTest {
             Engine engine = new Engine(osUtils.getBinaryLocation());
             engine.terminateEngine();
             engine.analyseFEN(fen, moveTime);
-            fail("Exception not thrown even though Engine was terminated");
+            fail("Exception not thrown even though Engine was terminated. ");
         }catch (Exception e){
             //e.printStackTrace();
             assert(e).getClass().equals(IOException.class);

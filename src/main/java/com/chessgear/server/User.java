@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * User class.
- * Created by Ran on 10/8/2015.
+ * Created by Ran on 10/8/2015
  */
 public class User {
 

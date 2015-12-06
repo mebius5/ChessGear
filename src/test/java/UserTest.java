@@ -53,7 +53,7 @@ public class UserTest {
             user.setGameTree(gameTree);
             assertEquals(user.getGameTree(),gameTree);
 
-            Date date = new Date(2015,12,05);
+            Date date = new Date(2015,12,01);
             Result result = Result.BLACK_WIN;
             Game game = new Game("white","black",date, testPGN, result,15);
             user.addGame(game);
