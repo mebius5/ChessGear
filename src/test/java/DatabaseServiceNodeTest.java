@@ -19,50 +19,9 @@ import com.chessgear.server.User.Property;
 
 public class DatabaseServiceNodeTest {
 
-    static String[] addresses = {"gogol@gmail.com", "jean@jean.fr", "hardcorechessplayer@jhu.edu"};
-
-    //small trick: evaluation of tests seems to be concurent, so this is to ensure that all test are independents.
-    static int number = 0;
-    Object lock = new Object();
-    
-    public DatabaseService createDatabase(){
-        DatabaseService yeh = null;
-        try {
-            synchronized(lock){
-                yeh = new DatabaseService("erase"+(number++));
-            }
-        } catch (IllegalArgumentException e) {
-            fail();
-            e.printStackTrace();
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
-        }
-        
-        for(String address: addresses){
-            HashMap<Property, String> attributes = new HashMap<Property, String>();
-            for(Property p : Property.values()){
-                attributes.put(p, address + p); 
-                //since we are going to add properties in the future, just make up something easy
-            }
-            yeh.addUser(address, attributes);
-        }
-        
-        return yeh;
-    }
-    
-    public void destroyDatabase(DatabaseService d){
-        try {
-            d.eraseDatabaseFile();
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
-        }
-    }
-
     @Test
     public void testAddNodeReallyAdds(){
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         
         //examples with no properties
         db.addNode("gogol@gmail.com", 1, Collections.emptyMap());
@@ -78,13 +37,13 @@ public class DatabaseServiceNodeTest {
             prop.put(p, p+"gogol");
         db.addNode("jean@jean.fr", 1, prop);
         assertTrue(db.nodeExists("jean@jean.fr", 1));
-        
-        destroyDatabase(db); 
+
+        DatabaseServiceTestTool.destroyDatabase(db);
     }
 
     @Test
     public void testCannotAddTwiceANode(){
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         
         try{
             db.addNode("gogol@gmail.com", 1, Collections.emptyMap());
@@ -95,13 +54,13 @@ public class DatabaseServiceNodeTest {
             
         }
         finally{
-            destroyDatabase(db); 
+            DatabaseServiceTestTool.destroyDatabase(db);
         }
     }
 
     @Test
     public void testCannotAddNodeWithInexistentUser(){
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         
         try{
             db.addNode("inexistant@user.com", 1, Collections.emptyMap());
@@ -111,13 +70,13 @@ public class DatabaseServiceNodeTest {
             
         }
         finally{
-            destroyDatabase(db); 
+            DatabaseServiceTestTool.destroyDatabase(db);
         } 
     }
     
     @Test
     public void testFetchPropertiesNodeWorks(){
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         
         HashMap<GameTreeNode.NodeProperties, String> prop = new HashMap<>();
         prop.put(NodeProperties.EVAL, "0.78");
@@ -128,13 +87,13 @@ public class DatabaseServiceNodeTest {
         //a second example with null value
         db.addNode("gogol@gmail.com", 2, Collections.emptyMap());
         assertTrue(db.fetchNodeProperty("gogol@gmail.com", 2).get(NodeProperties.EVAL) == null);
-        
-        destroyDatabase(db);
+
+        DatabaseServiceTestTool.destroyDatabase(db);
     }
     
     @Test
     public void testUpdatePropertyWorks(){
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         
         HashMap<GameTreeNode.NodeProperties, String> prop = new HashMap<>();
         prop.put(NodeProperties.EVAL, "0.78");
@@ -144,14 +103,14 @@ public class DatabaseServiceNodeTest {
         
         db.updateNodeProperty("gogol@gmail.com", 1, GameTreeNode.NodeProperties.EVAL, "0.333");
         assertEquals(db.fetchNodeProperty("gogol@gmail.com", 1).get(NodeProperties.EVAL), "0.333");
-        
-        destroyDatabase(db);
+
+        DatabaseServiceTestTool.destroyDatabase(db);
         
     }
     
     @Test
     public void testUpdatePropertyThrowsException(){
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         
         try{
             db.updateNodeProperty("inexistant@user.com", 1, GameTreeNode.NodeProperties.EVAL, "0.333");
@@ -161,13 +120,13 @@ public class DatabaseServiceNodeTest {
             
         }
         finally{
-            destroyDatabase(db); 
+            DatabaseServiceTestTool.destroyDatabase(db);
         } 
     }
     
     @Test
     public void testRemoveWorks(){
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         
         HashMap<GameTreeNode.NodeProperties, String> prop = new HashMap<>();
         prop.put(NodeProperties.EVAL, "0.78");
@@ -178,13 +137,13 @@ public class DatabaseServiceNodeTest {
         db.deleteNode("gogol@gmail.com", 1);
         
         assertFalse(db.nodeExists("gogol@gmail.com", 1));
-        
-        destroyDatabase(db);
+
+        DatabaseServiceTestTool.destroyDatabase(db);
     }
     
     @Test
     public void testRemoveThrowsException(){
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         
         try{
             db.deleteNode("inexistant@user.com", 1);
@@ -194,7 +153,7 @@ public class DatabaseServiceNodeTest {
             
         }
         finally{
-            destroyDatabase(db); 
+            DatabaseServiceTestTool.destroyDatabase(db);
         } 
     }
     
@@ -209,7 +168,7 @@ public class DatabaseServiceNodeTest {
          *      5     4
          */
         
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         db.addNode("jean@jean.fr", 1, Collections.emptyMap()); 
         db.addNode("jean@jean.fr", 2, Collections.emptyMap()); 
         db.addNode("jean@jean.fr", 3, Collections.emptyMap()); 
@@ -234,7 +193,7 @@ public class DatabaseServiceNodeTest {
             
         }
         finally{
-            destroyDatabase(db); 
+            DatabaseServiceTestTool.destroyDatabase(db);
         }
     }
     
