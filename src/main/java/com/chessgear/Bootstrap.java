@@ -336,7 +336,7 @@ public class Bootstrap {
         put("/chessgear/api/logout", (request, response) -> {
             String temp = request.body();
             JsonParser parsed = new JsonParser();
-            JsonObject user = parsed.parse(temp).getAsJsonObject();
+            JsonObject user = (parsed.parse(temp)).getAsJsonObject();
             String email = user.get("email").getAsString();
             server.logOutUser(email, database);
             return "";
