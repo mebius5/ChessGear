@@ -59,7 +59,7 @@ public class Engine {
             stdOutput.write(command);
             stdOutput.flush();
 
-            boolean print = true; //Set to true to print
+            boolean print = false; //Set to true to print
             obtainResultAndMaybePrint(engineResult, print);
 
             return engineResult;
