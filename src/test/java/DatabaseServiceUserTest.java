@@ -25,9 +25,10 @@ public class DatabaseServiceUserTest {
         
         try{
             yeh.addUser(null, Collections.emptyMap());
+            fail();
         }
         catch(IllegalArgumentException e){
-            
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -82,8 +83,8 @@ public class DatabaseServiceUserTest {
             yeh.fetchUserProperties(null);
             fail();
         }
-        catch(IllegalArgumentException e){
-            
+        catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -99,8 +100,8 @@ public class DatabaseServiceUserTest {
             yeh.addUser("gogol@gmail.com", Collections.emptyMap());
             fail();
         }
-        catch(IllegalArgumentException e){
-            
+        catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -142,8 +143,9 @@ public class DatabaseServiceUserTest {
             yeh.updateUserProperty("non@existent.user", Property.PASSWORD, "smth");
             fail();
         }
-        catch(IllegalArgumentException e){
-            
+        catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
+
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -156,8 +158,9 @@ public class DatabaseServiceUserTest {
             yeh.updateUserProperty(null, Property.PASSWORD, "smth");
             fail();
         }
-        catch(IllegalArgumentException e){
-            
+        catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
+
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -170,8 +173,8 @@ public class DatabaseServiceUserTest {
             yeh.updateUserProperty(null, Property.PASSWORD, "smth");
             fail();
         }
-        catch(IllegalArgumentException e){
-            
+        catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -198,7 +201,8 @@ public class DatabaseServiceUserTest {
             yeh.deleteUser("non@existent.user");
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -207,14 +211,13 @@ public class DatabaseServiceUserTest {
     
     public void testDeleteuserFailsOnNullUser(){
         
-        
         DatabaseService yeh = DatabaseServiceTestTool.createDatabase();
         try{
             yeh.deleteUser(null);
             fail();
         }
-        catch(IllegalArgumentException e){
-            
+        catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
