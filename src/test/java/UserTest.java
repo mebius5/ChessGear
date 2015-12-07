@@ -59,7 +59,7 @@ public class UserTest {
             user.addGame(game);
             assertEquals(user.getNumgames(),1);
 
-            assertEquals(User.Property.USERNAME.toString(), "USERNAME");
+            assertEquals(User.Property.EMAIL.toString(), "EMAIL");
             assertEquals(User.Property.PASSWORD.toString(), "PASSWORD");
 
         } catch (Exception e){

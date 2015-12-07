@@ -95,7 +95,7 @@ public class Bootstrap {
                 String pass = user.get("password").getAsString();
                 Map<User.Property, String> maps = database.fetchUserProperties(email);
                 String corr = maps.get(User.Property.PASSWORD);
-                String username = maps.get(User.Property.USERNAME);
+                String username = maps.get(User.Property.EMAIL);
                 if (corr.equals(pass)) {
                     response.status(200);
                     User use = new User(username, email, pass);
@@ -128,7 +128,7 @@ public class Bootstrap {
                 String username = user.get("email").getAsString();
                 HashMap<User.Property, String> prop = new HashMap<>();
                 prop.put(User.Property.PASSWORD, pass);
-                prop.put(User.Property.USERNAME, username);
+                prop.put(User.Property.EMAIL, username);
                 try {
                     database.addUser(email, prop);
                 } catch (IllegalArgumentException e) {

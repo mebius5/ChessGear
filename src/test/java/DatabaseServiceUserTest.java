@@ -124,15 +124,15 @@ public class DatabaseServiceUserTest {
         
         //positives tests
         String ad = "gogol@gmail.com";
-        yeh.updateUserProperty(ad, Property.USERNAME, "gogolito");
-        assertEquals(yeh.fetchUserProperties(ad).get(Property.USERNAME), "gogolito");
+        yeh.updateUserProperty(ad, Property.EMAIL, "gogolito");
+        assertEquals(yeh.fetchUserProperties(ad).get(Property.EMAIL), "gogolito");
         
         ad = "hardcorechessplayer@jhu.edu";
         yeh.updateUserProperty(ad, Property.PASSWORD, "somewhatthisismoresecur3");
         assertEquals(yeh.fetchUserProperties(ad).get(Property.PASSWORD), "somewhatthisismoresecur3");
         
         //negative tests
-        assertEquals(yeh.fetchUserProperties(ad).get(Property.USERNAME), ad + Property.USERNAME);
+        assertEquals(yeh.fetchUserProperties(ad).get(Property.EMAIL), ad + Property.EMAIL);
 
         DatabaseServiceTestTool.destroyDatabase(yeh);
     }
