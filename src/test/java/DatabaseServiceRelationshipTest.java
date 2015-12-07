@@ -62,7 +62,7 @@ public class DatabaseServiceRelationshipTest {
             fail();
         }
         catch(IllegalArgumentException e){
-            
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -79,7 +79,7 @@ public class DatabaseServiceRelationshipTest {
             fail();
         }
         catch(IllegalArgumentException e){
-            
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -95,7 +95,7 @@ public class DatabaseServiceRelationshipTest {
             fail();
         }
         catch(IllegalArgumentException e){
-            
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -116,7 +116,7 @@ public class DatabaseServiceRelationshipTest {
             fail();
         }
         catch(IllegalArgumentException e){
-            
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -164,7 +164,7 @@ public class DatabaseServiceRelationshipTest {
             fail();
         }
         catch(IllegalArgumentException e){
-            
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -181,7 +181,7 @@ public class DatabaseServiceRelationshipTest {
             fail();
         }
         catch(IllegalArgumentException e){
-            
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -199,7 +199,7 @@ public class DatabaseServiceRelationshipTest {
             fail();
         }
         catch(IllegalArgumentException e){
-            
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);

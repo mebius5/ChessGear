@@ -51,7 +51,7 @@ public class DatabaseServiceNodeTest {
             fail();
         }
         catch(IllegalArgumentException e){
-            
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -67,7 +67,7 @@ public class DatabaseServiceNodeTest {
             fail();
         }
         catch(IllegalArgumentException e){
-            
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -117,7 +117,7 @@ public class DatabaseServiceNodeTest {
             fail();
         }
         catch(IllegalArgumentException e){
-            
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -150,7 +150,7 @@ public class DatabaseServiceNodeTest {
             fail();
         }
         catch(IllegalArgumentException e){
-            
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -190,7 +190,7 @@ public class DatabaseServiceNodeTest {
             fail();
         }
         catch(IllegalArgumentException e){
-            
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
