@@ -37,7 +37,7 @@ public class DatabaseWrapper {
         if (!db.userExists(username))
             return null;
         int rootid = db.getRoot(username);
-        Map<User.Property, String> maps = db.fetchUserProperties(username);
+        Map<UserNoDb.Property, String> maps = db.fetchUserProperties(username);
         String corr = maps.get(UserNoDb.Property.PASSWORD);
         Map<GameTreeNode.NodeProperties, String> map = new HashMap<>();
         String board;
