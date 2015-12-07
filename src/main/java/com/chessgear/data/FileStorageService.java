@@ -59,7 +59,7 @@ public class FileStorageService {
             dir.mkdir();
 
         //check if the user already has a folder
-        File userDir = new File("/pgns/"+email);
+        File userDir = new File(rootDirectory+"/pgns/"+email);
         if(!userDir.exists())
             dir.mkdir();
 
