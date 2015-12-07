@@ -47,4 +47,14 @@ public class UserNoDb {
     public String getPassword() {
         return this.password;
     }
+    /**
+     * List of the User Properties
+     */
+    public enum Property {
+        USERNAME, PASSWORD
+    }
+
+    public void setGameTree(GameTree tree) {
+        this.gameTree = tree;
+    }
 }

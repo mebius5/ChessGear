@@ -100,6 +100,7 @@ public class GameTree {
     public void setRoot(GameTreeNode roo) {
         root = roo;
     }
+
     public void setNodeMapping(HashMap<Integer, GameTreeNode> e) {
         nodeMapping = e;
     }
@@ -119,6 +120,10 @@ public class GameTree {
      */
     public boolean containsNode(int id) {
         return nodeMapping.containsKey(id);
+    }
+
+    public void setNodeIdCounter(int high) {
+        nodeIdCounter = high;
     }
 
 }
