@@ -129,4 +129,15 @@ public class Move {
         return this.promotionType;
     }
 
+    /**
+     * Returns string representation of this move.
+     * @return String representation of this move.
+     */
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append(this.getOrigin().toString());
+        result.append(this.getDestination().toString());
+        return result.toString();
+    }
+
 }

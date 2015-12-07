@@ -4,7 +4,6 @@ import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -28,6 +27,14 @@ public class GameTreeBuilder {
         this.boardStateList = boardStateList;
         this.whiteHalfMoves = whiteHalfMoves;
         this.blackHalfMoves = blackHalfMoves;
+    }
+
+    /**
+     * Constructor with PGN parser as input.
+     * @param parser PGN Parser.
+     */
+    public GameTreeBuilder(PGNParser parser) {
+        this(parser.getListOfBoardStates(), parser.getWhiteHalfMoves(), parser.getBlackHalfMoves());
     }
 
     /**

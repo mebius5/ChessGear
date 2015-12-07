@@ -13,15 +13,10 @@ import java.util.Date;
 
 public class GameTest {
     @Test
-    public void testName() throws Exception {
-
-    }
-
-    @Test
     public void GameTreeConstructorTest() {
         String whitePlayerName="David";
         String blackPlayerName="Rob";
-        Date date = new Date(2008, 8, 28);
+        Date date = new Date(2009, 8, 28);
         String pgn ="Sample";
         Result result = Result.WHITE_WIN;
         int id = 5;

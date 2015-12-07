@@ -1,6 +1,6 @@
 package com.chessgear.data;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,17 +17,18 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sqlite.SQLiteDataSource;
 
+import static org.junit.Assert.fail;
+
 /**
  * Here are some important things to keep in mind when using this class: 
  * <ul>
  *  <li> This is a dumb class it does not handle who is logged in or any encryption properties.
  *  <li> It just hides SQL implentation details.
- *  <li> The superkey (unique identifier) of an user is it's e-mail adress.
+ *  <li> The superkey (unique identifier) of an user is it's username.
  *  <li> The superkey of a node is the combination of it's owner and an unique integer id.
  * </ul>
  */
 public class DatabaseService {
-
     //TODO: check the soundness of having a private static final modifier for this field.
     private static final String CANONICAL_DB_NAME = "chessgear.sql";
 
@@ -46,7 +47,7 @@ public class DatabaseService {
     public DatabaseService(String prefix) throws IOException, IllegalArgumentException{
         if(prefix == null)
             throw new IllegalArgumentException();
-        
+
         this.databasePath = prefix;
         this.database = prepareCuteDatabase(prefix);
     }
@@ -64,25 +65,25 @@ public class DatabaseService {
 
         Sql2o toReturn = new Sql2o(source);
         
-        //Schema for user table: User - (email, ... properties ...)
-        StringBuilder builderUserSpec = new StringBuilder("CREATE TABLE IF NOT EXISTS User(email TEXT PRIMARY KEY");
+        //Schema for user table: User - (username, ... properties ...)
+        StringBuilder builderUserSpec = new StringBuilder("CREATE TABLE IF NOT EXISTS User(username TEXT PRIMARY KEY");
         for(User.Property P : User.Property.values())
             builderUserSpec.append(", "+P.name().toLowerCase()+" TEXT");
         builderUserSpec.append(")");
         String userSpec = builderUserSpec.toString();
         
-        //Schema for nodes tables: Node - (email, nodeId, ... properties ...)        
-        StringBuilder builderNodeSpec = new StringBuilder("CREATE TABLE IF NOT EXISTS Node(email TEXT, nodeId INTEGER");
+        //Schema for nodes tables: Node - (username, nodeId, ... properties ...)        
+        StringBuilder builderNodeSpec = new StringBuilder("CREATE TABLE IF NOT EXISTS Node(username TEXT, nodeId INTEGER");
         for(GameTreeNode.NodeProperties P : GameTreeNode.NodeProperties.values())
             builderNodeSpec.append(", "+P.name().toLowerCase()+" TEXT");
-        builderNodeSpec.append(", PRIMARY KEY (email, nodeId))");
+        builderNodeSpec.append(", PRIMARY KEY (username, nodeId))");
         String nodeSpec = builderNodeSpec.toString();
         
-        //Schema for table storing trees: Tree - (email, rootId)
-        String treeSpec = "CREATE TABLE IF NOT EXISTS Tree(email TEXT PRIMARY KEY, rootNodeId INTEGER)";
+        //Schema for table storing trees: Tree - (username, rootId)
+        String treeSpec = "CREATE TABLE IF NOT EXISTS Tree(username TEXT PRIMARY KEY, rootNodeId INTEGER)";
         
-        //Schema for nodes relation: ParentOf - (email, parentId, childId) -- remember, in a tree child has only one parent
-        String parentOfSpec = "CREATE TABLE IF NOT EXISTS ParentOf(email TEXT, parentId, childId INTEGER, PRIMARY KEY (email, childId))";
+        //Schema for nodes relation: ParentOf - (username, parentId, childId) -- remember, in a tree child has only one parent
+        String parentOfSpec = "CREATE TABLE IF NOT EXISTS ParentOf(username TEXT, parentId, childId INTEGER, PRIMARY KEY (username, childId))";
         
         //run all commands
         Connection conn = toReturn.open();
@@ -98,7 +99,7 @@ public class DatabaseService {
     /**
      * WARNING: ONLY FOR TESTING PURPOSE
      * 
-     * @throws IOException 
+     * @throws IOException if eraseDatabaseFile fails
      */
     public void eraseDatabaseFile() throws IOException{
         Files.delete(Paths.get(databasePath + CANONICAL_DB_NAME));
@@ -107,20 +108,20 @@ public class DatabaseService {
     /**
      * Adds an user to the database.
      * 
-     * @param email The e-mail of the user. (it is the attribute that represent an user!).
+     * @param username The username of the user. (it is the attribute that represent an user!).
      * @param attributes The attributes of the user. If some is non-specified, NULL value will be put in the database.
      * 
-     * @throws IllegalArgumentException If the e-mail is null, already exists or the set of attributes is null.
+     * @throws IllegalArgumentException If the username is null, already exists or the set of attributes is null.
      */
-    public void addUser(String email, Map<Property,String> attributes) throws IllegalArgumentException{
-        if(email == null || attributes == null)
+    public void addUser(String username, Map<Property,String> attributes) throws IllegalArgumentException{
+        if(username == null || attributes == null)
             throw new IllegalArgumentException("args should not be null");
         
-        if(userExists(email))
+        if(userExists(username))
             throw new IllegalArgumentException("User with same superkey already exists");
         
         //constructing the sql command
-        StringBuilder cmdBuilder = new StringBuilder("INSERT INTO User Values('"+email+"'");
+        StringBuilder cmdBuilder = new StringBuilder("INSERT INTO User Values('"+username+"'");
         for(User.Property P : User.Property.values()){
             cmdBuilder.append(", ");
             
@@ -141,15 +142,15 @@ public class DatabaseService {
     /**
      * Deletes an user in the database
      * 
-     * @param email The e-mail of the user. (it is the attribute that represent an user!)
+     * @param username The username of the user. (it is the attribute that represent an user!)
      * 
      * @throws IllegalArgumentException If the specified user does not exist in the database
      */
-    public void deleteUser(String email) throws IllegalArgumentException{        
-        if(!userExists(email))
+    public void deleteUser(String username) throws IllegalArgumentException{        
+        if(!userExists(username))
             throw new IllegalArgumentException("user does not exists");
         
-        String cmd = "DELETE FROM User Where email='"+email+"';";
+        String cmd = "DELETE FROM User Where username='"+username+"';";
         Connection conn = database.open();
         conn.createQuery(cmd).executeUpdate();
         conn.close(); 
@@ -158,19 +159,19 @@ public class DatabaseService {
     /**
      * Updates the a field of the property of an user.
      * 
-     * @param email The e-mail of the user. (it is the attribute that represent an user!).
+     * @param username The username of the user. (it is the attribute that represent an user!).
      * @param p The field to modify.
      * @param v The value to put in place.
      * 
      * @throws IllegalArgumentException If the user does not exists in the database or if the value is null.
      */
-    public void updateUserProperty(String email, Property p, String v) throws IllegalArgumentException{
-        if(!userExists(email))
+    public void updateUserProperty(String username, Property p, String v) throws IllegalArgumentException{
+        if(!userExists(username))
             throw new IllegalArgumentException("specified user does not exists in database");
         if(v == null)
             throw new IllegalArgumentException("args should not be null");
 
-        String cmd = "UPDATE User SET "+p.toString().toLowerCase()+"='"+v+"' WHERE email = '"+email+"';";
+        String cmd = "UPDATE User SET "+p.toString().toLowerCase()+"='"+v+"' WHERE username='"+username+"';";
         
         Connection conn = database.open();
         conn.createQuery(cmd).executeUpdate();
@@ -178,17 +179,17 @@ public class DatabaseService {
     }
 
     /**
-     * This method looks in the database if the user specified by it's e-mail exists.
+     * This method looks in the database if the user specified by it's username exists.
      * 
-     * @param email The e-mail of the user. (it is the attribute that represent an user!)
+     * @param username The username of the user. (it is the attribute that represent an user!)
      * 
      * @return True if the user exists in the library, else false. Also if null value is provided, return false.
      */
-    public boolean userExists(String email){
-        if(email == null)
+    public boolean userExists(String username){
+        if(username == null)
             return false;
         
-        String cmd = "SELECT S.email FROM User as S where S.email = '"+email+"'";
+        String cmd = "SELECT S.username FROM User as S where S.username = '"+username+"'";
         
         Connection conn = database.open();
         List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
@@ -200,16 +201,16 @@ public class DatabaseService {
     /**
      * This methods tells wether a node exists or not.
      * 
-     * @param email The e-mail of the user.
+     * @param username The username of the user.
      * @param nodeId The interger id of the node.
      * 
      * @return true if the node exists, else false.
      */
-    public boolean nodeExists(String email, int nodeId){
-        if(!userExists(email))
+    public boolean nodeExists(String username, int nodeId){
+        if(!userExists(username))
             return false;
         
-        String cmd = "SELECT * FROM Node as N WHERE N.email = '" + email + "' and N.nodeId = " + nodeId;
+        String cmd = "SELECT * FROM Node as N WHERE N.username = '" + username + "' and N.nodeId = " + nodeId;
         
         Connection conn = database.open();
         List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
@@ -221,23 +222,23 @@ public class DatabaseService {
     /**
      * Deletes a node in the database
      * 
-     * @param email The e-mail of the user. (it is the attribute that represent an user!)
+     * @param username The username of the user. (it is the attribute that represent an user!)
      * @param nodeId the id of the node
      * 
      * @throws IllegalArgumentException If the node does not exist in the database or the node has children
      */
-    public void deleteNode(String email, int nodeId) throws IllegalArgumentException{        
-        if(!nodeExists(email, nodeId))
+    public void deleteNode(String username, int nodeId) throws IllegalArgumentException{        
+        if(!nodeExists(username, nodeId))
             throw new IllegalArgumentException("Node does not exists");
         
-        if(childrenFrom(email, nodeId).size() != 0)
+        if(childrenFrom(username, nodeId).size() != 0)
             throw new IllegalArgumentException("Node has children!");
         
-        String cmd = "DELETE FROM Node Where email='"+email+"' and nodeid="+nodeId+";";
+        String cmd = "DELETE FROM Node Where username='"+username+"' and nodeid="+nodeId+";";
         Connection conn = database.open();
         conn.createQuery(cmd).executeUpdate();
         
-        cmd = "DELETE FROM ParentOf Where email='"+email+"' and childid="+nodeId+";";
+        cmd = "DELETE FROM ParentOf Where username='"+username+"' and childid="+nodeId+";";
         conn.createQuery(cmd).executeUpdate();
         
         conn.close();
@@ -246,20 +247,20 @@ public class DatabaseService {
     }
     
     /**
-     * This method fetches all the property of the user specified by it's email
+     * This method fetches all the property of the user specified by it's username
      * 
-     * @param email The e-mail of the user. (it is the attribute that represent an user!)
+     * @param username The username of the user. (it is the attribute that represent an user!)
      * 
      * @return A map of all properties and their associated value for the user. If no value was specified for 
      * a property, then the corresponding value will simply be null. 
      * 
      * @throws IllegalArgumentException If the user does not exist see {@link #userExists(String) userExists}
      */
-    public Map<Property, String> fetchUserProperties(String email) throws IllegalArgumentException{        
-        if(!userExists(email))
+    public Map<Property, String> fetchUserProperties(String username) throws IllegalArgumentException{        
+        if(!userExists(username))
             throw new IllegalArgumentException("The user does not exists");
         
-        String cmd = "SELECT * FROM User as S where S.email = '"+email+"'";
+        String cmd = "SELECT * FROM User as S where S.username = '"+username+"'";
         
         Connection conn = database.open();
         List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
@@ -282,19 +283,19 @@ public class DatabaseService {
     /**
      * Updates the a field of the property of an user.
      * 
-     * @param email The e-mail of the user. (it is the attribute that represent an user!).
+     * @param username The username of the user. (it is the attribute that represent an user!).
+     * @param nodeId the id of the node
      * @param p The field to modify.
      * @param v The value to put in place.
-     * 
      * @throws IllegalArgumentException If the user does not exists in the database or if the value is null.
      */
-    public void updateNodeProperty(String email, int nodeId, NodeProperties p, String v) throws IllegalArgumentException{
-        if(!nodeExists(email, nodeId))
+    public void updateNodeProperty(String username, int nodeId, NodeProperties p, String v) throws IllegalArgumentException{
+        if(!nodeExists(username, nodeId))
             throw new IllegalArgumentException("specified node does not exists in database");
         if(v == null)
             throw new IllegalArgumentException("args should not be null");
 
-        String cmd = "UPDATE Node SET "+p.toString().toLowerCase()+"='"+v+"' WHERE email = '"+email+"' AND nodeid="+nodeId+";";
+        String cmd = "UPDATE Node SET "+p.toString().toLowerCase()+"='"+v+"' WHERE username = '"+username+"' AND nodeid="+nodeId+";";
         
         Connection conn = database.open();
         conn.createQuery(cmd).executeUpdate();
@@ -304,15 +305,15 @@ public class DatabaseService {
     /**
      * This method creates a GameTree for the player in the database
      * 
-     * @param email The unique identifier of the player
+     * @param username The unique identifier of the player
      * @param rootId The unique ID of the root (has only to be unique across nodes of the user)
      */
-    public void addTree(String email, int rootId){
-        if(!nodeExists(email, rootId))
+    public void addTree(String username, int rootId){
+        if(!nodeExists(username, rootId))
             throw new IllegalArgumentException("Node does not exists in the database");
         
         //check that the user has not already a tree TODO: use SQL trigger mechansim to make it better
-        String cmd = "SELECT * FROM Tree as T where T.email = '"+email+"'";
+        String cmd = "SELECT * FROM Tree as T where T.username = '"+username+"'";
         
         Connection conn = database.open();
         List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
@@ -322,7 +323,7 @@ public class DatabaseService {
             throw new IllegalArgumentException("The user already has a game tree");
         
         //finally execute command
-        cmd = "INSERT INTO Tree Values('"+email+"', "+rootId+")";
+        cmd = "INSERT INTO Tree Values('"+username+"', "+rootId+")";
         
         conn = database.open();
         conn.createQuery(cmd).executeUpdate();
@@ -330,27 +331,27 @@ public class DatabaseService {
     }
     
     /**
-     * This methods adds a node to the database. The primary keys of the node are it's email (the user to whom
+     * This methods adds a node to the database. The primary keys of the node are it's username (the user to whom
      * the node belongs to), and nodeId the id of the node (note that the nodeId has only to be unique for a particular
      * user.)
      * 
-     * @param email The email of the user to whom the node belongs.
+     * @param username The username of the user to whom the node belongs.
      * @param nodeId The id of the node. (has to be unique for the player)
      * @param properties A Map of properties that the node has (if some attributes are non specified, they will be
      * stored as NULL)
      * 
      * @throws IllegalArgumentException If the node already exists or if the user does not exists.
      */
-    public void addNode(String email, int nodeId, Map<GameTreeNode.NodeProperties, String> properties){
-        if(nodeExists(email, nodeId))
+    public void addNode(String username, int nodeId, Map<GameTreeNode.NodeProperties, String> properties){
+        if(nodeExists(username, nodeId))
             throw new IllegalArgumentException("Node already exists in database");
-        else if(!userExists(email))
+        else if(!userExists(username))
             throw new IllegalArgumentException("User does not exists");
         else if(properties == null)
             throw new IllegalArgumentException("properties cannot be null");
 
         //constructing the sql command
-        StringBuilder cmdBuilder = new StringBuilder("INSERT INTO Node Values('"+email+"', "+nodeId);
+        StringBuilder cmdBuilder = new StringBuilder("INSERT INTO Node Values('"+username+"', "+nodeId);
         for(GameTreeNode.NodeProperties P : GameTreeNode.NodeProperties.values()){
             cmdBuilder.append(", ");
             
@@ -371,14 +372,14 @@ public class DatabaseService {
     /**
      * This method adds a child node to a node
      * 
-     * @param email The unique identifier of the player
+     * @param username The unique identifier of the player
      * @param parentId The unique ID of the parent (has only to be unique across nodes of the user)
      * @param childId The unique ID of the child (has only to be unique across nodes of the user)
      * 
      * @throws IllegalArgumentException if the child already has a parent. (In a tree, there is only one parent)
      */
-    public void addChild(String email, int parentId, int childId){        
-        if(!nodeExists(email, parentId) || !nodeExists(email, childId))
+    public void addChild(String username, int parentId, int childId){        
+        if(!nodeExists(username, parentId) || !nodeExists(username, childId))
             throw new IllegalArgumentException("parent or child not present in database");
         if(parentId == childId)
             throw new IllegalArgumentException("parent cannot be it's own child (and vice-versa)");
@@ -393,7 +394,7 @@ public class DatabaseService {
             throw new IllegalArgumentException("this child already has a parent!");
 
         //now we can execute the command
-        cmd = "INSERT INTO ParentOf Values('"+email+"', "+parentId+", "+childId+")";
+        cmd = "INSERT INTO ParentOf Values('"+username+"', "+parentId+", "+childId+")";
         conn.createQuery(cmd).executeUpdate();
         conn.close();   
     }
@@ -401,16 +402,16 @@ public class DatabaseService {
     /**
      * Get the root id of the user's game tree
      * 
-     * @param email The unique identifier of the player
+     * @param username The unique identifier of the player
      * 
      * @return The id of player game tree's roote.
      */
-    public int getRoot(String email){
-        if(!userExists(email))
+    public int getRoot(String username){
+        if(!userExists(username))
             throw new IllegalArgumentException("Use does not exists in the database");
         
         
-        String cmd = "SELECT rootNodeId FROM Tree as T where T.email = '"+email+"'";
+        String cmd = "SELECT rootNodeId FROM Tree as T where T.username = '"+username+"'";
         
         
         Connection conn = database.open();
@@ -426,19 +427,19 @@ public class DatabaseService {
     /**
      * This method fetch all the properties for the node. If a property was not specified, null is given as value.
      * 
-     * @param email The e-mail of the user.
+     * @param username The username of the user.
      * @param nodeid The integer identifier.
      * 
      * @return A map containing the value for all properties.
      * 
      * @throws IllegalArgumentException if the node does not exist.
      */
-    public Map<GameTreeNode.NodeProperties, String> fetchNodeProperty(String email, int nodeid){
+    public Map<GameTreeNode.NodeProperties, String> fetchNodeProperty(String username, int nodeid){
 
-        if(!nodeExists(email, nodeid))
+        if(!nodeExists(username, nodeid))
             throw new IllegalArgumentException("The user or node does not exists");
         
-        String cmd = "SELECT * FROM Node as N where N.email = '"+email+"' and N.nodeid = '"+nodeid+"'";
+        String cmd = "SELECT * FROM Node as N where N.username = '"+username+"' and N.nodeid = '"+nodeid+"'";
         
         Connection conn = database.open();
         List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
@@ -461,16 +462,16 @@ public class DatabaseService {
     /**
      * This methods list the children of a node
      * 
-     * @param email The unique identifier of the player
-     * @param parentID The unique ID of the parent (has only to be unique across nodes of the user)
+     * @param username The unique identifier of the player
+     * @param parentId The unique ID of the parent (has only to be unique across nodes of the user)
      * 
      * @return a list of children id
      */
-    public List<Integer> childrenFrom(String email, int parentId){
-        if(!nodeExists(email, parentId))
+    public List<Integer> childrenFrom(String username, int parentId){
+        if(!nodeExists(username, parentId))
             throw new IllegalArgumentException("Use does not exists in the database");
         
-        String cmd = "SELECT childId FROM ParentOf as P where P.email = '"+email+"' and P.parentId = "+parentId;
+        String cmd = "SELECT childId FROM ParentOf as P where P.username = '"+username+"' and P.parentId = "+parentId;
         
         Connection conn = database.open();
         List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
@@ -486,16 +487,15 @@ public class DatabaseService {
     /**
      * This method finds the parent of a child node.
      * 
-     * @param email The unique identifier of the player
-     * @param childID The unique ID of the child (has only to be unique across nodes of the user)
-     * 
+     * @param username The unique identifier of the player
+     * @param childId The unique ID of the child (has only to be unique across nodes of the user)
      * @return the node from the parent
      */
-    public int parentFrom(String email, int childId){
-        if(!nodeExists(email, childId))
+    public int parentFrom(String username, int childId){
+        if(!nodeExists(username, childId))
             throw new IllegalArgumentException("node does not exists in the database");
         
-        String cmd = "SELECT parentId FROM ParentOf as P where P.email = '"+email+"' and P.childId = "+childId;
+        String cmd = "SELECT parentId FROM ParentOf as P where P.username = '"+username+"' and P.childId = "+childId;
         
         Connection conn = database.open();
         List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();

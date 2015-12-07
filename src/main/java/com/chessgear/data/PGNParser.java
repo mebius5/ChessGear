@@ -55,7 +55,12 @@ public class PGNParser {
      * @throws PGNParseException PGN couldn't be parsed.
      */
     public PGNParser(String pgn) throws PGNParseException {
+        if(pgn==null){
+            PGNParseException e = new PGNParseException("Null PGN string.");
+            throw e;
+        }
         this.pgn = pgn;
+        parseInformation();
     }
 
     /**
@@ -75,6 +80,11 @@ public class PGNParser {
                         break;
                     case "Result": this.result = Result.parseResult(t.getValue());
                         break;
+                    case "Variant":
+                        if(!t.getValue().equals("Standard")){
+                            PGNParseException e = new PGNParseException("PGN Variant other than Standard detected!. Error thrown!");
+                            throw e;
+                        }
                 }
             }
         } catch (PGNParseException e) {
@@ -232,6 +242,7 @@ public class PGNParser {
         this.boardStates = new ArrayList<>();
 
         try {
+            parseInformation();
             String strippedPgn = stripAnnotations(pgn);
             BoardState currentBoardState = new BoardState();
             currentBoardState.setToDefaultPosition();
@@ -313,9 +324,9 @@ public class PGNParser {
     }
 
     /**
-     *
-     * @param token
-     * @return
+     * Method to extract Square target from String token
+     * @param token the string token passed in to retrieve target
+     * @return a new Square that matches the String token
      */
     public static Square extractTarget(String token) {
         int lastIndex = getLastNumericIndex(token);

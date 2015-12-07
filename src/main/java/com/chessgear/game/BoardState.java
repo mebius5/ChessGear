@@ -1,7 +1,5 @@
 package com.chessgear.game;
 
-import com.chessgear.data.PGNParseException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -674,6 +672,14 @@ public class BoardState {
             if (other.equals(this.toFEN())) return true;
         }
         return false;
+    }
+
+    /**
+     * Accessor for full move counter.
+     * @return Full move counter.
+     */
+    public int getFullMoveCounter() {
+        return this.fullMoveCounter;
     }
 
 }

@@ -5,6 +5,7 @@
         <link href="css/normalize.css" rel="stylesheet" type="text/css">
         <link href="css/style.css" rel="stylesheet" type="text/css">
         <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="js/js.cookie.js"></script>
     </head>
     <body>
 
@@ -15,7 +16,6 @@
                     ChessGear v1.0
                 </div>
                 <div id="current-user">
-                    not signed in
                 </div>
                 <div id="nav">
                     <ul>
@@ -137,6 +137,14 @@
             var back = 0;
 
             $(document).ready(function() {
+
+                var loggedInUser = Cookies.get('loggedInUser');
+                if (loggedInUser != null) {
+                    $("#current-user").html(loggedInUser);
+                } else {
+                    window.location.replace("welcome.html");
+                }
+
                 // Set the board squares colors
                 for (c = 1; c <= 8; c++) { // Iterate along rank
                     if (c % 2 == 0) { // If even row: white, then black
@@ -167,13 +175,15 @@
                     nodeId = 0;
                 }
 
-                // Request default board state from tree
-                var boardStateRequest = $.get("chessgear/api/games/tree/" + nodeId, function(data) {
+                // Request board state from tree
+                
+                var boardStateRequest = $.get("chessgear/api/games/tree/" + loggedInUser + "/" + nodeId, function(data) {
                     var parsedResponse = jQuery.parseJSON(data);
                     back = parsedResponse.previousNodeId;
                     displayBoard(parsedResponse.boardstate);
                     displayChildren(parsedResponse.children);
                 });
+    
 
             });
 
@@ -182,6 +192,7 @@
             });
 
             $("#navigate-back").click(function (e) {
+                if (back != null)
                 window.location.href="./?node=" + back;
             })
 
@@ -243,7 +254,7 @@
             function displayChildren(children) {
 
                 for (var c = 0; c < children.length; c++) {
-                    $("#children-list").append("<li><a href='./?node=" + children[c] + "'>Child " + c + "</a></li>");
+                    $("#children-list").append("<li><a href='./?node=" + children[c].id + "'>" + children[c].name + "</a> - Eval : " + children[c].eval + "</li>");
                 }
             }
 

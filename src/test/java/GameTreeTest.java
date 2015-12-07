@@ -2,9 +2,10 @@
  * Created by GradyXiao on 10/24/15.
  * JUnit Test for GameTree.java
  */
-import static org.junit.Assert.*;
-
-import com.chessgear.data.*;
+import com.chessgear.data.GameTree;
+import com.chessgear.data.GameTreeBuilder;
+import com.chessgear.data.GameTreeNode;
+import com.chessgear.data.PGNParser;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.PieceType;
 import com.chessgear.game.Player;
@@ -12,6 +13,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /***
  * Test for GameTree.java
@@ -44,7 +48,7 @@ public class GameTreeTest {
     public void testGameTree() {
         try {
             GameTree gameTree = new GameTree(); //Tests GameTree constructor
-            assertEquals(gameTree.getRoot(),null);
+            assertEquals(gameTree.getRoot(),GameTreeNode.rootNode(0));
             PGNParser parser = new PGNParser(this.testPGN);
             GameTreeBuilder testBuilder = new GameTreeBuilder(parser.getListOfBoardStates(), parser.getWhiteHalfMoves(), parser.getBlackHalfMoves());
             List<GameTreeNode> gameTreeNodes = testBuilder.getListOfNodes();

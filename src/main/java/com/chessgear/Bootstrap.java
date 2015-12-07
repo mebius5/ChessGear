@@ -5,27 +5,17 @@ import com.chessgear.game.BoardState;
 import com.chessgear.game.Game;
 import com.chessgear.server.ChessGearServer;
 import com.chessgear.server.User;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.http.Part;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 import static spark.Spark.*;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.util.Scanner;
-
-import javax.servlet.MultipartConfigElement;
-import javax.servlet.http.Part;
-
-import com.chessgear.data.DatabaseService;
 
 /**
  * ChessGear main class.
@@ -65,6 +55,7 @@ public class Bootstrap {
 
     /**
      * Clearing the Database
+     * @return false if error occurs while deleting database. Else, true
      */
     public boolean clearDatabase() {
         try {
@@ -86,6 +77,8 @@ public class Bootstrap {
         dirty();
         port(PORT);
         ipAddress(ADDRESS);
+        staticFileLocation("/html");
+
         //neiltest
         HashMap<User.Property, String > map = new HashMap<>();
         //data.addUser("email@email.com", map);
@@ -95,13 +88,14 @@ public class Bootstrap {
             JsonParser parsed = new JsonParser();
             JsonObject user = parsed.parse(temp).getAsJsonObject();
             String email = user.get("email").getAsString();
+
+            System.out.println("Received login request: " + request.body());
+
             if (database.userExists(email)) {
                 String pass = user.get("password").getAsString();
-                System.out.println(pass);
                 Map<User.Property, String> maps = database.fetchUserProperties(email);
                 String corr = maps.get(User.Property.PASSWORD);
                 String username = maps.get(User.Property.USERNAME);
-                System.out.println(corr);
                 if (corr.equals(pass)) {
                     response.status(200);
                     User use = new User(username, email, pass);
@@ -113,8 +107,9 @@ public class Bootstrap {
                     return error;
                 }
             } else {
+                System.out.println("User does not exist");
                 JsonObject error = new JsonObject();
-                error.addProperty("why", "User Does Not exist");
+                error.addProperty("why", "User does not exist");
                 response.status(408);
                 return error;
             }
@@ -122,14 +117,15 @@ public class Bootstrap {
         });
 
         // Handle register
-        put("/chessgear/api/register", (request, response) -> {
+        post("/chessgear/api/register", (request, response) -> {
+            System.out.println("User registration request received: " + request.body());
             String temp = request.body();
             JsonParser parsed = new JsonParser();
             JsonObject user = parsed.parse(temp).getAsJsonObject();
             String email = user.get("email").getAsString();
             if (!(database.userExists(email))) {
                 String pass = user.get("password").getAsString();
-                String username = user.get("username").getAsString();
+                String username = user.get("email").getAsString();
                 HashMap<User.Property, String> prop = new HashMap<>();
                 prop.put(User.Property.PASSWORD, pass);
                 prop.put(User.Property.USERNAME, username);
@@ -232,6 +228,7 @@ public class Bootstrap {
         });
 
         get("/chessgear/api/games/tree/:email/:nodeid", (request, response) -> {
+            System.out.println("Request received for node " + request.params("nodeid") + " for user " + request.params("email"));
             String email = request.params("email");
             int nodeid;
             try {
@@ -246,6 +243,9 @@ public class Bootstrap {
                 return errorReturn("User not logged in");
             }
             GameTree tree = uses.getGameTree();
+            if (tree == null) {
+                return errorReturn("Tree doesn't exist!");
+            }
             GameTreeNode node = tree.getNodeWithId(nodeid);
             if (node == null) {
                 response.status(404);
@@ -260,7 +260,7 @@ public class Bootstrap {
     });
         //slightly changed, pass an email instead of username, is now a put request so I can get parameters
 
-        put(" /chessgear/api/:email/property", (request, response) -> {
+        put("/chessgear/api/:email/property", (request, response) -> {
             String email = request.params("email");
 
             Map<User.Property, String> maps = database.fetchUserProperties(email);
