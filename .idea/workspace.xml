@@ -5,11 +5,8 @@
     <option name="CUSTOM_SCOPE_NAME" value="Project Files" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="Added some asserts into DatabaseServiceUserTest.">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/data/DatabaseService.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/data/DatabaseService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/DatabaseServiceUserTest.class" afterPath="$PROJECT_DIR$/target/test-classes/DatabaseServiceUserTest.class" />
+    <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/DatabaseServiceUserTest.java" afterPath="$PROJECT_DIR$/src/test/java/DatabaseServiceUserTest.java" />
     </list>
     <ignored path="ChessGear.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -825,12 +822,6 @@
       <option name="number" value="Default" />
       <updated>1443206600718</updated>
     </task>
-    <task id="LOCAL-00042" summary="Added extra unit tests for pgn parser.">
-      <created>1446761361868</created>
-      <option name="number" value="00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1446761361868</updated>
-    </task>
     <task id="LOCAL-00043" summary="Added extra unit tests for pgn parser.">
       <created>1446761889914</created>
       <option name="number" value="00043" />
@@ -1119,7 +1110,13 @@
       <option name="project" value="LOCAL" />
       <updated>1449515552989</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="Added some assertEquals into DatabaseServiceUserTest.">
+      <created>1449516694190</created>
+      <option name="number" value="00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1449516694190</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1207,7 +1204,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Deleted exclusion of Bootstrap and ChessGearServer to make project work" />
     <MESSAGE value="Made changes to GameTree.java, added to GameTreeTest.java, made changes to GameTreeNode.java, added GameTreeNodeTest.java" />
     <MESSAGE value="Added an OsUtils class to check the OS of the system and determine the location of the Stockfish binary file. Modfied Engine.java and GameTree.java to use OsUtils instead. Added OsUtilsTest.java and modified tests for EngineTest.java and GameTreeTest.java." />
     <MESSAGE value="Refractored the code slightly. Added missing javadoc descriptors. Rebuilt JavaDoc." />
@@ -1232,7 +1228,8 @@
     <MESSAGE value="Refractored resetTestEnvironment(), createDatabase(), and deleteDatabase() into a new class called DatabaseTestTool.java" />
     <MESSAGE value="Modified EngineTest by adding one more bestMove possibility to avoid frequent test failtures on Travis-CI. Added test for GameTreeBuilder(PGNParser Parser). Deleted TreeNode.java" />
     <MESSAGE value="Refractored Engine.java by extracting the obtainResultAndMaybePrint() method and added PGNParseExceptionTest.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refractored Engine.java by extracting the obtainResultAndMaybePrint() method and added PGNParseExceptionTest.java" />
+    <MESSAGE value="Added some assertEquals into DatabaseServiceUserTest." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added some assertEquals into DatabaseServiceUserTest." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
