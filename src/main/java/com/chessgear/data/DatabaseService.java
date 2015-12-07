@@ -48,26 +48,8 @@ public class DatabaseService {
         if(prefix == null)
             throw new IllegalArgumentException();
 
-        resetTestEnvironment();
-
         this.databasePath = prefix;
         this.database = prepareCuteDatabase(prefix);
-    }
-
-    private void resetTestEnvironment(){
-        try {
-            File file1 = new File("."+File.separatorChar);
-            File[] files = file1.listFiles();
-            for (int i=0;i<file1.listFiles().length;i++){
-                if (files[i].getName().contains("erase")) {
-                    if(files[i].getCanonicalFile().delete()){
-                        System.out.println("Deleted "+files[i].getCanonicalFile().getName()+" from previous test run");
-                    }
-                }
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
     }
 
     private Sql2o prepareCuteDatabase(String databasePath) throws IOException{        

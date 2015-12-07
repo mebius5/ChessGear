@@ -23,51 +23,9 @@ import javax.xml.crypto.Data;
 
 public class DatabaseServiceRelationshipTest {
 
-    static String[] addresses = {"gogol@gmail.com", "jean@jean.fr", "hardcorechessplayer@jhu.edu"};
-
-    //small trick: evaluation of tests seems to be concurent, so this is to ensure that all test are independents.
-    static int number = 0;
-    Object lock = new Object();
-
-
-    public DatabaseService createDatabase(){
-        DatabaseService yeh = null;
-        try {
-            synchronized(lock){
-                yeh = new DatabaseService("erase"+(number++));
-            }
-        } catch (IllegalArgumentException e) {
-            fail();
-            e.printStackTrace();
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
-        }
-        
-        for(String address: addresses){
-            HashMap<Property, String> attributes = new HashMap<Property, String>();
-            for(Property p : Property.values()){
-                attributes.put(p, address + p); 
-                //since we are going to add properties in the future, just make up something easy
-            }
-            yeh.addUser(address, attributes);
-        }
-        
-        return yeh;
-    }
-    
-    public void destroyDatabase(DatabaseService d){
-        try {
-            d.eraseDatabaseFile();
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
-        }
-    }
-
     @Test
     public void testAddChildrenReallyAdds(){
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         
         db.addNode("gogol@gmail.com", 1, Collections.emptyMap());
         db.addNode("gogol@gmail.com", 2, Collections.emptyMap());
@@ -82,13 +40,13 @@ public class DatabaseServiceRelationshipTest {
         }
         
         assertNotEquals(db.childrenFrom("gogol@gmail.com", 1).size(), 1); //more stuff was added
-          
-        destroyDatabase(db);
+
+        DatabaseServiceTestTool.destroyDatabase(db);
     }
     
     @Test
     public void testAddChildrenWithInexistantNodeFails(){
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         try{
             db.addNode("gogol@gmail.com", 1, Collections.emptyMap()); 
             db.addChild("gogol@gmail.com", 1, 34);
@@ -107,13 +65,13 @@ public class DatabaseServiceRelationshipTest {
             
         }
         finally{
-            destroyDatabase(db);
+            DatabaseServiceTestTool.destroyDatabase(db);
         } 
     }
     
     @Test
     public void testAddChildrenWithInexistentUserFails(){
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         try{
             db.addNode("gogol@gmail.com", 1, Collections.emptyMap()); 
             db.addNode("gogol@gmail.com", 2, Collections.emptyMap()); 
@@ -124,13 +82,13 @@ public class DatabaseServiceRelationshipTest {
             
         }
         finally{
-            destroyDatabase(db);
+            DatabaseServiceTestTool.destroyDatabase(db);
         } 
     }
     
     @Test
     public void testChildCannotBeItsParent(){
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         try{
             db.addNode("gogol@gmail.com", 1, Collections.emptyMap()); 
             db.addChild("gogol@gmail.com", 1, 1);
@@ -140,13 +98,13 @@ public class DatabaseServiceRelationshipTest {
             
         }
         finally{
-            destroyDatabase(db);
+            DatabaseServiceTestTool.destroyDatabase(db);
         } 
     }
     
     @Test
     public void testChildCannotHaveTwoParent(){
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         try{
             db.addNode("gogol@gmail.com", 1, Collections.emptyMap());
             db.addNode("gogol@gmail.com", 2, Collections.emptyMap()); 
@@ -161,7 +119,7 @@ public class DatabaseServiceRelationshipTest {
             
         }
         finally{
-            destroyDatabase(db);
+            DatabaseServiceTestTool.destroyDatabase(db);
         } 
     }
     
@@ -176,7 +134,7 @@ public class DatabaseServiceRelationshipTest {
          *      5     4
          */
         
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         db.addNode("jean@jean.fr", 1, Collections.emptyMap()); 
         db.addNode("jean@jean.fr", 2, Collections.emptyMap()); 
         db.addNode("jean@jean.fr", 3, Collections.emptyMap()); 
@@ -192,13 +150,13 @@ public class DatabaseServiceRelationshipTest {
         assertEquals(db.parentFrom("jean@jean.fr", 5), 2);
         assertEquals(db.parentFrom("jean@jean.fr", 2), 1);
         assertEquals(db.parentFrom("jean@jean.fr", 3), 1);
-        
-        destroyDatabase(db);
+
+        DatabaseServiceTestTool.destroyDatabase(db);
     }
     
     @Test
     public void testGetParentWhenNoParentThrowsException(){
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         
         try{
             db.addNode("gogol@gmail.com", 1, Collections.emptyMap()); 
@@ -209,13 +167,13 @@ public class DatabaseServiceRelationshipTest {
             
         }
         finally{
-            destroyDatabase(db);
+            DatabaseServiceTestTool.destroyDatabase(db);
         }  
     }
     
     @Test
     public void testGetParentWhenInexistentNodeFails(){
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         
         try{
             db.addNode("gogol@gmail.com", 1, Collections.emptyMap()); 
@@ -226,14 +184,14 @@ public class DatabaseServiceRelationshipTest {
             
         }
         finally{
-            destroyDatabase(db);
+            DatabaseServiceTestTool.destroyDatabase(db);
         }  
    
     }
     
     @Test
     public void testGetParentWhenInexistentUserFails(){
-        DatabaseService db = createDatabase();
+        DatabaseService db = DatabaseServiceTestTool.createDatabase();
         
         try{
             db.addNode("gogol@gmail.com", 1, Collections.emptyMap()); 
@@ -244,7 +202,7 @@ public class DatabaseServiceRelationshipTest {
             
         }
         finally{
-            destroyDatabase(db);
+            DatabaseServiceTestTool.destroyDatabase(db);
         } 
     }
     

@@ -6,11 +6,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/Bootstrap.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/Bootstrap.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/data/PGNParser.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/data/PGNParser.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/game/BoardState.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/game/BoardState.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/DatabaseServiceTestTool.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/data/DatabaseService.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/data/DatabaseService.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseService.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/DatabaseServiceNodeTest.java" afterPath="$PROJECT_DIR$/src/test/java/DatabaseServiceNodeTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/DatabaseServiceRelationshipTest.java" afterPath="$PROJECT_DIR$/src/test/java/DatabaseServiceRelationshipTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/DatabaseServiceTreeTest.java" afterPath="$PROJECT_DIR$/src/test/java/DatabaseServiceTreeTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/DatabaseServiceUserTest.java" afterPath="$PROJECT_DIR$/src/test/java/DatabaseServiceUserTest.java" />
     </list>
     <ignored path="ChessGear.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -60,30 +63,7 @@
     <favorites_list name="ChessGear" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="DatabaseServiceRelationshipTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/DatabaseServiceRelationshipTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-              <folding>
-                <element signature="e#1295#1313#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DatabaseService.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5">
-              <caret line="64" column="21" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -125,14 +105,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/PGNParseException.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/game/Result.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/game/Player.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/util/Engine.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/engine/Engine.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/game/Game.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/game/PieceType.java" />
-        <option value="$PROJECT_DIR$/src/test/java/DatabaseServiceUserTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/PieceTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/PieceTypeTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/PlayerTest.java" />
@@ -176,6 +152,10 @@
         <option value="$PROJECT_DIR$/src/test/java/UserTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/DatabaseServiceRelationshipTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseService.java" />
+        <option value="$PROJECT_DIR$/src/test/java/DatabaseServiceNodeTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/DatabaseServiceTreeTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/DatabaseServiceUserTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/DatabaseServiceTestTool.java" />
       </list>
     </option>
   </component>
@@ -314,6 +294,14 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -427,7 +415,7 @@
       <recent name="$PROJECT_DIR$/stockfish-6-src/src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.DatabaseServiceNodeTest">
+  <component name="RunManager" selected="JUnit.All in ChessGear">
     <configuration default="false" name="GameTreeNodeJsonTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="ChessGear" />
@@ -807,9 +795,9 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.DatabaseServiceNodeTest" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.All in ChessGear" />
         <item index="1" class="java.lang.String" itemvalue="JUnit.DatabaseServiceRelationshipTest" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.All in ChessGear" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.DatabaseServiceNodeTest" />
         <item index="3" class="java.lang.String" itemvalue="JUnit.GameTreeTest" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.GameTreeNodeJsonTest" />
       </list>
@@ -837,12 +825,6 @@
       <created>1443206600718</created>
       <option name="number" value="Default" />
       <updated>1443206600718</updated>
-    </task>
-    <task id="LOCAL-00038" summary="BoardState core functionality should be complete. Added some unit tests. Rebuilt javadoc.">
-      <created>1445917227517</created>
-      <option name="number" value="00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1445917227517</updated>
     </task>
     <task id="LOCAL-00039" summary="Rebuilt JavaDoc to include GameTest.java, MoveTest.java, PieceTypeTest.java, ResultTest.java., etc.">
       <created>1445926778349</created>
@@ -1132,39 +1114,45 @@
       <option name="project" value="LOCAL" />
       <updated>1449379074213</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="Improved resetTestEnvironment() of the DatabaseService.java">
+      <created>1449380128065</created>
+      <option name="number" value="00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1449380128065</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="DatabaseServiceNodeTest - 2015.12.06 at 00h 19m 15s.xml">
-      <configuration name="DatabaseServiceNodeTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DatabaseServiceNodeTest - 2015.12.06 at 00h 22m 18s.xml">
-      <configuration name="DatabaseServiceNodeTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DatabaseServiceNodeTest - 2015.12.06 at 00h 22m 35s.xml">
-      <configuration name="DatabaseServiceNodeTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DatabaseServiceNodeTest - 2015.12.06 at 00h 32m 25s.xml">
-      <configuration name="DatabaseServiceNodeTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DatabaseServiceNodeTest - 2015.12.06 at 00h 32m 53s.xml">
-      <configuration name="DatabaseServiceNodeTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DatabaseServiceNodeTest - 2015.12.06 at 00h 33m 05s.xml">
-      <configuration name="DatabaseServiceNodeTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DatabaseServiceNodeTest - 2015.12.06 at 00h 33m 11s.xml">
-      <configuration name="DatabaseServiceNodeTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DatabaseServiceNodeTest - 2015.12.06 at 00h 34m 18s.xml">
-      <configuration name="DatabaseServiceNodeTest" configurationId="JUnit" />
+    <history-entry file="All_in_ChessGear - 2015.12.07 at 13h 20m 52s.xml">
+      <configuration name="All in ChessGear" configurationId="JUnit" />
     </history-entry>
     <history-entry file="DatabaseServiceNodeTest - 2015.12.06 at 00h 34m 20s.xml">
       <configuration name="DatabaseServiceNodeTest" configurationId="JUnit" />
     </history-entry>
     <history-entry file="DatabaseServiceNodeTest - 2015.12.06 at 00h 34m 24s.xml">
       <configuration name="DatabaseServiceNodeTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DatabaseServiceRelationshipTest - 2015.12.07 at 13h 13m 27s.xml">
+      <configuration name="DatabaseServiceRelationshipTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DatabaseServiceRelationshipTest - 2015.12.07 at 13h 13m 32s.xml">
+      <configuration name="DatabaseServiceRelationshipTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DatabaseServiceRelationshipTest - 2015.12.07 at 13h 13m 36s.xml">
+      <configuration name="DatabaseServiceRelationshipTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DatabaseServiceRelationshipTest - 2015.12.07 at 13h 15m 44s.xml">
+      <configuration name="DatabaseServiceRelationshipTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DatabaseServiceRelationshipTest - 2015.12.07 at 13h 15m 48s.xml">
+      <configuration name="DatabaseServiceRelationshipTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DatabaseServiceRelationshipTest - 2015.12.07 at 13h 15m 58s.xml">
+      <configuration name="DatabaseServiceRelationshipTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DatabaseServiceRelationshipTest - 2015.12.07 at 13h 16m 02s.xml">
+      <configuration name="DatabaseServiceRelationshipTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -1178,7 +1166,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="725" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32594937" sideWeight="0.49394855" order="6" side_tool="false" content_ui="tabs" />
@@ -1187,10 +1175,11 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30963665" sideWeight="0.11954766" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32714054" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.080314964" sideWeight="0.4789984" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23854661" sideWeight="0.88045233" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12164297" sideWeight="0.88045233" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3222749" sideWeight="0.4969743" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26979" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.49346405" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1205,7 +1194,6 @@
       <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32216215" sideWeight="0.48880598" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.112164296" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24717286" sideWeight="0.50653595" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1220,7 +1208,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added startEngine() and terminateEngine() to Engine.java and add respective test. Modified .travis.yml to build C++ before running java." />
     <MESSAGE value="Corrected EngineTest.java to accept multiple possibilities instead of just one." />
     <MESSAGE value="Test EngineTest.java" />
     <MESSAGE value="Updating Bootstrap" />
@@ -1245,7 +1232,8 @@
     <MESSAGE value="Recommit last changes where we added UserTest.java" />
     <MESSAGE value="Fixed DatabaseServiceTest.java to reset and delete previous db files before starting test." />
     <MESSAGE value="Added the correct resetTestEnvironment() to DatabaseService.java. This works now." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added the correct resetTestEnvironment() to DatabaseService.java. This works now." />
+    <MESSAGE value="Improved resetTestEnvironment() of the DatabaseService.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved resetTestEnvironment() of the DatabaseService.java" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1258,31 +1246,10 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/java/MoveTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.122137405">
-          <caret line="16" column="50" selection-start-line="16" selection-start-column="50" selection-end-line="16" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar!/com/google/gson/JsonParser.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/DatabaseServiceTreeTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31839624">
-          <caret line="18" column="31" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/DatabaseServiceUserTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19769357">
-          <caret line="49" column="9" selection-start-line="49" selection-start-column="9" selection-end-line="49" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -1529,7 +1496,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.08264463">
           <caret line="78" column="65" selection-start-line="78" selection-start-column="65" selection-end-line="78" selection-end-column="65" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1558,7 +1524,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33093524">
           <caret line="40" column="5" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1573,7 +1538,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="66" column="74" selection-start-line="66" selection-start-column="74" selection-end-line="66" selection-end-column="74" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1581,7 +1545,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="18" column="33" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1589,7 +1552,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6277533">
           <caret line="32" column="19" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1597,33 +1559,57 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5971897">
           <caret line="33" column="39" selection-start-line="33" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/DatabaseServiceRelationshipTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="5.8480177">
+          <caret line="193" column="32" selection-start-line="193" selection-start-column="32" selection-end-line="193" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1563877">
+          <caret line="52" column="5" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/DatabaseServiceNodeTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42951542">
-          <caret line="36" column="29" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
+        <state vertical-scroll-proportion="6.0462556">
+          <caret line="195" column="36" selection-start-line="195" selection-start-column="36" selection-end-line="195" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/DatabaseServiceRelationshipTest.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/DatabaseServiceTreeTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.13215859">
+          <caret line="13" column="28" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/DatabaseServiceUserTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.3876653">
+          <caret line="219" column="36" selection-start-line="219" selection-start-column="36" selection-end-line="219" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/DatabaseServiceTestTool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.0738637">
+          <caret line="73" column="49" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="49" />
           <folding>
-            <element signature="e#1295#1313#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1847#1870#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5">
-          <caret line="64" column="21" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
