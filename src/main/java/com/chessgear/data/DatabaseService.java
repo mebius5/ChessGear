@@ -29,9 +29,10 @@ import static org.junit.Assert.fail;
  * </ul>
  */
 public class DatabaseService {
-    //TODO: check the soundness of having a private static final modifier for this field.
-    private static final String CANONICAL_DB_NAME = "chessgear.sql";
+    public static final String CANONICAL_DB_NAME = "chessgear.sql";
 
+    private static DatabaseService instance;
+    
     private final Sql2o database;    
     private final String databasePath;
 
@@ -44,24 +45,41 @@ public class DatabaseService {
      * @throws IOException If something gets bad with the database file
      * @throws IllegalArgumentException If the prefix is null.
      */
-    public DatabaseService(String prefix) throws IOException, IllegalArgumentException{
+    private DatabaseService(String prefix) throws IOException, IllegalArgumentException{
+        //check that data folder exists:
+        File general = new File(FileStorageService.DATA_DIRECTORY_NAME);
+        if(!general.exists())
+            general.mkdir();
+        
         if(prefix == null)
             throw new IllegalArgumentException();
 
-        this.databasePath = prefix;
+        this.databasePath = FileStorageService.DATA_DIRECTORY_NAME + File.separator + prefix + CANONICAL_DB_NAME;
         this.database = prepareCuteDatabase(prefix);
     }
+    
+    public static DatabaseService getInstanceOf(){
+        if(instance == null)
+            try {
+                instance = new DatabaseService("");
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        
+        return instance;
+    }
 
-    private Sql2o prepareCuteDatabase(String databasePath) throws IOException{        
-        //if file does not exists, create it
-        Path dbPath = Paths.get(databasePath + CANONICAL_DB_NAME);
-        if (!(Files.exists(dbPath))) {
-            Files.createFile(dbPath);
-        }
-
+    private Sql2o prepareCuteDatabase(String databaseFileName) throws IOException{        
+        //check that data folder exists:
+        File general = new File(FileStorageService.DATA_DIRECTORY_NAME);
+        if(!general.exists())
+            general.mkdir();
+                
         //create the source database object
         SQLiteDataSource source = new SQLiteDataSource();
-        source.setUrl("jdbc:sqlite:" + databasePath + "chessgear.sql");
+        source.setUrl("jdbc:sqlite:" + databasePath);
 
         Sql2o toReturn = new Sql2o(source);
         
@@ -97,12 +115,13 @@ public class DatabaseService {
     }
 
     /**
-     * WARNING: ONLY FOR TESTING PURPOSE
+     * Only for testing.
      * 
      * @throws IOException if eraseDatabaseFile fails
      */
-    public void eraseDatabaseFile() throws IOException{
-        Files.delete(Paths.get(databasePath + CANONICAL_DB_NAME));
+    @SuppressWarnings("unused")
+    private void eraseDatabaseFile() throws IOException{
+        Files.delete(Paths.get(databasePath));
     }
 
     /**

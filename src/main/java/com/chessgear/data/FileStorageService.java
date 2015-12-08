@@ -19,8 +19,9 @@ public class FileStorageService {
      * Note: This is a pretty naïve implementation of a file storage system. To scale better, take a look at amazon S3 services
      */
 
-    public static final String dataDirectoryName = "data";
-    private static final String fileDirectoryName = "files";
+    public static final String DATA_DIRECTORY_NAME = "data";
+    public static final String FILE_DIRECTORY_NAME = "files";
+    
     private final File root;
 
     private final DatabaseService db;
@@ -39,11 +40,11 @@ public class FileStorageService {
         if(db == null || rootDirectorySuffix == null)
             throw new IllegalArgumentException("Database and root directory cannot be null");
 
-        File general = new File(dataDirectoryName);
+        File general = new File(DATA_DIRECTORY_NAME);
         if(!general.exists())
             general.mkdir();
         
-        root = new File(dataDirectoryName + File.separator + fileDirectoryName + rootDirectorySuffix);
+        root = new File(DATA_DIRECTORY_NAME + File.separator + FILE_DIRECTORY_NAME + rootDirectorySuffix);
         if(!root.exists())
             root.mkdir();
    
@@ -57,29 +58,42 @@ public class FileStorageService {
      */
     public static FileStorageService getInstanceOf(){
         if(instance == null)
-            instance = new FileStorageService(null, "");
+            instance = new FileStorageService(DatabaseService.getInstanceOf(), "");
         
         return instance;
     }
     
     /**
-     * For tests only. Also destroy the referenced DatabaseService.
+     * For tests only. Does not delete the referenced DatabaseService
      * 
      * @throws IOException If there was a problem while erasing the database.
      */
     @SuppressWarnings("unused")
     private void destroy() throws IOException{
         deleteRecursively(root);
-        db.eraseDatabaseFile();
     }
     
-    private void deleteRecursively(File f){
+    /**
+     * A small utility function that deletes everything in a folder/file recursively
+     * 
+     * @param f The File (which can be a directory, where the deletion has to start)
+     */
+    public static void deleteRecursively(File f){
         if(f.isDirectory()){
             for(File ff : f.listFiles())
                 deleteRecursively(ff);
         }
         
         f.delete();
+    }
+    
+    /**
+     * This method gives back the referenced database. (Should only be useful for testing or simplifying calls)
+     * 
+     * @return the referenced database
+     */
+    public DatabaseService getReferecencedDatabaseService(){
+        return db;
     }
     
     /**

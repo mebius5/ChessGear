@@ -29,7 +29,7 @@ public class DatabaseServiceTreeTest {
     public void testUserHasInitiallyNoTree(){
         DatabaseService db = DatabaseServiceTestTool.createDatabase();
         try{
-            for(String s : DatabaseServiceTestTool.addresses)
+            for(String s : DatabaseServiceTestTool.usernames)
                 db.getRoot(s);
             
             //if no error was thrown in the meantime, this is a fail

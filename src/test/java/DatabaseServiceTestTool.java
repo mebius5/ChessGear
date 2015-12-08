@@ -3,7 +3,6 @@ import com.chessgear.data.FileStorageService;
 import com.chessgear.server.User;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,61 +11,155 @@ import java.util.HashMap;
 import static org.junit.Assert.fail;
 
 /**
+ * Since the class is only used for testing purposes, we call faill at any exception thrown. Ideas for reflexivity were found there:
+ * 
+ * http://stackoverflow.com/questions/5629706/java-accessing-private-constructor-with-type-parameters
+ * http://onjavahell.blogspot.com/2009/05/testing-private-methods-using.html
+ * 
  * Created by GradyXiao on 12/7/15.
  */
 public class DatabaseServiceTestTool {
 
-    static String[] addresses = {"gogol@gmail.com", "jean@jean.fr", "hardcorechessplayer@jhu.edu"};
+    /**
+     * The values used to fill mock-up database
+     */
+    public static final String[] usernames = {"gogol", "jean", "hardcorechessplayer"};
 
     //small trick: evaluation of tests seems to be concurent, so this is to ensure that all test are independents.
     static int number = 0;
     static Object lock = new Object();
+
+    private static void deleteDatabaseIfExists(String prefix){
+        //check if the data folder exists
+        File general = new File(FileStorageService.DATA_DIRECTORY_NAME);
+        if(!general.exists())
+            general.mkdir();
         
-    /***
-     * Deletes db from previous failed test runs, if any
-     */
-    private static void resetTestEnvironment(){
-        try {
-            File file1 = new File("."+File.separatorChar);
-            File[] files = file1.listFiles();
-            for (int i=0;i<file1.listFiles().length;i++){
-                if (files[i].getName().contains("erase")) {
-                    if(files[i].getCanonicalFile().delete()){
-                        System.out.println("Deleted "+files[i].getCanonicalFile().getName()+" from previous test run");
-                    }
-                }
-            }
-        }catch(Exception e){
-            e.printStackTrace();
+        File toDel = new File(general.getPath() + File.separator + prefix + DatabaseService.CANONICAL_DB_NAME);
+        if(toDel.exists()){
+            toDel.delete();
+
+            System.out.println("Deleted " + toDel.getName() + " from previous test run");
+        }        
+    }
+    
+    private static void deleteFileFolderIfExists(String suffix){
+        //check if the data folder exists
+        File general = new File(FileStorageService.DATA_DIRECTORY_NAME);
+        if(!general.exists())
+            general.mkdir();
+        
+        File toDel = new File(FileStorageService.DATA_DIRECTORY_NAME + File.separator + 
+                FileStorageService.FILE_DIRECTORY_NAME + suffix);
+        if(toDel.exists()){
+            FileStorageService.deleteRecursively(toDel);
+            System.out.println("Deleted " + toDel.getName() + " from previous test run");
         }
     }
     
-    public static FileStorageService createFileStorageService(){
-        DatabaseService yeeh = createDatabase();
-        FileStorageService toReturn = null;
-        
+    /**
+     * Creates a new FileStorageService in a fresh folder by mean of reflexivity. Don't forget to destroy it after use.
+     * 
+     * @return A fresh FileStorageService for tests.
+     */
+    public static FileStorageService createFileStorageService(){        
+        //create the prefix to give to the file folder.
+        int ticket = 0;
         synchronized(lock){
-            
-            try {
-                //tweaking by using reflexivity to call the private constructor
-                //taken here : http://stackoverflow.com/questions/5629706/java-accessing-private-constructor-with-type-parameters
-                Constructor<FileStorageService> constructor = (Constructor<FileStorageService>) FileStorageService.class.getDeclaredConstructors()[0];
-                constructor.setAccessible(true); 
-                toReturn = constructor.newInstance(yeeh, "erase"+(number++));
-                constructor.setAccessible(false);
-            } catch (SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-
+            ticket = number++;
         }
+        String suffix = "erase" + ticket;
+        deleteFileFolderIfExists(suffix);
+
+        FileStorageService toReturn = null;
+        try {
+            Constructor<FileStorageService> constructor = 
+                    (Constructor<FileStorageService>) FileStorageService.class.getDeclaredConstructors()[0];
+            constructor.setAccessible(true); 
+            toReturn = constructor.newInstance(createDatabase(true), suffix);
+            constructor.setAccessible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+
         return toReturn;
     }
-    
-    public static void deleteFileStorageService(FileStorageService fss){              
+
+    /**
+     * Cleans the workspace of the specified FileStorageService. Also takes care of the referenced DatabaseService
+     * 
+     * @param fss The FileStorageService to delete.
+     */
+    public static void destroyFileStorageService(FileStorageService fss){              
         try {
             Method m = fss.getClass().getDeclaredMethod("destroy");
             m.setAccessible(true);
             m.invoke(fss);
+            m.setAccessible(false);
+
+            destroyDatabase(fss.getReferecencedDatabaseService());
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+    /**
+     * Creates a fresh DatabaseService for testing puprose, by mean of reflexivity. Don't forget to destroy it after use.
+     * 
+     * @param fillWithValues specify if the Database has to have some initial mockup value or no.
+     * 
+     * @return database The actual DatabaseService
+     */
+    public static DatabaseService createDatabase(boolean fillWithValues){
+        //create the prefix to give to the file folder.
+        int ticket = 0;
+        synchronized(lock){
+            ticket = number++;
+        }
+        String prefix = "eraseme" + ticket;
+        
+        deleteDatabaseIfExists(prefix);
+
+        DatabaseService toReturn = null;
+
+        try {
+
+            Constructor<DatabaseService> constructor = 
+                    (Constructor<DatabaseService>) DatabaseService.class.getDeclaredConstructors()[0];
+            constructor.setAccessible(true); 
+            toReturn = constructor.newInstance(prefix);
+            constructor.setAccessible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+
+        if(fillWithValues){
+            for(String address: usernames){
+                HashMap<User.Property, String> attributes = new HashMap<User.Property, String>();
+                for(User.Property p : User.Property.values()){
+                    attributes.put(p, address + p);
+                    //since we are going to add properties in the future, just make up something easy
+                }
+                toReturn.addUser(address, attributes);
+            }
+        }
+        
+        return toReturn;
+    }
+
+    /**
+     * Destroys the database passed in
+     * 
+     * @param db the database that has to be deleted
+     */
+    public static void destroyDatabase(DatabaseService db){
+        try {
+            Method m = db.getClass().getDeclaredMethod("eraseDatabaseFile");
+            m.setAccessible(true);
+            m.invoke(db);
             m.setAccessible(false);
         } catch (NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
@@ -78,49 +171,5 @@ public class DatabaseServiceTestTool {
             e.printStackTrace();
         }
     }
-    
-    /***
-     * Creates database
-     * @return database
-     */
-    public static DatabaseService createDatabase(){
 
-        resetTestEnvironment();
-        DatabaseService yeh = null;
-        try {
-            synchronized(lock){
-                yeh = new DatabaseService("erase"+(number++));
-            }
-        } catch (IllegalArgumentException e) {
-            fail();
-            e.printStackTrace();
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
-        }
-
-        for(String address: addresses){
-            HashMap<User.Property, String> attributes = new HashMap<User.Property, String>();
-            for(User.Property p : User.Property.values()){
-                attributes.put(p, address + p);
-                //since we are going to add properties in the future, just make up something easy
-            }
-            yeh.addUser(address, attributes);
-        }
-
-        return yeh;
-    }
-
-    /***
-     * Destroy the database passed in
-     * @param d the database that's being deleted
-     */
-    public static void destroyDatabase(DatabaseService d){
-        try {
-            d.eraseDatabaseFile();
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
-        }
-    }
 }

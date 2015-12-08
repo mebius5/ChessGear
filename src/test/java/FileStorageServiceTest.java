@@ -42,8 +42,8 @@ public class FileStorageServiceTest {
         
         FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
         
-        String user1 = DatabaseServiceTestTool.addresses[0];
-        String user2 = DatabaseServiceTestTool.addresses[1];
+        String user1 = DatabaseServiceTestTool.usernames[0];
+        String user2 = DatabaseServiceTestTool.usernames[1];
         
         assertTrue(fss.getFilesFor(user1).size() == 0);
         assertTrue(fss.getFilesFor(user2).size() == 0);
@@ -64,7 +64,7 @@ public class FileStorageServiceTest {
         //testing for a side effect now
         assertTrue(fss.getFilesFor(user2).size() == 0);
         
-        DatabaseServiceTestTool.deleteFileStorageService(fss);
+        DatabaseServiceTestTool.destroyFileStorageService(fss);
     }
     
     @Test
@@ -73,8 +73,8 @@ public class FileStorageServiceTest {
         
         FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
         
-        String user1 = DatabaseServiceTestTool.addresses[0];
-        String user2 = DatabaseServiceTestTool.addresses[1];
+        String user1 = DatabaseServiceTestTool.usernames[0];
+        String user2 = DatabaseServiceTestTool.usernames[1];
         
         assertTrue(fss.getFilesFor(user1).size() == 0);
         assertTrue(fss.getFilesFor(user2).size() == 0);
@@ -112,13 +112,13 @@ public class FileStorageServiceTest {
         assertTrue(fss.getFilesFor(user2).size() == 1);
         assertEquals(fss.getFilesFor(user2).get(0), "hello.pgn");
         
-        DatabaseServiceTestTool.deleteFileStorageService(fss);
+        DatabaseServiceTestTool.destroyFileStorageService(fss);
     }
     
     @Test
     public void testDownloadFile(){
         FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
-        String user = DatabaseServiceTestTool.addresses[2];
+        String user = DatabaseServiceTestTool.usernames[2];
         
         try {
             fss.addFile(user, "suchagoodplay.pgn", prepareConstantInputStream(100, (byte) 2));
@@ -139,7 +139,7 @@ public class FileStorageServiceTest {
             is.close();
             cst.close();
             
-            DatabaseServiceTestTool.deleteFileStorageService(fss);
+            DatabaseServiceTestTool.destroyFileStorageService(fss);
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -162,7 +162,7 @@ public class FileStorageServiceTest {
             
         }
         
-        DatabaseServiceTestTool.deleteFileStorageService(fss);
+        DatabaseServiceTestTool.destroyFileStorageService(fss);
     }
     
     @Test
@@ -176,7 +176,7 @@ public class FileStorageServiceTest {
            
         }
         
-        DatabaseServiceTestTool.deleteFileStorageService(fss);
+        DatabaseServiceTestTool.destroyFileStorageService(fss);
     }
     
     @Test
@@ -184,13 +184,13 @@ public class FileStorageServiceTest {
         FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
 
         try {
-            fss.removeFile(DatabaseServiceTestTool.addresses[0], "idontexistsmeeh.pgn");
+            fss.removeFile(DatabaseServiceTestTool.usernames[0], "idontexistsmeeh.pgn");
             fail();
         } catch (IllegalArgumentException e2) {
            
         }
         
-        DatabaseServiceTestTool.deleteFileStorageService(fss);
+        DatabaseServiceTestTool.destroyFileStorageService(fss);
     }
     
     @Test
@@ -204,7 +204,7 @@ public class FileStorageServiceTest {
             
         }
         
-        DatabaseServiceTestTool.deleteFileStorageService(fss);
+        DatabaseServiceTestTool.destroyFileStorageService(fss);
     }
     
     @Test
@@ -221,7 +221,7 @@ public class FileStorageServiceTest {
             e.printStackTrace();
         }
         
-        DatabaseServiceTestTool.deleteFileStorageService(fss);
+        DatabaseServiceTestTool.destroyFileStorageService(fss);
     }
     
     @Test
@@ -229,7 +229,7 @@ public class FileStorageServiceTest {
         FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
 
         try {
-            fss.downloadFile(DatabaseServiceTestTool.addresses[0], "meeh.pgn");
+            fss.downloadFile(DatabaseServiceTestTool.usernames[0], "meeh.pgn");
             fail();
         } catch (IllegalArgumentException e) {
            
@@ -238,7 +238,7 @@ public class FileStorageServiceTest {
             e.printStackTrace();
         }
         
-        DatabaseServiceTestTool.deleteFileStorageService(fss);
+        DatabaseServiceTestTool.destroyFileStorageService(fss);
     }
     
 }
