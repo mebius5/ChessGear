@@ -45,18 +45,14 @@ public class Bootstrap {
     private static final String ADDRESS = "localhost";
 
     static public void dirty() {
-        database = null;
-        try {
-            database = new DatabaseService("neiltest");
-        } catch (IOException | IllegalArgumentException b) {
-            System.out.println("Failure to connect to database");
-        }
+        database = DatabaseService.getInstanceOf();
     }
 
     /**
      * Clearing the Database
      * @return false if error occurs while deleting database. Else, true
      */
+    /***
     public boolean clearDatabase() {
         try {
             database.eraseDatabaseFile();
@@ -66,6 +62,8 @@ public class Bootstrap {
         }
         return true;
     }
+     ***/
+
     /**
      * The Main Server asdf
      * @param args this is the main
