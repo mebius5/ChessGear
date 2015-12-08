@@ -1,3 +1,4 @@
+package com.chessgear.data;
 import com.chessgear.data.DatabaseService;
 import com.chessgear.data.FileStorageService;
 import com.chessgear.server.User;
@@ -62,6 +63,7 @@ public class DatabaseServiceTestTool {
      * 
      * @return A fresh FileStorageService for tests.
      */
+    @SuppressWarnings("unchecked")
     public static FileStorageService createFileStorageService(){        
         //create the prefix to give to the file folder.
         int ticket = 0;
@@ -112,6 +114,7 @@ public class DatabaseServiceTestTool {
      * 
      * @return database The actual DatabaseService
      */
+    @SuppressWarnings("unchecked")
     public static DatabaseService createDatabase(boolean fillWithValues){
         //create the prefix to give to the file folder.
         int ticket = 0;
