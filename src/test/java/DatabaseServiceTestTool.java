@@ -4,6 +4,9 @@ import com.chessgear.server.User;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import static org.junit.Assert.fail;
@@ -40,13 +43,40 @@ public class DatabaseServiceTestTool {
     
     public static FileStorageService createFileStorageService(){
         DatabaseService yeeh = createDatabase();
-        FileStorageService toReturn;
+        FileStorageService toReturn = null;
         
         synchronized(lock){
-            toReturn = new FileStorageService(yeeh, "erase"+(number++));
+            
+            try {
+                //tweaking by using reflexivity to call the private constructor
+                //taken here : http://stackoverflow.com/questions/5629706/java-accessing-private-constructor-with-type-parameters
+                Constructor<FileStorageService> constructor = (Constructor<FileStorageService>) FileStorageService.class.getDeclaredConstructors()[0];
+                constructor.setAccessible(true); 
+                toReturn = constructor.newInstance(yeeh, "erase"+(number++));
+                constructor.setAccessible(false);
+            } catch (SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
         }
-        
         return toReturn;
+    }
+    
+    public static void deleteFileStorageService(FileStorageService fss){              
+        try {
+            Method m = fss.getClass().getDeclaredMethod("destroy");
+            m.setAccessible(true);
+            m.invoke(fss);
+            m.setAccessible(false);
+        } catch (NoSuchMethodException | SecurityException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
     
     /***

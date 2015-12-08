@@ -7,11 +7,9 @@ package com.chessgear.data;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,22 +19,23 @@ public class FileStorageService {
      * Note: This is a pretty naïve implementation of a file storage system. To scale better, take a look at amazon S3 services
      */
 
-    private final DatabaseService db;
-    
     public static final String dataDirectoryName = "data";
     private static final String fileDirectoryName = "files";
-    
     private final File root;
 
+    private final DatabaseService db;
+    
+    private static FileStorageService instance;
+    
     /**
-     * Construct a small utility to manage server files.
+     * Should be called directly for tests only. Construct a small utility to manage server files.
      * 
      * @param db The app's database (mainly to check user emails)
      * @param rootDirectorySuffix The suffix root of the directory where to put the file (e.g. data) (for testing purpose).
      * 
      * @throws IllegalArgumentException if any of the argument is null
      */
-    public FileStorageService(DatabaseService db, String rootDirectorySuffix){
+    private FileStorageService(DatabaseService db, String rootDirectorySuffix){
         if(db == null || rootDirectorySuffix == null)
             throw new IllegalArgumentException("Database and root directory cannot be null");
 
@@ -52,11 +51,24 @@ public class FileStorageService {
     }
     
     /**
+     * Get the singleton instance of the FileStorageService.
+     * 
+     * @return the unique instance of FileStorageService.
+     */
+    public static FileStorageService getInstanceOf(){
+        if(instance == null)
+            instance = new FileStorageService(null, "");
+        
+        return instance;
+    }
+    
+    /**
      * For tests only. Also destroy the referenced DatabaseService.
      * 
      * @throws IOException If there was a problem while erasing the database.
      */
-    public void destroy() throws IOException{
+    @SuppressWarnings("unused")
+    private void destroy() throws IOException{
         deleteRecursively(root);
         db.eraseDatabaseFile();
     }
@@ -171,4 +183,5 @@ public class FileStorageService {
         fos.close();
         is.close();
     }
+
 }

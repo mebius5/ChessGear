@@ -64,12 +64,7 @@ public class FileStorageServiceTest {
         //testing for a side effect now
         assertTrue(fss.getFilesFor(user2).size() == 0);
         
-        try {
-            fss.destroy();
-        } catch (IOException e) {
-            e.printStackTrace();
-            fail();
-        }
+        DatabaseServiceTestTool.deleteFileStorageService(fss);
     }
     
     @Test
@@ -117,12 +112,7 @@ public class FileStorageServiceTest {
         assertTrue(fss.getFilesFor(user2).size() == 1);
         assertEquals(fss.getFilesFor(user2).get(0), "hello.pgn");
         
-        try {
-            fss.destroy();
-        } catch (IOException e) {
-            e.printStackTrace();
-            fail();
-        }
+        DatabaseServiceTestTool.deleteFileStorageService(fss);
     }
     
     @Test
@@ -149,7 +139,7 @@ public class FileStorageServiceTest {
             is.close();
             cst.close();
             
-            fss.destroy();
+            DatabaseServiceTestTool.deleteFileStorageService(fss);
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -172,12 +162,7 @@ public class FileStorageServiceTest {
             
         }
         
-        try {
-            fss.destroy();
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
-        }
+        DatabaseServiceTestTool.deleteFileStorageService(fss);
     }
     
     @Test
@@ -191,12 +176,7 @@ public class FileStorageServiceTest {
            
         }
         
-        try {
-            fss.destroy();
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
-        }
+        DatabaseServiceTestTool.deleteFileStorageService(fss);
     }
     
     @Test
@@ -210,12 +190,7 @@ public class FileStorageServiceTest {
            
         }
         
-        try {
-            fss.destroy();
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
-        }
+        DatabaseServiceTestTool.deleteFileStorageService(fss);
     }
     
     @Test
@@ -229,12 +204,7 @@ public class FileStorageServiceTest {
             
         }
         
-        try {
-            fss.destroy();
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
-        }
+        DatabaseServiceTestTool.deleteFileStorageService(fss);
     }
     
     @Test
@@ -251,12 +221,7 @@ public class FileStorageServiceTest {
             e.printStackTrace();
         }
         
-        try {
-            fss.destroy();
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
-        }
+        DatabaseServiceTestTool.deleteFileStorageService(fss);
     }
     
     @Test
@@ -273,11 +238,7 @@ public class FileStorageServiceTest {
             e.printStackTrace();
         }
         
-        try {
-            fss.destroy();
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
-        }
+        DatabaseServiceTestTool.deleteFileStorageService(fss);
     }
+    
 }
