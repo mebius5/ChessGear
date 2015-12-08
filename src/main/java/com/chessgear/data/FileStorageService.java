@@ -6,6 +6,8 @@
 package com.chessgear.data;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,50 +22,74 @@ public class FileStorageService {
      */
 
     private final DatabaseService db;
-    private final String rootDirectory;
+    
+    public static final String dataDirectoryName = "data";
+    private static final String fileDirectoryName = "files";
+    
+    private final File root;
 
     /**
      * Construct a small utility to manage server files.
      * 
      * @param db The app's database (mainly to check user emails)
-     * @param rootDirectory The root of the directory where to put the file (e.g. data).
+     * @param rootDirectorySuffix The suffix root of the directory where to put the file (e.g. data) (for testing purpose).
      * 
      * @throws IllegalArgumentException if any of the argument is null
      */
-    public FileStorageService(DatabaseService db, String rootDirectory){
-        if(db == null || rootDirectory == null)
+    public FileStorageService(DatabaseService db, String rootDirectorySuffix){
+        if(db == null || rootDirectorySuffix == null)
             throw new IllegalArgumentException("Database and root directory cannot be null");
 
+        File general = new File(dataDirectoryName);
+        if(!general.exists())
+            general.mkdir();
+        
+        root = new File(dataDirectoryName + File.separator + fileDirectoryName + rootDirectorySuffix);
+        if(!root.exists())
+            root.mkdir();
+   
         this.db = db;
-        this.rootDirectory = rootDirectory;
     }
     
+    /**
+     * For tests only. Also destroy the referenced DatabaseService.
+     * 
+     * @throws IOException If there was a problem while erasing the database.
+     */
+    public void destroy() throws IOException{
+        deleteRecursively(root);
+        db.eraseDatabaseFile();
+    }
+    
+    private void deleteRecursively(File f){
+        if(f.isDirectory()){
+            for(File ff : f.listFiles())
+                deleteRecursively(ff);
+        }
+        
+        f.delete();
+    }
     
     /**
      * This methods fetches the name of all files that the user has
      * 
-     * @param email The user email
+     * @param username The name of the user
      * 
      * @return A list of the name of user's files on the server
      * 
      * @throws IllegalArgumentException if the user is not in the database
      */
-    public List<String> getFilesFor(String email){
-        if(!db.userExists(email))
+    public List<String> getFilesFor(String username){
+        if(!db.userExists(username))
             throw new IllegalArgumentException("User is not in database");
         
-        
-        //check if the general directory already exists
-        File dir = new File(rootDirectory);
-        if(!dir.exists())
-            dir.mkdir();
-
-        //check if the user already has a folder
-        File userDir = new File(rootDirectory+"/pgns/"+email);
-        if(!userDir.exists())
-            dir.mkdir();
-
         ArrayList<String> toReturn = new ArrayList<>();
+        
+        //check if the user already has a folder        
+        File userDir = new File(root.getPath() + File.separator + username);
+        if(!userDir.exists())
+            return toReturn;
+
         for(File f: userDir.listFiles())
             toReturn.add(f.getName());
 
@@ -73,70 +99,66 @@ public class FileStorageService {
     /**
      * This method is usefull to download a file. It output the FileOutputStream representing the file.
      * 
-     * @param email The email of the user
+     * @param username The username of the user
      * @param fileName The name of the file
      * 
      * @return A FileOutputStream representing the file
      * 
-     * @throws IllegalArgumentException if the user or de file does not exists
+     * @throws IllegalArgumentException if the user or the file does not exists
      * @throws IOException if there was a problem while fetching data
      */
-    public OutputStream downloadFile(String email, String fileName) throws IOException{
-        if(!db.userExists(email))
+    public InputStream downloadFile(String username, String fileName) throws IOException{
+        if(!db.userExists(username))
             throw new IllegalArgumentException("User is not in database");
         
-        File out = new File(rootDirectory+"/pgns/"+email+"/"+fileName);
+        File out = new File(root.getPath() + File.separator + username + File.separator +fileName);
         if(!out.exists())
             throw new IllegalArgumentException();
         
-        return new FileOutputStream(out);
+        return new FileInputStream(out);
     }
     
     /**
      * This method removes a file from the server
      * 
-     * @param email The email of the user
+     * @param username The name of the user
      * @param fileName The name of the file to store
+     * 
      * @throws Exception throws exception if error occurs during removeFile
      * @throws IllegalArgumentException if the user or the file does not exists
      * @throws IOException if there was a problem while removing the file
      */
-    public void removeFile(String email, String fileName) throws Exception{
-        if(!db.userExists(email))
+    public void removeFile(String username, String fileName){
+        if(!db.userExists(username))
             throw new IllegalArgumentException("User is not in database");
         
-        File out = new File(rootDirectory+"/pgns/"+email+"/"+fileName);
+        File out = new File(root.getPath() + File.separator + username + File.separator + fileName);
         if(!out.exists())
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Non existent file");
         
         out.delete();
     }
 
     /**
-     * This methods adds a file to the server
+     * This methods adds a file to the server. It also closes the stream.
      * 
-     * @param email The email of the user
+     * @param username The name of the user
      * @param fileName The name of the file
      * @param is The input stream representing the data of the file
      * 
      * @throws IllegalArgumentException if the user does not exists
      * @throws IOException if there was a problem when storing the file
      */
-    public void addFile(String email, String fileName, InputStream is) throws IOException{
-        if(!db.userExists(email))
+    public void addFile(String username, String fileName, InputStream is) throws IOException{
+        if(!db.userExists(username))
             throw new IllegalArgumentException("User is not in database");
 
-        //check if the general directory already exists
-        File dir = new File(rootDirectory);
-        if(!dir.exists())
-            dir.mkdir();
-
         //check if the user already has a folder
-        File userDir = new File("/pgns/"+email);
+        File userDir = new File(root.getPath() + File.separator + username);
         if(!userDir.exists())
-            dir.mkdir();
+            userDir.mkdir();
 
-        File toStore = new File(rootDirectory+"/"+fileName);
+        File toStore = new File(userDir.getPath() + File.separator + fileName);
         FileOutputStream fos;
         fos = new FileOutputStream(toStore);
 

@@ -1,4 +1,5 @@
 import com.chessgear.data.DatabaseService;
+import com.chessgear.data.FileStorageService;
 import com.chessgear.server.User;
 
 import java.io.File;
@@ -17,7 +18,7 @@ public class DatabaseServiceTestTool {
     //small trick: evaluation of tests seems to be concurent, so this is to ensure that all test are independents.
     static int number = 0;
     static Object lock = new Object();
-
+        
     /***
      * Deletes db from previous failed test runs, if any
      */
@@ -36,7 +37,18 @@ public class DatabaseServiceTestTool {
             e.printStackTrace();
         }
     }
-
+    
+    public static FileStorageService createFileStorageService(){
+        DatabaseService yeeh = createDatabase();
+        FileStorageService toReturn;
+        
+        synchronized(lock){
+            toReturn = new FileStorageService(yeeh, "erase"+(number++));
+        }
+        
+        return toReturn;
+    }
+    
     /***
      * Creates database
      * @return database

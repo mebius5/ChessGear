@@ -1,6 +1,13 @@
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Random;
+
 import org.junit.Test;
+
+import com.chessgear.data.FileStorageService;
 
 /*
  *	Author:      Gilbert Maystre
@@ -9,9 +16,268 @@ import org.junit.Test;
 
 public class FileStorageServiceTest {
 
-    @Test
-    public void test() {
-        fail("Not yet implemented");
+    private static final Random rand = new Random(1995);
+    
+    private InputStream prepareConstantInputStream(int size, byte content){
+        byte[] bytes = new byte[size];
+        
+        for(int i = 0; i < size; i++)
+            bytes[i] = content;
+        
+        return new ByteArrayInputStream(bytes);
     }
+    
+    private InputStream prepareRandomInputStream(){        
+        int size = rand.nextInt(50)+10; //generates an int in [10; 60[        
+        byte[] bytes = new byte[size];
+        
+        rand.nextBytes(bytes);
+        
+        return new ByteArrayInputStream(bytes);
+    }
+    
+    @Test
+    public void testAddFileAddsFile(){
+        //note: this also tests getFileFor()
+        
+        FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
+        
+        String user1 = DatabaseServiceTestTool.addresses[0];
+        String user2 = DatabaseServiceTestTool.addresses[1];
+        
+        assertTrue(fss.getFilesFor(user1).size() == 0);
+        assertTrue(fss.getFilesFor(user2).size() == 0);
+        
+        try {
+            InputStream is = prepareRandomInputStream();
+            fss.addFile(user1, "mypgn.pgn", is);
+            is.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+        assertTrue(fss.getFilesFor(user1).size() == 1);
+        assertEquals(fss.getFilesFor(user1).get(0), "mypgn.pgn");
+        
+        //testing for a side effect now
+        assertTrue(fss.getFilesFor(user2).size() == 0);
+        
+        try {
+            fss.destroy();
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+    
+    @Test
+    public void testRemoveFileRemovesFile(){
+        //note: this also tests getFileFor()
+        
+        FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
+        
+        String user1 = DatabaseServiceTestTool.addresses[0];
+        String user2 = DatabaseServiceTestTool.addresses[1];
+        
+        assertTrue(fss.getFilesFor(user1).size() == 0);
+        assertTrue(fss.getFilesFor(user2).size() == 0);
+        
+        try {
+            InputStream is1 = prepareRandomInputStream();
+            fss.addFile(user1, "hello.pgn", is1);
+            is1.close();
+            
+            InputStream is2 = prepareRandomInputStream();
+            fss.addFile(user2, "hello.pgn", is2);
+            is2.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+        assertTrue(fss.getFilesFor(user1).size() == 1);
+        assertTrue(fss.getFilesFor(user2).size() == 1);
+        
+        assertEquals(fss.getFilesFor(user1).get(0), "hello.pgn");
+        assertEquals(fss.getFilesFor(user2).get(0), "hello.pgn");
+        
+        try {
+            fss.removeFile(user1, "hello.pgn");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+            fail();
+        }
+        
+        assertTrue(fss.getFilesFor(user1).size() == 0);
+        
+        //testing for side-effects now
+        assertTrue(fss.getFilesFor(user2).size() == 1);
+        assertEquals(fss.getFilesFor(user2).get(0), "hello.pgn");
+        
+        try {
+            fss.destroy();
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+    
+    @Test
+    public void testDownloadFile(){
+        FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
+        String user = DatabaseServiceTestTool.addresses[2];
+        
+        try {
+            fss.addFile(user, "suchagoodplay.pgn", prepareConstantInputStream(100, (byte) 2));
+            
+            InputStream is = fss.downloadFile(user, "suchagoodplay.pgn");
+            InputStream cst = prepareConstantInputStream(100, (byte) 2);
+            
+            //dirty way to compare two streams.
+            int token = 0;
+            while((token = is.read()) != -1){
+                if(cst.read() != token)
+                    fail();
+            }
+            
+            if(cst.read() != -1)
+                fail();
+            
+            is.close();
+            cst.close();
+            
+            fss.destroy();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+    
+    @Test
+    public void testAddFilesThrowsExceptionOnNonexistentUser(){
+        FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
+        
+        InputStream is = prepareRandomInputStream();
+        try {
+            fss.addFile("nonexistentuser", "wontbestoredanyway.pgn", is);
+            fail();
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        } catch (IllegalArgumentException e2){
+            
+        }
+        
+        try {
+            fss.destroy();
+        } catch (IOException e) {
+            fail();
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void testRemoveFilesThrowsExceptionOnNonexistentUser(){
+        FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
 
+        try {
+            fss.removeFile("nonexistentuser", "wontbestoredanyway.pgn");
+            fail();
+        } catch (IllegalArgumentException e2) {
+           
+        }
+        
+        try {
+            fss.destroy();
+        } catch (IOException e) {
+            fail();
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void testRemoveFilesThrowsExceptionOnNonexistentFile(){
+        FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
+
+        try {
+            fss.removeFile(DatabaseServiceTestTool.addresses[0], "idontexistsmeeh.pgn");
+            fail();
+        } catch (IllegalArgumentException e2) {
+           
+        }
+        
+        try {
+            fss.destroy();
+        } catch (IOException e) {
+            fail();
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void testGetFilesForThrowsExceptionOnNonexistentUser(){
+        FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
+
+        try {
+            fss.getFilesFor("nonexistentuser");
+            fail();
+        } catch (IllegalArgumentException e) {
+            
+        }
+        
+        try {
+            fss.destroy();
+        } catch (IOException e) {
+            fail();
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void testDownloadFileThrowsExceptionOnNonexistentUser(){
+        FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
+
+        try {
+            fss.downloadFile("nonexistentuser", "meeh.pgn");
+            fail();
+        } catch (IllegalArgumentException e) {
+           
+        } catch (IOException e) {
+            fail();
+            e.printStackTrace();
+        }
+        
+        try {
+            fss.destroy();
+        } catch (IOException e) {
+            fail();
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void testDownloadFileThrowsExceptionOnNonexistentFile(){
+        FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
+
+        try {
+            fss.downloadFile(DatabaseServiceTestTool.addresses[0], "meeh.pgn");
+            fail();
+        } catch (IllegalArgumentException e) {
+           
+        } catch (IOException e) {
+            fail();
+            e.printStackTrace();
+        }
+        
+        try {
+            fss.destroy();
+        } catch (IOException e) {
+            fail();
+            e.printStackTrace();
+        }
+    }
 }
