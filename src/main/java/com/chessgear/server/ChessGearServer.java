@@ -103,7 +103,6 @@ public class ChessGearServer {
      */
     public void logOutUser(String email, DatabaseService db) {
         User temp = null;
-
         int rootid = db.getRoot(email);
         temp = getUser(email);
         GameTree tree = temp.getGameTree();

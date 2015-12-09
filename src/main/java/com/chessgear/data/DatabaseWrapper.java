@@ -41,6 +41,7 @@ public class DatabaseWrapper {
         String corr = maps.get(UserNoDb.Property.PASSWORD);
         Map<GameTreeNode.NodeProperties, String> map = new HashMap<>();
         String board;
+        int mult;
         try {
             map = db.fetchNodeProperty(username, rootid);
             board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
@@ -48,9 +49,10 @@ public class DatabaseWrapper {
             board = "err";
         }
         try {
-            Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
+            mult = Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
         } catch (NumberFormatException e) {
             System.err.println("Error Fetching");
+            mult = 1;
         }
         GameTreeNode root = new GameTreeNode(rootid);
         BoardState boardstate;
@@ -60,6 +62,7 @@ public class DatabaseWrapper {
             boardstate = new BoardState();
             boardstate.setToDefaultPosition();
         }
+        root.setMultiplicity(mult);
         root.setBoardState(boardstate);
         bigid = 0;
         HashMap<Integer, GameTreeNode> nodemapping = makeTree(root, username);
@@ -71,9 +74,7 @@ public class DatabaseWrapper {
         user.setGameTree(tree);
         return user;
     }
-    public int updateUser(UserNoDb user) {
-        return 1;
-    }
+
     public HashMap<Integer, GameTreeNode> makeTree(GameTreeNode base, String email) {
         List<Integer> children;
         HashMap<Integer, GameTreeNode> nodemapping = new HashMap<>();
@@ -90,13 +91,16 @@ public class DatabaseWrapper {
         for (int i = 0; i < children.size(); i++) {
             Map<GameTreeNode.NodeProperties, String> map = db.fetchNodeProperty(email, children.get(i));
             String board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
+            int mult;
             try {
-                Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
+                mult = Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
             } catch (NumberFormatException e) {
                 System.err.println("Error Fetching");
+                mult = 1;
             }
             GameTreeNode next = new GameTreeNode(children.get(i));
             BoardState boarstate = new BoardState(board);
+            next.setMultiplicity(mult);
             next.setBoardState(boarstate);
             base.addChild(next);
             next.setParent(base);
@@ -107,5 +111,55 @@ public class DatabaseWrapper {
             bigid = base.getId();
         }
         return nodemapping;
+    }
+    public int updateUser(UserNoDb user) {
+        String username = user.getUsername();
+        int rootid = db.getRoot(username);
+        GameTree tree = user.getGameTree();
+        deleteTree(username, rootid);
+        storeTree(username, tree, rootid);
+        return 1;
+    }
+
+    public int storeTree(String email, GameTree gametree, int id) {
+        GameTreeNode curr = gametree.getNodeWithId(id);
+        List<GameTreeNode> children = curr.getChildren();
+        try {
+            for(int i = 0;i < children.size(); i++) {
+                GameTreeNode temp = children.get(i);
+                storeTree(email, gametree, temp.getId());
+            }
+        } catch (NullPointerException e) {
+            GameTreeNode temp;
+        }
+        HashMap<GameTreeNode.NodeProperties, String> pmap = new HashMap<>();
+        pmap.put(GameTreeNode.NodeProperties.BOARDSTATE, curr.getBoardState().toFEN());
+        pmap.put(GameTreeNode.NodeProperties.MULTIPLICITY, String.valueOf(curr.getMultiplicity()));
+        db.addNode(email, id, pmap);
+        return 1;
+    }
+    /**
+     * For deleting hte tree
+     * @param email
+     * @param id
+     * @return
+     */
+    public int deleteTree (String email, int id) {
+        List<Integer> children;
+        try{
+            children = db.childrenFrom(email, id);
+        } catch (IllegalArgumentException e) {
+            try {
+                db.deleteNode(email, id);
+            } catch (IllegalArgumentException b) {
+                return 0;
+            }
+            return 0;
+        }
+        for (int i = 0; i < children.size(); i++) {
+            deleteTree(email, children.get(i));
+        }
+        db.deleteNode(email, id);
+        return 1;
     }
 }
