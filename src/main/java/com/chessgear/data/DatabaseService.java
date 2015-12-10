@@ -1,23 +1,20 @@
 package com.chessgear.data;
 
-import java.io.*;
+import com.chessgear.data.GameTreeNode.NodeProperties;
+import com.chessgear.server.UserNoDb;
+import com.chessgear.server.UserNoDb.Property;
+import org.sql2o.Connection;
+import org.sql2o.Sql2o;
+import org.sqlite.SQLiteDataSource;
+
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.chessgear.data.GameTreeNode.NodeProperties;
-import com.chessgear.server.User;
-import com.chessgear.server.User.Property;
-
-import org.sql2o.Connection;
-import org.sql2o.Sql2o;
-import org.sqlite.SQLiteDataSource;
-
-import static org.junit.Assert.fail;
 
 /**
  * Here are some important things to keep in mind when using this class: 
@@ -85,7 +82,7 @@ public class DatabaseService {
         
         //Schema for user table: User - (username, ... properties ...)
         StringBuilder builderUserSpec = new StringBuilder("CREATE TABLE IF NOT EXISTS User(username TEXT PRIMARY KEY");
-        for(User.Property P : User.Property.values())
+        for(UserNoDb.Property P : UserNoDb.Property.values())
             builderUserSpec.append(", "+P.name().toLowerCase()+" TEXT");
         builderUserSpec.append(")");
         String userSpec = builderUserSpec.toString();
@@ -141,7 +138,7 @@ public class DatabaseService {
         
         //constructing the sql command
         StringBuilder cmdBuilder = new StringBuilder("INSERT INTO User Values('"+username+"'");
-        for(User.Property P : User.Property.values()){
+        for(UserNoDb.Property P : UserNoDb.Property.values()){
             cmdBuilder.append(", ");
             
             //if property not availaible, should put NULL into database

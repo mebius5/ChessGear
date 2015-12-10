@@ -57,6 +57,7 @@ public class UserNoDb {
         GameTreeBuilder treeBuilder = new GameTreeBuilder(parser);
         this.gameTree.addGame(treeBuilder.getListOfNodes());
         Game newGame = new Game(parser);
+        this.games.add(newGame);
     }
 
     /**
