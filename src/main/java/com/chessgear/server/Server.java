@@ -6,14 +6,14 @@ import java.util.HashMap;
  * ChessGear server object, with no database integration.
  * Created by Ran on 12/4/2015.
  */
-public class ServerNoDb {
+public class Server {
 
-    private HashMap<String, UserNoDb> users;
+    private HashMap<String, User> users;
 
     /**
      * Initializes a server.
      */
-    public ServerNoDb() {
+    public Server() {
         this.users = new HashMap<>();
     }
 
@@ -21,7 +21,7 @@ public class ServerNoDb {
      * Adds user.
      * @param user User to add.
      */
-    public void addUser(UserNoDb user) {
+    public void addUser(User user) {
         this.users.put(user.getUsername(), user);
     }
 
@@ -39,7 +39,7 @@ public class ServerNoDb {
      * @param username Username of user to retrieve.
      * @return Gets object if exists, else null.
      */
-    public UserNoDb getUser(String username) {
+    public User getUser(String username) {
         if (this.userExists(username)) return this.users.get(username);
         return null;
     }

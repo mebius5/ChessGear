@@ -1,8 +1,8 @@
 package com.chessgear.data;
 
 import com.chessgear.data.GameTreeNode.NodeProperties;
-import com.chessgear.server.UserNoDb;
-import com.chessgear.server.UserNoDb.Property;
+import com.chessgear.server.User;
+import com.chessgear.server.User.Property;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sqlite.SQLiteDataSource;
@@ -82,7 +82,7 @@ public class DatabaseService {
         
         //Schema for user table: User - (username, ... properties ...)
         StringBuilder builderUserSpec = new StringBuilder("CREATE TABLE IF NOT EXISTS User(username TEXT PRIMARY KEY");
-        for(UserNoDb.Property P : UserNoDb.Property.values())
+        for(User.Property P : User.Property.values())
             builderUserSpec.append(", "+P.name().toLowerCase()+" TEXT");
         builderUserSpec.append(")");
         String userSpec = builderUserSpec.toString();
@@ -138,7 +138,7 @@ public class DatabaseService {
         
         //constructing the sql command
         StringBuilder cmdBuilder = new StringBuilder("INSERT INTO User Values('"+username+"'");
-        for(UserNoDb.Property P : UserNoDb.Property.values()){
+        for(User.Property P : User.Property.values()){
             cmdBuilder.append(", ");
             
             //if property not availaible, should put NULL into database

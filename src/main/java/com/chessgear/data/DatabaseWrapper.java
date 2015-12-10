@@ -1,10 +1,7 @@
 package com.chessgear.data;
 
 import com.chessgear.game.BoardState;
-import com.chessgear.game.Game;
 import com.chessgear.server.User;
-import com.chessgear.server.UserNoDb;
-import com.chessgear.data.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,12 +30,12 @@ public class DatabaseWrapper {
      * @param username the username
      * @return the user object
      */
-    public UserNoDb getUser(String username) {
+    public User getUser(String username) {
         if (!db.userExists(username))
             return null;
         int rootid = db.getRoot(username);
-        Map<UserNoDb.Property, String> maps = db.fetchUserProperties(username);
-        String corr = maps.get(UserNoDb.Property.PASSWORD);
+        Map<User.Property, String> maps = db.fetchUserProperties(username);
+        String corr = maps.get(User.Property.PASSWORD);
         Map<GameTreeNode.NodeProperties, String> map = new HashMap<>();
         String board;
         int mult;
@@ -70,7 +67,7 @@ public class DatabaseWrapper {
         tree.setNodeMapping(nodemapping);
         tree.setRoot(root);
         tree.setNodeIdCounter(bigid);
-        UserNoDb user = new UserNoDb(username, corr);
+        User user = new User(username, corr);
         user.setGameTree(tree);
         return user;
     }
@@ -112,7 +109,7 @@ public class DatabaseWrapper {
         }
         return nodemapping;
     }
-    public int updateUser(UserNoDb user) {
+    public int updateUser(User user) {
         String username = user.getUsername();
         int rootid = db.getRoot(username);
         GameTree tree = user.getGameTree();
