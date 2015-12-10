@@ -3,11 +3,12 @@ package com.chessgear.server;
 import com.chessgear.data.GameTree;
 import com.chessgear.game.Game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * User class.
- * Created by Ran on 10/8/2015.
+ * Created by Ran on 10/8/2015
  */
 public class User {
 
@@ -21,6 +22,7 @@ public class User {
         username = usernam;
         email = em;
         password = passw;
+        games = new ArrayList<>();
     }
     /**
      * User's username.
@@ -62,7 +64,7 @@ public class User {
      * List of the User Properties
      */
     public enum Property {
-        USERNAME, PASSWORD
+        EMAIL, PASSWORD
     }
 
     /**
@@ -70,8 +72,8 @@ public class User {
      * @param game the game
      */
     public void addGame(Game game) {
-        games.add(game);
-        numgames++;
+        this.games.add(game);
+        this.numgames++;
     }
 
     /**

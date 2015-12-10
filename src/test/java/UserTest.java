@@ -1,26 +1,22 @@
-/**
- * Created by GradyXiao on 10/24/15.
- * JUnit Test for GameTree.java
- */
 import com.chessgear.data.GameTree;
 import com.chessgear.data.GameTreeBuilder;
 import com.chessgear.data.GameTreeNode;
 import com.chessgear.data.PGNParser;
-import com.chessgear.game.BoardState;
-import com.chessgear.game.PieceType;
-import com.chessgear.game.Player;
+import com.chessgear.game.Game;
+import com.chessgear.game.Result;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
+import com.chessgear.server.User;
 
+import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-/***
- * Test for GameTree.java
+/**
+ * Created by GradyXiao on 12/4/15.
  */
-public class GameTreeTest {
+public class UserTest {
     private String testPGN;
 
     @Before
@@ -45,25 +41,28 @@ public class GameTreeTest {
     }
 
     @Test
-    public void testGameTree() {
+    public void testUser() {
         try {
+            String passwd = "abcd1234";
+            String username = "Bob";
+            String email = "tb40@cloud.net";
+            User user = new User(username, email, passwd);
+            assertEquals(user.getEmail(), email);
+
             GameTree gameTree = new GameTree(); //Tests GameTree constructor
-            assertEquals(gameTree.getRoot(),GameTreeNode.rootNode(0));
-            PGNParser parser = new PGNParser(this.testPGN);
-            GameTreeBuilder testBuilder = new GameTreeBuilder(parser.getListOfBoardStates(), parser.getWhiteHalfMoves(), parser.getBlackHalfMoves());
-            List<GameTreeNode> gameTreeNodes = testBuilder.getListOfNodes();
+            user.setGameTree(gameTree);
+            assertEquals(user.getGameTree(),gameTree);
 
-            gameTree.addGame(gameTreeNodes);
+            Date date = new Date(2015,12,01);
+            Result result = Result.BLACK_WIN;
+            Game game = new Game("white","black",date, testPGN, result,15);
+            user.addGame(game);
+            assertEquals(user.getNumgames(),1);
 
-            BoardState startingBoardState = gameTree.getRoot().getBoardState();
-            assertEquals(startingBoardState.toFEN(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+            assertEquals(User.Property.EMAIL.toString(), "EMAIL");
+            assertEquals(User.Property.PASSWORD.toString(), "PASSWORD");
 
-            assertEquals(gameTree.containsNode(1), true);
-            assertEquals(gameTree.getNodeWithId(1).getBoardState().toFEN(), "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1");
-            assertEquals(gameTree.getNodeWithId(1).getLastMoveMade().getWhoMoved(), Player.WHITE);
-            assertEquals(gameTree.getNodeWithId(1).getLastMoveMade().getPieceType(), PieceType.KNIGHT);
-            assertEquals(gameTree.getNodeWithId(1).getLastMoveMade().getDestination().toString(), "f3");
-        } catch (Exception e) {
+        } catch (Exception e){
             e.printStackTrace();
             fail();
         }

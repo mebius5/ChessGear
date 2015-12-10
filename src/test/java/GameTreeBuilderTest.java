@@ -52,12 +52,15 @@ public class GameTreeBuilderTest {
             List<GameTreeNode> gameTreeNodes = testBuilder.getListOfNodes();
             assertEquals(gameTreeNodes.size(), 129);
             BoardState startingBoardState = gameTreeNodes.get(0).getBoardState();
-            assertEquals(startingBoardState, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+            assertEquals(startingBoardState.toFEN(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 
-            assertEquals(gameTreeNodes.get(1).getBoardState(), "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1");
+            assertEquals(gameTreeNodes.get(1).getBoardState().toFEN(), "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1");
             assertEquals(gameTreeNodes.get(1).getLastMoveMade().getWhoMoved(), Player.WHITE);
             assertEquals(gameTreeNodes.get(1).getLastMoveMade().getPieceType(), PieceType.KNIGHT);
-            assertEquals(gameTreeNodes.get(1).getLastMoveMade().getDestination(), "f3");
+            assertEquals(gameTreeNodes.get(1).getLastMoveMade().getDestination().toString(), "f3");
+
+            GameTreeBuilder testBuilder2 = new GameTreeBuilder(parser);
+            assertEquals(testBuilder2.getListOfNodes(),testBuilder.getListOfNodes());
 
         } catch (PGNParseException e) {
             fail();

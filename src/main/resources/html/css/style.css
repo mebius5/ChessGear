@@ -79,7 +79,7 @@ header {
 }
 
 .inactive-nav {
-    background-color: #313131;
+    background-color: #132831;
 }
 
 .inactive-nav:hover {
@@ -148,7 +148,7 @@ footer {
 }
 
 #application-wrapper {
-    margin-top: 50px;
+    padding-top: 50px;
     margin-bottom: 50px;
     font-size: 0;
 }
@@ -171,4 +171,69 @@ footer {
 
 .clear {
     clear: both;
+}
+
+.even-rank > .board-square:nth-child(1) {
+    background-color: #fff;
+}
+
+.even-rank > .board-square:nth-child(2) {
+    background-color: #35525b;
+}
+
+.even-rank > .board-square:nth-child(3) {
+    background-color: #fff;
+}
+
+.even-rank > .board-square:nth-child(4) {
+    background-color: #35525b;
+}
+
+
+.even-rank > .board-square:nth-child(5) {
+    background-color: #fff;
+}
+
+.even-rank > .board-square:nth-child(6) {
+    background-color: #35525b;
+}
+
+.even-rank > .board-square:nth-child(7) {
+    background-color: #fff;
+}
+
+.even-rank > .board-square:nth-child(8) {
+    background-color: #35525b;
+}
+
+.odd-rank > .board-square:nth-child(1) {
+    background-color: #35525b;
+}
+
+.odd-rank > .board-square:nth-child(2) {
+    background-color: #fff;
+}
+
+.odd-rank > .board-square:nth-child(3) {
+    background-color: #35525b;
+}
+
+.odd-rank > .board-square:nth-child(4) {
+    background-color: #fff;
+}
+
+.odd-rank > .board-square:nth-child(5) {
+    background-color: #35525b;
+}
+
+.odd-rank > .board-square:nth-child(6) {
+    background-color: #fff;
+}
+
+.odd-rank > .board-square:nth-child(7) {
+    background-color: #35525b;
+}
+
+.odd-rank > .board-square:nth-child(8) {
+    background-color: #fff;
 }

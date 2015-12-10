@@ -87,7 +87,7 @@ public class BootstrapNoDb {
             System.out.println("Game import request received" + request.body());
             JsonObject parsedRequest = parser.parse(request.body()).getAsJsonObject();
             String pgn = parsedRequest.get("pgn").getAsString();
-            String user = request.params("username");
+            String user = request.params("username").toLowerCase();
 
             // Check if user exists. If so, fetch its tree, and add the game.
             if (server.userExists(user)) {
@@ -114,7 +114,7 @@ public class BootstrapNoDb {
         });
 
         get("/chessgear/api/games/tree/:username/:nodeid", "application/json", (request, response) -> {
-            String user = request.params("username");
+            String user = request.params("username").toLowerCase();
             int nodeId = Integer.parseInt(request.params("nodeid"));
             System.out.println("Node request recieved for user " + user + ", node " + nodeId);
 
