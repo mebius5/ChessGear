@@ -149,6 +149,44 @@ public class FileStorageServiceTest {
     }
     
     @Test
+    public void testWithString(){
+        FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
+        String user = DatabaseServiceTestTool.usernames[2];
+        
+        try {
+            assertTrue(fss.getFilesFor(user).size() == 0);
+            fss.addFile(user, "hello.pgn", "blublabli");
+            assertTrue(fss.getFilesFor(user).size() == 1);
+            
+            //check for a side effect
+            assertTrue(fss.getFilesFor(DatabaseServiceTestTool.usernames[1]).size() == 0);
+            
+            //check that we can well fetch back
+            assertEquals(fss.fetchFileContent(user, "hello.pgn"), "blublabli");
+            
+            //and check that we can fetch a representative stream also
+            
+            InputStream is = fss.downloadFile(user, "hello.pgn");
+            
+            //tip found on http://stackoverflow.com/questions/309424/read-convert-an-inputstream-to-a-string
+            java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+            String fetched =  s.hasNext() ? s.next() : "";
+            s.close();
+            is.close();
+            
+            assertEquals(fetched, "blublabli");
+            
+            DatabaseServiceTestTool.destroyFileStorageService(fss);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+        
+    }
+    
+    @Test
     public void testAddFilesThrowsExceptionOnNonexistentUser(){
         FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
         
@@ -161,6 +199,12 @@ public class FileStorageServiceTest {
             fail();
         } catch (IllegalArgumentException e2){
             
+        }
+        
+        try {
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         
         DatabaseServiceTestTool.destroyFileStorageService(fss);
@@ -241,5 +285,60 @@ public class FileStorageServiceTest {
         
         DatabaseServiceTestTool.destroyFileStorageService(fss);
     }
+    
+    
+    @Test
+    public void testFetchFileContentThrowsExceptionOnNonexistentUser(){
+        FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
+
+        try {
+            fss.fetchFileContent("nonexistentuser", "meeh.pgn");
+            fail();
+        } catch (IllegalArgumentException e) {
+           
+        } catch (IOException e) {
+            fail();
+            e.printStackTrace();
+        }
+        
+        DatabaseServiceTestTool.destroyFileStorageService(fss);
+    }
+    
+    @Test
+    public void testFetchFileContentThrowsExceptionOnNonexistentFile(){
+        FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
+
+        try {
+            fss.fetchFileContent(DatabaseServiceTestTool.usernames[0], "meeh.pgn");
+            fail();
+        } catch (IllegalArgumentException e) {
+           
+        } catch (IOException e) {
+            fail();
+            e.printStackTrace();
+        }
+        
+        DatabaseServiceTestTool.destroyFileStorageService(fss);
+    }
+    
+    @Test
+    public void testAddFileAsStreamThrowsExceptionOnNonexistentUser(){
+        FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
+        
+        try {
+            fss.addFile("nonexistentuser", "wontbestoredanyway.pgn", "blehblehbleh");
+            fail();
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        } catch (IllegalArgumentException e2){
+            
+        }
+        
+        DatabaseServiceTestTool.destroyFileStorageService(fss);
+    }
+    
+    
+    
     
 }
