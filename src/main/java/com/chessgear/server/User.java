@@ -59,6 +59,14 @@ public class User {
         Game newGame = new Game(parser);
         this.games.add(newGame);
     }
+    
+    /***
+     * Sets the gameTree to tree
+     * @param tree the gameTree to be set to
+     */
+    public void setGameTree(GameTree tree) {
+        this.gameTree = tree;
+    }
 
     /**
      * Accessor for username.
@@ -75,18 +83,13 @@ public class User {
     public String getPassword() {
         return this.password;
     }
+    
     /**
      * List of the User Properties
      */
     public enum Property {
-        USERNAME, PASSWORD
+        PASSWORD
     }
 
-    /***
-     * Sets the gameTree to tree
-     * @param tree the gameTree to be set to
-     */
-    public void setGameTree(GameTree tree) {
-        this.gameTree = tree;
-    }
+
 }
