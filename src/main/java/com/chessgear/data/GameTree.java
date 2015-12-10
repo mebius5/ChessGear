@@ -95,6 +95,16 @@ public class GameTree {
     }
 
     /**
+     * Setting the root
+     */
+    public void setRoot(GameTreeNode roo) {
+        root = roo;
+    }
+
+    public void setNodeMapping(HashMap<Integer, GameTreeNode> e) {
+        nodeMapping = e;
+    }
+    /**
      * Gets the node with the specified id.
      * @param id Id to get node for.
      * @return game tree node with the Id requrested
@@ -110,6 +120,10 @@ public class GameTree {
      */
     public boolean containsNode(int id) {
         return nodeMapping.containsKey(id);
+    }
+
+    public void setNodeIdCounter(int high) {
+        nodeIdCounter = high;
     }
 
 }

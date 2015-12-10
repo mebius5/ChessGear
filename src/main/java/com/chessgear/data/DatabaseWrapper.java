@@ -1,52 +1,58 @@
-package com.chessgear.server;
+package com.chessgear.data;
 
-import com.chessgear.data.DatabaseService;
-import com.chessgear.data.GameTree;
-import com.chessgear.data.GameTreeNode;
 import com.chessgear.game.BoardState;
+import com.chessgear.game.Game;
+import com.chessgear.server.User;
+import com.chessgear.server.UserNoDb;
+import com.chessgear.data.*;
 
-import javax.xml.crypto.Data;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- * Object representation of the chessgear server.
- * Created by Ran on 10/8/2015.
+ * Created by Neil on 12/7/2015.
  */
-public class ChessGearServer {
+public class DatabaseWrapper {
     /**
-     * Constructor with an Empty List
+     * The Database we are accessing
      */
-    public ChessGearServer() {
-        users = new ArrayList<>();
+    DatabaseService db;
+    /**
+     * the biggest ID
+     */
+    int bigid;
+    /**
+     * The database wrapper
+     * @param database the database
+     */
+    public DatabaseWrapper(DatabaseService database) {
+        db = database;
     }
     /**
-     * Store tree
+     * @param username the username
+     * @return the user object
      */
-    public void storeTree(String email, GameTree n, DatabaseService db) {
-        //insert here
-    }
-
-    /**
-     * Adding a user to the stored user Bases
-     * @param user the user to be stored
-     * @param db the database that will be modified
-     */
-    public void addOnlineUser(User user, DatabaseService db) {
-        String email = user.getEmail();
-        int rootid = db.getRoot(email);
-
+    public UserNoDb getUser(String username) {
+        if (!db.userExists(username))
+            return null;
+        int rootid = db.getRoot(username);
+        Map<UserNoDb.Property, String> maps = db.fetchUserProperties(username);
+        String corr = maps.get(UserNoDb.Property.PASSWORD);
         Map<GameTreeNode.NodeProperties, String> map = new HashMap<>();
         String board;
+        int mult;
         try {
-            map = db.fetchNodeProperty(email, rootid);
+            map = db.fetchNodeProperty(username, rootid);
             board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
         } catch (IllegalArgumentException e) {
             board = "err";
         }
         try {
-            Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
+            mult = Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
         } catch (NumberFormatException e) {
             System.err.println("Error Fetching");
+            mult = 1;
         }
         GameTreeNode root = new GameTreeNode(rootid);
         BoardState boardstate;
@@ -56,18 +62,20 @@ public class ChessGearServer {
             boardstate = new BoardState();
             boardstate.setToDefaultPosition();
         }
+        root.setMultiplicity(mult);
         root.setBoardState(boardstate);
-        HashMap<Integer, GameTreeNode> nodemapping = makeTree(root, db, email);
+        bigid = 0;
+        HashMap<Integer, GameTreeNode> nodemapping = makeTree(root, username);
         GameTree tree = new GameTree();
         tree.setNodeMapping(nodemapping);
         tree.setRoot(root);
+        tree.setNodeIdCounter(bigid);
+        UserNoDb user = new UserNoDb(username, corr);
         user.setGameTree(tree);
-        System.out.println("Adding " + user.getEmail());
-        users.add(user);
-        System.out.println(users.size());
+        return user;
     }
-    //Makes a tree from the Database with a root node
-    public HashMap<Integer, GameTreeNode> makeTree(GameTreeNode base, DatabaseService db, String email) {
+
+    public HashMap<Integer, GameTreeNode> makeTree(GameTreeNode base, String email) {
         List<Integer> children;
         HashMap<Integer, GameTreeNode> nodemapping = new HashMap<>();
         System.out.println("hey");
@@ -75,56 +83,51 @@ public class ChessGearServer {
             children = db.childrenFrom(email, base.getId());
         } catch(IllegalArgumentException e) {
             nodemapping.put(base.getId(), base);
+            if(base.getId() > bigid) {
+                bigid = base.getId();
+            }
             return nodemapping;
         }
         for (int i = 0; i < children.size(); i++) {
             Map<GameTreeNode.NodeProperties, String> map = db.fetchNodeProperty(email, children.get(i));
             String board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
+            int mult;
             try {
-                Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
+                mult = Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
             } catch (NumberFormatException e) {
                 System.err.println("Error Fetching");
+                mult = 1;
             }
             GameTreeNode next = new GameTreeNode(children.get(i));
             BoardState boarstate = new BoardState(board);
+            next.setMultiplicity(mult);
             next.setBoardState(boarstate);
             base.addChild(next);
             next.setParent(base);
-            nodemapping = makeTree(next, db, email);
-
+            nodemapping = makeTree(next, email);
         }
         nodemapping.put(base.getId(), base);
+        if(base.getId() > bigid) {
+            bigid = base.getId();
+        }
         return nodemapping;
     }
-    /**
-     * Removes a user when we no longer need its memory
-     * @param email the user to be logged out
-     * @param db the database that will be modified
-     */
-    public void logOutUser(String email, DatabaseService db) {
-        User temp = null;
-        int rootid = db.getRoot(email);
-        temp = getUser(email);
-        GameTree tree = temp.getGameTree();
-        deleteTree(email, db, rootid);
-        storeTree(email, tree, db, rootid);
-        for (int i = 0; i < users.size(); i++) {
-            if (email.equals(users.get(i).getEmail())) {
-                temp = users.get(i);
-                users.remove(i);
-            }
-        }
+    public int updateUser(UserNoDb user) {
+        String username = user.getUsername();
+        int rootid = db.getRoot(username);
+        GameTree tree = user.getGameTree();
+        deleteTree(username, rootid);
+        storeTree(username, tree, rootid);
+        return 1;
     }
-    /**
-     * For Storing the tree
-     */
-    public int storeTree(String email, GameTree gametree, DatabaseService db,int id) {
+
+    public int storeTree(String email, GameTree gametree, int id) {
         GameTreeNode curr = gametree.getNodeWithId(id);
         List<GameTreeNode> children = curr.getChildren();
         try {
             for(int i = 0;i < children.size(); i++) {
                 GameTreeNode temp = children.get(i);
-                storeTree(email, gametree, db, temp.getId());
+                storeTree(email, gametree, temp.getId());
             }
         } catch (NullPointerException e) {
             GameTreeNode temp;
@@ -138,11 +141,10 @@ public class ChessGearServer {
     /**
      * For deleting hte tree
      * @param email
-     * @param db
      * @param id
      * @return
      */
-    public int deleteTree (String email, DatabaseService db, int id) {
+    public int deleteTree (String email, int id) {
         List<Integer> children;
         try{
             children = db.childrenFrom(email, id);
@@ -155,31 +157,9 @@ public class ChessGearServer {
             return 0;
         }
         for (int i = 0; i < children.size(); i++) {
-            deleteTree(email, db, children.get(i));
+            deleteTree(email, children.get(i));
         }
         db.deleteNode(email, id);
         return 1;
     }
-    /**
-     * Gets a User from an email address
-     * @param email email address of user requested
-     * @return the requrested user with the same email address
-     */
-    public User getUser(String email) {
-        System.out.println(users.size());
-        for (int i = 0; i < users.size(); i++) {
-            System.out.println(email + " " + users.get(i).getEmail());
-            if (email.equals(users.get(i).getEmail())) {
-
-                return users.get(i);
-            }
-        }
-        return null;
-    }
-
-    /**
-     * List of users.
-     */
-    private ArrayList<User> users;
-
 }
