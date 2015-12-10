@@ -136,7 +136,7 @@ public class DatabaseWrapper {
         return 1;
     }
     /**
-     * For deleting hte tree
+     * For deleting the tree
      * @param email
      * @param id
      * @return
