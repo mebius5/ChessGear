@@ -82,6 +82,10 @@ public class User {
         USERNAME, PASSWORD
     }
 
+    /***
+     * Sets the gameTree to tree
+     * @param tree the gameTree to be set to
+     */
     public void setGameTree(GameTree tree) {
         this.gameTree = tree;
     }

@@ -46,7 +46,9 @@ public class Engine {
      * @throws Exception throws an error if something wrong happens during analyseFEN()
      */
     public EngineResult analyseFEN(String fen,int moveTime) throws Exception{
-        System.out.println("Analyzing fen " + fen);
+
+        //System.out.println("Analyzing fen " + fen);
+
         try {
             EngineResult engineResult = new EngineResult(); //Results from the engine analysis
 
@@ -79,7 +81,6 @@ public class Engine {
      */
     private void obtainResultAndMaybePrint(EngineResult engineResult, boolean print) throws IOException {
         // read the output from the command
-        //System.out.println("Here is the standard output of the command:\n");
         String s="";
         Scanner scanner=new Scanner(s);
         MatchResult matchResult;
