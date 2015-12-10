@@ -400,6 +400,10 @@ public class PGNParser {
         return lastIndex;
     }
 
+    public String getPGN() {
+        return this.pgn;
+    }
+
     /**
      * Inner class tag. Encodes tag information.
      */
@@ -438,6 +442,7 @@ public class PGNParser {
         public String getValue() {
             return this.value;
         }
+
     }
 }
 

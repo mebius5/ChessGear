@@ -1,6 +1,12 @@
 package com.chessgear.server;
 
 import com.chessgear.data.GameTree;
+import com.chessgear.data.GameTreeBuilder;
+import com.chessgear.data.PGNParser;
+import com.chessgear.game.Game;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User object, with no database integration.
@@ -9,6 +15,7 @@ import com.chessgear.data.GameTree;
 public class UserNoDb {
 
     private GameTree gameTree;
+    private List<Game> games;
 
     private String username;
     private String password;
@@ -22,6 +29,7 @@ public class UserNoDb {
         this.username = username;
         this.password = password;
         this.gameTree = new GameTree();
+        this.games = new ArrayList<>();
     }
 
     /**
@@ -30,6 +38,25 @@ public class UserNoDb {
      */
     public GameTree getGameTree() {
         return this.gameTree;
+    }
+
+    /**
+     * Accessor for user's list of games.
+     * @return List of games for user.
+     */
+    public List<Game> getGameList() {
+        return this.games;
+    }
+
+    /**
+     * Parses and adds a game in pgn form.
+     * @param pgn PGN game string.
+     */
+    public void addGame(String pgn) throws Exception {
+        PGNParser parser = new PGNParser(pgn);
+        GameTreeBuilder treeBuilder = new GameTreeBuilder(parser);
+        this.gameTree.addGame(treeBuilder.getListOfNodes());
+        Game newGame = new Game(parser);
     }
 
     /**

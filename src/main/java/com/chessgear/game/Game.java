@@ -1,5 +1,7 @@
 package com.chessgear.game;
 
+import com.chessgear.data.PGNParser;
+
 import java.util.Date;
 
 /**
@@ -55,6 +57,15 @@ public class Game {
         this.result=result;
         this.id=id;
     }
+
+    /**
+     * Creates a new game from pgn parser.
+     * @param parser
+     */
+    public Game(PGNParser parser) {
+        this(parser.getWhitePlayerName(), parser.getBlackPlayerName(), new Date(), parser.getPGN(), parser.getResult(), 0);
+    }
+
     /**
      * Accessor for name of white player.
      * @return Name of white player.

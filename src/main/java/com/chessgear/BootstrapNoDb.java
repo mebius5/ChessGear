@@ -91,7 +91,10 @@ public class BootstrapNoDb {
 
             // Check if user exists. If so, fetch its tree, and add the game.
             if (server.userExists(user)) {
-                GameTree currentTree = server.getUser(user).getGameTree();
+                // Also add the game to the user's list of games.
+                UserNoDb currentUser = server.getUser(user);
+                currentUser.addGame(pgn);
+                GameTree currentTree = currentUser.getGameTree();
                 GameTreeBuilder treeBuilder = new GameTreeBuilder(new PGNParser(pgn));
                 currentTree.addGame(treeBuilder.getListOfNodes());
                 // Return response
