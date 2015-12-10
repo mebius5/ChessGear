@@ -64,7 +64,7 @@ public class User {
      * List of the User Properties
      */
     public enum Property {
-        USERNAME, PASSWORD
+        EMAIL, PASSWORD
     }
 
     /**

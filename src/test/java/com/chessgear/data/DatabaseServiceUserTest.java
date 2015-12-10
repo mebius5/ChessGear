@@ -1,8 +1,7 @@
+package com.chessgear.data;
 import static org.junit.Assert.*;
 
-import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
@@ -21,13 +20,14 @@ import com.chessgear.server.User.Property;
 public class DatabaseServiceUserTest {
         
     public void testAddUserFailsOnNullUser(){
-        DatabaseService yeh = DatabaseServiceTestTool.createDatabase();
+        DatabaseService yeh = DatabaseServiceTestTool.createDatabase(false);
         
         try{
             yeh.addUser(null, Collections.emptyMap());
+            fail();
         }
         catch(IllegalArgumentException e){
-            
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -36,32 +36,32 @@ public class DatabaseServiceUserTest {
     
     @Test
     public void testUserExists(){
-       DatabaseService yeh = DatabaseServiceTestTool.createDatabase();
+       DatabaseService yeh = DatabaseServiceTestTool.createDatabase(true);
         
         //positive tests
-        for(String address: DatabaseServiceTestTool.addresses)
+        for(String address: DatabaseServiceTestTool.usernames)
             assertTrue(yeh.userExists(address));
         
         //negative tests
-        assertFalse(yeh.userExists("coco@hotmail.com"));
-        assertFalse(yeh.userExists("badchessplayer@jhu.edu"));
-        assertFalse(yeh.userExists("mamamia@pizza.se"));
+        assertFalse(yeh.userExists("coco"));
+        assertFalse(yeh.userExists("badchessplayer"));
+        assertFalse(yeh.userExists("mamamia"));
 
         DatabaseServiceTestTool.destroyDatabase(yeh);
     }
     
     @Test
     public void testUserExistsOnNullValueReturnsFalse(){
-        DatabaseService yeh = DatabaseServiceTestTool.createDatabase();
+        DatabaseService yeh = DatabaseServiceTestTool.createDatabase(false);
         assertFalse(yeh.userExists(null));
         DatabaseServiceTestTool.destroyDatabase(yeh);
     }
     
     @Test
     public void testFetchUserProperties(){
-        DatabaseService yeh = DatabaseServiceTestTool.createDatabase();
+        DatabaseService yeh = DatabaseServiceTestTool.createDatabase(true);
         
-        for(String address: DatabaseServiceTestTool.addresses){
+        for(String address: DatabaseServiceTestTool.usernames){
             Map<Property, String> huh = yeh.fetchUserProperties(address);
             
             //the return procedure should hand out each property
@@ -77,13 +77,13 @@ public class DatabaseServiceUserTest {
     }
     
     public void testFetchUserPropertiesFailsOnNullUser(){
-        DatabaseService yeh = DatabaseServiceTestTool.createDatabase();
+        DatabaseService yeh = DatabaseServiceTestTool.createDatabase(false);
         try{
             yeh.fetchUserProperties(null);
             fail();
         }
-        catch(IllegalArgumentException e){
-            
+        catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -92,15 +92,15 @@ public class DatabaseServiceUserTest {
     
     @Test
     public void cannotAddExistingAlreadyExistingUser(){
-        DatabaseService yeh = DatabaseServiceTestTool.createDatabase();
+        DatabaseService yeh = DatabaseServiceTestTool.createDatabase(true);
         
         //this is a small hack to verify that the exception is well thrown and destroy the database anyway. 
         try{
-            yeh.addUser("gogol@gmail.com", Collections.emptyMap());
+            yeh.addUser("gogol", Collections.emptyMap());
             fail();
         }
-        catch(IllegalArgumentException e){
-            
+        catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -109,41 +109,42 @@ public class DatabaseServiceUserTest {
     
     @Test
     public void nonSpecifyingAPropertyResultsInNullStorage(){
-        DatabaseService yeh = DatabaseServiceTestTool.createDatabase();
+        DatabaseService yeh = DatabaseServiceTestTool.createDatabase(false);
         
-        yeh.addUser("aaa@bbb.cc", Collections.emptyMap());
-        assertTrue(yeh.fetchUserProperties("aaa@bbb.cc").size() == Property.values().length);
+        yeh.addUser("aaa", Collections.emptyMap());
+        assertTrue(yeh.fetchUserProperties("aaa").size() == Property.values().length);
 
         DatabaseServiceTestTool.destroyDatabase(yeh);
     }
     
     @Test
     public void testUpdateProperty(){
-        DatabaseService yeh = DatabaseServiceTestTool.createDatabase();
+        DatabaseService yeh = DatabaseServiceTestTool.createDatabase(true);
         
         //positives tests
-        String ad = "gogol@gmail.com";
-        yeh.updateUserProperty(ad, Property.USERNAME, "gogolito");
-        assertEquals(yeh.fetchUserProperties(ad).get(Property.USERNAME), "gogolito");
+        String ad = "gogol";
+        yeh.updateUserProperty(ad, Property.EMAIL, "gogolito");
+        assertEquals(yeh.fetchUserProperties(ad).get(Property.EMAIL), "gogolito");
         
-        ad = "hardcorechessplayer@jhu.edu";
+        ad = "hardcorechessplayer";
         yeh.updateUserProperty(ad, Property.PASSWORD, "somewhatthisismoresecur3");
         assertEquals(yeh.fetchUserProperties(ad).get(Property.PASSWORD), "somewhatthisismoresecur3");
         
         //negative tests
-        assertEquals(yeh.fetchUserProperties(ad).get(Property.USERNAME), ad + Property.USERNAME);
+        assertEquals(yeh.fetchUserProperties(ad).get(Property.EMAIL), ad + Property.EMAIL);
 
         DatabaseServiceTestTool.destroyDatabase(yeh);
     }
     
     public void testUpdatePropertyFailsOnNonexistentKey(){
-        DatabaseService yeh = DatabaseServiceTestTool.createDatabase();
+        DatabaseService yeh = DatabaseServiceTestTool.createDatabase(false);
         try{
-            yeh.updateUserProperty("non@existent.user", Property.PASSWORD, "smth");
+            yeh.updateUserProperty("nonexistentuser", Property.PASSWORD, "smth");
             fail();
         }
-        catch(IllegalArgumentException e){
-            
+        catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
+
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -151,13 +152,14 @@ public class DatabaseServiceUserTest {
     }
     
     public void testUpdatePropertyFailsOnNullUser(){
-        DatabaseService yeh = DatabaseServiceTestTool.createDatabase();
+        DatabaseService yeh = DatabaseServiceTestTool.createDatabase(false);
         try{
             yeh.updateUserProperty(null, Property.PASSWORD, "smth");
             fail();
         }
-        catch(IllegalArgumentException e){
-            
+        catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
+
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -165,13 +167,13 @@ public class DatabaseServiceUserTest {
     }
     
     public void testUpdatePropertyFailsOnNullProperty(){
-        DatabaseService yeh = DatabaseServiceTestTool.createDatabase();
+        DatabaseService yeh = DatabaseServiceTestTool.createDatabase(false);
         try{
             yeh.updateUserProperty(null, Property.PASSWORD, "smth");
             fail();
         }
-        catch(IllegalArgumentException e){
-            
+        catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -180,25 +182,26 @@ public class DatabaseServiceUserTest {
     
     @Test
     public void testDeleteUser(){
-        DatabaseService yeh = DatabaseServiceTestTool.createDatabase();
+        DatabaseService yeh = DatabaseServiceTestTool.createDatabase(true);
         
         //positive tests
-        yeh.deleteUser("gogol@gmail.com");
-        assertFalse(yeh.userExists("gogol@gmail.com"));
+        yeh.deleteUser("gogol");
+        assertFalse(yeh.userExists("gogol"));
         
         //negative tests
-        assertTrue(yeh.userExists("jean@jean.fr"));
+        assertTrue(yeh.userExists("jean"));
         DatabaseServiceTestTool.destroyDatabase(yeh);
     }
     
     public void testDeleteUserFailsOnNonexistentKey(){
         
-        DatabaseService yeh = DatabaseServiceTestTool.createDatabase();
+        DatabaseService yeh = DatabaseServiceTestTool.createDatabase(false);
         try{
-            yeh.deleteUser("non@existent.user");
+            yeh.deleteUser("nonexistentuser");
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -207,14 +210,13 @@ public class DatabaseServiceUserTest {
     
     public void testDeleteuserFailsOnNullUser(){
         
-        
-        DatabaseService yeh = DatabaseServiceTestTool.createDatabase();
+        DatabaseService yeh = DatabaseServiceTestTool.createDatabase(false);
         try{
             yeh.deleteUser(null);
             fail();
         }
-        catch(IllegalArgumentException e){
-            
+        catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);

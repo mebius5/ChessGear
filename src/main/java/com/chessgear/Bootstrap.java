@@ -45,18 +45,14 @@ public class Bootstrap {
     private static final String ADDRESS = "localhost";
 
     static public void dirty() {
-        database = null;
-        try {
-            database = new DatabaseService("neiltest");
-        } catch (IOException | IllegalArgumentException b) {
-            System.out.println("Failure to connect to database");
-        }
+        database = DatabaseService.getInstanceOf();
     }
 
     /**
      * Clearing the Database
      * @return false if error occurs while deleting database. Else, true
      */
+    /***
     public boolean clearDatabase() {
         try {
             database.eraseDatabaseFile();
@@ -66,6 +62,8 @@ public class Bootstrap {
         }
         return true;
     }
+     ***/
+
     /**
      * The Main Server asdf
      * @param args this is the main
@@ -101,7 +99,7 @@ public class Bootstrap {
                 String pass = user.get("password").getAsString();
                 Map<User.Property, String> maps = database.fetchUserProperties(email);
                 String corr = maps.get(User.Property.PASSWORD);
-                String username = maps.get(User.Property.USERNAME);
+                String username = maps.get(User.Property.EMAIL);
                 if (corr.equals(pass)) {
                     response.status(200);
                     User use = new User(username, email, pass);
@@ -134,7 +132,7 @@ public class Bootstrap {
                 String username = user.get("email").getAsString();
                 HashMap<User.Property, String> prop = new HashMap<>();
                 prop.put(User.Property.PASSWORD, pass);
-                prop.put(User.Property.USERNAME, username);
+                prop.put(User.Property.EMAIL, username);
                 try {
                     database.addUser(email, prop);
                 } catch (IllegalArgumentException e) {

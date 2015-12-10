@@ -34,11 +34,13 @@ public class EngineTest {
             boolean result = false;
 
             if(engine.analyseFEN(fen, moveTime).getBestMove().contains("f3e5")||
-                    engine.analyseFEN(fen, moveTime).getBestMove().contains("b1c3")){
+                    engine.analyseFEN(fen, moveTime).getBestMove().contains("b1c3")||
+                    engine.analyseFEN(fen, moveTime).getBestMove().contains("d2d4"))
+            {
                 i++;
             }
 
-            if(engine.analyseFEN(fen2,moveTime).getBestMove().contains("e2e4 ponder e7e5")||
+            if(engine.analyseFEN(fen2,moveTime).getBestMove().contains("e2e4")||
              engine.analyseFEN(fen2,moveTime).getBestMove().contains("g1f3") ||
                     engine.analyseFEN(fen2,moveTime).getBestMove().contains("d2d4")){
                 i++;
