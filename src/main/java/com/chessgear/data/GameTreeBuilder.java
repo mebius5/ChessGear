@@ -73,6 +73,7 @@ public class GameTreeBuilder {
         tree.setNodeMapping(nodemapping);
         tree.setRoot(root);
         tree.setNodeIdCounter(++NodeCount);
+        System.out.println(NodeCount);
         return tree;
     }
 
@@ -92,7 +93,7 @@ public class GameTreeBuilder {
             nodemap.put(base.getId(), base);
             return base.getId();
         }
-        int bigid = 0;
+        int bigid = base.getId();
 
         for (int i = 0; i < children.size(); i++) {
             Map<GameTreeNode.NodeProperties, String> map = db.fetchNodeProperty(email, children.get(i));

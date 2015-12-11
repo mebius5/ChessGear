@@ -70,21 +70,22 @@ public class UserTest {
             assertEquals(twin.getGameList().size(), user.getGameList().size());
             PGNParser pgnParser = new PGNParser(testPGN);
             GameTreeBuilder gameTreeBuilder = new GameTreeBuilder(pgnParser);
-            user.addGame(testPGNN);
+            user.addGame(testPGN);
             GameTree gameTree = new GameTree();
             gameTree.addGame(gameTreeBuilder.getListOfNodes(), username);
-            System.out.println(fss.getReferecencedDatabaseService().nodeExists(username, 140));
+            System.out.println(fss.getReferecencedDatabaseService().nodeExists(username, 80));
             GameTree test = GameTreeBuilder.constructGameTree(username);
-            System.out.println(test.containsNode(140));
-            System.out.println(test.getNodeWithId(140).getBoardState().toFEN());
-            Map<GameTreeNode.NodeProperties, String> maps = fss.getReferecencedDatabaseService().fetchNodeProperty(username, 140);
+            System.out.println(test.containsNode(80));
+            System.out.println(test.getNodeWithId(80).getBoardState().toFEN());
+            Map<GameTreeNode.NodeProperties, String> maps = fss.getReferecencedDatabaseService().fetchNodeProperty(username, 80);
             System.out.println(maps.get(GameTreeNode.NodeProperties.BOARDSTATE));
 
             //System.out.println("children are " + fss.getReferecencedDatabaseService().childrenFrom(username , 0));
             Game game = new Game(pgnParser);
             
-            user.addGame(testPGN);
-
+            user.addGame(testPGNN);
+            test = GameTreeBuilder.constructGameTree(username);
+            System.out.println(test.containsNode(150));
             assertEquals(user.getGameList().get(0).getPgn(),game.getPgn());
             assertEquals(user.getGameList().get(0).getBlackPlayerName(), game.getBlackPlayerName());
 

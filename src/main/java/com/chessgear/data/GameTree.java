@@ -98,6 +98,7 @@ public class GameTree {
                 props.put(GameTreeNode.NodeProperties.PV, engineResult.getPv());
                 try {
                     db.addNode(username, candidateChildNode.getId(), props);
+                    //System.out.println("added node with ID" + candidateChildNode.getId());
                 } catch (IllegalArgumentException e) {
                     if(!e.getMessage().equals("Node already exists in database"))
                         System.err.println(e.getMessage());
