@@ -38,7 +38,7 @@ public class GameTreeBuilder {
      * Constructor with PGN parser as input.
      * @param parser PGN Parser.
      */
-    public GameTreeBuilder(PGNParser parser) {
+    public GameTreeBuilder(PGNParser parser) throws Exception{
         this(parser.getListOfBoardStates(), parser.getWhiteHalfMoves(), parser.getBlackHalfMoves());
     }
     

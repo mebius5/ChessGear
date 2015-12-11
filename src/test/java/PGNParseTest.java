@@ -3,6 +3,8 @@ import com.chessgear.data.PGNParser;
 import com.chessgear.game.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.*;
 
@@ -18,6 +20,9 @@ import static com.chessgear.data.PGNParser.Tag;
 public class PGNParseTest {
 
     String testString;
+
+    //Logger for Engine
+    private static final Logger logger = LoggerFactory.getLogger(PGNParseTest.class);
 
     @Before
     public void initialize() {
@@ -41,6 +46,17 @@ public class PGNParseTest {
     }
 
     @Test
+    public void testFalsePGN(){
+        try {
+            String failureString = "Hello";
+            PGNParser pgnParser = new PGNParser(failureString);
+            fail("Test should have thrown exception due to invalid PGN string");
+        }catch(Exception e){
+            logger.info("Performing testFalsePGN: Should print logger error due to tags. Ignore previous logger error");
+            assertEquals(e.getClass(),PGNParseException.class);
+        }
+    }
+    @Test
     public void parseTagTest() {
 
         String testString = "[Event \"Hourly Bullet Arena\"]";
@@ -60,7 +76,6 @@ public class PGNParseTest {
             assertEquals(pgnParser.getBlackPlayerName(), "Fins");
             assertEquals(pgnParser.getWhitePlayerName(), "gorlee2013");
             assertEquals(pgnParser.getResult(), Result.DRAW);
-
         } catch (PGNParseException e) {
             fail("PGN Parse exception thrown : " + e.getMessage());
         }
@@ -76,8 +91,8 @@ public class PGNParseTest {
     public void testExtractTargetSquare() {
         String testString = "Qh6";
         Square result = PGNParser.extractTarget(testString);
-        assertEquals(result, "h6");
-        assertEquals(PGNParser.extractTarget("e8=Q+"), "e8");
+        assertEquals(result.toString(), "h6");
+        assertEquals(PGNParser.extractTarget("e8=Q+").toString(), "e8");
     }
 
     @Test
@@ -149,7 +164,7 @@ public class PGNParseTest {
             assertEquals(boardStates2.get(boardStates2.size() - 1).toFEN(), "r2q4/p2b4/kp6/8/1N6/1B4P1/PK3PP1/2R5 b - - 1 38");
 
         } catch (PGNParseException e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage());
             fail();
         }
     }
@@ -160,7 +175,7 @@ public class PGNParseTest {
             PGNParser parser = new PGNParser(this.testString);
             assertEquals(parser.getGameLength(), 47);
         } catch (PGNParseException e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage());
             fail();
         }
     }
@@ -171,18 +186,18 @@ public class PGNParseTest {
             PGNParser parser = new PGNParser(this.testString);
             int gameLength = parser.getGameLength();
             Move whiteHalfMove = parser.getHalfMove(Player.WHITE, gameLength);
-            assertEquals(whiteHalfMove.getOrigin(), "b7");
-            assertEquals(whiteHalfMove.getDestination(), "c8");
+            assertEquals(whiteHalfMove.getOrigin().toString(), "b7");
+            assertEquals(whiteHalfMove.getDestination().toString(), "c8");
             assertEquals(whiteHalfMove.getPieceType(), PieceType.KING);
             assertEquals(whiteHalfMove.getWhoMoved(), Player.WHITE);
             Move blackHalfMove = parser.getHalfMove(Player.BLACK, gameLength);
-            assertEquals(blackHalfMove.getOrigin(), "a5");
-            assertEquals(blackHalfMove.getDestination(), "b6");
+            assertEquals(blackHalfMove.getOrigin().toString(), "a5");
+            assertEquals(blackHalfMove.getDestination().toString(), "b6");
             assertEquals(blackHalfMove.getPieceType(), PieceType.QUEEN);
             assertEquals(blackHalfMove.getWhoMoved(), Player.BLACK);
 
         } catch (PGNParseException e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage());
             fail();
         }
     }

@@ -3,6 +3,8 @@ package com.chessgear.analysis;
 import java.io.*;
 import java.util.Scanner;
 import java.util.regex.MatchResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class to facilitate engine analysis.
@@ -13,6 +15,9 @@ public class Engine {
 
     private BufferedReader stdInput; //Input from the Stock engine
     private BufferedWriter stdOutput; //Output to the Stockfish engine
+
+    //Logger for Engine
+    private static final Logger logger = LoggerFactory.getLogger(Engine.class);
 
     /***
      * Default constructor. Starts the Stockfish engine.
@@ -47,7 +52,7 @@ public class Engine {
      */
     public EngineResult analyseFEN(String fen,int moveTime) throws Exception{
 
-        //System.out.println("Analyzing fen " + fen);
+        //logger.info("Analyzing fen "+fen);
 
         try {
             EngineResult engineResult = new EngineResult(); //Results from the engine analysis
@@ -86,7 +91,7 @@ public class Engine {
         MatchResult matchResult;
         while ((s = stdInput.readLine()) != null) {
             if(print) {
-                System.out.println(s);
+                logger.info(s);
             }
 
             if(s.contains(" cp ")){
@@ -108,10 +113,10 @@ public class Engine {
         }
 
         if(print) {
-            System.out.println("Last cp: " + engineResult.getCp());
-            System.out.println("Last pv: " + engineResult.getPv());
-            System.out.println("Best move: " + engineResult.getBestMove());
-            System.out.println("");
+            logger.info("Last cp: " + engineResult.getCp());
+            logger.info("Last pv: " + engineResult.getPv());
+            logger.info("Best move: " + engineResult.getBestMove());
+            logger.info("");
         }
         scanner.close();
     }
