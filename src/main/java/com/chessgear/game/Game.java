@@ -41,9 +41,9 @@ public class Game {
     private int id;
 
     /**
-     * Counter.
+     * Next game id.
      */
-    private static int idCounter = 0;
+    private static int nextGameId = 0;
 
     /**
      * Constructor for the Game class
@@ -64,19 +64,11 @@ public class Game {
     }
 
     /**
-     * Accessor for the next id for a game.
-     * @return Next game id.
-     */
-    public static int getNextGameId() {
-        return Game.idCounter++;
-    }
-
-    /**
      * Creates a new game from pgn parser.
      * @param parser
      */
-    public Game(PGNParser parser, int id) {
-        this(parser.getWhitePlayerName(), parser.getBlackPlayerName(), new Date(), parser.getPGN(), parser.getResult(), id);
+    public Game(PGNParser parser) {
+        this(parser.getWhitePlayerName(), parser.getBlackPlayerName(), new Date(), parser.getPGN(), parser.getResult(), nextGameId++);
     }
 
     /**
@@ -123,7 +115,5 @@ public class Game {
      * Accessor for the id of the game.
      * @return Id of the game
      */
-    public int getID(){
-        return this.id;
-    }
+    public int getID(){return this.id;}
 }

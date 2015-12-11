@@ -43,7 +43,7 @@ public class Bootstrap {
                 return failureResponse;
             } else {
                 System.out.println("User " + user + " created!");
-                server.addUser(new User(user, password));
+                server.addUser(User.registerNewUser(user, password));
                 response.status(200);
                 JsonObject successResponse = new JsonObject();
                 successResponse.addProperty("user", user);
@@ -98,7 +98,7 @@ public class Bootstrap {
                 currentUser.addGame(pgn);
                 GameTree currentTree = currentUser.getGameTree();
                 GameTreeBuilder treeBuilder = new GameTreeBuilder(new PGNParser(pgn));
-                currentTree.addGame(treeBuilder.getListOfNodes());
+                currentTree.addGame(treeBuilder.getListOfNodes(), currentUser.getUsername());
                 // Return response
                 response.status(201);
                 JsonObject successResponse = new JsonObject();
@@ -196,6 +196,7 @@ public class Bootstrap {
                 User currentUser = server.getUser(user);
                 currentUser.setPassword(password);
                 response.status(200);
+                return "";
             } else {
                 System.out.println("Request failed: user not found!");
                 response.status(405);
@@ -203,7 +204,6 @@ public class Bootstrap {
                 failureResponse.addProperty("why", "User not found!");
                 return failureResponse;
             }
-            return "";
         });
     }
 }

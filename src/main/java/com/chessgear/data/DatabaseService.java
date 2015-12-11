@@ -441,6 +441,22 @@ public class DatabaseService {
     }
     
     /**
+     * Tells wether the user already has a tree or not
+     * 
+     * @param username
+     * @return
+     */
+    public boolean hasRoot(String username){
+        String cmd = "SELECT rootNodeId FROM Tree as T where T.username = '"+username+"'";
+        
+        Connection conn = database.open();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        conn.close();
+                
+        return boh.size() == 0;
+    }
+    
+    /**
      * This method fetch all the properties for the node. If a property was not specified, null is given as value.
      * 
      * @param username The username of the user.
