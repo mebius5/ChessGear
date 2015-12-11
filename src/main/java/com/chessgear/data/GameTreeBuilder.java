@@ -72,7 +72,7 @@ public class GameTreeBuilder {
         GameTree tree = new GameTree();
         tree.setNodeMapping(nodemapping);
         tree.setRoot(root);
-        tree.setNodeIdCounter(NodeCount);
+        tree.setNodeIdCounter(++NodeCount);
         return tree;
     }
 
@@ -85,16 +85,16 @@ public class GameTreeBuilder {
     private static int makeTree(GameTreeNode base, String email, HashMap<Integer, GameTreeNode> nodemap) {
         DatabaseService db = DatabaseService.getInstanceOf();
         List<Integer> children;
-        HashMap<Integer, GameTreeNode> nodemapping = new HashMap<>();
         try {
             children = db.childrenFrom(email, base.getId());
         } catch(IllegalArgumentException e) {
-            nodemapping.put(base.getId(), base);
+            //System.out.println("being called");
+            nodemap.put(base.getId(), base);
             return base.getId();
         }
         int bigid = 0;
+
         for (int i = 0; i < children.size(); i++) {
-            System.out.println(children.get(i));
             Map<GameTreeNode.NodeProperties, String> map = db.fetchNodeProperty(email, children.get(i));
             String board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
             String cp = map.get(GameTreeNode.NodeProperties.CP);
@@ -125,8 +125,8 @@ public class GameTreeBuilder {
                 bigid = id;
         }
 
-        nodemapping.put(base.getId(), base);
-        System.out.println("added node with id" + base.getId());
+        nodemap.put(base.getId(), base);
+        //System.out.println("added node with id" + base.getId());
         if(bigid > base.getId()) {
             return bigid;
         } else {
