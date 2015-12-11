@@ -124,7 +124,7 @@ public class User {
             Game newGame = new Game(parser);
             
             //we modify the user's belonging.
-            gameTree.addGame(treeBuilder.getListOfNodes());
+            gameTree.addGame(treeBuilder.getListOfNodes(), username);
             games.add(newGame);
         } catch (PGNParseException e) {
             e.printStackTrace();

@@ -66,7 +66,11 @@ public class GameTree {
                     childFound = true;
                     Integer mult = n.getMultiplicity();
                     String multi = mult.toString();
-                    db.updateNodeProperty(username, n.getId(), GameTreeNode.NodeProperties.MULTIPLICITY, multi);
+                    try {
+                        db.updateNodeProperty(username, n.getId(), GameTreeNode.NodeProperties.MULTIPLICITY, multi);
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("failed to store in database");
+                    }
                     //.updateNodeProperty();
                     break;
                 }
@@ -86,10 +90,16 @@ public class GameTree {
                 props.put(GameTreeNode.NodeProperties.BOARDSTATE,candidateChildNode.getBoardState().toFEN());
                 Integer mult = candidateChildNode.getMultiplicity();
                 props.put(GameTreeNode.NodeProperties.MULTIPLICITY, mult.toString());
-                db.addNode(username, candidateChildNode.getId(), props);
-                List<GameTreeNode> children = candidateChildNode.getChildren();
-                for (int i = 0; i < candidateChildNode.getChildren().size(); i++) {
-                    db.addChild(username, candidateChildNode.getId(), children.get(i).getId());
+
+                try {
+                    db.addNode(username, candidateChildNode.getId(), props);
+                    List<GameTreeNode> children = candidateChildNode.getChildren();
+                    for (int i = 0; i < candidateChildNode.getChildren().size(); i++) {
+                            db.addChild(username, candidateChildNode.getId(), children.get(i).getId());
+
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Error storing in database");
                 }
             }
 

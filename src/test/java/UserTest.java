@@ -60,7 +60,7 @@ public class UserTest {
             PGNParser pgnParser = new PGNParser(testPGN);
             GameTreeBuilder gameTreeBuilder = new GameTreeBuilder(pgnParser);
             GameTree gameTree = new GameTree();
-            gameTree.addGame(gameTreeBuilder.getListOfNodes());
+            gameTree.addGame(gameTreeBuilder.getListOfNodes(), username);
             Game game = new Game(pgnParser);
             
             user.addGame(testPGN);

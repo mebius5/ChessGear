@@ -62,9 +62,9 @@ public class GameTreeTest {
 
             //Tests setNodeIdCounter()
             gameTree.setNodeIdCounter(8);
-
-            gameTree.addGame(gameTreeNodes);
-            gameTree.addGame(gameTreeNodes);
+            String username = "nothing";
+            gameTree.addGame(gameTreeNodes, username);
+            gameTree.addGame(gameTreeNodes, username);
             assertEquals(gameTree.getRoot().getMultiplicity(),2);
 
             BoardState startingBoardState = gameTree.getRoot().getBoardState();
