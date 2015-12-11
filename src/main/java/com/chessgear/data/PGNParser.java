@@ -193,30 +193,28 @@ public class PGNParser {
      * Accessor for black's half moves.
      * @return List of black's half moves.
      */
-    public List<Move> getBlackHalfMoves() throws PGNParseException {
+    public List<Move> getBlackHalfMoves() {
         try {
             if (this.blackHalfMoves == null) this.parseMoves(this.pgn);
             return this.blackHalfMoves;
-        } catch(StringIndexOutOfBoundsException error){
-            PGNParseException e = new PGNParseException("Attempting to parse move from an invalid PGN string");
+        } catch(PGNParseException e){
             logger.error(e.getMessage());
-            throw e;
         }
+        return null;
     }
 
     /**
      * Accessor for white's half moves.
      * @return List of white's half moves.
      */
-    public List<Move> getWhiteHalfMoves() throws PGNParseException {
+    public List<Move> getWhiteHalfMoves() {
         try {
             if (this.whiteHalfMoves == null) this.parseMoves(this.pgn);
             return this.whiteHalfMoves;
-        } catch(StringIndexOutOfBoundsException error){
-            PGNParseException e = new PGNParseException("Attempting to parse move from an invalid PGN string");
+        } catch(PGNParseException e){
             logger.error(e.getMessage());
-            throw e;
         }
+        return null;
     }
 
     /**
@@ -286,7 +284,7 @@ public class PGNParser {
      * @param pgn String containing the PGN for a game of chess.
      * @throws PGNParseException Something went wrong.
      */
-    private void parseMoves(String pgn) throws PGNParseException {
+    public void parseMoves(String pgn) throws PGNParseException {
         this.whiteHalfMoves = new ArrayList<>();
         this.blackHalfMoves = new ArrayList<>();
         this.boardStates = new ArrayList<>();
@@ -369,6 +367,11 @@ public class PGNParser {
                 active = active.toggle();
             }
         } catch (PGNParseException e) {
+            logger.error(e.getMessage());
+            throw e;
+        } catch (StringIndexOutOfBoundsException error){
+            PGNParseException e = new PGNParseException("Unable to parse PGN due to string Out of Bound error. Most likely " +
+                    "due to invalid PGN string");
             logger.error(e.getMessage());
             throw e;
         }

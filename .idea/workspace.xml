@@ -4,21 +4,72 @@
     <option name="CUSTOM_SCOPE_NAME" value="Project Files" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="Added logger for Engine.java, PGNParser.java&#10;Throws PGNParseException for invalid PGN string now">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/Bootstrap.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/Bootstrap.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/analysis/Engine.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/analysis/Engine.class" />
+    <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="Updated Javadoc Tags for PGNParser and Game">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/data/GameTree.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/data/GameTree.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/data/PGNParser$1.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/data/PGNParser$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/data/GameTreeNode.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/data/GameTreeNode.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/data/PGNParser$Tag.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/data/PGNParser$Tag.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/data/PGNParser.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/data/PGNParser.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/GameTreeTest.class" afterPath="$PROJECT_DIR$/target/test-classes/GameTreeTest.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/PGNParseTest.class" afterPath="$PROJECT_DIR$/target/test-classes/PGNParseTest.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/analysis/Engine.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/analysis/Engine.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeBuilder.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeBuilder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/BoardStateTest.html" afterPath="$PROJECT_DIR$/javadoc/BoardStateTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/GameTest.html" afterPath="$PROJECT_DIR$/javadoc/GameTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/GameTreeTest.html" afterPath="$PROJECT_DIR$/javadoc/GameTreeTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/MoveTest.html" afterPath="$PROJECT_DIR$/javadoc/MoveTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/PGNParseTest.html" afterPath="$PROJECT_DIR$/javadoc/PGNParseTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/PieceTest.html" afterPath="$PROJECT_DIR$/javadoc/PieceTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/PieceTypeTest.html" afterPath="$PROJECT_DIR$/javadoc/PieceTypeTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/PlayerTest.html" afterPath="$PROJECT_DIR$/javadoc/PlayerTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/ResultTest.html" afterPath="$PROJECT_DIR$/javadoc/ResultTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/SquareTest.html" afterPath="$PROJECT_DIR$/javadoc/SquareTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/allclasses-frame.html" afterPath="$PROJECT_DIR$/javadoc/allclasses-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/allclasses-noframe.html" afterPath="$PROJECT_DIR$/javadoc/allclasses-noframe.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/Bootstrap.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/Bootstrap.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/Engine.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/Engine.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseService.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseService.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTreeNode.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTreeNode.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParseException.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParseException.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParser.Tag.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParser.Tag.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParser.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParser.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/BoardState.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/BoardState.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Game.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Game.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Move.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Move.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Piece.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Piece.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/PieceType.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/PieceType.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Player.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Player.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Result.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Result.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Square.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Square.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/server/User.Property.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/User.Property.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/server/User.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/User.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/constant-values.html" afterPath="$PROJECT_DIR$/javadoc/constant-values.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/deprecated-list.html" afterPath="$PROJECT_DIR$/javadoc/deprecated-list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/help-doc.html" afterPath="$PROJECT_DIR$/javadoc/help-doc.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-all.html" afterPath="$PROJECT_DIR$/javadoc/index-all.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index.html" afterPath="$PROJECT_DIR$/javadoc/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/overview-frame.html" afterPath="$PROJECT_DIR$/javadoc/overview-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/overview-summary.html" afterPath="$PROJECT_DIR$/javadoc/overview-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/overview-tree.html" afterPath="$PROJECT_DIR$/javadoc/overview-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/serialized-form.html" afterPath="$PROJECT_DIR$/javadoc/serialized-form.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/PGNParser.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/PGNParser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/game/Game.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/game/Game.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/GameTreeBuilderTest.java" afterPath="$PROJECT_DIR$/src/test/java/GameTreeBuilderTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/PGNParseTest.java" afterPath="$PROJECT_DIR$/src/test/java/PGNParseTest.java" />
     </list>
     <ignored path="ChessGear.iws" />
@@ -76,18 +127,18 @@
       <file leaf-file-name="PGNParser.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/PGNParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48831168">
-              <caret line="347" column="20" selection-start-line="347" selection-start-column="20" selection-end-line="347" selection-end-column="20" />
+            <state vertical-scroll-proportion="-0.3946731">
+              <caret line="207" column="12" selection-start-line="207" selection-start-column="12" selection-end-line="207" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/UserTest.java">
+      <file leaf-file-name="PGNParseTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/PGNParseTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="81" column="32" selection-start-line="81" selection-start-column="32" selection-end-line="81" selection-end-column="32" />
+              <caret line="227" column="38" selection-start-line="227" selection-start-column="38" selection-end-line="227" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -97,58 +148,11 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/game/Game.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="64" column="34" selection-start-line="64" selection-start-column="34" selection-end-line="64" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/server/User.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="210" column="35" selection-start-line="210" selection-start-column="35" selection-end-line="210" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GameTreeBuilderTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/GameTreeBuilderTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="62" column="43" selection-start-line="62" selection-start-column="43" selection-end-line="62" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Bootstrap.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/Bootstrap.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="44" column="31" selection-start-line="44" selection-start-column="31" selection-end-line="44" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PGNParseTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/PGNParseTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.814815">
-              <caret line="194" column="12" selection-start-line="194" selection-start-column="12" selection-end-line="194" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Engine.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/analysis/Engine.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="54" column="10" selection-start-line="54" selection-start-column="10" selection-end-line="54" selection-end-column="10" />
-              <folding />
+              <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+              <folding>
+                <element signature="e#1698#1699#0" expanded="true" />
+                <element signature="e#1741#1742#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -243,10 +247,10 @@
         <option value="$PROJECT_DIR$/src/test/java/GameTreeTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeBuilder.java" />
         <option value="$PROJECT_DIR$/src/test/java/GameTreeBuilderTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/game/Game.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/analysis/Engine.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/PGNParser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/game/Game.java" />
         <option value="$PROJECT_DIR$/src/test/java/PGNParseTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/PGNParser.java" />
       </list>
     </option>
   </component>
@@ -468,36 +472,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="chessgear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="analysis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -653,7 +627,7 @@
       </FILE-GROUP>
     </UpdatedFiles>
   </component>
-  <component name="RunManager" selected="JUnit.All in ChessGear">
+  <component name="RunManager" selected="JUnit.PGNParseTest">
     <configuration default="false" name="All in ChessGear" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="ChessGear" />
@@ -1038,10 +1012,10 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.All in ChessGear" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.PGNParseTest" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.EngineTest" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.UserTest" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.PGNParseTest" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.UserTest" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.All in ChessGear" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.EngineTest" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.DatabaseServiceRelationshipTest" />
       </list>
     </recent_temporary>
@@ -1071,12 +1045,6 @@
       <created>1443206600718</created>
       <option name="number" value="Default" />
       <updated>1443206600718</updated>
-    </task>
-    <task id="LOCAL-00037" summary="BoardState core functionality should be complete. Added some unit tests. Rebuilt javadoc.">
-      <created>1445906076926</created>
-      <option name="number" value="00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1445906076926</updated>
     </task>
     <task id="LOCAL-00038" summary="BoardState core functionality should be complete. Added some unit tests. Rebuilt javadoc.">
       <created>1445917227517</created>
@@ -1366,39 +1334,45 @@
       <option name="project" value="LOCAL" />
       <updated>1449796008318</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="Added logger for Engine.java, PGNParser.java&#10;Throws PGNParseException for invalid PGN string now">
+      <created>1449864925836</created>
+      <option name="number" value="00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1449864925856</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_in_ChessGear - 2015.12.11 at 15h 05m 23s.xml">
-      <configuration name="All in ChessGear" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_ChessGear - 2015.12.11 at 15h 11m 53s.xml">
-      <configuration name="All in ChessGear" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_ChessGear - 2015.12.11 at 15h 12m 03s.xml">
-      <configuration name="All in ChessGear" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_ChessGear - 2015.12.11 at 15h 12m 53s.xml">
-      <configuration name="All in ChessGear" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="PGNParseTest - 2015.12.11 at 14h 50m 28s.xml">
+    <history-entry file="PGNParseTest - 2015.12.11 at 15h 32m 44s.xml">
       <configuration name="PGNParseTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="PGNParseTest - 2015.12.11 at 14h 53m 20s.xml">
+    <history-entry file="PGNParseTest - 2015.12.11 at 15h 35m 45s.xml">
       <configuration name="PGNParseTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="PGNParseTest - 2015.12.11 at 15h 00m 33s.xml">
+    <history-entry file="PGNParseTest - 2015.12.11 at 15h 36m 11s.xml">
       <configuration name="PGNParseTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="PGNParseTest - 2015.12.11 at 15h 02m 05s.xml">
+    <history-entry file="PGNParseTest - 2015.12.11 at 15h 40m 09s.xml">
       <configuration name="PGNParseTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="PGNParseTest - 2015.12.11 at 15h 02m 30s.xml">
+    <history-entry file="PGNParseTest - 2015.12.11 at 15h 41m 56s.xml">
       <configuration name="PGNParseTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="PGNParseTest - 2015.12.11 at 15h 03m 36s.xml">
+    <history-entry file="PGNParseTest - 2015.12.11 at 15h 43m 51s.xml">
       <configuration name="PGNParseTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PGNParseTest - 2015.12.11 at 15h 45m 40s.xml">
+      <configuration name="PGNParseTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PGNParseTest - 2015.12.11 at 15h 47m 04s.xml">
+      <configuration name="PGNParseTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserTest - 2015.12.11 at 15h 19m 49s.xml">
+      <configuration name="UserTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserTest - 2015.12.11 at 15h 32m 59s.xml">
+      <configuration name="UserTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -1412,19 +1386,20 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="725" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32540542" sideWeight="0.49394855" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3048973" sideWeight="0.47579426" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.06477093" sideWeight="0.47579426" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30952382" sideWeight="0.11954766" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32714054" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3206951" sideWeight="0.4789984" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5134281" sideWeight="0.88045233" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2606635" sideWeight="0.88045233" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32385466" sideWeight="0.4969743" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26655897" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.49346405" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1439,7 +1414,6 @@
       <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32108107" sideWeight="0.48880598" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25750396" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2463651" sideWeight="0.50653595" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1454,7 +1428,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updating Bootstrap" />
     <MESSAGE value="Deleted exclusion of Bootstrap and ChessGearServer to make project work" />
     <MESSAGE value="Made changes to GameTree.java, added to GameTreeTest.java, made changes to GameTreeNode.java, added GameTreeNodeTest.java" />
     <MESSAGE value="Added an OsUtils class to check the OS of the system and determine the location of the Stockfish binary file. Modfied Engine.java and GameTree.java to use OsUtils instead. Added OsUtilsTest.java and modified tests for EngineTest.java and GameTreeTest.java." />
@@ -1479,7 +1452,8 @@
     <MESSAGE value="Added more coverage to GameTreeTest.java&#10;Tried to update Javadoc, but have some errors still." />
     <MESSAGE value="Modified GameTree to also calculate multiplicity for the root" />
     <MESSAGE value="Added logger for Engine.java, PGNParser.java&#10;Throws PGNParseException for invalid PGN string now" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added logger for Engine.java, PGNParser.java&#10;Throws PGNParseException for invalid PGN string now" />
+    <MESSAGE value="Updated PGNParser.java with new Exception structure. Added failure cases to PGNParser.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated PGNParser.java with new Exception structure. Added failure cases to PGNParser.java" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1793,34 +1767,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/Bootstrap.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="44" column="31" selection-start-line="44" selection-start-column="31" selection-end-line="44" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/GameTreeBuilderTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="62" column="43" selection-start-line="62" selection-start-column="43" selection-end-line="62" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.4053398">
+          <caret line="92" column="7" selection-start-line="92" selection-start-column="7" selection-end-line="92" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/server/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="210" column="35" selection-start-line="210" selection-start-column="35" selection-end-line="210" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.49029127">
+          <caret line="222" column="35" selection-start-line="222" selection-start-column="35" selection-end-line="222" selection-end-column="35" />
+          <folding>
+            <element signature="e#4565#4566#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/GameTreeBuilderTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.55825245">
+          <caret line="62" column="43" selection-start-line="62" selection-start-column="43" selection-end-line="62" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/game/Game.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/Bootstrap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="64" column="34" selection-start-line="64" selection-start-column="34" selection-end-line="64" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.33252427">
+          <caret line="44" column="31" selection-start-line="44" selection-start-column="31" selection-end-line="44" selection-end-column="31" />
           <folding />
         </state>
       </provider>
@@ -1835,32 +1811,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/UserTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="81" column="32" selection-start-line="81" selection-start-column="32" selection-end-line="81" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.48863637">
+          <caret line="76" column="30" selection-start-line="76" selection-start-column="30" selection-end-line="76" selection-end-column="30" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/game/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+          <folding>
+            <element signature="e#1698#1699#0" expanded="true" />
+            <element signature="e#1741#1742#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/PGNParseTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.814815">
-          <caret line="194" column="12" selection-start-line="194" selection-start-column="12" selection-end-line="194" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4053398">
-          <caret line="92" column="7" selection-start-line="92" selection-start-column="7" selection-end-line="92" selection-end-column="7" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="227" column="38" selection-start-line="227" selection-start-column="38" selection-end-line="227" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/PGNParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48831168">
-          <caret line="347" column="20" selection-start-line="347" selection-start-column="20" selection-end-line="347" selection-end-column="20" />
+        <state vertical-scroll-proportion="-0.3946731">
+          <caret line="207" column="12" selection-start-line="207" selection-start-column="12" selection-end-line="207" selection-end-column="12" />
           <folding />
         </state>
       </provider>
