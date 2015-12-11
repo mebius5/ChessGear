@@ -96,8 +96,8 @@ public class GameTree {
                 try {
                     db.addNode(username, candidateChildNode.getId(), props);
                 } catch (IllegalArgumentException e) {
-                    System.out.println(username);
-                    System.out.println(e.getMessage());
+                    System.err.println(username);
+                    System.err.println(e.getMessage());
                 }
                 try {
                     List<GameTreeNode> children = candidateChildNode.getChildren();
