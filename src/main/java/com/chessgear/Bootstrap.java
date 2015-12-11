@@ -150,10 +150,57 @@ public class Bootstrap {
             System.out.println("Games list request received for user " + user);
             if (server.userExists(user)) {
 
+                response.status(200);
+                return server.getUser(user).getGamesJson();
+
             } else {
                 System.out.println("Request failed: user not found!");
                 response.status(405);
                 JsonObject failureResponse = new JsonObject();
+                failureResponse.addProperty("why", "User not found!");
+                return failureResponse;
+            }
+        });
+
+        // Handle game pgn request.
+        get("/chessgear/api/games/:username/:gameId", "application/json", (request, response) -> {
+            String user = request.params("username");
+            int gameId = Integer.parseInt(request.params("gameId"));
+            System.out.println("Game pgn request received for " + user + ", game " + gameId);
+            if (server.userExists(user)) {
+                if (server.getUser(user).getGameById(gameId) != null) {
+                    response.status(200);
+                    return server.getUser(user).getGameById(gameId).getPgn();
+                } else {
+                    System.out.println("Request failed: game not found");
+                    JsonObject failureResponse = new JsonObject();
+                    failureResponse.addProperty("why", "Game not found!");
+                    return failureResponse;
+                }
+            } else {
+                System.out.println("Request failed: user not found");
+                JsonObject failureResponse = new JsonObject();
+                failureResponse.addProperty("why", "User not found!");
+                return failureResponse;
+            }
+        });
+
+        // Update user password
+        post("/chessgear/api/account", "application/json", (request, response) -> {
+            JsonObject parsedRequest = parser.parse(request.body()).getAsJsonObject();
+            String user = parsedRequest.get("user").getAsString().toLowerCase();
+            String password = parsedRequest.get("password").getAsString();
+            System.out.println("Password change request for " + user + " received");
+
+            if (server.userExists(user)) {
+                User currentUser = server.getUser(user);
+                currentUser.setPassword(password);
+                response.status(200);
+            } else {
+                System.out.println("Request failed: user not found!");
+                response.status(405);
+                JsonObject failureResponse = new JsonObject();
+                failureResponse.addProperty("why", "User not found!");
                 return failureResponse;
             }
             return "";

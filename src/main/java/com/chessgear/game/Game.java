@@ -1,6 +1,7 @@
 package com.chessgear.game;
 
 import com.chessgear.data.PGNParser;
+import com.google.gson.GsonBuilder;
 
 import java.util.Date;
 
@@ -38,7 +39,7 @@ public class Game {
     /**
      * Id of game.
      */
-    private int id;
+    private static int id = 0;
 
     /**
      * Constructor for the Game class
@@ -63,7 +64,7 @@ public class Game {
      * @param parser
      */
     public Game(PGNParser parser) {
-        this(parser.getWhitePlayerName(), parser.getBlackPlayerName(), new Date(), parser.getPGN(), parser.getResult(), 0);
+        this(parser.getWhitePlayerName(), parser.getBlackPlayerName(), new Date(), parser.getPGN(), parser.getResult(), Game.id++);
     }
 
     /**
@@ -110,5 +111,36 @@ public class Game {
      * Accessor for the id of the game.
      * @return Id of the game
      */
-    public int getID(){return this.id;}
+    public int getID(){
+        return this.id;
+    }
+
+    /**
+     * Accessor for JSON representation of this object.
+     * @return Json for a game.
+     */
+    public String getJson() {
+        return new GsonBuilder().serializeNulls().create().toJson(new GameJson(this));
+    }
+
+    /**
+     * Container class for converting information about games to JSON.
+     */
+    private class GameJson {
+
+        private String name;
+        private Integer id;
+
+        public GameJson(Game game) {
+            StringBuilder nameBuilder = new StringBuilder();
+            nameBuilder.append(game.whitePlayerName);
+            nameBuilder.append(" vs ");
+            nameBuilder.append(game.blackPlayerName);
+            nameBuilder.append(", ");
+            nameBuilder.append(game.dateImported.toString());
+            this.name = nameBuilder.toString();
+            this.id = game.getID();
+        }
+
+    }
 }

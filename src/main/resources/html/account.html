@@ -32,7 +32,7 @@
                     <div id="account-left">
                         <h3>Account Management</h3>
                         <ul>
-                            <li>Change Password</li>
+                            <li><a href="#" id="change-password">Change Password</a></li>
                         </ul>
                     </div><div id="account-right">
                         <h3>Games Archive</h3>
@@ -51,24 +51,5 @@
         </div>
 
     </body>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-
-            var loggedInUser = Cookies.get('loggedInUser');
-            if (loggedInUser != null) {
-                $("#current-user").prepend(loggedInUser);
-            } else {
-                window.location.replace("welcome.html");
-            }
-
-            $("#logout").click(function (e) {
-                e.preventDefault();
-                Cookies.remove('loggedInUser');
-                location.reload();
-            });
-
-        });
-    </script>
-
+    <script type="text/javascript" src="js/account.js"></script>
 </html>

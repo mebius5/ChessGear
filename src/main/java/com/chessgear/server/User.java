@@ -4,6 +4,7 @@ import com.chessgear.data.GameTree;
 import com.chessgear.data.GameTreeBuilder;
 import com.chessgear.data.PGNParser;
 import com.chessgear.game.Game;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,19 @@ public class User {
     }
 
     /**
+     * Gets game by id.
+     * @param id Id of game we want.
+     * @return Game with corresponding id.
+     */
+    public Game getGameById(int id) {
+        for (Game g : this.games) {
+            if (g.getID() == id) return g;
+        }
+
+        return null;
+    }
+
+    /**
      * Parses and adds a game in pgn form.
      * @param pgn PGN game string.
      */
@@ -75,6 +89,15 @@ public class User {
     public String getPassword() {
         return this.password;
     }
+
+    /**
+     * Mutator for password.
+     * @param password New password.
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     /**
      * List of the User Properties
      */
@@ -88,5 +111,29 @@ public class User {
      */
     public void setGameTree(GameTree tree) {
         this.gameTree = tree;
+    }
+
+    /**
+     * Gets the Json representation of this.
+     * @return
+     */
+    public String getGamesJson() {
+        return new GsonBuilder().serializeNulls().create().toJson(new UserGamesJson(this));
+    }
+
+    /**
+     * Container class for converting user's list of games to json.
+     */
+    private static class UserGamesJson {
+
+        private List<String> games;
+
+        public UserGamesJson(User user) {
+            this.games = new ArrayList<>();
+            for (Game g : user.games) {
+                this.games.add(g.getJson());
+            }
+        }
+
     }
 }

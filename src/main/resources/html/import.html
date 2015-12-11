@@ -30,7 +30,7 @@
             <main>
                 
                 <div id="pgn-upload">
-                    <form id="pgn-submit" action="submit.php" method="post">
+                    <form id="pgn-submit" action="#" method="post">
                         <h3>Upload a file</h3>
                         <input type="file" name="pgn-file">
                         <p style="color: #aaa; font-weight: bold;">or</p>
@@ -39,7 +39,6 @@
                         <input type="submit" style="color: #000;">
                     </form>
                 </div>
-
             </main>
 
             <footer>
@@ -48,38 +47,7 @@
 
         </div>
 
-        <script type="text/javascript">
-
-            $(document).ready(function() {
-                var loggedInUser = Cookies.get('loggedInUser');
-                if (loggedInUser != null) {
-                    $("#current-user").prepend(loggedInUser);
-                } else {
-                    window.location.replace("welcome.html");
-                }
-
-                $("#logout").click(function (e) {
-                    e.preventDefault();
-                    Cookies.remove('loggedInUser');
-                    location.reload();
-                });
-
-                $("#pgn-submit").submit(function(e) {
-                alert("Submitted!");
-                e.preventDefault();
-                var pgnBody = $("#pgn-body").val();
-                var postRequest = $.post("chessgear/api/games/import/" + loggedInUser, JSON.stringify({pgn : pgnBody}), function(data) {
-                    alert("Import success!");
-                });
-                postRequest.fail(function (data) {
-                    alert("Import failed: " + data.responseText);
-                });
-            });
-            });
-
-            
-
-        </script>
+        <script type="text/javascript" src="js/import.js"></script>
 
     </body>
 </html>
