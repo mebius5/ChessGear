@@ -78,14 +78,14 @@ public class DatabaseServiceNodeTest {
         DatabaseService db = DatabaseServiceTestTool.createDatabase(true);
         
         HashMap<GameTreeNode.NodeProperties, String> prop = new HashMap<>();
-        prop.put(NodeProperties.EVAL, "0.78");
+        prop.put(NodeProperties.CP, "0.78");
         
         db.addNode("gogol", 1, prop);
-        assertEquals(db.fetchNodeProperty("gogol", 1).get(NodeProperties.EVAL), "0.78");
+        assertEquals(db.fetchNodeProperty("gogol", 1).get(NodeProperties.CP), "0.78");
         
         //a second example with null value
         db.addNode("gogol", 2, Collections.emptyMap());
-        assertTrue(db.fetchNodeProperty("gogol", 2).get(NodeProperties.EVAL) == null);
+        assertTrue(db.fetchNodeProperty("gogol", 2).get(NodeProperties.CP) == null);
 
         DatabaseServiceTestTool.destroyDatabase(db);
     }
@@ -95,13 +95,13 @@ public class DatabaseServiceNodeTest {
         DatabaseService db = DatabaseServiceTestTool.createDatabase(true);
         
         HashMap<GameTreeNode.NodeProperties, String> prop = new HashMap<>();
-        prop.put(NodeProperties.EVAL, "0.78");
+        prop.put(NodeProperties.CP, "0.78");
         
         db.addNode("gogol", 1, prop);
-        assertEquals(db.fetchNodeProperty("gogol", 1).get(NodeProperties.EVAL), "0.78");
+        assertEquals(db.fetchNodeProperty("gogol", 1).get(NodeProperties.CP), "0.78");
         
-        db.updateNodeProperty("gogol", 1, GameTreeNode.NodeProperties.EVAL, "0.333");
-        assertEquals(db.fetchNodeProperty("gogol", 1).get(NodeProperties.EVAL), "0.333");
+        db.updateNodeProperty("gogol", 1, GameTreeNode.NodeProperties.CP, "0.333");
+        assertEquals(db.fetchNodeProperty("gogol", 1).get(NodeProperties.CP), "0.333");
 
         DatabaseServiceTestTool.destroyDatabase(db);
         
@@ -112,7 +112,7 @@ public class DatabaseServiceNodeTest {
         DatabaseService db = DatabaseServiceTestTool.createDatabase(false);
         
         try{
-            db.updateNodeProperty("inexistantuser", 1, GameTreeNode.NodeProperties.EVAL, "0.333");
+            db.updateNodeProperty("inexistantuser", 1, GameTreeNode.NodeProperties.CP, "0.333");
             fail();
         }
         catch(IllegalArgumentException e){
@@ -128,7 +128,7 @@ public class DatabaseServiceNodeTest {
         DatabaseService db = DatabaseServiceTestTool.createDatabase(true);
         
         HashMap<GameTreeNode.NodeProperties, String> prop = new HashMap<>();
-        prop.put(NodeProperties.EVAL, "0.78");
+        prop.put(NodeProperties.CP, "0.78");
         db.addNode("gogol", 1, prop);
         
         assertTrue(db.nodeExists("gogol", 1));

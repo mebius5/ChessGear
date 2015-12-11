@@ -50,7 +50,6 @@ public class GameTree {
         DatabaseService db = DatabaseService.getInstanceOf();
         OsUtils osUtils = new OsUtils();
         Engine engine = new Engine(osUtils.getBinaryLocation());
-
         this.root.incrementMultiplicity();
 
         GameTreeNode currentNode = this.root;
@@ -90,16 +89,23 @@ public class GameTree {
                 props.put(GameTreeNode.NodeProperties.BOARDSTATE,candidateChildNode.getBoardState().toFEN());
                 Integer mult = candidateChildNode.getMultiplicity();
                 props.put(GameTreeNode.NodeProperties.MULTIPLICITY, mult.toString());
-
+                props.put(GameTreeNode.NodeProperties.BESTMOVE, engineResult.getBestMove());
+                Double cp = engineResult.getCp();
+                props.put(GameTreeNode.NodeProperties.CP, cp.toString());
+                props.put(GameTreeNode.NodeProperties.PV, engineResult.getPv());
                 try {
                     db.addNode(username, candidateChildNode.getId(), props);
+                } catch (IllegalArgumentException e) {
+                    System.out.println(username);
+                    System.out.println(e.getMessage());
+                }
+                try {
                     List<GameTreeNode> children = candidateChildNode.getChildren();
                     for (int i = 0; i < candidateChildNode.getChildren().size(); i++) {
-                            db.addChild(username, candidateChildNode.getId(), children.get(i).getId());
-
+                        db.addChild(username, candidateChildNode.getId(), children.get(i).getId());
                     }
                 } catch (IllegalArgumentException e) {
-                    System.err.println("Error storing in database");
+                    System.err.println("yo");
                 }
             }
 

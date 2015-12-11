@@ -1,5 +1,6 @@
 package com.chessgear.data;
 
+import com.chessgear.analysis.EngineResult;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
 import com.chessgear.server.User;
@@ -51,8 +52,6 @@ public class GameTreeBuilder {
         if (!db.userExists(username))
             return null;
         int rootid = db.getRoot(username);
-        Map<User.Property, String> maps = db.fetchUserProperties(username);
-        String corr = maps.get(User.Property.PASSWORD);
         Map<GameTreeNode.NodeProperties, String> map = new HashMap<>();
         String board;
         int mult;
@@ -78,11 +77,12 @@ public class GameTreeBuilder {
         }
         root.setMultiplicity(mult);
         root.setBoardState(boardstate);
-        HashMap<Integer, GameTreeNode> nodemapping = makeTree(root, username);
+        HashMap<Integer, GameTreeNode> nodemapping = new HashMap<>();
+        int NodeCount = makeTree(root, username, nodemapping);
         GameTree tree = new GameTree();
         tree.setNodeMapping(nodemapping);
         tree.setRoot(root);
-        //tree.setNodeIdCounter(bigid);
+        tree.setNodeIdCounter(NodeCount);
         return tree;
     }
 
@@ -92,7 +92,7 @@ public class GameTreeBuilder {
      * @param email
      * @return
      */
-    private static HashMap<Integer, GameTreeNode> makeTree(GameTreeNode base, String email) {
+    private static int makeTree(GameTreeNode base, String email, HashMap<Integer, GameTreeNode> nodemap) {
         DatabaseService db = DatabaseService.getInstanceOf();
         List<Integer> children;
         HashMap<Integer, GameTreeNode> nodemapping = new HashMap<>();
@@ -100,22 +100,24 @@ public class GameTreeBuilder {
             children = db.childrenFrom(email, base.getId());
         } catch(IllegalArgumentException e) {
             nodemapping.put(base.getId(), base);
-            /*
-            if(base.getId() > bigid) {
-                bigid = base.getId();
-            }
-            */
-            return nodemapping;
-        }
 
+            return base.getId();
+        }
+        int bigid = 0;
         for (int i = 0; i < children.size(); i++) {
             Map<GameTreeNode.NodeProperties, String> map = db.fetchNodeProperty(email, children.get(i));
             String board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
-            String eval = map.get(GameTreeNode.NodeProperties.EVAL);
+            String cp = map.get(GameTreeNode.NodeProperties.CP);
+            String pv = map.get(GameTreeNode.NodeProperties.PV);
+            String bestmove = map.get(GameTreeNode.NodeProperties.BESTMOVE);
+            EngineResult engine = new EngineResult();
+            engine.setBestMove(bestmove);
+            double dcp = Double.parseDouble(cp);
+            engine.setCp(dcp);
+            engine.setPv(pv);
             int mult;
             try {
                 mult = Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
-
             } catch (NumberFormatException e) {
                 System.err.println("Error Fetching");
                 mult = 1;
@@ -124,18 +126,22 @@ public class GameTreeBuilder {
             BoardState boarstate = new BoardState(board);
             next.setMultiplicity(mult);
             next.setBoardState(boarstate);
+            next.setEngineResult(engine);
             /*
             Need to add Engine result here, not sure how it is stored.
              */
             base.addChild(next);
             next.setParent(base);
-            nodemapping = makeTree(next, email);
+            int id = makeTree(next, email, nodemap);
+            if (bigid < id)
+                bigid = id;
         }
         nodemapping.put(base.getId(), base);
-        /*if(base.getId() > bigid) {
-            bigid = base.getId();
-        }*/
-        return nodemapping;
+        if(bigid > base.getId()) {
+            return bigid;
+        } else {
+            return bigid;
+        }
     }
 
     /**

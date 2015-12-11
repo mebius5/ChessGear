@@ -281,7 +281,7 @@ public class GameTreeNode {
     }
 
     public enum NodeProperties{
-        EVAL, BOARDSTATE, MULTIPLICITY
+        CP, BOARDSTATE, MULTIPLICITY, PV, BESTMOVE
     }
 
     /**
