@@ -41,44 +41,34 @@ public class GameTreeBuilder {
     public GameTreeBuilder(PGNParser parser) {
         this(parser.getListOfBoardStates(), parser.getWhiteHalfMoves(), parser.getBlackHalfMoves());
     }
-    
+
+    /**
+     * Builds a game tree from a user's gametree stored in the database.
+     * @param username
+     * @return
+     */
     public static GameTree constructGameTree(String username){
-        /*
-         * The purpose of this method is to bake a cute GameTree from the data present in the DataBase.
-         * 
-         * Don't forget, DatabaseService is a Singleton, thus a call to DatabaseService.getInstance() is sufficient.
-         */
         DatabaseService db = DatabaseService.getInstanceOf();
         if (!db.userExists(username))
             return null;
         int rootid = db.getRoot(username);
+        //getting information about the root node
         Map<GameTreeNode.NodeProperties, String> map = new HashMap<>();
         String board;
-        int mult;
-        try {
-            map = db.fetchNodeProperty(username, rootid);
-            board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
-        } catch (IllegalArgumentException e) {
-            board = "err";
-        }
-        try {
-            mult = Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
-        } catch (NumberFormatException e) {
-            System.err.println("Error Fetching");
-            mult = 1;
-        }
+        map = db.fetchNodeProperty(username, rootid);
+        board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
+        int mult = Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
+
+        //creating the root node
         GameTreeNode root = new GameTreeNode(rootid);
         BoardState boardstate;
-        if(!board.equals("err")) {
-            boardstate = new BoardState(board);
-        } else {
-            boardstate = new BoardState();
-            boardstate.setToDefaultPosition();
-        }
+        boardstate = new BoardState(board);
         root.setMultiplicity(mult);
         root.setBoardState(boardstate);
         HashMap<Integer, GameTreeNode> nodemapping = new HashMap<>();
+        //recursively creating the tree
         int NodeCount = makeTree(root, username, nodemapping);
+        System.err.println(NodeCount);
         GameTree tree = new GameTree();
         tree.setNodeMapping(nodemapping);
         tree.setRoot(root);
@@ -100,7 +90,6 @@ public class GameTreeBuilder {
             children = db.childrenFrom(email, base.getId());
         } catch(IllegalArgumentException e) {
             nodemapping.put(base.getId(), base);
-
             return base.getId();
         }
         int bigid = 0;
@@ -127,9 +116,6 @@ public class GameTreeBuilder {
             next.setMultiplicity(mult);
             next.setBoardState(boarstate);
             next.setEngineResult(engine);
-            /*
-            Need to add Engine result here, not sure how it is stored.
-             */
             base.addChild(next);
             next.setParent(base);
             int id = makeTree(next, email, nodemap);

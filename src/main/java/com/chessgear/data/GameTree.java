@@ -51,7 +51,12 @@ public class GameTree {
         OsUtils osUtils = new OsUtils();
         Engine engine = new Engine(osUtils.getBinaryLocation());
         this.root.incrementMultiplicity();
-
+        Integer rootmult = root.getMultiplicity();
+        try {
+            db.updateNodeProperty(username, this.root.getId(), GameTreeNode.NodeProperties.MULTIPLICITY, rootmult.toString());
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+        }
         GameTreeNode currentNode = this.root;
         for (int c = 1; c < gameTreeNodes.size(); c++) {
             GameTreeNode candidateChildNode = gameTreeNodes.get(c);
@@ -68,7 +73,7 @@ public class GameTree {
                     try {
                         db.updateNodeProperty(username, n.getId(), GameTreeNode.NodeProperties.MULTIPLICITY, multi);
                     } catch (IllegalArgumentException e) {
-                        System.err.println("failed to store in database");
+                        System.err.println(e.getMessage());
                     }
                     //.updateNodeProperty();
                     break;
@@ -85,6 +90,7 @@ public class GameTree {
                 this.nodeMapping.put(this.nodeIdCounter++, candidateChildNode);
                 currentNode.addChild(candidateChildNode);
                 currentNode = candidateChildNode;
+                //also update in the database
                 HashMap<GameTreeNode.NodeProperties, String> props = new HashMap<>();
                 props.put(GameTreeNode.NodeProperties.BOARDSTATE,candidateChildNode.getBoardState().toFEN());
                 Integer mult = candidateChildNode.getMultiplicity();
@@ -96,8 +102,8 @@ public class GameTree {
                 try {
                     db.addNode(username, candidateChildNode.getId(), props);
                 } catch (IllegalArgumentException e) {
-                    System.err.println(username);
-                    System.err.println(e.getMessage());
+                    if(!e.getMessage().equals("Node already exists in database"))
+                        System.err.println(e.getMessage());
                 }
                 try {
                     List<GameTreeNode> children = candidateChildNode.getChildren();
