@@ -82,6 +82,10 @@ public class User {
         USERNAME, PASSWORD
     }
 
+    /**
+     * Mutator for GameTree.
+     * @param tree
+     */
     public void setGameTree(GameTree tree) {
         this.gameTree = tree;
     }

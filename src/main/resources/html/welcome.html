@@ -83,6 +83,9 @@
                 var postRequest = jQuery.post("/chessgear/api/register", JSON.stringify({user : loginEmail, password : loginPassword}), function (data, status) {
                     alert("Registration success!");
                 });
+                postRequest.fail(function (data) {
+                    alert("Registration failed: " + jQuery.parseJSON(data.responseText).why);
+                });
             });
             
         });
