@@ -34,26 +34,31 @@ public class UserTest {
 
     @Test
     public void testUser() {
-        try {
+        try {            
             String password = "abcd1234";
             String username = "Bob";
 
-            DatabaseService db = DatabaseServiceTestTool.createDatabase(true);
             FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
-            DatabaseServiceTestTool.changeDBinUserClass(db);
+            DatabaseServiceTestTool.changeDBinUserClass(fss.getReferecencedDatabaseService());
             DatabaseServiceTestTool.changeFSSinUserClass(fss);
 
             User user = User.registerNewUser(username, password);
             assertEquals(user.getUsername(), username);
             assertEquals(user.getPassword(),password);
-            assertEquals(User.getUser(user.getUsername()),user);
-
+            user.setPassword("new");
+            
+            //reload a fresh new user an test for consistency
+            User twin = User.getUser(username);
+            assertEquals(twin.getUsername(), user.getUsername());
+            assertEquals(twin.getPassword(), user.getPassword());
+            assertEquals(twin.getGameList().size(), user.getGameList().size());
+            
             PGNParser pgnParser = new PGNParser(testPGN);
             GameTreeBuilder gameTreeBuilder = new GameTreeBuilder(pgnParser);
             GameTree gameTree = new GameTree();
             gameTree.addGame(gameTreeBuilder.getListOfNodes());
             Game game = new Game(pgnParser);
-
+            
             user.addGame(testPGN);
             assertEquals(user.getGameList().get(0).getPgn(),game.getPgn());
             assertEquals(user.getGameList().get(0).getBlackPlayerName(), game.getBlackPlayerName());
@@ -65,8 +70,10 @@ public class UserTest {
 
             assertEquals(User.Property.PASSWORD.toString(), "PASSWORD");
 
-            DatabaseServiceTestTool.destroyDatabase(db);
             DatabaseServiceTestTool.destroyFileStorageService(fss);
+            
+            DatabaseServiceTestTool.changeDBinUserClass(DatabaseService.getInstanceOf());
+            DatabaseServiceTestTool.changeFSSinUserClass(FileStorageService.getInstanceOf());
 
         } catch (Exception e){
             e.printStackTrace();

@@ -75,6 +75,7 @@ public class DatabaseServiceTestTool {
         deleteFileFolderIfExists(suffix);
 
         FileStorageService toReturn = null;
+        
         try {
             Constructor<FileStorageService> constructor = 
                     (Constructor<FileStorageService>) FileStorageService.class.getDeclaredConstructors()[0];
