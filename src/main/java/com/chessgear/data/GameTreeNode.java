@@ -66,6 +66,7 @@ public class GameTreeNode {
         result.multiplicity = 0;
         result.boardState = new BoardState();
         result.boardState.setToDefaultPosition();
+        DatabaseService db = DatabaseService.getInstanceOf();
         return result;
     }
 

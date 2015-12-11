@@ -180,7 +180,19 @@ public class User {
         HashMap<Property, String> userProp = new HashMap<>();
         userProp.put(Property.PASSWORD, password);
         db.addUser(username, userProp);
-        
+
+        //now the gametree
+        HashMap<GameTreeNode.NodeProperties, String> props = new HashMap<>();
+        props.put(GameTreeNode.NodeProperties.MULTIPLICITY, "1");
+
+        //put in the initial board state
+        BoardState begin = new BoardState();
+        begin.setToDefaultPosition();
+        props.put(GameTreeNode.NodeProperties.BOARDSTATE, begin.toFEN());
+
+
+        db.addNode(username, 0, props);
+        db.addTree(username, 0);
         return toReturn;
     }
     
