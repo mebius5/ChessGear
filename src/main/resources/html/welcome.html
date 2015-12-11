@@ -57,6 +57,7 @@
             $("#logout").click(function (e) {
                 e.preventDefault();
                 Cookies.remove('loggedInUser');
+                location.reload();
             });
 
             $("#login").submit(function (e) {
@@ -65,8 +66,9 @@
                 var loginEmail = $("#username").val();
                 var loginPassword = $("#password").val();
                 var postRequest = jQuery.post("/chessgear/api/login", JSON.stringify({user : loginEmail, password : loginPassword}), function (data, status) {
-                    alert("Login success!" + data);
+                    alert("Login success!");
                     Cookies.set('loggedInUser', loginEmail);
+                    window.location.replace("index.html");
                 });
                 postRequest.fail(function (data) {
                     alert("Login failed: " + jQuery.parseJSON(data.responseText).why);
@@ -79,7 +81,7 @@
                 var loginEmail = $("#username").val();
                 var loginPassword = $("#password").val();
                 var postRequest = jQuery.post("/chessgear/api/register", JSON.stringify({user : loginEmail, password : loginPassword}), function (data, status) {
-                    alert("Registration success!" + data);
+                    alert("Registration success!");
                 });
             });
             

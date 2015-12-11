@@ -4,13 +4,10 @@
     <option name="CUSTOM_SCOPE_NAME" value="Project Files" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="Modified GameTree to also calculate multiplicity for the root">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/html/account.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/Bootstrap.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/Bootstrap.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/chessgear/data/DatabaseService.class" afterPath="$PROJECT_DIR$/target/classes/com/chessgear/data/DatabaseService.class" />
+    <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/html/account.html" afterPath="$PROJECT_DIR$/src/main/resources/html/account.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/html/import.html" afterPath="$PROJECT_DIR$/src/main/resources/html/import.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/html/index.html" afterPath="$PROJECT_DIR$/src/main/resources/html/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/html/css/style.css" afterPath="$PROJECT_DIR$/src/main/resources/html/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/html/welcome.html" afterPath="$PROJECT_DIR$/src/main/resources/html/welcome.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -814,12 +811,6 @@
       <option name="number" value="Default" />
       <updated>1443206600718</updated>
     </task>
-    <task id="LOCAL-00038" summary="BoardState core functionality should be complete. Added some unit tests. Rebuilt javadoc.">
-      <created>1445917227517</created>
-      <option name="number" value="00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1445917227517</updated>
-    </task>
     <task id="LOCAL-00039" summary="Rebuilt JavaDoc to include GameTest.java, MoveTest.java, PieceTypeTest.java, ResultTest.java., etc.">
       <created>1445926778349</created>
       <option name="number" value="00039" />
@@ -1108,7 +1099,13 @@
       <option name="project" value="LOCAL" />
       <updated>1449805815469</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="Front-end modifications.">
+      <created>1449858176177</created>
+      <option name="number" value="00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1449858176177</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1196,7 +1193,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Test EngineTest.java" />
     <MESSAGE value="Updating Bootstrap" />
     <MESSAGE value="Deleted exclusion of Bootstrap and ChessGearServer to make project work" />
     <MESSAGE value="Made changes to GameTree.java, added to GameTreeTest.java, made changes to GameTreeNode.java, added GameTreeNodeTest.java" />
@@ -1221,7 +1217,8 @@
     <MESSAGE value="Added ServerTest.java" />
     <MESSAGE value="Added more coverage to GameTreeTest.java&#10;Tried to update Javadoc, but have some errors still." />
     <MESSAGE value="Modified GameTree to also calculate multiplicity for the root" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modified GameTree to also calculate multiplicity for the root" />
+    <MESSAGE value="Front-end modifications." />
+    <option name="LAST_COMMIT_MESSAGE" value="Front-end modifications." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

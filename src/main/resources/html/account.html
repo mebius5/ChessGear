@@ -35,7 +35,7 @@
                             <li>Change Password</li>
                         </ul>
                     </div><div id="account-right">
-                        <h3>List of Games</h3>
+                        <h3>Games Archive</h3>
                         <p>Test</p>
                     </div><div class="clear"></div>
 
@@ -65,6 +65,7 @@
             $("#logout").click(function (e) {
                 e.preventDefault();
                 Cookies.remove('loggedInUser');
+                location.reload();
             });
 
         });
