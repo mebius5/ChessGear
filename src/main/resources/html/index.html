@@ -16,12 +16,13 @@
                     ChessGear v1.0
                 </div>
                 <div id="current-user">
+                    | <a href="#" id="logout">logout</a>
                 </div>
                 <div id="nav">
                     <ul>
-                        <li class="active-nav"><a href="#">Home</a></li>
+                        <li class="active-nav"><a href="index.html">Home</a></li>
                         <li class="inactive-nav"><a href="import.html">Import</a></li>
-                        <li class="inactive-nav"><a href="#">Account</a></li>
+                        <li class="inactive-nav"><a href="account.html">Account</a></li>
                         <div class="clear"></div>
                     </ul>
                 </div>
@@ -30,7 +31,7 @@
                 
                 <div id="application-wrapper">
                     <div id="board-wrapper">
-                        <div id="rank-8-wrapper">
+                        <div id="rank-8-wrapper" class="even-rank">
                             <div class="board-square" id="square-a8"></div>
                             <div class="board-square" id="square-b8"></div>
                             <div class="board-square" id="square-c8"></div>
@@ -40,7 +41,7 @@
                             <div class="board-square" id="square-g8"></div>
                             <div class="board-square" id="square-h8"></div>
                         </div>
-                        <div id="rank-7-wrapper">
+                        <div id="rank-7-wrapper" class="odd-rank">
                             <div class="board-square" id="square-a7"></div>
                             <div class="board-square" id="square-b7"></div>
                             <div class="board-square" id="square-c7"></div>
@@ -50,7 +51,7 @@
                             <div class="board-square" id="square-g7"></div>
                             <div class="board-square" id="square-h7"></div>
                         </div>
-                        <div id="rank-6-wrapper">
+                        <div id="rank-6-wrapper" class="even-rank">
                             <div class="board-square" id="square-a6"></div>
                             <div class="board-square" id="square-b6"></div>
                             <div class="board-square" id="square-c6"></div>
@@ -60,7 +61,7 @@
                             <div class="board-square" id="square-g6"></div>
                             <div class="board-square" id="square-h6"></div>
                         </div>
-                        <div id="rank-5-wrapper">
+                        <div id="rank-5-wrapper" class="odd-rank">
                             <div class="board-square" id="square-a5"></div>
                             <div class="board-square" id="square-b5"></div>
                             <div class="board-square" id="square-c5"></div>
@@ -70,7 +71,7 @@
                             <div class="board-square" id="square-g5"></div>
                             <div class="board-square" id="square-h5"></div>
                         </div>
-                        <div id="rank-4-wrapper">
+                        <div id="rank-4-wrapper" class="even-rank">
                             <div class="board-square" id="square-a4"></div>
                             <div class="board-square" id="square-b4"></div>
                             <div class="board-square" id="square-c4"></div>
@@ -80,7 +81,7 @@
                             <div class="board-square" id="square-g4"></div>
                             <div class="board-square" id="square-h4"></div>
                         </div>
-                        <div id="rank-3-wrapper">
+                        <div id="rank-3-wrapper" class="odd-rank">
                             <div class="board-square" id="square-a3"></div>
                             <div class="board-square" id="square-b3"></div>
                             <div class="board-square" id="square-c3"></div>
@@ -90,7 +91,7 @@
                             <div class="board-square" id="square-g3"></div>
                             <div class="board-square" id="square-h3"></div>
                         </div>
-                        <div id="rank-2-wrapper">
+                        <div id="rank-2-wrapper" class="even-rank">
                             <div class="board-square" id="square-a2"></div>
                             <div class="board-square" id="square-b2"></div>
                             <div class="board-square" id="square-c2"></div>
@@ -100,7 +101,7 @@
                             <div class="board-square" id="square-g2"></div>
                             <div class="board-square" id="square-h2"></div>
                         </div>
-                        <div id="rank-1-wrapper">
+                        <div id="rank-1-wrapper" class="odd-rank">
                             <div class="board-square" id="square-a1"></div>
                             <div class="board-square" id="square-b1"></div>
                             <div class="board-square" id="square-c1"></div>
@@ -132,188 +133,7 @@
 
         </div>
 
-        <script type="text/javascript">
-            var toggle = 1;
-            var back = 0;
-
-            $(document).ready(function() {
-
-                var loggedInUser = Cookies.get('loggedInUser');
-                if (loggedInUser != null) {
-                    $("#current-user").html(loggedInUser);
-                } else {
-                    window.location.replace("welcome.html");
-                }
-
-                // Set the board squares colors
-                for (c = 1; c <= 8; c++) { // Iterate along rank
-                    if (c % 2 == 0) { // If even row: white, then black
-                        
-                        $("#square-a" + c).css({backgroundColor : 'white'});
-                        $("#square-b" + c).css({backgroundColor : '#d85000'});
-                        $("#square-c" + c).css({backgroundColor : 'white'});
-                        $("#square-d" + c).css({backgroundColor : '#d85000'});
-                        $("#square-e" + c).css({backgroundColor : 'white'});
-                        $("#square-f" + c).css({backgroundColor : '#d85000'});
-                        $("#square-g" + c).css({backgroundColor : 'white'});
-                        $("#square-h" + c).css({backgroundColor : '#d85000'});
-
-                    } else { // If odd row: black, then white.
-                        $("#square-a" + c).css({backgroundColor : '#d85000'});
-                        $("#square-b" + c).css({backgroundColor : 'white'});
-                        $("#square-c" + c).css({backgroundColor : '#d85000'});
-                        $("#square-d" + c).css({backgroundColor : 'white'});
-                        $("#square-e" + c).css({backgroundColor : '#d85000'});
-                        $("#square-f" + c).css({backgroundColor : 'white'});
-                        $("#square-g" + c).css({backgroundColor : '#d85000'});
-                        $("#square-h" + c).css({backgroundColor : 'white'});
-                    }
-                }
-
-                var nodeId = getUrlParameter("node");
-                if (nodeId === undefined) {
-                    nodeId = 0;
-                }
-
-                // Request board state from tree
-                
-                var boardStateRequest = $.get("chessgear/api/games/tree/" + loggedInUser + "/" + nodeId, function(data) {
-                    var parsedResponse = jQuery.parseJSON(data);
-                    back = parsedResponse.previousNodeId;
-                    displayBoard(parsedResponse.boardstate);
-                    displayChildren(parsedResponse.children);
-                });
-    
-
-            });
-
-            $("#navigate-root").click(function (e) {
-                window.location.href="./?node=0";
-            });
-
-            $("#navigate-back").click(function (e) {
-                if (back != null)
-                window.location.href="./?node=" + back;
-            })
-
-            $("#flipButton").click(function (e) {
-                rotateBoard();
-            });
-
-            // Rotates the board
-            function rotateBoard() {
-                if (toggle == 1) {
-                    $("#board-wrapper").css({transform : 'rotate(180deg)', transition : 'transform 1s linear'});
-                    $(".board-square > img").each(function(index) {
-                        $(this).css({transform : 'rotate(-180deg)', transition : 'transform 1s linear'});
-                    });
-                } else {
-                    $("#board-wrapper").css({transform : 'rotate(0deg)', transition : 'transform 1s linear'});
-                    $(".board-square > img").each(function(index) {
-                        $(this).css({transform : 'rotate(0deg)', transition : 'transform 1s linear'});
-                    });
-                    
-                }
-                toggle = -toggle;
-                
-            }
-
-            function displayBoard(boardState) {
-                var splitIndex = boardState.indexOf(" ");
-                boardState = boardState.substring(0, splitIndex);
-
-                var tokenizedRows = boardState.split("/");
-
-                for (var c = 0; c < 8; c++) {
-
-                    var currentRow = 8 - c;
-                    var currentFile = 0;
-
-                    var currentRowFEN = tokenizedRows[c];
-
-                    for (var d = 0; d < currentRowFEN.length; d++) {
-
-                        var currentChar = currentRowFEN.charAt(d);
-                        var numSpaces = parseInt(currentChar);
-                        // If numeric
-                        if (isNaN(numSpaces)) {
-                            var fileChar = numberToFile(currentFile);
-                            var imgSrc = getPieceFromChar(currentChar);
-                            var square = "#square-" + fileChar + currentRow;
-                            var img = "<img src=\"img/" + imgSrc +"\">";
-                            $(square).html(img);
-                            currentFile++;
-                        } else {
-                            currentFile += numSpaces;
-                        }
-
-                    }
-                }
-            }
-
-            function displayChildren(children) {
-
-                for (var c = 0; c < children.length; c++) {
-                    $("#children-list").append("<li><a href='./?node=" + children[c].id + "'>" + children[c].name + "</a> - Eval : " + children[c].eval + "</li>");
-                }
-            }
-
-            /**
-             * 0=a, 1=b, etc.
-             */
-            function numberToFile(number) {
-                return String.fromCharCode(97 + number);
-            }
-
-            function getPieceFromChar(piece) {
-
-                switch (piece) {
-                    case "p":
-                        return "black_pawn.png";
-                    case "r":
-                        return "black_rook.png";
-                    case "n":
-                        return "black_knight.png";
-                    case "b":
-                        return "black_bishop.png";
-                    case "q":
-                        return "black_queen.png";
-                    case "k":
-                        return "black_king.png";
-                    case "P":
-                        return "white_pawn.png";
-                    case "R":
-                        return "white_rook.png";
-                    case "N":
-                        return "white_knight.png";
-                    case "B":
-                        return "white_bishop.png";
-                    case "Q":
-                        return "white_queen.png";
-                    case "K":
-                        return "white_king.png";
-
-                }
-
-                return null;
-
-            }
-
-            function getUrlParameter(sParam) {
-                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-                    sURLVariables = sPageURL.split('&'),
-                    sParameterName,
-                    i;
-
-                for (i = 0; i < sURLVariables.length; i++) {
-                    sParameterName = sURLVariables[i].split('=');
-
-                    if (sParameterName[0] === sParam) {
-                        return sParameterName[1] === undefined ? true : sParameterName[1];
-                    }
-                }
-            }
-        </script>
+        <script type="text/javascript" src="js/main-page.js"></script>
 
     </body>
 

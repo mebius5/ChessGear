@@ -1,20 +1,14 @@
 package com.chessgear.server;
 
-import com.chessgear.data.DatabaseService;
-import com.chessgear.data.FileStorageService;
-import com.chessgear.data.GameTree;
-import com.chessgear.data.GameTreeBuilder;
-import com.chessgear.data.GameTreeNode;
-import com.chessgear.data.PGNParseException;
-import com.chessgear.data.PGNParser;
+import com.chessgear.data.*;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.Game;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * User object, with no database integration.
@@ -158,6 +152,19 @@ public class User {
         //make the changes in the database
         db.updateUserProperty(username, Property.PASSWORD, newPassword);
     }
+
+    /**
+     * Gets game by id.
+     * @param id Id of game we want.
+     * @return Game with corresponding id.
+     */
+    public Game getGameById(int id) {
+        for (Game g : this.games) {
+            if (g.getID() == id) return g;
+        }
+
+        return null;
+    }
     
     /**
      * This methods creates a new user, (the first time he registers). It makes the necessary calls to update the database.
@@ -189,7 +196,6 @@ public class User {
         BoardState begin = new BoardState();
         begin.setToDefaultPosition();
         props.put(GameTreeNode.NodeProperties.BOARDSTATE, begin.toFEN());
-
 
         db.addNode(username, 0, props);
         db.addTree(username, 0);
@@ -241,6 +247,54 @@ public class User {
      */
     public enum Property {
         PASSWORD
+    }
+
+
+    /**
+     * Gets the Json representation of this.
+     * @return
+     */
+    public String getGamesJson() {
+        return new GsonBuilder().serializeNulls().create().toJson(new UserGamesJson(this));
+    }
+
+    /**
+     * Container class for converting user's list of games to json.
+     */
+    private static class UserGamesJson {
+
+        private List<GameJson> games;
+
+        public UserGamesJson(User user) {
+            this.games = new ArrayList<>();
+            for (Game g : user.games) {
+                this.games.add(new GameJson(g));
+            }
+        }
+
+    }
+
+    /**
+     * Container class for converting information about games to JSON.
+     */
+    private static class GameJson {
+
+        private String name;
+        private int id;
+
+        public GameJson(Game game) {
+            StringBuilder nameBuilder = new StringBuilder();
+            nameBuilder.append(game.getResult().toString());
+            nameBuilder.append(" - ");
+            nameBuilder.append(game.getWhitePlayerName());
+            nameBuilder.append(" vs ");
+            nameBuilder.append(game.getBlackPlayerName());
+            nameBuilder.append(", ");
+            nameBuilder.append(game.getDateImported().toString());
+            this.name = nameBuilder.toString();
+            this.id = game.getID();
+        }
+
     }
     
 }

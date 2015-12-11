@@ -41,6 +41,11 @@ public class Game {
     private int id;
 
     /**
+     * Next game id.
+     */
+    private static int nextGameId = 0;
+
+    /**
      * Constructor for the Game class
      * @param whitePlayerName the name of the white player
      * @param blackPlayerName name of the black player
@@ -63,7 +68,7 @@ public class Game {
      * @param parser
      */
     public Game(PGNParser parser) {
-            this(parser.getWhitePlayerName(), parser.getBlackPlayerName(), new Date(), parser.getPGN(), parser.getResult(), 0);
+        this(parser.getWhitePlayerName(), parser.getBlackPlayerName(), new Date(), parser.getPGN(), parser.getResult(), nextGameId++);
     }
 
     /**

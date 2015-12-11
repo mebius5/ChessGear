@@ -27,6 +27,7 @@ public class Bootstrap {
         ipAddress(ADDRESS);
         staticFileLocation("/html");
 
+        // Handle registration request.
         post("/chessgear/api/register", "application/json", (request, response) -> {
             System.out.println("User registration request receieved: " + request.body());
             JsonObject parsedRequest = parser.parse(request.body()).getAsJsonObject();
@@ -42,7 +43,7 @@ public class Bootstrap {
                 return failureResponse;
             } else {
                 System.out.println("User " + user + " created!");
-                server.addUser(new User(user, password));
+                server.addUser(User.registerNewUser(user, password));
                 response.status(200);
                 JsonObject successResponse = new JsonObject();
                 successResponse.addProperty("user", user);
@@ -50,6 +51,7 @@ public class Bootstrap {
             }
         });
 
+        // Handle login.
         post("/chessgear/api/login", "application/json", (request, response) -> {
             System.out.println("User login request received: " + request.body());
             JsonObject parsedRequest = parser.parse(request.body()).getAsJsonObject();
@@ -82,7 +84,7 @@ public class Bootstrap {
             }
         });
 
-
+        // Handle import.
         post("/chessgear/api/games/import/:username", "application/json", (request, response) -> {
             System.out.println("Game import request received" + request.body());
             JsonObject parsedRequest = parser.parse(request.body()).getAsJsonObject();
@@ -113,10 +115,11 @@ public class Bootstrap {
 
         });
 
+        // Handle node request
         get("/chessgear/api/games/tree/:username/:nodeid", "application/json", (request, response) -> {
             String user = request.params("username").toLowerCase();
             int nodeId = Integer.parseInt(request.params("nodeid"));
-            System.out.println("Node request recieved for user " + user + ", node " + nodeId);
+            System.out.println("Node request received for user " + user + ", node " + nodeId);
 
             if (server.userExists(user)) {
                 GameTree currentTree = server.getUser(user).getGameTree();
@@ -132,9 +135,6 @@ public class Bootstrap {
                     failureResponse.addProperty("why", "Node not found!");
                     return failureResponse;
                 }
-
-
-
             } else {
                 System.out.println("Request failed: user does not exist!");
                 response.status(405);
@@ -144,9 +144,66 @@ public class Bootstrap {
             }
         });
 
+        // Handle games list request.
+        get("/chessgear/api/games/list/:username", "application/json", (request, response) -> {
+            String user = request.params("username");
+            System.out.println("Games list request received for user " + user);
+            if (server.userExists(user)) {
 
+                response.status(200);
+                return server.getUser(user).getGamesJson();
+
+            } else {
+                System.out.println("Request failed: user not found!");
+                response.status(405);
+                JsonObject failureResponse = new JsonObject();
+                failureResponse.addProperty("why", "User not found!");
+                return failureResponse;
+            }
+        });
+
+        // Handle game pgn request.
+        get("/chessgear/api/games/:username/:gameId", "application/json", (request, response) -> {
+            String user = request.params("username");
+            int gameId = Integer.parseInt(request.params("gameId"));
+            System.out.println("Game pgn request received for " + user + ", game " + gameId);
+            if (server.userExists(user)) {
+                if (server.getUser(user).getGameById(gameId) != null) {
+                    response.status(200);
+                    return server.getUser(user).getGameById(gameId).getPgn();
+                } else {
+                    System.out.println("Request failed: game not found");
+                    JsonObject failureResponse = new JsonObject();
+                    failureResponse.addProperty("why", "Game not found!");
+                    return failureResponse;
+                }
+            } else {
+                System.out.println("Request failed: user not found");
+                JsonObject failureResponse = new JsonObject();
+                failureResponse.addProperty("why", "User not found!");
+                return failureResponse;
+            }
+        });
+
+        // Update user password
+        post("/chessgear/api/account", "application/json", (request, response) -> {
+            JsonObject parsedRequest = parser.parse(request.body()).getAsJsonObject();
+            String user = parsedRequest.get("user").getAsString().toLowerCase();
+            String password = parsedRequest.get("password").getAsString();
+            System.out.println("Password change request for " + user + " received");
+
+            if (server.userExists(user)) {
+                User currentUser = server.getUser(user);
+                currentUser.setPassword(password);
+                response.status(200);
+                return "";
+            } else {
+                System.out.println("Request failed: user not found!");
+                response.status(405);
+                JsonObject failureResponse = new JsonObject();
+                failureResponse.addProperty("why", "User not found!");
+                return failureResponse;
+            }
+        });
     }
-
-
-    
 }
