@@ -46,17 +46,6 @@ public class PGNParseTest {
     }
 
     @Test
-    public void testFalsePGN(){
-        try {
-            String failureString = "Hello";
-            PGNParser pgnParser = new PGNParser(failureString);
-            fail("Test should have thrown exception due to invalid PGN string");
-        }catch(Exception e){
-            logger.info("Performing testFalsePGN: Should print logger error due to tags. Ignore previous logger error");
-            assertEquals(e.getClass(),PGNParseException.class);
-        }
-    }
-    @Test
     public void parseTagTest() {
 
         String testString = "[Event \"Hourly Bullet Arena\"]";
@@ -199,6 +188,44 @@ public class PGNParseTest {
         } catch (PGNParseException e) {
             logger.error(e.getMessage());
             fail();
+        }
+    }
+
+    @Test
+    public void testInvalidPGNTags(){
+        try {
+            String failureString ="1. d4 d5 2. c4 Nf6 { Queen's Gambit Declined, Marshall Defence } 3. Nc3 c6 4. Nf3 e6 5. Bg5 Nbd7 6. e3 Qa5 7. Nd2 Bb4 8. Qc2 c5 9. dxc5 O-O 10. Nb3 Qa4 11. Bd3 dxc4 12. Bxc4 Bxc3+ 13. Qxc3 Ne4 14. Qc2? { (0.18 → -0.94) Mistake. The best move was Qd4. } (14. Qd4 Qb4+ 15. Kf1 Ndxc5 16. Nxc5 Qxc4+ 17. Qxc4 Nd2+ 18. Ke2 Nxc4 19. Rhc1 Nxb2 20. Rab1 b6 21. Rxb2 bxc5 22. Be7 Ba6+ 23. Kf3 Rfe8) 14... Qb4+ 15. Ke2 Nxg5 16. h4 Ne5 17. Rac1? { (-0.62 → -2.48) Mistake. The best move was Nd2. } (17. Nd2 Nh3 18. Rxh3 Bd7 19. Rc1 Qxc5 20. Qc3 Nxc4 21. Nxc4 Rac8 22. Rg3 f6 23. Kf1 Bb5 24. b3 Qh5 25. Rh3 Qg4) 17... Nxc4?? { (-2.48 → 0.64) Blunder. The best move was b5. } (17... b5 18. Bd3 Qg4+ 19. Kf1 Bb7 20. Rh2 Ne4 21. Be2 Qf5 22. Bf3 Rfc8 23. Nd4 Nxf3 24. Nxf5 Nxh2+ 25. Kg1 Rxc5 26. Qxc5 Nxc5 27. Rxc5) 18. Qxc4?! { (0.64 → 0.00) Inaccuracy. The best move was hxg5. } (18. hxg5 h6 19. Qxc4 Qxc4+ 20. Rxc4 hxg5 21. Rd1 e5 22. Rcc1 f6 23. Na5 b6 24. Nb3 bxc5 25. Nxc5 Kf7 26. f3 Rh8 27. Kf2 g4) 18... Qxc4+ 19. Rxc4 Bd7 20. hxg5?! { (0.20 → -0.48) Inaccuracy. The best move was Rd4. } (20. Rd4 Bb5+ 21. Kd2 Ne4+ 22. Rxe4 Bc6 23. Rg4 h5 24. Rd4 Bxg2 25. Rg1 Bd5 26. e4 Bxb3 27. axb3 Rfc8 28. b4 a5 29. bxa5 Rxa5) 20... Bb5 21. Nd2 Rad8 22. b3?! { (-0.46 → -1.09) Inaccuracy. The best move was Rc1. } (22. Rc1 Rd5 23. Ne4 b6 24. c6 Rc8 25. Kf3 Bxc4 26. Rxc4 Kf8 27. Rc1 Rf5+ 28. Ke2 Ke7 29. b3 Rd5 30. Kf3 Rb5 31. Rc2 f5) 22... Rd5 23. e4? { (-0.86 → -2.37) Mistake. The best move was Ne4. } (23. Ne4 Bxc4+ 24. bxc4 Rd7 25. f4 b6 26. Rb1 bxc5 27. Kf3 Rc7 28. g4 Rd8 29. Rb5 Kf8 30. Ra5 Ke7 31. Nxc5 Rd2 32. Ne4 Rb2) 23... Rxc5 24. Ke3?! { (-2.22 → -2.96) Inaccuracy. The best move was Rd1. } (24. Rd1 Rxg5 25. Kf3 Bxc4 26. Nxc4 f5 27. e5 b5 28. Nd6 f4 29. Re1 b4 30. Re4 a5 31. Nc4 Rd8 32. Rxf4 Rd3+ 33. Ke4 Rc3) 24... Bxc4 25. Nxc4 Rxg5 26. g3 Rc5 27. Rd1 b5 28. Nd6 Rc3+ 29. Kf4?! { (-2.97 → -3.62) Inaccuracy. The best move was Rd3. } (29. Rd3 Rc2 30. Nxb5 Rxa2 31. Rc3 e5 32. f4 f6 33. Nd6 Rb2 34. Nc8 exf4+ 35. gxf4 Rd8 36. Ne7+ Kf7 37. Nd5 Kg6 38. Kf3 h5) 29... a6 30. Nb7?! { (-3.36 → -4.07) Inaccuracy. The best move was Rd2. } (30. Rd2 Rd8 31. e5 Kf8 32. Kg4 Ke7 33. f4 f6 34. Re2 g6 35. Kh3 Rc1 36. b4 Rg1 37. Ne4 fxe5 38. fxe5 Rdd1 39. Rc2) 30... f6 31. Rd6? { (-3.84 → -5.25) Mistake. The best move was Kg4. } (31. Kg4 f5+ 32. exf5 exf5+ 33. Kf4 Rc2 34. f3 h6 35. Rd5 g5+ 36. Ke3 Rxa2 37. Nc5 f4+ 38. gxf4 gxf4+ 39. Ke4 Re2+ 40. Kd4 Re3) 31... g5+? { (-5.25 → -3.07) Mistake. The best move was h5. } (31... h5 32. e5 fxe5+ 33. Kxe5 Rxf2 34. Rxa6 Rxg3 35. Nc5 h4 36. Rxe6 Rxa2 37. Ne4 Rxb3 38. Re8+ Kf7 39. Rh8 Rh2 40. Nc5 Re3+ 41. Ne4) 32. Kg4 Rc7? { (-2.85 → -1.32) Mistake. The best move was Rc2. } (32... Rc2 33. Rxe6 Kf7 34. Rxa6 Rxf2 35. Kh5 Rh2+ 36. Kg4 Kg6 37. Kf3 Rc8 38. e5 Rc3+ 39. Ke4 Re2+ 40. Kd4 Rf3 41. Rxf6+ Rxf6 42. exf6) 33. Na5? { (-1.32 → -3.52) Mistake. The best move was Nd8. } (33. Nd8 Rc2 34. Nxe6 Re8 35. f4 gxf4 36. gxf4 a5 37. Kf5 Kf7 38. Rd7+ Re7 39. Rd6 Rxa2 40. Nd4 a4 41. Rxf6+ Kg8 42. Ne6 Re8) 33... Kf7?! { (-3.52 → -2.60) Inaccuracy. The best move was Rc2. } (33... Rc2 34. Nc6 Rxf2 35. a4 Rb2 36. Nd4 Rd2 37. axb5 axb5 38. Nxb5 Rxd6 39. Nxd6 Rd8 40. Nb7 Rc8 41. Nd6 Rc3) 34. Nc6 Ra8 35. e5 f5+? { (-2.58 → -0.65) Mistake. The best move was fxe5. } (35... fxe5 36. Nxe5+ Ke7 37. Rb6 Rc2 38. Nc6+ Kf7 39. Ne5+ Kg8 40. f3 Rxa2 41. Nd7 Kf7 42. Rb7 Rg8 43. Ne5+ Kf6 44. Nd7+ Ke7 45. Nc5+) 36. Kxg5 Rg8+ 37. Kf4 Rg4+ 38. Kf3 Rg8 39. Nd8+ Rxd8?! { White forfeits on time (0.00 → 0.50) Inaccuracy. The best move was Ke8. } (39... Ke8 40. Nxe6 Rc3+ 41. Kf4 Rg6 42. Kxf5 Rf3+ 43. Ke4 Rxf2 44. Nc7+ Ke7 45. Nd5+ Kf7 46. Rd7+ Kf8 47. Rd8+ Kf7 48. Rd7+) 0-1";
+            PGNParser pgnParser = new PGNParser(failureString);
+            fail("Test should have thrown exception due to invalid tags PGN string");
+        }catch(Exception e){
+            logger.info("Performing testFalsePGN: Should print logger error due to tags. Ignore previous logger error");
+            assertEquals(e.getClass(),PGNParseException.class);
+        }
+    }
+
+    @Test public void testInvalidPGNMoves(){
+        try{
+            String failureString = "[Event \"Hourly Bullet Arena\"]\n" +
+                    "[Site \"http://lichess.org/t3yPcgEw\"]\n" +
+                    "[Date \"2015.10.25\"]\n" +
+                    "[White \"ENERGIE73\"]\n" +
+                    "[Black \"Fins\"]\n" +
+                    "[Result \"0-1\"]\n" +
+                    "[WhiteElo \"2218\"]\n" +
+                    "[BlackElo \"2560\"]\n" +
+                    "[PlyCount \"78\"]\n" +
+                    "[Variant \"Standard\"]\n" +
+                    "[TimeControl \"60+0\"]\n" +
+                    "[ECO \"D06\"]\n" +
+                    "[Opening \"Queen's Gambit Declined, Marshall Defence\"]\n" +
+                    "[Termination \"Time forfeit\"]\n" +
+                    "[Annotator \"lichess.org\"]\n";
+            PGNParser pgnParser = new PGNParser(failureString);
+            pgnParser.parseMoves(pgnParser.getPGN());
+            fail("Test should have thrown exception due to invalid moves in PGN string");
+        } catch(Exception e){
+            logger.info("Performing testInvalidPGNMoves: Should print logger error due to invalid moves. Ignore previous logger error");
+            assertEquals(e.getClass(),PGNParseException.class);
         }
     }
 
