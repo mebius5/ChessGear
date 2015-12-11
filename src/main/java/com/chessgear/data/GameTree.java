@@ -48,12 +48,8 @@ public class GameTree {
     public void addGame(List<GameTreeNode> gameTreeNodes) throws Exception {
         OsUtils osUtils = new OsUtils();
         Engine engine = new Engine(osUtils.getBinaryLocation());
-        if (this.root == null) {
-            this.root = gameTreeNodes.get(0);
-            this.root.setMultiplicity(1);
-            this.root.setId(this.nodeIdCounter);
-            this.nodeMapping.put(this.nodeIdCounter++, this.root); // Add to hashmapping.
-        }
+
+        this.root.incrementMultiplicity();
 
         GameTreeNode currentNode = this.root;
         for (int c = 1; c < gameTreeNodes.size(); c++) {

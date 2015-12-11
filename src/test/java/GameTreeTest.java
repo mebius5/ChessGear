@@ -64,6 +64,8 @@ public class GameTreeTest {
             gameTree.setNodeIdCounter(8);
 
             gameTree.addGame(gameTreeNodes);
+            gameTree.addGame(gameTreeNodes);
+            assertEquals(gameTree.getRoot().getMultiplicity(),2);
 
             BoardState startingBoardState = gameTree.getRoot().getBoardState();
             assertEquals(startingBoardState.toFEN(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
