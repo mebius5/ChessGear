@@ -38,7 +38,12 @@ public class Game {
     /**
      * Id of game.
      */
-    private static int id = 0;
+    private int id;
+
+    /**
+     * Counter.
+     */
+    private static int idCounter = 0;
 
     /**
      * Constructor for the Game class
@@ -56,24 +61,22 @@ public class Game {
         this.pgn=pgn;
         this.result=result;
         this.id=id;
-
-        System.out.println("Game is being initialized with id " + this.getID());
     }
 
     /**
      * Accessor for the next id for a game.
      * @return Next game id.
      */
-    public static int getGameId() {
-        return ++Game.id;
+    public static int getNextGameId() {
+        return Game.idCounter++;
     }
 
     /**
      * Creates a new game from pgn parser.
      * @param parser
      */
-    public Game(PGNParser parser) {
-        this(parser.getWhitePlayerName(), parser.getBlackPlayerName(), new Date(), parser.getPGN(), parser.getResult(), Game.getGameId());
+    public Game(PGNParser parser, int id) {
+        this(parser.getWhitePlayerName(), parser.getBlackPlayerName(), new Date(), parser.getPGN(), parser.getResult(), id);
     }
 
     /**

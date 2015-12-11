@@ -70,7 +70,7 @@ public class User {
         PGNParser parser = new PGNParser(pgn);
         GameTreeBuilder treeBuilder = new GameTreeBuilder(parser);
         this.gameTree.addGame(treeBuilder.getListOfNodes());
-        Game newGame = new Game(parser);
+        Game newGame = new Game(parser, Game.getNextGameId());
         System.out.println("Game id : " + newGame.getID());
         this.games.add(newGame);
     }
