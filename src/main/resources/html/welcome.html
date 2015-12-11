@@ -15,12 +15,13 @@
                     ChessGear v1.0
                 </div>
                 <div id="current-user">
+                    | <a href="#" id="logout">logout</a>
                 </div>
                 <div id="nav">
                     <ul>
                         <li class="active-nav"><a href="index.html">Home</a></li>
                         <li class="inactive-nav"><a href="import.html">Import</a></li>
-                        <li class="inactive-nav"><a href="#">Account</a></li>
+                        <li class="inactive-nav"><a href="account.html">Account</a></li>
                         <div class="clear"></div>
                     </ul>
                 </div>
@@ -48,13 +49,17 @@
         $(document).ready(function() {
             var loggedInUser = Cookies.get('loggedInUser');
             if (loggedInUser != null) {
-                $("#current-user").html(loggedInUser);
+                $("#current-user").prepend(loggedInUser);
             } else {
                 $("#current-user").html("Not logged in");
             }
 
+            $("#logout").click(function (e) {
+                e.preventDefault();
+                Cookies.remove('loggedInUser');
+            });
+
             $("#login").submit(function (e) {
-                console.log('blop');
                 e.preventDefault();
                 
                 var loginEmail = $("#username").val();
