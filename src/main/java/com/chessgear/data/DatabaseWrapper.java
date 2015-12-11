@@ -85,7 +85,6 @@ public class DatabaseWrapper {
             }
             return nodemapping;
         }
-        
         for (int i = 0; i < children.size(); i++) {
             Map<GameTreeNode.NodeProperties, String> map = db.fetchNodeProperty(email, children.get(i));
             String board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);

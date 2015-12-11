@@ -3,13 +3,13 @@
  * JUnit Test for Game.java
  */
 
-import static org.junit.Assert.*;
-
 import com.chessgear.game.Game;
 import com.chessgear.game.Result;
 import org.junit.Test;
 
 import java.util.Date;
+
+import static org.junit.Assert.assertEquals;
 
 public class GameTest {
     @Test
@@ -19,9 +19,9 @@ public class GameTest {
         Date date = new Date(2009, 8, 28);
         String pgn ="Sample";
         Result result = Result.WHITE_WIN;
-        int id = 5;
+        int id = 0;
 
-        Game test = new Game(whitePlayerName,blackPlayerName,date,pgn,result,id);
+        Game test = new Game(whitePlayerName,blackPlayerName,date,pgn,result, id);
         assertEquals(test.getWhitePlayerName(),whitePlayerName);
         assertEquals(test.getBlackPlayerName(),blackPlayerName);
         assertEquals(test.getDateImported(),date);

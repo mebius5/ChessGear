@@ -4,7 +4,6 @@ import com.chessgear.analysis.Engine;
 import com.chessgear.analysis.EngineResult;
 import com.chessgear.analysis.OsUtils;
 
-import javax.xml.crypto.Data;
 import java.util.HashMap;
 import java.util.List;
 
@@ -47,20 +46,20 @@ public class GameTree {
      * @param username name of User where the game will be added to
      * @throws Exception if error occurs while adding a game to gameTree
      */
-    public void addGame(List<GameTreeNode> gameTreeNodes, String username) throws Exception {
-        DatabaseService db = DatabaseService.getInstanceOf();
+    public void addGame(List<GameTreeNode> gameTreeNodes) throws Exception {
         OsUtils osUtils = new OsUtils();
         Engine engine = new Engine(osUtils.getBinaryLocation());
-        this.root.incrementMultiplicity();
-        Integer rootmult = root.getMultiplicity();
-        try {
-            db.updateNodeProperty(username, this.root.getId(), GameTreeNode.NodeProperties.MULTIPLICITY, rootmult.toString());
-        } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
+        if (this.root == null) {
+            this.root = gameTreeNodes.get(0);
+            this.root.setMultiplicity(1);
+            this.root.setId(this.nodeIdCounter);
+            this.nodeMapping.put(this.nodeIdCounter++, this.root); // Add to hashmapping.
         }
+
         GameTreeNode currentNode = this.root;
         for (int c = 1; c < gameTreeNodes.size(); c++) {
             GameTreeNode candidateChildNode = gameTreeNodes.get(c);
+
             boolean childFound = false;
             List<GameTreeNode> currentChildren = currentNode.getChildren();
             for (GameTreeNode n : currentChildren) {
@@ -68,14 +67,6 @@ public class GameTree {
                     n.incrementMultiplicity();
                     currentNode = n;
                     childFound = true;
-                    Integer mult = n.getMultiplicity();
-                    String multi = mult.toString();
-                    try {
-                        db.updateNodeProperty(username, n.getId(), GameTreeNode.NodeProperties.MULTIPLICITY, multi);
-                    } catch (IllegalArgumentException e) {
-                        System.err.println(e.getMessage());
-                    }
-                    //.updateNodeProperty();
                     break;
                 }
             }
@@ -89,43 +80,11 @@ public class GameTree {
                 candidateChildNode.setEngineResult(engineResult);
                 this.nodeMapping.put(this.nodeIdCounter++, candidateChildNode);
                 currentNode.addChild(candidateChildNode);
-                HashMap<GameTreeNode.NodeProperties, String> props = new HashMap<>();
-                props.put(GameTreeNode.NodeProperties.BOARDSTATE,candidateChildNode.getBoardState().toFEN());
-                Integer mult = candidateChildNode.getMultiplicity();
-                props.put(GameTreeNode.NodeProperties.MULTIPLICITY, mult.toString());
-                props.put(GameTreeNode.NodeProperties.BESTMOVE, engineResult.getBestMove());
-                Double cp = engineResult.getCp();
-                props.put(GameTreeNode.NodeProperties.CP, cp.toString());
-                props.put(GameTreeNode.NodeProperties.PV, engineResult.getPv());
-                try {
-                    db.addNode(username, candidateChildNode.getId(), props);
-                    //System.out.println("added node with ID" + candidateChildNode.getId());
-                } catch (IllegalArgumentException e) {
-                    if(!e.getMessage().equals("Node already exists in database"))
-                        System.err.println(e.getMessage());
-                }
-                try {
-                    //bSystem.out.println(currentNode.getId() + " and " + candidateChildNode.getId());
-                    db.addChild(username, currentNode.getId(), candidateChildNode.getId());
-                } catch (IllegalArgumentException e) {
-                    if(e.getMessage() != "this child already has a parent!")
-                        System.err.println(e.getMessage());
-                }
                 currentNode = candidateChildNode;
-                //also update in the database
-
             }
 
         }
         engine.terminateEngine();
-        
-        //TODO: make the update in the database.
-        /*
-         * The update made to the tree should be repercuted in the database.
-         * 
-         */
-
-
     }
 
     /**

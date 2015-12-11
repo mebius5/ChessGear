@@ -66,7 +66,6 @@ public class GameTreeNode {
         result.multiplicity = 0;
         result.boardState = new BoardState();
         result.boardState.setToDefaultPosition();
-        DatabaseService db = DatabaseService.getInstanceOf();
         return result;
     }
 
@@ -234,7 +233,6 @@ public class GameTreeNode {
         private List<ChildNodeJson> children;
         private Integer previousNodeId;
 
-
         GameTreeNodeJson(GameTreeNode node) {
             this.boardstate = node.boardState.toFEN();
             this.children = new ArrayList<>();
@@ -282,7 +280,7 @@ public class GameTreeNode {
     }
 
     public enum NodeProperties{
-        CP, BOARDSTATE, MULTIPLICITY, PV, BESTMOVE
+        EVAL, BOARDSTATE, MULTIPLICITY
     }
 
     /**

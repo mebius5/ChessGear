@@ -28,7 +28,8 @@ public class FileStorageService {
 
     private final File root;
 
-    private static DatabaseService db;
+    private final DatabaseService db;
+
     private static FileStorageService instance;
 
     /**

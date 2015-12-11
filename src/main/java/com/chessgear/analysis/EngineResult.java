@@ -1,10 +1,8 @@
 package com.chessgear.analysis;
 
 /**
- * Created by Grady Xiao on 11/8/15.
- * Class used to store the result returned from Stockfish Engine Analysis
+ * Created by GradyXiao on 11/8/15.
  */
-
 public class EngineResult {
     private double cp; //Stores the score returned by the Stockfish engine in centipawns
     private String pv; //Stores the best line returned by the Stockfish engine

@@ -1,8 +1,6 @@
 package com.chessgear.data;
 
 import com.chessgear.game.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +49,6 @@ public class PGNParser {
      */
     private List<BoardState> boardStates;
 
-    //Logger
-    private static final Logger logger = LoggerFactory.getLogger(PGNParser.class);
-
     /**
      * Constructs the parser with the string we need to parse.
      * @param pgn String containing the PGN for a game.
@@ -61,7 +56,8 @@ public class PGNParser {
      */
     public PGNParser(String pgn) throws PGNParseException {
         if(pgn==null){
-            throw new PGNParseException("Null PGN string.");
+            PGNParseException e = new PGNParseException("Null PGN string.");
+            throw e;
         }
         this.pgn = pgn;
         parseInformation();
@@ -70,16 +66,11 @@ public class PGNParser {
     /**
      * Parses the pgn and stores relevant information in the class attributes.
      */
-    private void parseInformation() throws PGNParseException {
+    private void parseInformation() {
 
         try {
             // Parse the tags.
             List<Tag> tags = parseTags(this.pgn);
-
-            if(tags.size()<=3){
-                throw new PGNParseException("PGN string must have at least tags for blackPlayerName, whitePlayerName, and result.");
-            }
-
             // Get tag with name White
             for (Tag t : tags) {
                 switch (t.getName()) {
@@ -91,28 +82,24 @@ public class PGNParser {
                         break;
                     case "Variant":
                         if(!t.getValue().equals("Standard")){
-                            throw new PGNParseException("PGN Variant other than Standard detected!. Error thrown!");
+                            PGNParseException e = new PGNParseException("PGN Variant other than Standard detected!. Error thrown!");
+                            throw e;
                         }
                 }
             }
         } catch (PGNParseException e) {
-            logger.error(e.getMessage());
-            throw e;
+            System.err.println(e.getMessage());
         }
+
     }
 
     /**
      * Accessor for white player name.
      * @return White player name.
      */
-    public String getWhitePlayerName(){
-        try {
-            if (this.whitePlayerName == null) this.parseInformation();
-            return this.whitePlayerName;
-        } catch (PGNParseException e){
-            logger.error(e.getMessage());
-        }
-        return null;
+    public String getWhitePlayerName() {
+        if (this.whitePlayerName == null) this.parseInformation();
+        return this.whitePlayerName;
     }
 
     /**
@@ -120,13 +107,8 @@ public class PGNParser {
      * @return Black player name.
      */
     public String getBlackPlayerName() {
-        try {
-            if (this.blackPlayerName == null) this.parseInformation();
-            return this.blackPlayerName;
-        } catch (PGNParseException e){
-            logger.error(e.getMessage());
-        }
-        return null;
+        if (this.blackPlayerName == null) this.parseInformation();
+        return this.blackPlayerName;
     }
 
     /**
@@ -134,13 +116,8 @@ public class PGNParser {
      * @return Result of the game.
      */
     public Result getResult() {
-        try {
-            if (this.result == null) this.parseInformation();
-            return this.result;
-        } catch (PGNParseException e){
-            logger.error(e.getMessage());
-        }
-        return null;
+        if (this.result == null) this.parseInformation();
+        return this.result;
     }
 
     /**
@@ -148,13 +125,8 @@ public class PGNParser {
      * @return Number of full moves in the game.
      */
     public int getGameLength() {
-        try {
-            if (this.boardStates == null) this.parseMoves(this.pgn);
-            return this.boardStates.size() / 2;
-        }catch(PGNParseException e){
-            logger.error(e.getMessage());
-        }
-        return 0;
+        if (this.boardStates == null) this.parseMoves(this.pgn);
+        return this.boardStates.size() / 2;
     }
 
     /**
@@ -164,29 +136,24 @@ public class PGNParser {
      * @return Move corresponding to the passed arguments.
      */
     public Move getHalfMove(Player player, int fullMoveNumber) {
-        try {
-            if (this.boardStates == null) this.parseMoves(this.pgn);
-            switch (player) {
-                case BLACK:
-                    if (this.blackHalfMoves.size() >= fullMoveNumber) {
-                        return this.blackHalfMoves.get(fullMoveNumber - 1);
-                    } else {
-                        return null;
-                    }
-
-                case WHITE:
-                    if (this.whiteHalfMoves.size() >= fullMoveNumber) {
-                        return this.whiteHalfMoves.get(fullMoveNumber - 1);
-                    } else {
-                        return null;
-                    }
-                default:
+        if (this.boardStates == null) this.parseMoves(this.pgn);
+        switch (player) {
+            case BLACK:
+                if (this.blackHalfMoves.size() >= fullMoveNumber) {
+                    return this.blackHalfMoves.get(fullMoveNumber - 1);
+                } else {
                     return null;
-            }
-        }catch(Exception e){
-            logger.error(e.getMessage());
+                }
+
+            case WHITE:
+                if (this.whiteHalfMoves.size() >= fullMoveNumber) {
+                    return this.whiteHalfMoves.get(fullMoveNumber - 1);
+                } else {
+                    return null;
+                }
+            default:
+                return null;
         }
-        return null;
     }
 
     /**
@@ -194,13 +161,8 @@ public class PGNParser {
      * @return List of black's half moves.
      */
     public List<Move> getBlackHalfMoves() {
-        try {
-            if (this.blackHalfMoves == null) this.parseMoves(this.pgn);
-            return this.blackHalfMoves;
-        } catch(PGNParseException e){
-            logger.error(e.getMessage());
-        }
-        return null;
+        if (this.blackHalfMoves == null) this.parseMoves(this.pgn);
+        return this.blackHalfMoves;
     }
 
     /**
@@ -208,13 +170,8 @@ public class PGNParser {
      * @return List of white's half moves.
      */
     public List<Move> getWhiteHalfMoves() {
-        try {
-            if (this.whiteHalfMoves == null) this.parseMoves(this.pgn);
-            return this.whiteHalfMoves;
-        } catch(PGNParseException e){
-            logger.error(e.getMessage());
-        }
-        return null;
+        if (this.whiteHalfMoves == null) this.parseMoves(this.pgn);
+        return this.whiteHalfMoves;
     }
 
     /**
@@ -222,13 +179,8 @@ public class PGNParser {
      * @return List of board states containing game progression.
      */
     public List<BoardState> getListOfBoardStates() {
-        try {
-            if (this.boardStates == null) this.parseMoves(this.pgn);
-            return this.boardStates;
-        }catch(Exception e){
-            logger.error(e.getMessage());
-        }
-        return null;
+        if (this.boardStates == null) this.parseMoves(this.pgn);
+        return this.boardStates;
     }
 
     /**
@@ -284,7 +236,7 @@ public class PGNParser {
      * @param pgn String containing the PGN for a game of chess.
      * @throws PGNParseException Something went wrong.
      */
-    public void parseMoves(String pgn) throws PGNParseException {
+    private void parseMoves(String pgn) {
         this.whiteHalfMoves = new ArrayList<>();
         this.blackHalfMoves = new ArrayList<>();
         this.boardStates = new ArrayList<>();
@@ -367,13 +319,7 @@ public class PGNParser {
                 active = active.toggle();
             }
         } catch (PGNParseException e) {
-            logger.error(e.getMessage());
-            throw e;
-        } catch (StringIndexOutOfBoundsException error){
-            PGNParseException e = new PGNParseException("Unable to parse PGN due to string Out of Bound error. Most likely " +
-                    "due to invalid PGN string");
-            logger.error(e.getMessage());
-            throw e;
+            System.err.println(e.getMessage());
         }
     }
 

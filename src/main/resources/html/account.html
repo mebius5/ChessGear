@@ -10,7 +10,6 @@
     <body>
 
         <div id="main-wrapper">
-
             <header>
                 <div id="wordmark">
                     ChessGear v1.0
@@ -21,24 +20,29 @@
                 <div id="nav">
                     <ul>
                         <li class="inactive-nav"><a href="index.html">Home</a></li>
-                        <li class="active-nav"><a href="import.html">Import</a></li>
-                        <li class="inactive-nav"><a href="account.html">Account</a></li>
+                        <li class="inactive-nav"><a href="import.html">Import</a></li>
+                        <li class="active-nav"><a href="account.html">Account</a></li>
                         <div class="clear"></div>
                     </ul>
                 </div>
             </header>
             <main>
                 
-                <div id="pgn-upload">
-                    <form id="pgn-submit" action="#" method="post">
-                        <h3>Upload a file</h3>
-                        <input type="file" name="pgn-file">
-                        <p style="color: #aaa; font-weight: bold;">or</p>
-                        <h3>Paste in your PGN</h3>
-                        <textarea rows="8" cols="80" id="pgn-body" name="pgn-body"></textarea><br>
-                        <input type="submit" style="color: #000;">
-                    </form>
+                <div id="account-wrapper">
+                    <div id="account-left">
+                        <h3>Account Management</h3>
+                        <ul>
+                            <li><a href="#" id="change-password">Change Password</a></li>
+                        </ul>
+                    </div><div id="account-right">
+                        <h3>Games Archive</h3>
+                        <ul id="games-list">
+                        </ul>
+                    </div><div class="clear"></div>
+
                 </div>
+                
+
             </main>
 
             <footer>
@@ -47,7 +51,6 @@
 
         </div>
 
-        <script type="text/javascript" src="js/import.js"></script>
-
     </body>
+    <script type="text/javascript" src="js/account.js"></script>
 </html>

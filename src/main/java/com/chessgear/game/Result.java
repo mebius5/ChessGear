@@ -29,4 +29,21 @@ public enum Result {
         }
     }
 
+    /**
+     * Gets string implementation for the result..
+     * @return String implementation for the result.
+     */
+    public String toString() {
+        switch (this) {
+            case WHITE_WIN:
+                return "1-0";
+            case BLACK_WIN:
+                return "0-1";
+            case DRAW:
+                return "1/2-1/2";
+            default:
+                return "Invalid result";
+        }
+    }
+
 }
