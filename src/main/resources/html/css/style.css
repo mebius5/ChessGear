@@ -255,6 +255,7 @@ footer {
     display: inline-block;
     width: 664px;
     padding-right: 20px;
+    vertical-align: top;
 }
 
 #logout {
@@ -280,4 +281,8 @@ footer {
 main {
     color: #d85000;
     text-align: left;
+}
+
+#games-list {
+    display: inline;
 }

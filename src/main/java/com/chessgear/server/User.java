@@ -71,6 +71,7 @@ public class User {
         GameTreeBuilder treeBuilder = new GameTreeBuilder(parser);
         this.gameTree.addGame(treeBuilder.getListOfNodes());
         Game newGame = new Game(parser);
+        System.out.println("Game id : " + newGame.getID());
         this.games.add(newGame);
     }
 
@@ -126,13 +127,36 @@ public class User {
      */
     private static class UserGamesJson {
 
-        private List<String> games;
+        private List<GameJson> games;
 
         public UserGamesJson(User user) {
             this.games = new ArrayList<>();
             for (Game g : user.games) {
-                this.games.add(g.getJson());
+                this.games.add(new GameJson(g));
             }
+        }
+
+    }
+
+    /**
+     * Container class for converting information about games to JSON.
+     */
+    private static class GameJson {
+
+        private String name;
+        private int id;
+
+        public GameJson(Game game) {
+            StringBuilder nameBuilder = new StringBuilder();
+            nameBuilder.append(game.getResult().toString());
+            nameBuilder.append(" - ");
+            nameBuilder.append(game.getWhitePlayerName());
+            nameBuilder.append(" vs ");
+            nameBuilder.append(game.getBlackPlayerName());
+            nameBuilder.append(", ");
+            nameBuilder.append(game.getDateImported().toString());
+            this.name = nameBuilder.toString();
+            this.id = game.getID();
         }
 
     }
