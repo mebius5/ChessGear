@@ -58,7 +58,6 @@ public class UserTest {
             user.setGameTree(gameTree);
             assertEquals(user.getGameTree(),gameTree);
 
-            assertEquals(User.Property.USERNAME.toString(), "USERNAME");
             assertEquals(User.Property.PASSWORD.toString(), "PASSWORD");
 
         } catch (Exception e){
