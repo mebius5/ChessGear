@@ -36,6 +36,16 @@ public class GameTreeBuilder {
     public GameTreeBuilder(PGNParser parser) {
         this(parser.getListOfBoardStates(), parser.getWhiteHalfMoves(), parser.getBlackHalfMoves());
     }
+    
+    public static GameTree constructGameTree(String username){
+        //TODO
+        /*
+         * The purpose of this method is to bake a cute GameTree from the data present in the DataBase.
+         * 
+         * Don't forget, DatabaseService is a Singleton, thus a call to DatabaseService.getInstance() is sufficient.
+         */
+        return null;
+    }
 
     /**
      * Output of our class. Returns a list of nodes that represents the game.

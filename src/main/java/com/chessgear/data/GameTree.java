@@ -80,6 +80,12 @@ public class GameTree {
 
         }
         engine.terminateEngine();
+        
+        //TODO: make the update in the database.
+        /*
+         * The update made to the tree should be repercuted in the database.
+         * 
+         */
     }
 
     /**
