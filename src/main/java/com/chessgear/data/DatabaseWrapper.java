@@ -119,13 +119,13 @@ public class DatabaseWrapper {
         return 1;
     }
 
-    public int storeTree(String email, GameTree gametree, int id) {
+    public int storeTree(String username, GameTree gametree, int id) {
         GameTreeNode curr = gametree.getNodeWithId(id);
         List<GameTreeNode> children = curr.getChildren();
         try {
             for(int i = 0;i < children.size(); i++) {
                 GameTreeNode temp = children.get(i);
-                storeTree(email, gametree, temp.getId());
+                storeTree(username, gametree, temp.getId());
             }
         } catch (NullPointerException e) {
             GameTreeNode temp;
@@ -133,31 +133,31 @@ public class DatabaseWrapper {
         HashMap<GameTreeNode.NodeProperties, String> pmap = new HashMap<>();
         pmap.put(GameTreeNode.NodeProperties.BOARDSTATE, curr.getBoardState().toFEN());
         pmap.put(GameTreeNode.NodeProperties.MULTIPLICITY, String.valueOf(curr.getMultiplicity()));
-        db.addNode(email, id, pmap);
+        db.addNode(username, id, pmap);
         return 1;
     }
     /**
      * For deleting the tree
-     * @param email
+     * @param username
      * @param id
      * @return
      */
-    public int deleteTree (String email, int id) {
+    public int deleteTree (String username, int id) {
         List<Integer> children;
         try{
-            children = db.childrenFrom(email, id);
+            children = db.childrenFrom(username, id);
         } catch (IllegalArgumentException e) {
             try {
-                db.deleteNode(email, id);
+                db.deleteNode(username, id);
             } catch (IllegalArgumentException b) {
                 return 0;
             }
             return 0;
         }
         for (int i = 0; i < children.size(); i++) {
-            deleteTree(email, children.get(i));
+            deleteTree(username, children.get(i));
         }
-        db.deleteNode(email, id);
+        db.deleteNode(username, id);
         return 1;
     }
 }

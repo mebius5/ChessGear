@@ -441,10 +441,10 @@ public class DatabaseService {
     }
     
     /**
-     * Tells wether the user already has a tree or not
+     * Tells whether the user already has a tree or not
      * 
-     * @param username
-     * @return
+     * @param username username to be checked
+     * @return true if user has root and false if user does not
      */
     public boolean hasRoot(String username){
         String cmd = "SELECT rootNodeId FROM Tree as T where T.username = '"+username+"'";

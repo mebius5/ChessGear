@@ -91,7 +91,7 @@ public class User {
     /**
      * Parses and adds a game in pgn form. The String will be stored as a file. If you want to choose the 
      * name, please use the method addGame(String pgn, String fileName). The default name is 
-     * username_<current time>.pgn
+     * "username_<current time>.pgn"
      * 
      * @param pgn A PGN representing the game
      */

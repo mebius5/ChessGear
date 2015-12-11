@@ -37,6 +37,7 @@ public class GameTreeBuilder {
     /**
      * Constructor with PGN parser as input.
      * @param parser PGN Parser.
+     * @throws Exception if anything goes wrong during the building process
      */
     public GameTreeBuilder(PGNParser parser) throws Exception{
         this(parser.getListOfBoardStates(), parser.getWhiteHalfMoves(), parser.getBlackHalfMoves());
@@ -44,8 +45,8 @@ public class GameTreeBuilder {
 
     /**
      * Builds a game tree from a user's gametree stored in the database.
-     * @param username
-     * @return
+     * @param username username of User that need to construct game tree
+     * @return the new reconstructed gameTree
      */
     public static GameTree constructGameTree(String username){
         DatabaseService db = DatabaseService.getInstanceOf();

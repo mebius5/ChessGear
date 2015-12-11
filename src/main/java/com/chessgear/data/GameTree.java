@@ -44,6 +44,7 @@ public class GameTree {
     /**
      * Adds a game to the tree.
      * @param gameTreeNodes a list of game tree node
+     * @param username name of User where the game will be added to
      * @throws Exception if error occurs while adding a game to gameTree
      */
     public void addGame(List<GameTreeNode> gameTreeNodes, String username) throws Exception {
@@ -135,11 +136,12 @@ public class GameTree {
         return this.root;
     }
 
-    /**
-     * Setting the root
+    /***
+     * Setting the root of the gameTree
+     * @param root New root to be set to
      */
-    public void setRoot(GameTreeNode roo) {
-        root = roo;
+    public void setRoot(GameTreeNode root) {
+        this.root = root;
     }
 
     public void setNodeMapping(HashMap<Integer, GameTreeNode> e) {
