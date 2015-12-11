@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ChessGear</title>
+        <link href="css/normalize.css" rel="stylesheet" type="text/css">
+        <link href="css/style.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="js/js.cookie.js"></script>
+    </head>
+    <body>
+
+        <div id="main-wrapper">
+            <header>
+                <div id="wordmark">
+                    ChessGear v1.0
+                </div>
+                <div id="current-user">
+                    | <a href="#" id="logout">logout</a>
+                </div>
+                <div id="nav">
+                    <ul>
+                        <li class="inactive-nav"><a href="index.html">Home</a></li>
+                        <li class="inactive-nav"><a href="import.html">Import</a></li>
+                        <li class="active-nav"><a href="account.html">Account</a></li>
+                        <div class="clear"></div>
+                    </ul>
+                </div>
+            </header>
+            <main>
+                
+                <div id="account-wrapper">
+                    <div id="account-left">
+                        <h3>Account Management</h3>
+                        <ul>
+                            <li><a href="#" id="change-password">Change Password</a></li>
+                        </ul>
+                    </div><div id="account-right">
+                        <h3>Games Archive</h3>
+                        <ul id="games-list">
+                        </ul>
+                    </div><div class="clear"></div>
+
+                </div>
+                
+
+            </main>
+
+            <footer>
+                &copy;ChessGear 2015
+            </footer>
+
+        </div>
+
+    </body>
+    <script type="text/javascript" src="js/account.js"></script>
+</html>
