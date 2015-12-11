@@ -5,6 +5,7 @@ import com.chessgear.server.User;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -172,6 +173,30 @@ public class DatabaseServiceTestTool {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
+        }
+    }
+    
+    public static void changeDBinUserClass(DatabaseService replaceWith){
+        try{
+            Field f = User.class.getDeclaredField("db");
+            f.setAccessible(true);
+            f.set(null, replaceWith);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            fail();
+        }
+    }
+    
+    public static void changeFSSinUserClass(FileStorageService replaceWith){
+        try{
+            Field f = User.class.getDeclaredField("fss"); //NoSuchFieldException
+            f.setAccessible(true);
+            f.set(null, replaceWith);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            fail();
         }
     }
 

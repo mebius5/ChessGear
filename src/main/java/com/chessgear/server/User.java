@@ -31,8 +31,8 @@ public class User {
     //if wanted, can add private String email here.
     
     //those two field are just references to to shorten the code.
-    private static final DatabaseService db = DatabaseService.getInstanceOf();
-    private static final FileStorageService fss = FileStorageService.getInstanceOf();
+    private static DatabaseService db = DatabaseService.getInstanceOf();
+    private static FileStorageService fss = FileStorageService.getInstanceOf();
     
     //in the end, only this constructor should remain
     private User(String username){
