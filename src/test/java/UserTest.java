@@ -56,11 +56,14 @@ public class UserTest {
             assertEquals(twin.getUsername(), user.getUsername());
             assertEquals(twin.getPassword(), user.getPassword());
             assertEquals(twin.getGameList().size(), user.getGameList().size());
-            
             PGNParser pgnParser = new PGNParser(testPGN);
             GameTreeBuilder gameTreeBuilder = new GameTreeBuilder(pgnParser);
+
             GameTree gameTree = new GameTree();
             gameTree.addGame(gameTreeBuilder.getListOfNodes(), username);
+            System.out.println(fss.getReferecencedDatabaseService().nodeExists(username, 80));
+            GameTree test = GameTreeBuilder.constructGameTree(username);
+            System.out.println(test.containsNode(80));
             Game game = new Game(pgnParser);
             
             user.addGame(testPGN);
@@ -68,7 +71,8 @@ public class UserTest {
             assertEquals(user.getGameList().get(0).getBlackPlayerName(), game.getBlackPlayerName());
 
             assertEquals(user.getGameTree().getRoot().getBoardState().toFEN(),gameTree.getRoot().getBoardState().toFEN());
-
+            //GameTree dbtest = GameTreeBuilder.constructGameTree(username);
+            //System.out.println(dbtest.containsNode(0));
             user.setGameTree(gameTree);
             assertEquals(user.getGameTree(),gameTree);
 
