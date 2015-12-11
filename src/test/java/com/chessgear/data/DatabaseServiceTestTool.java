@@ -177,6 +177,35 @@ public class DatabaseServiceTestTool {
         }
     }
     
+    public static void changeGetInstanceOfInDatabaseService(DatabaseService replaceWith){
+        try{
+            Field f = DatabaseService.class.getDeclaredField("instance");
+            f.setAccessible(true);
+            f.set(null, replaceWith);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            fail();
+        }
+    }
+    
+    public static void changeGetInstanceOfInFileStorageServiceClass(FileStorageService replaceWith){
+        try{
+            Field f = FileStorageService.class.getDeclaredField("instance"); //NoSuchFieldException
+            f.setAccessible(true);
+            f.set(null, replaceWith);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            fail();
+        }
+    }
+    
+    
+    
+    
+    
+    @Deprecated
     public static void changeDBinUserClass(DatabaseService replaceWith){
         try{
             Field f = User.class.getDeclaredField("db");
@@ -189,6 +218,7 @@ public class DatabaseServiceTestTool {
         }
     }
     
+    @Deprecated
     public static void changeFSSinUserClass(FileStorageService replaceWith){
         try{
             Field f = User.class.getDeclaredField("fss"); //NoSuchFieldException

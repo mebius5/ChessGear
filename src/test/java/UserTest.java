@@ -39,8 +39,8 @@ public class UserTest {
             String username = "Bob";
 
             FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
-            DatabaseServiceTestTool.changeDBinUserClass(fss.getReferecencedDatabaseService());
-            DatabaseServiceTestTool.changeFSSinUserClass(fss);
+            DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(fss.getReferecencedDatabaseService());
+            DatabaseServiceTestTool.changeGetInstanceOfInFileStorageServiceClass(fss);
 
             User user = User.registerNewUser(username, password);
             assertEquals(user.getUsername(), username);
@@ -76,9 +76,8 @@ public class UserTest {
 
             DatabaseServiceTestTool.destroyFileStorageService(fss);
             
-            DatabaseServiceTestTool.changeDBinUserClass(DatabaseService.getInstanceOf());
-            DatabaseServiceTestTool.changeFSSinUserClass(FileStorageService.getInstanceOf());
-
+            DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(null);
+            DatabaseServiceTestTool.changeGetInstanceOfInFileStorageServiceClass(null);
         } catch (Exception e){
             e.printStackTrace();
             fail();
