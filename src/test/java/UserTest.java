@@ -1,6 +1,4 @@
-import com.chessgear.data.GameTree;
-import com.chessgear.data.GameTreeBuilder;
-import com.chessgear.data.PGNParser;
+import com.chessgear.data.*;
 import com.chessgear.game.Game;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,9 +37,16 @@ public class UserTest {
         try {
             String password = "abcd1234";
             String username = "Bob";
-            User user = new User(username, password);
+
+            DatabaseService db = DatabaseServiceTestTool.createDatabase(true);
+            FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
+            DatabaseServiceTestTool.changeDBinUserClass(db);
+            DatabaseServiceTestTool.changeFSSinUserClass(fss);
+
+            User user = User.registerNewUser(username, password);
             assertEquals(user.getUsername(), username);
             assertEquals(user.getPassword(),password);
+            assertEquals(User.getUser(user.getUsername()),user);
 
             PGNParser pgnParser = new PGNParser(testPGN);
             GameTreeBuilder gameTreeBuilder = new GameTreeBuilder(pgnParser);
@@ -59,6 +64,9 @@ public class UserTest {
             assertEquals(user.getGameTree(),gameTree);
 
             assertEquals(User.Property.PASSWORD.toString(), "PASSWORD");
+
+            DatabaseServiceTestTool.destroyDatabase(db);
+            DatabaseServiceTestTool.destroyFileStorageService(fss);
 
         } catch (Exception e){
             e.printStackTrace();
