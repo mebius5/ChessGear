@@ -46,6 +46,10 @@ public class UserTest {
             assertEquals(user.getUsername(), username);
             assertEquals(user.getPassword(),password);
             user.setPassword("new");
+
+            User fake = new User(username,password);
+            assertEquals(fake.getUsername(),username);
+            assertEquals(fake.getPassword(),password);
             
             //reload a fresh new user an test for consistency
             User twin = User.getUser(username);
