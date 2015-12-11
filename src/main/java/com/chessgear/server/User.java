@@ -224,7 +224,7 @@ public class User {
         //we reconstruct the list of all it's games
         for(String filename: fss.getFilesFor(username)){
             try {
-                String fileContent ;
+                String fileContent;
                 fileContent = fss.fetchFileContent(username, filename);
                 toReturn.games.add(new Game(new PGNParser(fileContent)));
             } catch (IOException e) {

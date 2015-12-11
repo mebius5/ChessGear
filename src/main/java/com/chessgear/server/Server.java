@@ -1,5 +1,7 @@
 package com.chessgear.server;
 
+import com.chessgear.data.DatabaseService;
+
 import java.util.HashMap;
 
 /**
@@ -31,7 +33,16 @@ public class Server {
      * @return True if already exists, false if doesn't.
      */
     public boolean userExists(String username) {
-        return this.users.containsKey(username);
+        if (this.users.containsKey(username)) {
+            return true;
+        } else {
+            // Else check server
+            if (DatabaseService.getInstanceOf().userExists(username)) {
+                this.users.put(username, User.getUser(username));
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
