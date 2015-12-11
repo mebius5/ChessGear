@@ -4,6 +4,7 @@ import com.chessgear.analysis.Engine;
 import com.chessgear.analysis.EngineResult;
 import com.chessgear.analysis.OsUtils;
 
+import javax.xml.crypto.Data;
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,7 +46,8 @@ public class GameTree {
      * @param gameTreeNodes a list of game tree node
      * @throws Exception if error occurs while adding a game to gameTree
      */
-    public void addGame(List<GameTreeNode> gameTreeNodes) throws Exception {
+    public void addGame(List<GameTreeNode> gameTreeNodes, String username) throws Exception {
+        DatabaseService db = DatabaseService.getInstanceOf();
         OsUtils osUtils = new OsUtils();
         Engine engine = new Engine(osUtils.getBinaryLocation());
 
@@ -62,6 +64,10 @@ public class GameTree {
                     n.incrementMultiplicity();
                     currentNode = n;
                     childFound = true;
+                    Integer mult = n.getMultiplicity();
+                    String multi = mult.toString();
+                    db.updateNodeProperty(username, n.getId(), GameTreeNode.NodeProperties.MULTIPLICITY, multi);
+                    //.updateNodeProperty();
                     break;
                 }
             }
@@ -76,6 +82,15 @@ public class GameTree {
                 this.nodeMapping.put(this.nodeIdCounter++, candidateChildNode);
                 currentNode.addChild(candidateChildNode);
                 currentNode = candidateChildNode;
+                HashMap<GameTreeNode.NodeProperties, String> props = new HashMap<>();
+                props.put(GameTreeNode.NodeProperties.BOARDSTATE,candidateChildNode.getBoardState().toFEN());
+                Integer mult = candidateChildNode.getMultiplicity();
+                props.put(GameTreeNode.NodeProperties.MULTIPLICITY, mult.toString());
+                db.addNode(username, candidateChildNode.getId(), props);
+                List<GameTreeNode> children = candidateChildNode.getChildren();
+                for (int i = 0; i < candidateChildNode.getChildren().size(); i++) {
+                    db.addChild(username, candidateChildNode.getId(), children.get(i).getId());
+                }
             }
 
         }
@@ -86,6 +101,8 @@ public class GameTree {
          * The update made to the tree should be repercuted in the database.
          * 
          */
+
+
     }
 
     /**

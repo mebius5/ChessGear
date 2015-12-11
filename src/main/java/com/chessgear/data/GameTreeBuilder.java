@@ -2,9 +2,12 @@ package com.chessgear.data;
 
 import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
+import com.chessgear.server.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * GameTree builder helper class.
@@ -16,6 +19,7 @@ public class GameTreeBuilder {
     private List<Move> whiteHalfMoves;
     private List<Move> blackHalfMoves;
     private List<GameTreeNode> nodes;
+    private int bigid;
 
     /**
      * Constructor. We pass the list of boardstates encountered over the course of a game, a list of white's half moves, and a list of black's half moves.
@@ -38,13 +42,100 @@ public class GameTreeBuilder {
     }
     
     public static GameTree constructGameTree(String username){
-        //TODO
         /*
          * The purpose of this method is to bake a cute GameTree from the data present in the DataBase.
          * 
          * Don't forget, DatabaseService is a Singleton, thus a call to DatabaseService.getInstance() is sufficient.
          */
-        return null;
+        DatabaseService db = DatabaseService.getInstanceOf();
+        if (!db.userExists(username))
+            return null;
+        int rootid = db.getRoot(username);
+        Map<User.Property, String> maps = db.fetchUserProperties(username);
+        String corr = maps.get(User.Property.PASSWORD);
+        Map<GameTreeNode.NodeProperties, String> map = new HashMap<>();
+        String board;
+        int mult;
+        try {
+            map = db.fetchNodeProperty(username, rootid);
+            board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
+        } catch (IllegalArgumentException e) {
+            board = "err";
+        }
+        try {
+            mult = Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
+        } catch (NumberFormatException e) {
+            System.err.println("Error Fetching");
+            mult = 1;
+        }
+        GameTreeNode root = new GameTreeNode(rootid);
+        BoardState boardstate;
+        if(!board.equals("err")) {
+            boardstate = new BoardState(board);
+        } else {
+            boardstate = new BoardState();
+            boardstate.setToDefaultPosition();
+        }
+        root.setMultiplicity(mult);
+        root.setBoardState(boardstate);
+        HashMap<Integer, GameTreeNode> nodemapping = makeTree(root, username);
+        GameTree tree = new GameTree();
+        tree.setNodeMapping(nodemapping);
+        tree.setRoot(root);
+        //tree.setNodeIdCounter(bigid);
+        return tree;
+    }
+
+    /**
+     * Recursive call to create a tree from the database;
+     * @param base
+     * @param email
+     * @return
+     */
+    private static HashMap<Integer, GameTreeNode> makeTree(GameTreeNode base, String email) {
+        DatabaseService db = DatabaseService.getInstanceOf();
+        List<Integer> children;
+        HashMap<Integer, GameTreeNode> nodemapping = new HashMap<>();
+        try {
+            children = db.childrenFrom(email, base.getId());
+        } catch(IllegalArgumentException e) {
+            nodemapping.put(base.getId(), base);
+            /*
+            if(base.getId() > bigid) {
+                bigid = base.getId();
+            }
+            */
+            return nodemapping;
+        }
+
+        for (int i = 0; i < children.size(); i++) {
+            Map<GameTreeNode.NodeProperties, String> map = db.fetchNodeProperty(email, children.get(i));
+            String board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
+            String eval = map.get(GameTreeNode.NodeProperties.EVAL);
+            int mult;
+            try {
+                mult = Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
+
+            } catch (NumberFormatException e) {
+                System.err.println("Error Fetching");
+                mult = 1;
+            }
+            GameTreeNode next = new GameTreeNode(children.get(i));
+            BoardState boarstate = new BoardState(board);
+            next.setMultiplicity(mult);
+            next.setBoardState(boarstate);
+            /*
+            Need to add Engine result here, not sure how it is stored.
+             */
+            base.addChild(next);
+            next.setParent(base);
+            nodemapping = makeTree(next, email);
+        }
+        nodemapping.put(base.getId(), base);
+        /*if(base.getId() > bigid) {
+            bigid = base.getId();
+        }*/
+        return nodemapping;
     }
 
     /**
