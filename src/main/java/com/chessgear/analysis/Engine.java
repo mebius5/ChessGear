@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Created by Ran on 10/24/2015.
  */
 public class Engine {
-    private Process proc; //Java process
+    private Process process; //Java process
 
     private BufferedReader stdInput; //Input from the Stock engine
     private BufferedWriter stdOutput; //Output to the Stockfish engine
@@ -34,10 +34,10 @@ public class Engine {
     private void startEngine(String binaryLocation) {
         try {
             Runtime rt = Runtime.getRuntime();
-            proc = rt.exec(binaryLocation);
+            process = rt.exec(binaryLocation);
 
-            stdOutput = new BufferedWriter(new OutputStreamWriter(proc.getOutputStream()));
-            stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+            stdOutput = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
+            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -78,7 +78,7 @@ public class Engine {
 
     /***
      * Obtains the result from the Stockfish analysis output and store
-     * them into EngineResut
+     * them into EngineResult
      * Maybe print depending on whether print is true or false
      * @param engineResult Stores the engineResult of the Stockfish analysis
      * @param print Prints the output from Stockfish analysis if True
@@ -129,7 +129,7 @@ public class Engine {
         try {
             stdInput.close();
             stdOutput.close();
-            proc.destroy();
+            process.destroy();
         }catch (Exception e){
             e.printStackTrace();
             throw e;
