@@ -159,9 +159,13 @@ footer {
     display: inline-block;
     background-color: #aaa;
     width: 234px;
-    height: 640px;
+    min-height: 640px;
     margin-left: 50px;
     font-size: 12pt;
+}
+
+#children-wrapper > h3 {
+    margin-left: 15px;
 }
 
 #children-wrapper > ul {
@@ -173,6 +177,7 @@ footer {
 #children-list > li > a {
     text-decoration: none;
     color: #000;
+    display: block;
 }
 
 #children-list > li {

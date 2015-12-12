@@ -105,7 +105,7 @@ function displayChildren(response) {
     // Clears the list of children first.
     $("#children-list").html("");
     for (var c = 0; c < children.length; c++) {
-        var percentage = children[c].multiplicity / response.multiplicity * 100;
+        var percentage = Math.round(children[c].multiplicity / response.multiplicity * 100);
         $("#children-list").append("<li><a href='" + children[c].id + "' id='child-" + children[c].id + "'>" + children[c].name + " | (" + children[c].eval + ") | " + percentage + "%</a></li>");
         $("#child-" + children[c].id).click(function (e) {
             e.preventDefault();
