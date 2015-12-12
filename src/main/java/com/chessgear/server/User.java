@@ -263,7 +263,6 @@ public class User {
                 this.games.add(new GameJson(g));
             }
         }
-
     }
 
     /**
@@ -286,7 +285,5 @@ public class User {
             this.name = nameBuilder.toString();
             this.id = game.getID();
         }
-
     }
-    
 }

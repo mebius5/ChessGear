@@ -33,10 +33,11 @@ public class Server {
      * @return True if already exists, false if doesn't.
      */
     public boolean userExists(String username) {
+        // First check memory.
         if (this.users.containsKey(username)) {
             return true;
         } else {
-            // Else check server
+            // Else check database
             if (DatabaseService.getInstanceOf().userExists(username)) {
                 this.users.put(username, User.getUser(username));
                 return true;

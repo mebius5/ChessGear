@@ -18,9 +18,8 @@ public class PGNParser {
      * Minimum possible length of a line containing a tag.
      */
     private static final int MINIMUM_TAG_LINE_LENGTH = 6;
-
     /**
-     *
+     * Pgn that we're parsing.
      */
     private String pgn;
     /**

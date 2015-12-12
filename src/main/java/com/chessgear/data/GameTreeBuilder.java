@@ -2,8 +2,6 @@ package com.chessgear.data;
 
 import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +16,6 @@ public class GameTreeBuilder {
     private List<Move> whiteHalfMoves;
     private List<Move> blackHalfMoves;
     private List<GameTreeNode> nodes;
-    
-    //A quick reference
-    private static final DatabaseService db = DatabaseService.getInstanceOf();
-
-    //Logger
-    private static final Logger logger = LoggerFactory.getLogger(GameTreeBuilder.class);
 
     /**
      * Constructor. We pass the list of boardstates encountered over the course of a game, a list of white's half moves, and a list of black's half moves.
