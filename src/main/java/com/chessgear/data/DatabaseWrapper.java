@@ -20,13 +20,30 @@ import static com.chessgear.data.GameTreeNode.NodeProperties;
  */
 public class DatabaseWrapper {
 
-    private final static DatabaseService service = DatabaseService.getInstanceOf();
+    private DatabaseService service;
+    private static final DatabaseWrapper instance = new DatabaseWrapper(DatabaseService.getInstanceOf());
+
+    /**
+     * Constructs a database wrapper for the given database service.
+     * @param service DatabaseService that we're wrapping.
+     */
+    public DatabaseWrapper(DatabaseService service) {
+        this.service = service;
+    }
+
+    /**
+     * Returns static instance of the wrapper.
+     * @return Static instance of wrapper.
+     */
+    public static DatabaseWrapper getInstance() {
+        return instance;
+    }
 
     /**
      * Adds a new user to the database.
      * @param user User to add.
      */
-    public static void addUser(User user) {
+    public void addUser(User user) {
         // Adds the entry for the user
         service.addUser(user.getUsername(), User.Property.getProperties(user));
         // Creates a new tree for them.
@@ -41,7 +58,7 @@ public class DatabaseWrapper {
      * @param id Id of the node.
      * @return GameTreeNode object containing the information contained therein.
      */
-    public static GameTreeNode getGameTreeNode(String username, int id) {
+    public GameTreeNode getGameTreeNode(String username, int id) {
         if (service.nodeExists(username, id)) {
             GameTreeNode result = new GameTreeNode(id);
             Map<NodeProperties, String> properties = service.fetchNodeProperty(username, id);
@@ -80,7 +97,7 @@ public class DatabaseWrapper {
      * @param id Id of the node.
      * @param multiplicity New multiplicity of the node.
      */
-    public static void setMultiplicity(String username, int id, int multiplicity) {
+    public void setMultiplicity(String username, int id, int multiplicity) {
         service.updateNodeProperty(username, id, NodeProperties.MULTIPLICITY, String.valueOf(multiplicity));
     }
 
@@ -90,7 +107,7 @@ public class DatabaseWrapper {
      * @param parent Parent node.
      * @param child Child node.
      */
-    public static void addChild(String username, GameTreeNode parent, GameTreeNode child) {
+    public void addChild(String username, GameTreeNode parent, GameTreeNode child) {
         addNode(username, child);
         service.addChild(username, parent.getId(), child.getId());
     }
@@ -100,7 +117,7 @@ public class DatabaseWrapper {
      * @param username User who owns the node.
      * @param node Node object to add.
      */
-    public static void addNode(String username, GameTreeNode node) {
+    public void addNode(String username, GameTreeNode node) {
         service.addNode(username, node.getId(), NodeProperties.getProperties(node));
     }
 
@@ -109,7 +126,7 @@ public class DatabaseWrapper {
      * @param username User to get GameTree for.
      * @return GameTree of user.
      */
-    public static GameTree getGameTree(String username) {
+    public GameTree getGameTree(String username) {
         // Initialize tree, mapping
         GameTree tree = new GameTree();
         HashMap<Integer, GameTreeNode> nodeMapping = new HashMap<>();
@@ -142,7 +159,7 @@ public class DatabaseWrapper {
      * @param username User to whom the nodes belong.
      * @param nodeMapping Nodemapping which we're adding to.
      */
-    private static void setChildren(GameTreeNode currentNode, String username, HashMap<Integer, GameTreeNode> nodeMapping) {
+    private void setChildren(GameTreeNode currentNode, String username, HashMap<Integer, GameTreeNode> nodeMapping) {
         // Gets the list of child ids.
         List<Integer> children = service.childrenFrom(username, currentNode.getId());
 

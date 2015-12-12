@@ -55,7 +55,7 @@ public class GameTree {
         OsUtils osUtils = new OsUtils();
         Engine engine = new Engine(osUtils.getBinaryLocation());
         this.root.incrementMultiplicity();
-        DatabaseWrapper.setMultiplicity(username, this.root.getId(), this.root.getMultiplicity());
+        DatabaseWrapper.getInstance().setMultiplicity(username, this.root.getId(), this.root.getMultiplicity());
 
         GameTreeNode currentNode = this.root;
         for (int c = 1; c < gameTreeNodes.size(); c++) {
@@ -65,7 +65,7 @@ public class GameTree {
             for (GameTreeNode n : currentChildren) {
                 if (n.getBoardState().equals(candidateChildNode.getBoardState())) {
                     n.incrementMultiplicity();
-                    DatabaseWrapper.setMultiplicity(username, n.getId(), n.getMultiplicity());
+                    DatabaseWrapper.getInstance().setMultiplicity(username, n.getId(), n.getMultiplicity());
                     currentNode = n;
                     childFound = true;
                     break;
@@ -80,7 +80,7 @@ public class GameTree {
                 candidateChildNode.setEngineResult(engineResult);
                 this.nodeMapping.put(this.nodeIdCounter++, candidateChildNode);
                 currentNode.addChild(candidateChildNode);
-                DatabaseWrapper.addChild(username, currentNode, candidateChildNode);
+                DatabaseWrapper.getInstance().addChild(username, currentNode, candidateChildNode);
                 currentNode = candidateChildNode;
             }
         }
@@ -124,8 +124,20 @@ public class GameTree {
         return nodeMapping.containsKey(id);
     }
 
+    /**
+     * Mutator for the value of the node counter.
+     * @param high New value for the node counter.
+     */
     public void setNodeIdCounter(int high) {
         nodeIdCounter = high;
+    }
+
+    /**
+     * Accessor for the nodeMapping.
+     * @return nodeMapping for this tree.
+     */
+    public HashMap<Integer, GameTreeNode> getNodeMapping() {
+        return this.nodeMapping;
     }
 
 }

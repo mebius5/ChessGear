@@ -1,15 +1,17 @@
 package com.chessgear.server;
 
-import com.chessgear.data.*;
-import com.chessgear.game.Game;
+import com.chessgear.data.DatabaseServiceTestTool;
+import com.chessgear.data.FileStorageService;
+import com.chessgear.data.GameTreeNode;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
+import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -67,6 +69,9 @@ public class UserTest {
             assertEquals(user.getPassword(),password);
             user.setPassword("new");
 
+            user.addGame(testPGN);
+            assertEquals(user.getGameList().get(0).getPgn(), testPGN);
+
             User fake = new User(username,password);
             assertEquals(fake.getUsername(),username);
             assertEquals(fake.getPassword(),password);
@@ -76,35 +81,16 @@ public class UserTest {
             assertEquals(twin.getUsername(), user.getUsername());
             assertEquals(twin.getPassword(), user.getPassword());
             assertEquals(twin.getGameList().size(), user.getGameList().size());
-            PGNParser pgnParser = new PGNParser(testPGN);
-            GameTreeBuilder gameTreeBuilder = new GameTreeBuilder(pgnParser);
-            user.addGame(testPGN);
-            GameTree gameTree = new GameTree();
-            gameTree.addGame(gameTreeBuilder.getListOfNodes(), username);
-            logger.info(""+fss.getReferecencedDatabaseService().nodeExists(username, 80));
 
-            GameTree test = DatabaseWrapper.getGameTree(username);
-            logger.info(""+test.containsNode(80));
-            logger.info(test.getNodeWithId(80).getBoardState().toFEN());
-            Map<GameTreeNode.NodeProperties, String> maps = fss.getReferecencedDatabaseService().fetchNodeProperty(username, 80);
-            logger.info(maps.get(GameTreeNode.NodeProperties.BOARDSTATE));
+            HashMap<Integer, GameTreeNode> nodeMapping = user.getGameTree().getNodeMapping();
+            HashMap<Integer, GameTreeNode> twinMapping = twin.getGameTree().getNodeMapping();
 
-            //logger.info("children are " + fss.getReferecencedDatabaseService().childrenFrom(username , 0));
-            Game game = new Game(pgnParser);
-            
-            user.addGame(testPGNN);
-            test = DatabaseWrapper.getGameTree(username);
-            logger.info(""+test.containsNode(150));
-            assertEquals(user.getGameList().get(0).getPgn(),game.getPgn());
-            assertEquals(user.getGameList().get(0).getBlackPlayerName(), game.getBlackPlayerName());
+            for (Integer i : nodeMapping.keySet()) {
 
-            assertEquals(user.getGameTree().getRoot().getBoardState().toFEN(),gameTree.getRoot().getBoardState().toFEN());
-            //GameTree dbtest = GameTreeBuilder.constructGameTree(username);
-            //logger.info(""+dbtest.containsNode(0));
-            user.setGameTree(gameTree);
-            assertEquals(user.getGameTree(),gameTree);
+                assertTrue(twinMapping.containsKey(i));
+                assertTrue(nodeMapping.get(i).equals(twinMapping.get(i)));
 
-            assertEquals(User.Property.PASSWORD.toString(), "PASSWORD");
+            }
 
             DatabaseServiceTestTool.destroyFileStorageService(fss);
             

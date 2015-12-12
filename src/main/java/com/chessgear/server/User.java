@@ -179,7 +179,7 @@ public class User {
             throw new IllegalArgumentException("user already exists");
         
         User user = new User(username, password);
-        DatabaseWrapper.addUser(user);
+        DatabaseWrapper.getInstance().addUser(user);
         return user;
     }
     
@@ -202,7 +202,7 @@ public class User {
         toReturn.password = db.fetchUserProperties(username).get(Property.PASSWORD);
         
         // now we reconstruct its gametree
-        toReturn.gameTree = DatabaseWrapper.getGameTree(username);
+        toReturn.gameTree = DatabaseWrapper.getInstance().getGameTree(username);
         
         //we reconstruct the list of all it's games
         for(String filename: fss.getFilesFor(username)){
