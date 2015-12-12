@@ -193,6 +193,8 @@ public class User {
      * @return A handy representation of an User.
      */
     public static User getUser(String username){
+        System.out.println("Building user " + username + " from database!");
+
         if(!db.userExists(username))
             throw new IllegalArgumentException("user does not exist in the database");
         

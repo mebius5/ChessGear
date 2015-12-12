@@ -55,6 +55,7 @@ public class GameTree {
         OsUtils osUtils = new OsUtils();
         Engine engine = new Engine(osUtils.getBinaryLocation());
         this.root.incrementMultiplicity();
+        DatabaseWrapper.setMultiplicity(username, this.root.getId(), this.root.getMultiplicity());
 
         GameTreeNode currentNode = this.root;
         for (int c = 1; c < gameTreeNodes.size(); c++) {
@@ -64,6 +65,7 @@ public class GameTree {
             for (GameTreeNode n : currentChildren) {
                 if (n.getBoardState().equals(candidateChildNode.getBoardState())) {
                     n.incrementMultiplicity();
+                    DatabaseWrapper.setMultiplicity(username, n.getId(), n.getMultiplicity());
                     currentNode = n;
                     childFound = true;
                     break;
@@ -78,12 +80,11 @@ public class GameTree {
                 candidateChildNode.setEngineResult(engineResult);
                 this.nodeMapping.put(this.nodeIdCounter++, candidateChildNode);
                 currentNode.addChild(candidateChildNode);
+                DatabaseWrapper.addChild(username, currentNode, candidateChildNode);
                 currentNode = candidateChildNode;
             }
         }
         engine.terminateEngine();
-        
-        //TODO: make the update in the database.
     }
 
     /**

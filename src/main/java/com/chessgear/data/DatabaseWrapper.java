@@ -4,6 +4,8 @@ import com.chessgear.analysis.EngineResult;
 import com.chessgear.game.BoardState;
 import com.chessgear.server.User;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -90,7 +92,50 @@ public class DatabaseWrapper {
      * @return GameTree of user.
      */
     public static GameTree getGameTree(String username) {
-        return null; // TODO
+        // Initialize tree, mapping
+        GameTree tree = new GameTree();
+        HashMap<Integer, GameTreeNode> nodeMapping = new HashMap<>();
+
+        // Get the root node, and put it into the mapping.
+        GameTreeNode root = getGameTreeNode(username, service.getRoot(username));
+        tree.setRoot(root);
+        nodeMapping.put(root.getId(), root);
+
+        // Recursively set the children
+        setChildren(root, username, nodeMapping);
+        tree.setNodeMapping(nodeMapping);
+
+        // Sets the node id counter to 1 more than the highest id in the mapping.
+        int max = 0;
+        for (Integer i : nodeMapping.keySet()) {
+            if (i > max) max = i;
+        }
+        tree.setNodeIdCounter(max + 1);
+
+        return tree;
+    }
+
+    /**
+     * Recursive method to get children of the current node from the database.
+     * @param currentNode Current node we're getting children for.
+     * @param username User to whom the nodes belong.
+     * @param nodeMapping Nodemapping which we're adding to.
+     */
+    private static void setChildren(GameTreeNode currentNode, String username, HashMap<Integer, GameTreeNode> nodeMapping) {
+        // Gets the list of child ids.
+        List<Integer> children = service.childrenFrom(username, currentNode.getId());
+
+        // For each child:
+        for (Integer i : children) {
+            // Get the node, and add it as a child of the current node.
+            GameTreeNode newNode = getGameTreeNode(username, i);
+            currentNode.addChild(newNode);
+            // Put it into the node mapping.
+            nodeMapping.put(newNode.getId(), newNode);
+
+            // Call for all its children.
+            setChildren(newNode, username, nodeMapping);
+        }
     }
 
 }

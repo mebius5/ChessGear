@@ -273,7 +273,7 @@ public class GameTreeNode {
             } else {
                 this.name = null;
             }
-            if (node.getEngineResult() != null) {
+            if (node.getEngineResult() != null && node.getLastMoveMade() != null) {
                 this.eval = node.getEngineResult().getCp() / 100;
                 if (node.getLastMoveMade().getWhoMoved().equals(Player.WHITE)) eval = -eval;
             } else {
