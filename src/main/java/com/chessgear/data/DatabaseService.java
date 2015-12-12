@@ -412,7 +412,7 @@ public class DatabaseService {
         //now we can execute the command
         cmd = "INSERT INTO ParentOf Values('"+username+"', "+parentId+", "+childId+")";
         conn.createQuery(cmd).executeUpdate();
-        conn.close();   
+        conn.close();
     }
 
     /**
@@ -425,10 +425,8 @@ public class DatabaseService {
     public int getRoot(String username){
         if(!userExists(username))
             throw new IllegalArgumentException("Use does not exists in the database");
-        
-        
+
         String cmd = "SELECT rootNodeId FROM Tree as T where T.username = '"+username+"'";
-        
         
         Connection conn = database.open();
         List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
