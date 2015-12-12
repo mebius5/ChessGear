@@ -5,9 +5,89 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/Bootstrap.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/Bootstrap.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTree.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTree.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/server/User.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/server/User.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseServiceNodeTest.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseServiceTestTool.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseServiceTreeTest.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseWrapper.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/EngineResult.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/EngineResultTest.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/EngineTest.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/FileStorageService.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/FileStorageServiceTest.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTreeBuilder.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/GameTreeBuilderTest.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTreeNode.NodeProperties.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/GameTreeNodeJsonTest.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/GameTreeNodeTest.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/PGNParseExceptionTest.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/ServerTest.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/javadoc/UserTest.html" />
+      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\javadoc\com\chessgear\engine\package-frame.html" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\javadoc\com\chessgear\engine\package-summary.html" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\javadoc\com\chessgear\engine\package-tree.html" afterPath="" />
+      <change type="MOVED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\javadoc\DatabaseServiceRelationshipTest.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseServiceRelationshipTest.html" />
+      <change type="MOVED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\javadoc\DatabaseServiceUserTest.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseServiceUserTest.html" />
+      <change type="MOVED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\javadoc\com\chessgear\data\TreeNode.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/OsUtils.html" />
+      <change type="MOVED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\javadoc\com\chessgear\engine\Engine.html" afterPath="$PROJECT_DIR$/javadoc/OsUtilsTest.html" />
+      <change type="MOVED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\javadoc\com\chessgear\server\ChessGearServer.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/Server.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/BoardState.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/BoardState.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/BoardStateTest.html" afterPath="$PROJECT_DIR$/javadoc/BoardStateTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/Bootstrap.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/Bootstrap.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseService.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseService.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/Engine.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/Engine.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/FileStorageService.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/FileStorageService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Game.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Game.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/GameTest.html" afterPath="$PROJECT_DIR$/javadoc/GameTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTreeNode.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTreeNode.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/GameTreeTest.html" afterPath="$PROJECT_DIR$/javadoc/GameTreeTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Move.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Move.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/MoveTest.html" afterPath="$PROJECT_DIR$/javadoc/MoveTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParseException.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParseException.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/PGNParseTest.html" afterPath="$PROJECT_DIR$/javadoc/PGNParseTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParser.Tag.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParser.Tag.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParser.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParser.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Piece.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Piece.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/PieceTest.html" afterPath="$PROJECT_DIR$/javadoc/PieceTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/PieceType.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/PieceType.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/PieceTypeTest.html" afterPath="$PROJECT_DIR$/javadoc/PieceTypeTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Player.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Player.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/PlayerTest.html" afterPath="$PROJECT_DIR$/javadoc/PlayerTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Result.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Result.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/ResultTest.html" afterPath="$PROJECT_DIR$/javadoc/ResultTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Square.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Square.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/SquareTest.html" afterPath="$PROJECT_DIR$/javadoc/SquareTest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/server/User.Property.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/User.Property.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/server/User.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/User.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/allclasses-frame.html" afterPath="$PROJECT_DIR$/javadoc/allclasses-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/allclasses-noframe.html" afterPath="$PROJECT_DIR$/javadoc/allclasses-noframe.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/constant-values.html" afterPath="$PROJECT_DIR$/javadoc/constant-values.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/deprecated-list.html" afterPath="$PROJECT_DIR$/javadoc/deprecated-list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/help-doc.html" afterPath="$PROJECT_DIR$/javadoc/help-doc.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-all.html" afterPath="$PROJECT_DIR$/javadoc/index-all.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index.html" afterPath="$PROJECT_DIR$/javadoc/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/overview-frame.html" afterPath="$PROJECT_DIR$/javadoc/overview-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/overview-summary.html" afterPath="$PROJECT_DIR$/javadoc/overview-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/overview-tree.html" afterPath="$PROJECT_DIR$/javadoc/overview-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-frame.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-summary.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-tree.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/serialized-form.html" afterPath="$PROJECT_DIR$/javadoc/serialized-form.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ChessGear.iws" />
@@ -75,11 +155,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Bootstrap.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Bootstrap.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/Bootstrap.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.1264367">
+            <state vertical-scroll-proportion="37.517242">
               <caret line="100" column="0" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FileStorageService.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/FileStorageService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.4263323">
+              <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -162,7 +252,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/game/Result.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/chessgear/data/FileStorageServiceTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/PGNParser.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/FileStorageService.java" />
         <option value="$PROJECT_DIR$/src/test/java/UserTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/DatabaseSandboxTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/game/Move.java" />
@@ -180,6 +269,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/server/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTree.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/Bootstrap.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/FileStorageService.java" />
       </list>
     </option>
   </component>
@@ -302,286 +392,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="html" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="html" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="html" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="chessgear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="chessgear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="chessgear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="chessgear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ChessGear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="chessgear" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="analysis" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -947,12 +757,6 @@
       <option name="number" value="Default" />
       <updated>1443206600718</updated>
     </task>
-    <task id="LOCAL-00060" summary="Updating Bootstrap">
-      <created>1448911344618</created>
-      <option name="number" value="00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1448911344618</updated>
-    </task>
     <task id="LOCAL-00061" summary="Made changes to GameTree.java, added to GameTreeTest.java, made changes to GameTreeNode.java, added GameTreeNodeTest.java">
       <created>1448953855943</created>
       <option name="number" value="00061" />
@@ -1241,7 +1045,13 @@
       <option name="project" value="LOCAL" />
       <updated>1449931635876</updated>
     </task>
-    <option name="localTasksCounter" value="109" />
+    <task id="LOCAL-00109" summary="Fixed user : removed duplicate game import code.">
+      <created>1449932498618</created>
+      <option name="number" value="00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1449932498619</updated>
+    </task>
+    <option name="localTasksCounter" value="110" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1287,7 +1097,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32540542" sideWeight="0.49394855" order="6" side_tool="false" content_ui="tabs" />
@@ -1300,8 +1110,9 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2792208" sideWeight="0.8768657" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32359308" sideWeight="0.4969743" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18869936" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18869936" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31926408" sideWeight="0.48667377" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962178" sideWeight="0.49346405" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1314,7 +1125,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25750396" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24626866" sideWeight="0.50653595" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1329,7 +1139,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed user registration." />
     <MESSAGE value="Writing no database integration back-end." />
     <MESSAGE value="No database front-end, basic functionality complete." />
     <MESSAGE value="Added evals." />
@@ -1354,7 +1163,8 @@
     <MESSAGE value="Front-end updates. Asynchronous update of board state. Cleaning up javascript." />
     <MESSAGE value="Commenting." />
     <MESSAGE value="Removal of dead code." />
-    <option name="LAST_COMMIT_MESSAGE" value="Removal of dead code." />
+    <MESSAGE value="Fixed user : removed duplicate game import code." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed user : removed duplicate game import code." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1657,6 +1467,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="3.19933">
           <caret line="162" column="0" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1690,14 +1501,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/FileStorageService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.018973215">
-          <caret line="167" column="46" selection-start-line="167" selection-start-column="46" selection-end-line="167" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1756,8 +1559,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/Bootstrap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.1264367">
+        <state vertical-scroll-proportion="37.517242">
           <caret line="100" column="0" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/FileStorageService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4263323">
+          <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
           <folding />
         </state>
       </provider>

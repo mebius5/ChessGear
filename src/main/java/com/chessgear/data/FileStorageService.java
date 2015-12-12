@@ -177,8 +177,6 @@ public class FileStorageService {
      * 
      * @param username The name of the user
      * @param fileName The name of the file to store
-     * 
-     * @throws Exception throws exception if error occurs during removeFile
      * @throws IllegalArgumentException if the user or the file does not exists
      * @throws IOException if there was a problem while removing the file
      */
