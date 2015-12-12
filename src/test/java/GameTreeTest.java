@@ -2,13 +2,11 @@
  * Created by GradyXiao on 10/24/15.
  * JUnit Test for GameTree.java
  */
-import com.chessgear.data.GameTree;
-import com.chessgear.data.GameTreeBuilder;
-import com.chessgear.data.GameTreeNode;
-import com.chessgear.data.PGNParser;
+import com.chessgear.data.*;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.PieceType;
 import com.chessgear.game.Player;
+import com.chessgear.server.User;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -56,15 +54,22 @@ public class GameTreeTest {
     @Test
     public void testGameTree() {
         try {
+
+            FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
+            DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(fss.getReferecencedDatabaseService());
+            DatabaseServiceTestTool.changeGetInstanceOfInFileStorageServiceClass(fss);
+
             //Tests GameTree() and getRoot()
             GameTree gameTree = new GameTree(); //Tests GameTree constructor
             assertEquals(gameTree.getRoot(),GameTreeNode.rootNode(0));
 
             //Tests setNodeIdCounter()
             gameTree.setNodeIdCounter(8);
+
             String username = "nothing";
-            gameTree.addGame(gameTreeNodes, username);
-            gameTree.addGame(gameTreeNodes, username);
+            User user = User.registerNewUser("Nothing","Nothing");
+            gameTree.addGame(gameTreeNodes, user.getUsername());
+            gameTree.addGame(gameTreeNodes, user.getUsername());
             assertEquals(gameTree.getRoot().getMultiplicity(),2);
 
             BoardState startingBoardState = gameTree.getRoot().getBoardState();
@@ -91,6 +96,11 @@ public class GameTreeTest {
             //Hash map of gameTree should only have 3 in it, so 0 should return false
             assertTrue(gameTree.containsNode(3));
             assertFalse(gameTree.containsNode(0));
+
+            DatabaseServiceTestTool.destroyFileStorageService(fss);
+
+            DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(null);
+            DatabaseServiceTestTool.changeGetInstanceOfInFileStorageServiceClass(null);
 
         } catch (Exception e) {
             e.printStackTrace();
