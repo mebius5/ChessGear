@@ -7,10 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * User object, with no database integration.
@@ -98,7 +95,7 @@ public class User {
      */
     public void addGame(String pgn){
         //make a mokeupname
-        String name = username + "_" + System.currentTimeMillis() + ".pgn";
+        String name = username + "_" + UUID.randomUUID().toString() + ".pgn";
         addGame(pgn, name);
     }
 
