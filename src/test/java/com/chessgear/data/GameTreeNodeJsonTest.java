@@ -39,7 +39,8 @@ public class GameTreeNodeJsonTest {
 
     @Test
     public void testChildrenJson() {
-        assertEquals(testNode.getChildrenJson(), "[{\"id\":1,\"name\":\"1. e2e4\",\"eval\":null},{\"id\":2,\"name\":\"1. d2d4\",\"eval\":null},{\"id\":3,\"name\":\"1. g1f3\",\"eval\":null}]");
+        assertEquals(testNode.getChildrenJson(), "[{\"id\":1,\"name\":\"1. e2e4\",\"eval\":null,\"multiplicity\":1},{\"id\":2,\"name\":\"1. d2d4\",\"eval\":null,\"multiplicity\":1}," +
+                "{\"id\":3,\"name\":\"1. g1f3\",\"eval\":null,\"multiplicity\":1}]");
     }
 
     @Test
