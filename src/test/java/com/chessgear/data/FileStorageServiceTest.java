@@ -1,14 +1,12 @@
 package com.chessgear.data;
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
-import org.junit.Test;
-
-import com.chessgear.data.FileStorageService;
+import static org.junit.Assert.*;
 
 /*
  *	Author:      Gilbert Maystre
@@ -219,6 +217,8 @@ public class FileStorageServiceTest {
             fail();
         } catch (IllegalArgumentException e2) {
            
+        } catch (IOException e) {
+
         }
         
         DatabaseServiceTestTool.destroyFileStorageService(fss);
@@ -233,6 +233,8 @@ public class FileStorageServiceTest {
             fail();
         } catch (IllegalArgumentException e2) {
            
+        } catch (IOException e) {
+
         }
         
         DatabaseServiceTestTool.destroyFileStorageService(fss);

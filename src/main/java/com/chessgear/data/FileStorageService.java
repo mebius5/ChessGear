@@ -5,15 +5,7 @@
 
 package com.chessgear.data;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.nio.file.Files;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -189,7 +181,7 @@ public class FileStorageService {
      * @throws IllegalArgumentException if the user or the file does not exists
      * @throws IOException if there was a problem while removing the file
      */
-    public void removeFile(String username, String fileName) throws Exception{
+    public void removeFile(String username, String fileName) throws IllegalArgumentException, IOException{
         if(!db.userExists(username))
             throw new IllegalArgumentException("User is not in database");
 
