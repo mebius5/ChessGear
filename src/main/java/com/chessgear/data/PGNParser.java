@@ -77,6 +77,7 @@ public class PGNParser {
             List<Tag> tags = parseTags(this.pgn);
 
             if(tags.size()<=3){
+                System.out.println(this.pgn);
                 throw new PGNParseException("PGN string must have at least tags for blackPlayerName, whitePlayerName, and result.");
             }
 

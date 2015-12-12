@@ -163,9 +163,10 @@ public class FileStorageService {
         StringBuilder sb = new StringBuilder();
 
         String line;
-        while ((line = br.readLine()) != null) 
+        while ((line = br.readLine()) != null) {
             sb.append(line);
-        
+            sb.append(System.lineSeparator());
+        }
         br.close();
 
         return sb.toString();
