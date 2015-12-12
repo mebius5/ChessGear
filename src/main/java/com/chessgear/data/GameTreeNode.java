@@ -236,6 +236,7 @@ public class GameTreeNode {
         private String boardstate;
         private List<ChildNodeJson> children;
         private Integer previousNodeId;
+        private String bestLine;
         private int multiplicity;
 
         GameTreeNodeJson(GameTreeNode node) {
@@ -250,6 +251,9 @@ public class GameTreeNode {
                 this.previousNodeId = null;
             }
             this.multiplicity = node.getMultiplicity();
+            if (node.getEngineResult() != null) {
+                this.bestLine = node.getEngineResult().getPv();
+            }
         }
     }
 

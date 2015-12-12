@@ -54,6 +54,12 @@ function getNodeAndDisplayBoard(id, username) {
         back = parsedResponse.previousNodeId;
         displayBoard(parsedResponse.boardstate);
         displayChildren(parsedResponse);
+
+        if (parsedResponse.bestLine != null) {
+            $("#best-line").val(parsedResponse.bestLine);
+        } else {
+            $("#best-line").val("");
+        }
     });
 }
 
@@ -81,7 +87,11 @@ function displayBoard(boardState) {
                 var fileChar = numberToFile(currentFile);
                 var imgSrc = getPieceFromChar(currentChar);
                 var square = "#square-" + fileChar + currentRow;
-                var img = "<img src=\"img/" + imgSrc +"\">";
+                if (toggle == -1) {
+                    var img = "<img src=\"img/" + imgSrc +"\" style=\"transform : rotate(-180deg)\">";
+                } else {
+                    var img = "<img src=\"img/" + imgSrc +"\">";
+                }
                 $(square).html(img);
                 currentFile++;
             } else {
