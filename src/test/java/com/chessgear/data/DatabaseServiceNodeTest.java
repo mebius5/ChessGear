@@ -87,6 +87,8 @@ public class DatabaseServiceNodeTest {
         db.addNode("gogol", 2, Collections.emptyMap());
         assertTrue(db.fetchNodeProperty("gogol", 2).get(NodeProperties.CP) == null);
 
+        db.addNode("gogol", 0, prop);
+        assertFalse(db.hasRoot("gogol"));
         DatabaseServiceTestTool.destroyDatabase(db);
     }
     

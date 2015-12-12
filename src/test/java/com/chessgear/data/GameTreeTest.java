@@ -88,10 +88,11 @@ public class GameTreeTest {
             assertEquals(gameTree.getNodeWithId(8).getLastMoveMade().getPieceType(), PieceType.KNIGHT);
             assertEquals(gameTree.getNodeWithId(8).getLastMoveMade().getDestination().toString(), "f3");
 
-            //Test the setNodeMapping()
+            //Test the setNodeMapping() and getNodeMapping()
             HashMap<Integer, GameTreeNode> hashMap = new HashMap<>();
             hashMap.put(3,gameTreeNodes.get(3));
             gameTree.setNodeMapping(hashMap);
+            assertEquals(gameTree.getNodeMapping(),hashMap);
 
             //Hash map of gameTree should only have 3 in it, so 0 should return false
             assertTrue(gameTree.containsNode(3));

@@ -32,8 +32,14 @@ public class User {
 
     //Logger
     private static final Logger logger = LoggerFactory.getLogger(User.class);
-    
+
+
     //in the end, only this constructor should remain
+
+    /***
+     * Private constructor to create a user
+     * @param username the username of the user
+     */
     private User(String username){
         this.username = username;
         this.games = new ArrayList<>();
@@ -106,7 +112,7 @@ public class User {
         //first, we store safely the file
         try {
             fss.addFile(username, fileName, pgn);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             logger.error("Was not able to store file " + fileName + " for user " + username);
         }
@@ -133,12 +139,14 @@ public class User {
      * DEPRECATED: modify directly the GameTree, not it's reference!
      *
      * Sets the gameTree to tree
-     * @param tree the gameTree to be set to
+     * //@param //tree the gameTree to be set to
      */
     @Deprecated
+    /***
     public void setGameTree(GameTree tree) {
         this.gameTree = tree;
     }
+     ***/
     
     /**
      * Sets the password of an user, makes the necessary calls to update the database.
@@ -192,7 +200,7 @@ public class User {
      * @return A handy representation of an User.
      */
     public static User getUser(String username){
-        System.out.println("Building user " + username + " from database!");
+        logger.info("Building user " + username + " from database!");
 
         if(!db.userExists(username))
             throw new IllegalArgumentException("user does not exist in the database");

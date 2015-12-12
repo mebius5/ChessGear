@@ -40,12 +40,15 @@ public class DatabaseServiceTestTool {
         //check if the data folder exists
         File general = new File(FileStorageService.DATA_DIRECTORY_NAME);
         if(!general.exists())
-            general.mkdir();
+            if(!general.mkdir()){
+                logger.error("General directory "+general.getName()+" cannot be created.");
+            }
         
         File toDel = new File(general.getPath() + File.separator + prefix + DatabaseService.CANONICAL_DB_NAME);
         if(toDel.exists()){
-            toDel.delete();
-
+            if(!toDel.delete()){
+                logger.error("File "+toDel.getName()+" cannot be deleted.");
+            }
             logger.info("Deleted " + toDel.getName() + " from previous test run");
         }        
     }
@@ -54,7 +57,9 @@ public class DatabaseServiceTestTool {
         //check if the data folder exists
         File general = new File(FileStorageService.DATA_DIRECTORY_NAME);
         if(!general.exists())
-            general.mkdir();
+            if(!general.mkdir()){
+                logger.error("General directory "+general.getName()+" cannot be created.");
+            }
         
         File toDel = new File(FileStorageService.DATA_DIRECTORY_NAME + File.separator + 
                 FileStorageService.FILE_DIRECTORY_NAME + suffix);
@@ -199,10 +204,7 @@ public class DatabaseServiceTestTool {
             fail();
         }
     }
-    
-    
-    
-    
+    /***
     
     @Deprecated
     public static void changeDBinUserClass(DatabaseService replaceWith){
@@ -229,5 +231,5 @@ public class DatabaseServiceTestTool {
             fail();
         }
     }
-
+***/
 }

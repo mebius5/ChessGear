@@ -3,11 +3,14 @@ package com.chessgear.server;
 import com.chessgear.data.DatabaseServiceTestTool;
 import com.chessgear.data.FileStorageService;
 import com.chessgear.data.GameTreeNode;
+import com.chessgear.data.PGNParser;
+import com.chessgear.game.Game;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
@@ -58,7 +61,7 @@ public class UserTest {
     public void testUser() {
         try {            
             String password = "abcd1234";
-            String username = "Bob";
+            String username = "Test1234";
 
             FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
             DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(fss.getReferecencedDatabaseService());
@@ -92,8 +95,21 @@ public class UserTest {
 
             }
 
+            Game game = new Game(new PGNParser(testPGN));
+            assertEquals(user.getGameById(0).getPgn(),game.getPgn());
+
+            int id = 0;
+            String result = user.getGameById(id).getResult().toString();
+            String whitePlayerName = user.getGameById(id).getWhitePlayerName();
+            String blackPlayerName = user.getGameById(id).getBlackPlayerName();
+            String date = user.getGameById(0).getDateImported().toString();
+            assertEquals(user.getGamesJson(),
+                    "{\"games\":[{\"name\":\""+result+" - "+whitePlayerName+
+                    " vs "+blackPlayerName+", "+date+"\",\"id\":"+id+"}]}"
+            );
+
+
             DatabaseServiceTestTool.destroyFileStorageService(fss);
-            
             DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(null);
             DatabaseServiceTestTool.changeGetInstanceOfInFileStorageServiceClass(null);
         } catch (Exception e){
