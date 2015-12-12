@@ -1,5 +1,6 @@
 package com.chessgear.data;
 
+import com.chessgear.analysis.EngineResult;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * GameTree builder helper class.
