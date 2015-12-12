@@ -93,7 +93,6 @@ public class User {
     public void addGame(String pgn){
         //make a mokeupname
         String name = username + "_" + System.currentTimeMillis() + ".pgn";
-        
         addGame(pgn, name);
     }
 

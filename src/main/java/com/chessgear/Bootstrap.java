@@ -1,9 +1,7 @@
 package com.chessgear;
 
 import com.chessgear.data.GameTree;
-import com.chessgear.data.GameTreeBuilder;
 import com.chessgear.data.GameTreeNode;
-import com.chessgear.data.PGNParser;
 import com.chessgear.server.Server;
 import com.chessgear.server.User;
 import com.google.gson.JsonObject;
@@ -100,9 +98,6 @@ public class Bootstrap {
                 // Also add the game to the user's list of games.
                 User currentUser = server.getUser(user);
                 currentUser.addGame(pgn);
-                GameTree currentTree = currentUser.getGameTree();
-                GameTreeBuilder treeBuilder = new GameTreeBuilder(new PGNParser(pgn));
-                currentTree.addGame(treeBuilder.getListOfNodes(), currentUser.getUsername());
                 // Return response
                 response.status(201);
                 JsonObject successResponse = new JsonObject();

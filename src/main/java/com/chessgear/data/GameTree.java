@@ -54,7 +54,9 @@ public class GameTree {
     public void addGame(List<GameTreeNode> gameTreeNodes, String username) throws Exception {
         OsUtils osUtils = new OsUtils();
         Engine engine = new Engine(osUtils.getBinaryLocation());
+        System.out.println("Incrementing root multiplicity from " + this.root.getMultiplicity());
         this.root.incrementMultiplicity();
+        System.out.println("to " + this.root.getMultiplicity());
         DatabaseWrapper.setMultiplicity(username, this.root.getId(), this.root.getMultiplicity());
 
         GameTreeNode currentNode = this.root;
