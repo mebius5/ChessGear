@@ -3,7 +3,6 @@ package com.chessgear.data;
 import com.chessgear.analysis.EngineResult;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
-import com.chessgear.server.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,33 +53,8 @@ public class GameTreeBuilder {
      * @return the reconstructed gameTree object from database
      */
     public static GameTree constructGameTree(String username){
-        DatabaseService db = DatabaseService.getInstanceOf();
-        if (!db.userExists(username))
-            return null;
-        int rootid = db.getRoot(username);
-        //getting information about the root node
-        Map<GameTreeNode.NodeProperties, String> map;
-        String board;
-        map = db.fetchNodeProperty(username, rootid);
-        board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
-        int mult = Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
-
-        //creating the root node
-        GameTreeNode root = new GameTreeNode(rootid);
-        BoardState boardstate;
-        boardstate = new BoardState(board);
-        root.setMultiplicity(mult);
-        root.setBoardState(boardstate);
-        HashMap<Integer, GameTreeNode> nodemapping = new HashMap<>();
-        nodemapping.put(root.getId(), root);
-        //recursively creating the tree
-        int NodeCount = makeTree(root, username, nodemapping);
-        GameTree tree = new GameTree();
-        tree.setNodeMapping(nodemapping);
-        tree.setRoot(root);
-        tree.setNodeIdCounter(++NodeCount);
-        logger.info(""+NodeCount);
-        return tree;
+        // TODO RAN
+        return null;
     }
 
     /**

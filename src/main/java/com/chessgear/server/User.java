@@ -129,8 +129,7 @@ public class User {
         } catch (PGNParseException e) {
             e.printStackTrace();
             logger.error("Was not able to parse the file "+ fileName + " for user "+username);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             //TODO: check this, really ugly Exception.
             e.printStackTrace();
         } 
