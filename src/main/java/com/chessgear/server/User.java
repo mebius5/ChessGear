@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class User {
 
-    private GameTree gameTree;    //in the end, this field should be final
+    private GameTree gameTree;    // in the end, this field should be final
     private final List<Game> games;
     private final String username;
     
