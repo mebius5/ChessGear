@@ -65,7 +65,7 @@ public class Game {
 
     /**
      * Creates a new game from pgn parser.
-     * @param parser
+     * @param parser the PGNParser with the requested information from parsing the PGN string
      */
     public Game(PGNParser parser) {
         this(parser.getWhitePlayerName(), parser.getBlackPlayerName(), new Date(), parser.getPGN(), parser.getResult(), nextGameId++);

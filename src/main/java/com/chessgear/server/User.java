@@ -4,6 +4,8 @@ import com.chessgear.data.*;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.Game;
 import com.google.gson.GsonBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,6 +29,9 @@ public class User {
     //those two field are just references to to shorten the code.
     private static DatabaseService db = DatabaseService.getInstanceOf();
     private static FileStorageService fss = FileStorageService.getInstanceOf();
+
+    //Logger
+    private static final Logger logger = LoggerFactory.getLogger(User.class);
     
     //in the end, only this constructor should remain
     private User(String username){
@@ -85,7 +90,7 @@ public class User {
     /**
      * Parses and adds a game in pgn form. The String will be stored as a file. If you want to choose the 
      * name, please use the method addGame(String pgn, String fileName). The default name is 
-     * username_<current time>.pgn
+     * username_&lt;current time&gt;.pgn
      * 
      * @param pgn A PGN representing the game
      */
@@ -108,7 +113,7 @@ public class User {
             fss.addFile(username, fileName, pgn);
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Was not able to store file " + fileName + " for user " + username);
+            logger.error("Was not able to store file " + fileName + " for user " + username);
         }
         
         //now we add the game to the list of game and to the tree
@@ -122,7 +127,7 @@ public class User {
             games.add(newGame);
         } catch (PGNParseException e) {
             e.printStackTrace();
-            System.err.println("Was not able to parse the file "+ fileName + " for user "+username);
+            logger.error("Was not able to parse the file "+ fileName + " for user "+username);
         }
         catch (Exception e) {
             //TODO: check this, really ugly Exception.
@@ -229,10 +234,10 @@ public class User {
                 toReturn.games.add(new Game(new PGNParser(fileContent)));
             } catch (IOException e) {
                 e.printStackTrace();
-                System.err.println("Was not able to fetch content of file "+filename+" of user "+username);
+                logger.error("Was not able to fetch content of file "+filename+" of user "+username);
             } catch (PGNParseException e) {
                 e.printStackTrace();
-                System.err.println("Was not able to parse the content file "+filename+" of user "+username);
+                logger.error("Was not able to parse the content file "+filename+" of user "+username);
             }
 
         }
@@ -252,7 +257,7 @@ public class User {
 
     /**
      * Gets the Json representation of this.
-     * @return
+     * @return the Json string representation of the games
      */
     public String getGamesJson() {
         return new GsonBuilder().serializeNulls().create().toJson(new UserGamesJson(this));

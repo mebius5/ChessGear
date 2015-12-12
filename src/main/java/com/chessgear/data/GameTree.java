@@ -3,10 +3,13 @@ package com.chessgear.data;
 import com.chessgear.analysis.Engine;
 import com.chessgear.analysis.EngineResult;
 import com.chessgear.analysis.OsUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.crypto.Data;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Game Tree data structure.
@@ -31,6 +34,9 @@ public class GameTree {
      */
     private int nodeIdCounter;
 
+    //Logger
+    private static final Logger logger = LoggerFactory.getLogger(GameTree.class);
+
     /**
      * Initializes a new empty game tree.
      */
@@ -44,6 +50,7 @@ public class GameTree {
     /**
      * Adds a game to the tree.
      * @param gameTreeNodes a list of game tree node
+     * @param username the username of User that will add game to
      * @throws Exception if error occurs while adding a game to gameTree
      */
     public void addGame(List<GameTreeNode> gameTreeNodes, String username) throws Exception {
@@ -55,7 +62,7 @@ public class GameTree {
         try {
             db.updateNodeProperty(username, this.root.getId(), GameTreeNode.NodeProperties.MULTIPLICITY, rootmult.toString());
         } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage());
         }
         GameTreeNode currentNode = this.root;
         for (int c = 1; c < gameTreeNodes.size(); c++) {
@@ -72,7 +79,7 @@ public class GameTree {
                     try {
                         db.updateNodeProperty(username, n.getId(), GameTreeNode.NodeProperties.MULTIPLICITY, multi);
                     } catch (IllegalArgumentException e) {
-                        System.err.println(e.getMessage());
+                        logger.error(e.getMessage());
                     }
                     //.updateNodeProperty();
                     break;
@@ -83,7 +90,7 @@ public class GameTree {
             if (!childFound) {
                 candidateChildNode.setMultiplicity(1);
                 candidateChildNode.setId(this.nodeIdCounter);
-                //System.out.println(candidateChildNode.getBoardState().toFEN());
+                //logger.info(candidateChildNode.getBoardState().toFEN());
                 EngineResult engineResult = engine.analyseFEN(candidateChildNode.getBoardState().toFEN(), 100);
                 candidateChildNode.setEngineResult(engineResult);
                 this.nodeMapping.put(this.nodeIdCounter++, candidateChildNode);
@@ -98,17 +105,17 @@ public class GameTree {
                 props.put(GameTreeNode.NodeProperties.PV, engineResult.getPv());
                 try {
                     db.addNode(username, candidateChildNode.getId(), props);
-                    //System.out.println("added node with ID" + candidateChildNode.getId());
+                    //logger.info("added node with ID" + candidateChildNode.getId());
                 } catch (IllegalArgumentException e) {
                     if(!e.getMessage().equals("Node already exists in database"))
-                        System.err.println(e.getMessage());
+                        logger.error(e.getMessage());
                 }
                 try {
-                    //bSystem.out.println(currentNode.getId() + " and " + candidateChildNode.getId());
+                    //logger.info(currentNode.getId() + " and " + candidateChildNode.getId());
                     db.addChild(username, currentNode.getId(), candidateChildNode.getId());
                 } catch (IllegalArgumentException e) {
-                    if(e.getMessage() != "this child already has a parent!")
-                        System.err.println(e.getMessage());
+                    if(!Objects.equals(e.getMessage(), "this child already has a parent!"))
+                        logger.error(e.getMessage());
                 }
                 currentNode = candidateChildNode;
                 //also update in the database
@@ -135,11 +142,12 @@ public class GameTree {
         return this.root;
     }
 
-    /**
-     * Setting the root
+    /***
+     * Setting the root of the gameTree
+     * @param root GameTreeNode root to be set to
      */
-    public void setRoot(GameTreeNode roo) {
-        root = roo;
+    public void setRoot(GameTreeNode root) {
+        this.root = root;
     }
 
     public void setNodeMapping(HashMap<Integer, GameTreeNode> e) {

@@ -2,15 +2,21 @@ import com.chessgear.data.GameTreeNode;
 import com.chessgear.game.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Ran on 12/4/2015.
+ * Test for GameTreeNodeJson
  */
 public class GameTreeNodeJsonTest {
 
     private GameTreeNode testNode;
+
+    //Logger
+    private static final Logger logger = LoggerFactory.getLogger(GameTreeNodeJsonTest.class);
 
     @Before
     public void initialize() {
@@ -37,6 +43,6 @@ public class GameTreeNodeJsonTest {
 
     @Test
     public void testSelfJson() {
-        System.out.println(testNode.getJson());
+        logger.info(testNode.getJson());
     }
 }

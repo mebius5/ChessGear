@@ -208,7 +208,7 @@ public class GameTreeNode {
 
     /**
      * Accessor for JSON string representation of children.
-     * @return
+     * @return the Json string representation of children
      */
     public String getChildrenJson() {
         List<ChildNodeJson> jsonChildren = new ArrayList<>();
@@ -220,7 +220,7 @@ public class GameTreeNode {
 
     /**
      * Gets the JSON for this node.
-     * @return
+     * @return the Json string representation of this node
      */
     public String getJson() {
         return new GsonBuilder().serializeNulls().create().toJson(new GameTreeNodeJson(this));

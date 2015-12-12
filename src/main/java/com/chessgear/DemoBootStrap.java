@@ -8,6 +8,8 @@ import com.chessgear.data.PGNParser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ import static spark.Spark.*;
 
 /**
  * Created by Ran on 11/12/2015.
+ * Demo for the bootstrap
  */
 public class DemoBootStrap {
 
@@ -25,6 +28,9 @@ public class DemoBootStrap {
     static String sampleGame = "e4 e5 Nf3";
     static String sampleGame2 = "d4 e6";
     static String sampleGame3 = "e4 c5 Nf3";
+
+    //Logger
+    private static final Logger logger = LoggerFactory.getLogger(DemoBootStrap.class);
 
     public static void main(String[] args) {
 
@@ -49,7 +55,7 @@ public class DemoBootStrap {
 
             get("chessgear/api/games/tree/:nodeid", "application/json", (request, response) -> {
                 int nodeId = Integer.parseInt(request.params("nodeid"));
-                System.out.println("Request received for node " + nodeId);
+                logger.info("Request received for node " + nodeId);
 
                 if (tree.containsNode(nodeId)) {
                     GameTreeNode currentNode = tree.getNodeWithId(nodeId);
@@ -83,10 +89,10 @@ public class DemoBootStrap {
 
                     EngineResult engineResult = currentNode.getEngineResult();
                     if (engineResult != null) {
-                        System.out.println("Eval " + engineResult.getCp());
+                        logger.info("Eval " + engineResult.getCp());
                     }
 
-                    System.out.println(result.toString());
+                    logger.info(result.toString());
                     return result.toString();
 
                 } else {
@@ -96,7 +102,7 @@ public class DemoBootStrap {
             });
 
             post("chessgear/api/games/import", "application/json", (request, response) -> {
-                System.out.println("Request received for pgn import: " + request.body());
+                logger.info("Request received for pgn import: " + request.body());
                 JsonParser jsonParser = new JsonParser();
                 JsonElement element = jsonParser.parse(request.body());
                 JsonObject jsonObject = element.getAsJsonObject();

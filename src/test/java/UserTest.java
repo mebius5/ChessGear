@@ -4,15 +4,21 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import com.chessgear.server.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by GradyXiao on 12/4/15.
+ * JUnit Test for User.java
  */
 public class UserTest {
     private String testPGN, testPGNN;
+
+    //Logger
+    private static final Logger logger = LoggerFactory.getLogger(UserTest.class);
 
     @Before
     public void initialize() {
@@ -73,25 +79,26 @@ public class UserTest {
             user.addGame(testPGN);
             GameTree gameTree = new GameTree();
             gameTree.addGame(gameTreeBuilder.getListOfNodes(), username);
-            System.out.println(fss.getReferecencedDatabaseService().nodeExists(username, 80));
-            GameTree test = GameTreeBuilder.constructGameTree(username);
-            System.out.println(test.containsNode(80));
-            System.out.println(test.getNodeWithId(80).getBoardState().toFEN());
-            Map<GameTreeNode.NodeProperties, String> maps = fss.getReferecencedDatabaseService().fetchNodeProperty(username, 80);
-            System.out.println(maps.get(GameTreeNode.NodeProperties.BOARDSTATE));
+            logger.info(""+fss.getReferecencedDatabaseService().nodeExists(username, 80));
 
-            //System.out.println("children are " + fss.getReferecencedDatabaseService().childrenFrom(username , 0));
+            GameTree test = GameTreeBuilder.constructGameTree(username);
+            logger.info(""+test.containsNode(80));
+            logger.info(test.getNodeWithId(80).getBoardState().toFEN());
+            Map<GameTreeNode.NodeProperties, String> maps = fss.getReferecencedDatabaseService().fetchNodeProperty(username, 80);
+            logger.info(maps.get(GameTreeNode.NodeProperties.BOARDSTATE));
+
+            //logger.info("children are " + fss.getReferecencedDatabaseService().childrenFrom(username , 0));
             Game game = new Game(pgnParser);
             
             user.addGame(testPGNN);
             test = GameTreeBuilder.constructGameTree(username);
-            System.out.println(test.containsNode(150));
+            logger.info(""+test.containsNode(150));
             assertEquals(user.getGameList().get(0).getPgn(),game.getPgn());
             assertEquals(user.getGameList().get(0).getBlackPlayerName(), game.getBlackPlayerName());
 
             assertEquals(user.getGameTree().getRoot().getBoardState().toFEN(),gameTree.getRoot().getBoardState().toFEN());
             //GameTree dbtest = GameTreeBuilder.constructGameTree(username);
-            //System.out.println(dbtest.containsNode(0));
+            //logger.info(""+dbtest.containsNode(0));
             user.setGameTree(gameTree);
             assertEquals(user.getGameTree(),gameTree);
 

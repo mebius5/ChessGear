@@ -2,6 +2,8 @@ package com.chessgear.data;
 import com.chessgear.data.DatabaseService;
 import com.chessgear.data.FileStorageService;
 import com.chessgear.server.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -29,7 +31,10 @@ public class DatabaseServiceTestTool {
 
     //small trick: evaluation of tests seems to be concurent, so this is to ensure that all test are independents.
     static int number = 0;
-    static Object lock = new Object();
+    static final Object lock = new Object();
+
+    //Logger
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseServiceTestTool.class);
 
     private static void deleteDatabaseIfExists(String prefix){
         //check if the data folder exists
@@ -41,7 +46,7 @@ public class DatabaseServiceTestTool {
         if(toDel.exists()){
             toDel.delete();
 
-            System.out.println("Deleted " + toDel.getName() + " from previous test run");
+            logger.info("Deleted " + toDel.getName() + " from previous test run");
         }        
     }
     
@@ -55,7 +60,7 @@ public class DatabaseServiceTestTool {
                 FileStorageService.FILE_DIRECTORY_NAME + suffix);
         if(toDel.exists()){
             FileStorageService.deleteRecursively(toDel);
-            System.out.println("Deleted " + toDel.getName() + " from previous test run");
+            logger.info("Deleted " + toDel.getName() + " from previous test run");
         }
     }
     
@@ -67,7 +72,7 @@ public class DatabaseServiceTestTool {
     @SuppressWarnings("unchecked")
     public static FileStorageService createFileStorageService(){        
         //create the prefix to give to the file folder.
-        int ticket = 0;
+        int ticket;
         synchronized(lock){
             ticket = number++;
         }
@@ -119,7 +124,7 @@ public class DatabaseServiceTestTool {
     @SuppressWarnings("unchecked")
     public static DatabaseService createDatabase(boolean fillWithValues){
         //create the prefix to give to the file folder.
-        int ticket = 0;
+        int ticket;
         synchronized(lock){
             ticket = number++;
         }
@@ -143,7 +148,7 @@ public class DatabaseServiceTestTool {
 
         if(fillWithValues){
             for(String address: usernames){
-                HashMap<User.Property, String> attributes = new HashMap<User.Property, String>();
+                HashMap<User.Property, String> attributes = new HashMap<>();
                 for(User.Property p : User.Property.values()){
                     attributes.put(p, address + p);
                     //since we are going to add properties in the future, just make up something easy
@@ -160,19 +165,13 @@ public class DatabaseServiceTestTool {
      * 
      * @param db the database that has to be deleted
      */
-    public static void destroyDatabase(DatabaseService db){
+    public static void destroyDatabase(DatabaseService db) throws IllegalArgumentException {
         try {
             Method m = db.getClass().getDeclaredMethod("eraseDatabaseFile");
             m.setAccessible(true);
             m.invoke(db);
             m.setAccessible(false);
-        } catch (NoSuchMethodException | SecurityException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }

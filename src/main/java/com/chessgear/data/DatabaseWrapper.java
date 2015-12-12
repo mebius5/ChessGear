@@ -2,6 +2,8 @@ package com.chessgear.data;
 
 import com.chessgear.game.BoardState;
 import com.chessgear.server.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.Map;
 
 /**
  * Created by Neil on 12/7/2015.
+ * DatabaseWrapper class that incorporates database with other classes
  */
 public class DatabaseWrapper {
     /**
@@ -19,6 +22,10 @@ public class DatabaseWrapper {
      * the biggest ID
      */
     int bigid;
+
+    //Logger
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseWrapper.class);
+
     /**
      * The database wrapper
      * @param database the database
@@ -48,7 +55,7 @@ public class DatabaseWrapper {
         try {
             mult = Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
         } catch (NumberFormatException e) {
-            System.err.println("Error Fetching");
+            logger.error("Error Fetching");
             mult = 1;
         }
         GameTreeNode root = new GameTreeNode(rootid);
@@ -75,7 +82,7 @@ public class DatabaseWrapper {
     public HashMap<Integer, GameTreeNode> makeTree(GameTreeNode base, String email) {
         List<Integer> children;
         HashMap<Integer, GameTreeNode> nodemapping = new HashMap<>();
-        System.out.println("hey");
+        logger.info("hey");
         try {
             children = db.childrenFrom(email, base.getId());
         } catch(IllegalArgumentException e) {
@@ -85,18 +92,18 @@ public class DatabaseWrapper {
             }
             return nodemapping;
         }
-        
-        for (int i = 0; i < children.size(); i++) {
-            Map<GameTreeNode.NodeProperties, String> map = db.fetchNodeProperty(email, children.get(i));
+
+        for (Integer aChildren : children) {
+            Map<GameTreeNode.NodeProperties, String> map = db.fetchNodeProperty(email, aChildren);
             String board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
             int mult;
             try {
                 mult = Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
             } catch (NumberFormatException e) {
-                System.err.println("Error Fetching");
+                logger.error("Error Fetching");
                 mult = 1;
             }
-            GameTreeNode next = new GameTreeNode(children.get(i));
+            GameTreeNode next = new GameTreeNode(aChildren);
             BoardState boarstate = new BoardState(board);
             next.setMultiplicity(mult);
             next.setBoardState(boarstate);
@@ -123,8 +130,7 @@ public class DatabaseWrapper {
         GameTreeNode curr = gametree.getNodeWithId(id);
         List<GameTreeNode> children = curr.getChildren();
         try {
-            for(int i = 0;i < children.size(); i++) {
-                GameTreeNode temp = children.get(i);
+            for (GameTreeNode temp : children) {
                 storeTree(email, gametree, temp.getId());
             }
         } catch (NullPointerException e) {
@@ -138,26 +144,26 @@ public class DatabaseWrapper {
     }
     /**
      * For deleting the tree
-     * @param email
-     * @param id
-     * @return
+     * @param username username of User that will have tree deleted from
+     * @param id id of the tree
+     * @return 1 if delete successful and 0 if unsuccessful
      */
-    public int deleteTree (String email, int id) {
+    public int deleteTree (String username, int id) {
         List<Integer> children;
         try{
-            children = db.childrenFrom(email, id);
+            children = db.childrenFrom(username, id);
         } catch (IllegalArgumentException e) {
             try {
-                db.deleteNode(email, id);
+                db.deleteNode(username, id);
             } catch (IllegalArgumentException b) {
                 return 0;
             }
             return 0;
         }
-        for (int i = 0; i < children.size(); i++) {
-            deleteTree(email, children.get(i));
+        for (Integer aChildren : children) {
+            deleteTree(username, aChildren);
         }
-        db.deleteNode(email, id);
+        db.deleteNode(username, id);
         return 1;
     }
 }

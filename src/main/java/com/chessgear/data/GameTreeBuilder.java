@@ -4,6 +4,8 @@ import com.chessgear.analysis.EngineResult;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
 import com.chessgear.server.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +24,9 @@ public class GameTreeBuilder {
     private List<GameTreeNode> nodes;
     private int bigid;
 
+    //Logger
+    private static final Logger logger = LoggerFactory.getLogger(GameTreeBuilder.class);
+
     /**
      * Constructor. We pass the list of boardstates encountered over the course of a game, a list of white's half moves, and a list of black's half moves.
      * @param boardStateList List of board states.
@@ -37,6 +42,7 @@ public class GameTreeBuilder {
     /**
      * Constructor with PGN parser as input.
      * @param parser PGN Parser.
+     * @throws Exception if error occurs during building of game tree
      */
     public GameTreeBuilder(PGNParser parser) throws Exception{
         this(parser.getListOfBoardStates(), parser.getWhiteHalfMoves(), parser.getBlackHalfMoves());
@@ -44,8 +50,8 @@ public class GameTreeBuilder {
 
     /**
      * Builds a game tree from a user's gametree stored in the database.
-     * @param username
-     * @return
+     * @param username username of the user requesting constructGameTree
+     * @return the reconstructed gameTree object from database
      */
     public static GameTree constructGameTree(String username){
         DatabaseService db = DatabaseService.getInstanceOf();
@@ -53,7 +59,7 @@ public class GameTreeBuilder {
             return null;
         int rootid = db.getRoot(username);
         //getting information about the root node
-        Map<GameTreeNode.NodeProperties, String> map = new HashMap<>();
+        Map<GameTreeNode.NodeProperties, String> map;
         String board;
         map = db.fetchNodeProperty(username, rootid);
         board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
@@ -73,30 +79,30 @@ public class GameTreeBuilder {
         tree.setNodeMapping(nodemapping);
         tree.setRoot(root);
         tree.setNodeIdCounter(++NodeCount);
-        System.out.println(NodeCount);
+        logger.info(""+NodeCount);
         return tree;
     }
 
     /**
      * Recursive call to create a tree from the database;
-     * @param base
-     * @param email
-     * @return
+     * @param base Base of the tree to recreate from
+     * @param username Username of the request for makeTree
+     * @return integer for the id
      */
-    private static int makeTree(GameTreeNode base, String email, HashMap<Integer, GameTreeNode> nodemap) {
+    private static int makeTree(GameTreeNode base, String username, HashMap<Integer, GameTreeNode> nodemap) {
         DatabaseService db = DatabaseService.getInstanceOf();
         List<Integer> children;
         try {
-            children = db.childrenFrom(email, base.getId());
+            children = db.childrenFrom(username, base.getId());
         } catch(IllegalArgumentException e) {
-            //System.out.println("being called");
+            //logger.error("being called");
             nodemap.put(base.getId(), base);
             return base.getId();
         }
         int bigid = base.getId();
 
-        for (int i = 0; i < children.size(); i++) {
-            Map<GameTreeNode.NodeProperties, String> map = db.fetchNodeProperty(email, children.get(i));
+        for (Integer aChildren : children) {
+            Map<GameTreeNode.NodeProperties, String> map = db.fetchNodeProperty(username, aChildren);
             String board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
             String cp = map.get(GameTreeNode.NodeProperties.CP);
             String pv = map.get(GameTreeNode.NodeProperties.PV);
@@ -110,24 +116,24 @@ public class GameTreeBuilder {
             try {
                 mult = Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
             } catch (NumberFormatException e) {
-                System.err.println("Error Fetching");
+                logger.error("Error Fetching");
                 mult = 1;
             }
-            GameTreeNode next = new GameTreeNode(children.get(i));
+            GameTreeNode next = new GameTreeNode(aChildren);
             BoardState boarstate = new BoardState(board);
             next.setMultiplicity(mult);
             next.setBoardState(boarstate);
             next.setEngineResult(engine);
             base.addChild(next);
             next.setParent(base);
-            int id = makeTree(next, email, nodemap);
+            int id = makeTree(next, username, nodemap);
 
             if (bigid < id)
                 bigid = id;
         }
 
         nodemap.put(base.getId(), base);
-        //System.out.println("added node with id" + base.getId());
+        //logger.info("added node with id" + base.getId());
         if(bigid > base.getId()) {
             return bigid;
         } else {
