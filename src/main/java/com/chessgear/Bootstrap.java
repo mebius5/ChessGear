@@ -174,6 +174,7 @@ public class Bootstrap {
             if (server.userExists(user)) {
                 if (server.getUser(user).getGameById(gameId) != null) {
                     response.status(200);
+                    response.type("text/plain");
                     return server.getUser(user).getGameById(gameId).getPgn();
                 } else {
                     logger.error("Request failed: game not found");
