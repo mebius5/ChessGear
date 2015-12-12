@@ -402,7 +402,7 @@ public class DatabaseService {
         
         
         //check that the child has no parent yet
-        String cmd = "SELECT * FROM ParentOf as P WHERE P.childId = "+childId;
+        String cmd = "SELECT * FROM ParentOf as P WHERE P.childId = " + childId + " and P.username = '" + username + "'";
         Connection conn = database.open();
         List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
         
