@@ -22,7 +22,9 @@ public class GameTreeBuilder {
     private List<Move> whiteHalfMoves;
     private List<Move> blackHalfMoves;
     private List<GameTreeNode> nodes;
-    private int bigid;
+    
+    //A quick reference
+    private static final DatabaseService db = DatabaseService.getInstanceOf();
 
     //Logger
     private static final Logger logger = LoggerFactory.getLogger(GameTreeBuilder.class);
@@ -46,99 +48,6 @@ public class GameTreeBuilder {
      */
     public GameTreeBuilder(PGNParser parser) throws Exception{
         this(parser.getListOfBoardStates(), parser.getWhiteHalfMoves(), parser.getBlackHalfMoves());
-    }
-
-    /**
-     * Builds a game tree from a user's gametree stored in the database.
-     * @param username username of the user requesting constructGameTree
-     * @return the reconstructed gameTree object from database
-     */
-    public static GameTree constructGameTree(String username){
-        DatabaseService db = DatabaseService.getInstanceOf();
-        if (!db.userExists(username))
-            return null;
-        int rootid = db.getRoot(username);
-        //getting information about the root node
-        Map<GameTreeNode.NodeProperties, String> map;
-        String board;
-        map = db.fetchNodeProperty(username, rootid);
-        board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
-        int mult = Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
-
-        //creating the root node
-        GameTreeNode root = new GameTreeNode(rootid);
-        BoardState boardstate;
-        boardstate = new BoardState(board);
-        root.setMultiplicity(mult);
-        root.setBoardState(boardstate);
-        HashMap<Integer, GameTreeNode> nodemapping = new HashMap<>();
-        nodemapping.put(root.getId(), root);
-        //recursively creating the tree
-        int NodeCount = makeTree(root, username, nodemapping);
-        GameTree tree = new GameTree();
-        tree.setNodeMapping(nodemapping);
-        tree.setRoot(root);
-        tree.setNodeIdCounter(++NodeCount);
-        logger.info(""+NodeCount);
-        return tree;
-    }
-
-    /**
-     * Recursive call to create a tree from the database;
-     * @param base Base of the tree to recreate from
-     * @param username Username of the request for makeTree
-     * @return integer for the id
-     */
-    private static int makeTree(GameTreeNode base, String username, HashMap<Integer, GameTreeNode> nodemap) {
-        DatabaseService db = DatabaseService.getInstanceOf();
-        List<Integer> children;
-        try {
-            children = db.childrenFrom(username, base.getId());
-        } catch(IllegalArgumentException e) {
-            //logger.error("being called");
-            nodemap.put(base.getId(), base);
-            return base.getId();
-        }
-        int bigid = base.getId();
-
-        for (Integer aChildren : children) {
-            Map<GameTreeNode.NodeProperties, String> map = db.fetchNodeProperty(username, aChildren);
-            String board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
-            String cp = map.get(GameTreeNode.NodeProperties.CP);
-            String pv = map.get(GameTreeNode.NodeProperties.PV);
-            String bestmove = map.get(GameTreeNode.NodeProperties.BESTMOVE);
-            EngineResult engine = new EngineResult();
-            engine.setBestMove(bestmove);
-            double dcp = Double.parseDouble(cp);
-            engine.setCp(dcp);
-            engine.setPv(pv);
-            int mult;
-            try {
-                mult = Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
-            } catch (NumberFormatException e) {
-                logger.error("Error Fetching");
-                mult = 1;
-            }
-            GameTreeNode next = new GameTreeNode(aChildren);
-            BoardState boarstate = new BoardState(board);
-            next.setMultiplicity(mult);
-            next.setBoardState(boarstate);
-            next.setEngineResult(engine);
-            base.addChild(next);
-            next.setParent(base);
-            int id = makeTree(next, username, nodemap);
-
-            if (bigid < id)
-                bigid = id;
-        }
-
-        nodemap.put(base.getId(), base);
-        //logger.info("added node with id" + base.getId());
-        if(bigid > base.getId()) {
-            return bigid;
-        } else {
-            return bigid;
-        }
     }
 
     /**
@@ -169,4 +78,105 @@ public class GameTreeBuilder {
 
         return this.nodes;
     }
+    
+    /**
+     * Rebuild the GameTree of an user from what was previously stored in the database.
+     * 
+     * @param username The name of the user to whom belongs the GameTree.
+     * 
+     * @return A handy GameTree with no worries for the persistence layer.
+     */
+    public static GameTree fetchGameTreeFromDatabase(String username){
+        if (!db.userExists(username))
+            return null;
+                
+        //First, we have to reconstruct the root of the gameTree
+        int rootid = db.getRoot(username);
+        GameTreeNode root = bakeRootNode(username, rootid);
+        
+        //Second, we need the node mapping
+        HashMap<Integer, GameTreeNode> nodemapping = new HashMap<>();
+        nodemapping.put(root.getId(), root);
+        int biggestID = addChildren(root, username, nodemapping);//this is where the recursion happens
+
+        //Third, we construct the actual tree
+        GameTree toReturn = new GameTree();
+        toReturn.setNodeMapping(nodemapping);
+        toReturn.setRoot(root);
+        toReturn.setNodeIdCounter(biggestID);
+        
+        logger.info("Gilbert's code says: Someone asked to fetch the tree of " + username + " back from the database.");
+        logger.info("Gilbert's code says: also, for now, the biggest id is " + biggestID + ".");
+        return toReturn;
+    }
+    
+    private static int addChildren(GameTreeNode parent, String username, HashMap<Integer, GameTreeNode> nodemap) {
+        //take back all children
+        List<Integer> children = db.childrenFrom(username, parent.getId());
+
+        //put parent in the map
+        nodemap.put(parent.getId(), parent);
+        
+        int globalBiggestId = parent.getId();
+        
+        //put children in the map
+        for(int childrenId : children){            
+            GameTreeNode curr = bakeRegularNode(username, childrenId, parent);
+            int biggestId = addChildren(curr, username, nodemap);
+            
+            //update the bigest id found
+            globalBiggestId = Math.max(globalBiggestId, biggestId);
+        }
+
+        return globalBiggestId;
+    }
+
+    private static GameTreeNode bakeRootNode(String username, int nodeId){
+        GameTreeNode toReturn = new GameTreeNode(nodeId);
+        
+        //fetching back info of the node
+        Map<GameTreeNode.NodeProperties, String> properties = db.fetchNodeProperty(username, nodeId);
+
+        int mult = Integer.parseInt(properties.get(GameTreeNode.NodeProperties.MULTIPLICITY));
+        toReturn.setMultiplicity(mult);
+        
+        BoardState boardState = new BoardState(properties.get(GameTreeNode.NodeProperties.BOARDSTATE));
+        toReturn.setBoardState(boardState);
+        
+        return toReturn;
+
+    }
+    
+    private static GameTreeNode bakeRegularNode(String username, int nodeId, GameTreeNode parent){
+        GameTreeNode toReturn = new GameTreeNode(nodeId);
+        
+        //fetching back info of the node
+        Map<GameTreeNode.NodeProperties, String> properties = db.fetchNodeProperty(username, nodeId);
+
+        int mult = Integer.parseInt(properties.get(GameTreeNode.NodeProperties.MULTIPLICITY));
+        toReturn.setMultiplicity(mult);
+        
+        BoardState boardState = new BoardState(properties.get(GameTreeNode.NodeProperties.BOARDSTATE));
+        toReturn.setBoardState(boardState);
+        
+        //now the engine results
+        EngineResult engine = new EngineResult();
+        
+        String bestmove = properties.get(GameTreeNode.NodeProperties.BESTMOVE);
+        engine.setBestMove(bestmove);
+        
+        double cp = new Double(properties.get(GameTreeNode.NodeProperties.CP));
+        engine.setCp(cp);
+        
+        String pv = properties.get(GameTreeNode.NodeProperties.PV);
+        engine.setPv(pv);
+
+        toReturn.setEngineResult(engine);
+        
+        parent.addChild(toReturn);
+        toReturn.setParent(parent);
+        
+        return toReturn;
+    }
+    
 }

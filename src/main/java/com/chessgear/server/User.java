@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.chessgear.data.GameTreeNode.NodeProperties.*;
+
 /**
  * User object, with no database integration.
  * Created by Ran on 12/4/2015.
@@ -134,18 +136,7 @@ public class User {
             e.printStackTrace();
         } 
     }
-    
-    /***
-     * DEPRECATED: modify directly the GameTree, not it's reference!
-     * 
-     * Sets the gameTree to tree
-     * @param tree the gameTree to be set to
-     */
-    @Deprecated
-    public void setGameTree(GameTree tree) {
-        this.gameTree = tree;
-    }
-    
+        
     /**
      * Sets the password of an user, makes the necessary calls to update the database.
      * 
@@ -186,24 +177,26 @@ public class User {
         
         User toReturn = new User(username);
         toReturn.password = password;
-        toReturn.gameTree = new GameTree();
         
         //now we store all those info in the database.
         HashMap<Property, String> userProp = new HashMap<>();
         userProp.put(Property.PASSWORD, password);
         db.addUser(username, userProp);
 
-        //now the gametree
+        //now we set the initial gametree
         HashMap<GameTreeNode.NodeProperties, String> props = new HashMap<>();
-        props.put(GameTreeNode.NodeProperties.MULTIPLICITY, "1");
+        props.put(MULTIPLICITY, "1");
 
         //put in the initial board state
         BoardState begin = new BoardState();
         begin.setToDefaultPosition();
-        props.put(GameTreeNode.NodeProperties.BOARDSTATE, begin.toFEN());
+        props.put(BOARDSTATE, begin.toFEN());
 
         db.addNode(username, 0, props);
         db.addTree(username, 0);
+        
+        toReturn.gameTree = GameTreeBuilder.fetchGameTreeFromDatabase(username);
+        
         return toReturn;
     }
     
@@ -224,7 +217,7 @@ public class User {
         toReturn.password = db.fetchUserProperties(username).get(Property.PASSWORD);
         
         //now we reconstruct it's gametree
-        toReturn.gameTree = GameTreeBuilder.constructGameTree(username);
+        toReturn.gameTree = GameTreeBuilder.fetchGameTreeFromDatabase(username);
         
         //we reconstruct the list of all it's games
         for(String filename: fss.getFilesFor(username)){

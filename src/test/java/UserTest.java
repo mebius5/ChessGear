@@ -81,7 +81,7 @@ public class UserTest {
             gameTree.addGame(gameTreeBuilder.getListOfNodes(), username);
             logger.info(""+fss.getReferecencedDatabaseService().nodeExists(username, 80));
 
-            GameTree test = GameTreeBuilder.constructGameTree(username);
+            GameTree test = GameTreeBuilder.fetchGameTreeFromDatabase(username);
             logger.info(""+test.containsNode(80));
             logger.info(test.getNodeWithId(80).getBoardState().toFEN());
             Map<GameTreeNode.NodeProperties, String> maps = fss.getReferecencedDatabaseService().fetchNodeProperty(username, 80);
@@ -91,7 +91,7 @@ public class UserTest {
             Game game = new Game(pgnParser);
             
             user.addGame(testPGNN);
-            test = GameTreeBuilder.constructGameTree(username);
+            test = GameTreeBuilder.fetchGameTreeFromDatabase(username);
             logger.info(""+test.containsNode(150));
             assertEquals(user.getGameList().get(0).getPgn(),game.getPgn());
             assertEquals(user.getGameList().get(0).getBlackPlayerName(), game.getBlackPlayerName());
