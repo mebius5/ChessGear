@@ -453,7 +453,7 @@ public class DatabaseService {
         List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
         conn.close();
                 
-        return boh.size() == 0;
+        return boh.size() != 0;
     }
     
     /**

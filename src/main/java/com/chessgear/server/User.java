@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User object, with no database integration.
@@ -251,9 +252,14 @@ public class User {
      * the database to be abstracted of what data we want to store.
      */
     public enum Property {
-        PASSWORD
-    }
+        PASSWORD;
 
+        public static Map<Property, String> getProperties(User user) {
+            HashMap<Property, String> result = new HashMap<>();
+            result.put(PASSWORD, user.getPassword());
+            return result;
+        }
+    }
 
     /**
      * Gets the Json representation of this.

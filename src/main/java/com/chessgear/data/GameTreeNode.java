@@ -7,7 +7,9 @@ import com.chessgear.game.Player;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Node class for GameTree.
@@ -281,7 +283,24 @@ public class GameTreeNode {
     }
 
     public enum NodeProperties{
-        CP, BOARDSTATE, MULTIPLICITY, PV, BESTMOVE
+        CP, BOARDSTATE, MULTIPLICITY, PV, BESTMOVE;
+
+        public static Map<NodeProperties, String> getProperties(GameTreeNode node) {
+            HashMap<NodeProperties, String> result = new HashMap<>();
+            if (node.getEngineResult() != null) {
+                result.put(CP, String.valueOf(node.getEngineResult().getCp()));
+                result.put(PV, node.getEngineResult().getPv());
+                result.put(BESTMOVE, node.getEngineResult().getBestMove());
+            } else {
+                result.put(CP, "");
+                result.put(PV, "");
+                result.put(BESTMOVE, "");
+            }
+
+            result.put(BOARDSTATE, node.getBoardState().toFEN());
+            result.put(MULTIPLICITY, String.valueOf(node.getMultiplicity()));
+            return result;
+        }
     }
 
     /**
