@@ -236,6 +236,7 @@ public class GameTreeNode {
         private String boardstate;
         private List<ChildNodeJson> children;
         private Integer previousNodeId;
+        private int multiplicity;
 
         GameTreeNodeJson(GameTreeNode node) {
             this.boardstate = node.boardState.toFEN();
@@ -248,6 +249,7 @@ public class GameTreeNode {
             } else {
                 this.previousNodeId = null;
             }
+            this.multiplicity = node.getMultiplicity();
         }
     }
 
@@ -259,6 +261,7 @@ public class GameTreeNode {
         private int id;
         private String name;
         private Double eval;
+        private int multiplicity;
 
         ChildNodeJson(GameTreeNode node) {
             this.id = node.getId();
@@ -280,12 +283,21 @@ public class GameTreeNode {
             } else {
                 this.eval = null;
             }
+            this.multiplicity = node.multiplicity;
         }
     }
 
+    /**
+     * Enumeration of the database columns for the table of nodes.
+     */
     public enum NodeProperties{
         CP, BOARDSTATE, MULTIPLICITY, PV, BESTMOVE, LASTMOVE;
 
+        /**
+         * Constructs a mapping between enum and values for the given node.
+         * @param node Node for which to construct the mapping.
+         * @return Mapping between enum and values.
+         */
         public static Map<NodeProperties, String> getProperties(GameTreeNode node) {
             HashMap<NodeProperties, String> result = new HashMap<>();
             if (node.getEngineResult() != null) {

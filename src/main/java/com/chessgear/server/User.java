@@ -218,7 +218,6 @@ public class User {
                 e.printStackTrace();
                 logger.error("Was not able to parse the content file "+filename+" of user "+username);
             }
-
         }
 
         return toReturn;
@@ -232,6 +231,11 @@ public class User {
     public enum Property {
         PASSWORD;
 
+        /**
+         * Creates the mapping between enum and values for the given user.
+         * @param user User for whom to construct the mapping.
+         * @return Mapping between enum and values.
+         */
         public static Map<Property, String> getProperties(User user) {
             HashMap<Property, String> result = new HashMap<>();
             result.put(PASSWORD, user.getPassword());
