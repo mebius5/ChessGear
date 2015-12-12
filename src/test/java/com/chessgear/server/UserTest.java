@@ -79,7 +79,7 @@ public class UserTest {
             assertEquals(fake.getUsername(),username);
             assertEquals(fake.getPassword(),password);
             
-            //reload a fresh new user an test for consistency
+            // build from database and test for consistency.
             User twin = User.getUser(username);
             assertEquals(twin.getUsername(), user.getUsername());
             assertEquals(twin.getPassword(), user.getPassword());

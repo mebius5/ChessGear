@@ -25,7 +25,7 @@ public class DatabaseWrapper {
 
     /**
      * Constructs a database wrapper for the given database service.
-     * @param service DatabaseService that we're wrapping.
+     * @param service DatabaseService that we're wrapping.ause
      */
     public DatabaseWrapper(DatabaseService service) {
         this.service = service;
