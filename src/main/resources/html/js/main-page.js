@@ -4,17 +4,7 @@ var back = 0;
 $(document).ready(function() {
 
     var loggedInUser = getLoggedInUser();
-    if (loggedInUser != null) {
-        $("#current-user").prepend(loggedInUser);
-    } else {
-        window.location.replace("welcome.html");
-    }
-
-    $("#logout").click(function (e) {
-        e.preventDefault();
-        Cookies.remove('loggedInUser');
-        location.reload();
-    });
+    setUserHeader(loggedInUser);
 
     var nodeId = getUrlParameter("node");
     if (nodeId === undefined) {

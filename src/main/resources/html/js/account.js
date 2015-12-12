@@ -1,17 +1,7 @@
 $(document).ready(function() {
 
-    var loggedInUser = Cookies.get('loggedInUser');
-    if (loggedInUser != null) {
-        $("#current-user").prepend(loggedInUser);
-    } else {
-        window.location.replace("welcome.html");
-    }
-
-    $("#logout").click(function (e) {
-        e.preventDefault();
-        Cookies.remove('loggedInUser');
-        location.reload();
-    });
+    var loggedInUser = getLoggedInUser();
+    setUserHeader(loggedInUser);
 
     $("#change-password").click(function (e) {
         e.preventDefault();
