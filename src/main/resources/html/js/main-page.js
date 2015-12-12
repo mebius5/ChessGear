@@ -3,7 +3,7 @@ var back = 0;
 
 $(document).ready(function() {
 
-    var loggedInUser = Cookies.get('loggedInUser');
+    var loggedInUser = getLoggedInUser();
     if (loggedInUser != null) {
         $("#current-user").prepend(loggedInUser);
     } else {
@@ -20,16 +20,7 @@ $(document).ready(function() {
     if (nodeId === undefined) {
         nodeId = 0;
     }
-
-    // Request board state from tree
-    
-    var boardStateRequest = $.get("chessgear/api/games/tree/" + loggedInUser + "/" + nodeId, function(data) {
-        var parsedResponse = jQuery.parseJSON(data);
-        back = parsedResponse.previousNodeId;
-        displayBoard(parsedResponse.boardstate);
-        displayChildren(parsedResponse.children);
-    });
-
+    getNodeAndDisplayBoard(nodeId, loggedInUser);
 
 });
 
@@ -64,20 +55,30 @@ function rotateBoard() {
     
 }
 
+function getNodeAndDisplayBoard(id, username) {
+    var boardStateRequest = $.get("chessgear/api/games/tree/" + username + "/" + id, function(data) {
+        var parsedResponse = jQuery.parseJSON(data);
+        back = parsedResponse.previousNodeId;
+        displayBoard(parsedResponse.boardstate);
+        displayChildren(parsedResponse.children);
+    });
+}
+
 function displayBoard(boardState) {
     var splitIndex = boardState.indexOf(" ");
     boardState = boardState.substring(0, splitIndex);
-
     var tokenizedRows = boardState.split("/");
 
     for (var c = 0; c < 8; c++) {
 
+        // Current row.
         var currentRow = 8 - c;
         var currentFile = 0;
 
         var currentRowFEN = tokenizedRows[c];
-
+        // For each character in the current row's FEN
         for (var d = 0; d < currentRowFEN.length; d++) {
+
 
             var currentChar = currentRowFEN.charAt(d);
             var numSpaces = parseInt(currentChar);
@@ -90,7 +91,12 @@ function displayBoard(boardState) {
                 $(square).html(img);
                 currentFile++;
             } else {
-                currentFile += numSpaces;
+                for (var e = 0; e < numSpaces; e++) {
+                    var fileChar = numberToFile(currentFile);
+                    var square = "#square-" + fileChar + currentRow;
+                    $(square).html("");
+                    currentFile++;
+                }
             }
 
         }
@@ -98,9 +104,14 @@ function displayBoard(boardState) {
 }
 
 function displayChildren(children) {
-
+    // Clears the list of children first.
+    $("#children-list").html("");
     for (var c = 0; c < children.length; c++) {
-        $("#children-list").append("<li><a href='./?node=" + children[c].id + "'>" + children[c].name + "</a> - Eval : " + children[c].eval + "</li>");
+        $("#children-list").append("<li><a href='" + children[c].id + "' id='child-" + children[c].id + "'>" + children[c].name + "</a> - Eval : " + children[c].eval + "</li>");
+        $("#child-" + children[c].id).click(function (e) {
+            e.preventDefault();
+            getNodeAndDisplayBoard($(this).attr("href"), getLoggedInUser());
+        });
     }
 }
 
