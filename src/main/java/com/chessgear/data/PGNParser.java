@@ -343,8 +343,6 @@ public class PGNParser {
                     PieceType type = getPieceType(s);
                     Square target = extractTarget(s);
                     char fileDisambiguation = getFileDisambiguation(s);
-                    if (fileDisambiguation != 0) {
-                    }
                     int rankDisambiguation = getRankDisambiguation(s);
                     Piece p = currentBoardState.getPieceByTarget(type, active, target, fileDisambiguation, rankDisambiguation);
                     Square origin = p.getLocation();
