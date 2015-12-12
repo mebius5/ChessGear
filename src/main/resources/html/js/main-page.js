@@ -25,12 +25,12 @@ $(document).ready(function() {
 });
 
 $("#navigate-root").click(function (e) {
-    window.location.href="./?node=0";
+    getNodeAndDisplayBoard(0, getLoggedInUser());
 });
 
 $("#navigate-back").click(function (e) {
     if (back != null)
-    window.location.href="./?node=" + back;
+    getNodeAndDisplayBoard(back, getLoggedInUser());
 })
 
 $("#flipButton").click(function (e) {
@@ -55,6 +55,9 @@ function rotateBoard() {
     
 }
 
+/**
+ * Gets a node's information and displays it.
+ */
 function getNodeAndDisplayBoard(id, username) {
     var boardStateRequest = $.get("chessgear/api/games/tree/" + username + "/" + id, function(data) {
         var parsedResponse = jQuery.parseJSON(data);
@@ -64,6 +67,9 @@ function getNodeAndDisplayBoard(id, username) {
     });
 }
 
+/**
+ * Display a boardState.
+ */
 function displayBoard(boardState) {
     var splitIndex = boardState.indexOf(" ");
     boardState = boardState.substring(0, splitIndex);
@@ -103,6 +109,9 @@ function displayBoard(boardState) {
     }
 }
 
+/**
+ * Displays the children from JSON data.
+ */
 function displayChildren(children) {
     // Clears the list of children first.
     $("#children-list").html("");
@@ -151,11 +160,13 @@ function getPieceFromChar(piece) {
             return "white_king.png";
 
     }
-
     return null;
-
 }
 
+/**
+ * Extracts a parameter from the URL.
+ *
+ */
 function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
