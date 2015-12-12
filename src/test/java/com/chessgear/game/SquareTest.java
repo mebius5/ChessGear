@@ -1,3 +1,5 @@
+package com.chessgear.game;
+
 import static org.junit.Assert.*;
 
 import com.chessgear.game.Square;

@@ -1,5 +1,5 @@
-import com.chessgear.data.PGNParseException;
-import com.chessgear.data.PGNParser;
+package com.chessgear.data;
+
 import com.chessgear.game.*;
 import org.junit.Before;
 import org.junit.Test;

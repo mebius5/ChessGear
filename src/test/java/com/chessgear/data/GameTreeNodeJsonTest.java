@@ -1,4 +1,5 @@
-import com.chessgear.data.GameTreeNode;
+package com.chessgear.data;
+
 import com.chessgear.game.*;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-/**
+package com.chessgear.game; /**
  * Created by Grady Xiao on 10/24/15.
  * JUnit Test for Game.java
  */
@@ -6,8 +6,6 @@
 import static org.junit.Assert.*;
 
 import com.chessgear.data.PGNParser;
-import com.chessgear.game.Game;
-import com.chessgear.game.Result;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
