@@ -150,7 +150,7 @@ public class Bootstrap {
 
         // Handle games list request.
         get("/chessgear/api/games/list/:username", "application/json", (request, response) -> {
-            String user = request.params("username");
+            String user = request.params("username").toLowerCase();
             logger.info("Games list request received for user " + user);
             if (server.userExists(user)) {
 
@@ -168,7 +168,7 @@ public class Bootstrap {
 
         // Handle game pgn request.
         get("/chessgear/api/games/:username/:gameId", "application/json", (request, response) -> {
-            String user = request.params("username");
+            String user = request.params("username").toLowerCase();
             int gameId = Integer.parseInt(request.params("gameId"));
             logger.info("Game pgn request received for " + user + ", game " + gameId);
             if (server.userExists(user)) {
