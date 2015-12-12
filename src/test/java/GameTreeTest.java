@@ -97,7 +97,6 @@ public class GameTreeTest {
             assertTrue(gameTree.containsNode(3));
             assertFalse(gameTree.containsNode(0));
 
-            DatabaseService.getInstanceOf().deleteUser(user.getUsername());
             DatabaseServiceTestTool.destroyFileStorageService(fss);
 
             DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(null);
