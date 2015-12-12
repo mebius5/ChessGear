@@ -234,7 +234,6 @@ public class GameTreeNode {
         private List<ChildNodeJson> children;
         private Integer previousNodeId;
 
-
         GameTreeNodeJson(GameTreeNode node) {
             this.boardstate = node.boardState.toFEN();
             this.children = new ArrayList<>();
@@ -301,12 +300,9 @@ public class GameTreeNode {
             } else {
                 return false;
             }
-
-
         } else {
             return false;
         }
-
     }
     
 
