@@ -5,37 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\src\test\java\DatabaseSandboxTest.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\Bootstrap.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\analysis\Engine.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\data\DatabaseService.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\data\GameTree.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\data\GameTreeNode.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\data\PGNParseException.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\data\PGNParser$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\data\PGNParser$Tag.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\data\PGNParser.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\game\BoardState$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\game\BoardState.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\game\Game.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\game\Move.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\game\Piece$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\game\Piece.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\game\PieceType$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\game\PieceType.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\game\Player.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\game\Result.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\classes\com\chessgear\game\Square.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\test-classes\BoardStateTest.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\test-classes\GameTest.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\test-classes\GameTreeTest.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\test-classes\MoveTest.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\test-classes\PGNParseTest.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\test-classes\PieceTest.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\test-classes\PieceTypeTest.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\test-classes\PlayerTest.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\test-classes\ResultTest.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Ran\IdeaProjects\ChessGear\target\test-classes\SquareTest.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseService.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -94,14 +63,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/server/User.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="287" column="35" selection-start-line="287" selection-start-column="35" selection-end-line="287" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="DatabaseService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3325893">
-              <caret line="27" column="30" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.45535713">
+              <caret line="24" column="12" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DatabaseWrapper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseWrapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="126" column="33" selection-start-line="126" selection-start-column="33" selection-end-line="126" selection-end-column="33" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameTreeNode.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="298" column="51" selection-start-line="298" selection-start-column="51" selection-end-line="298" selection-end-column="51" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -187,11 +188,9 @@
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/Bootstrap.java" />
         <option value="$PROJECT_DIR$/src/test/java/UserTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTree.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/server/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeBuilder.java" />
         <option value="$PROJECT_DIR$/src/test/java/DatabaseSandboxTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/game/Move.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseWrapper.java" />
         <option value="$PROJECT_DIR$/src/main/resources/html/js/import.js" />
         <option value="$PROJECT_DIR$/src/main/resources/html/js/login.js" />
@@ -200,6 +199,8 @@
         <option value="$PROJECT_DIR$/src/main/resources/html/js/account.js" />
         <option value="$PROJECT_DIR$/src/main/resources/html/js/main-page.js" />
         <option value="$PROJECT_DIR$/src/main/resources/html/import.html" />
+        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/chessgear/server/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseService.java" />
       </list>
     </option>
@@ -968,18 +969,6 @@
       <option name="number" value="Default" />
       <updated>1443206600718</updated>
     </task>
-    <task id="LOCAL-00055" summary="Adding demo for iteration 4.">
-      <created>1447383959571</created>
-      <option name="number" value="00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1447383959572</updated>
-    </task>
-    <task id="LOCAL-00056" summary="Added startEngine() and terminateEngine() to Engine.java and add respective test. Modified .travis.yml to build C++ before running java.">
-      <created>1447700776010</created>
-      <option name="number" value="00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1447700776149</updated>
-    </task>
     <task id="LOCAL-00057" summary="Corrected EngineTest.java to accept multiple possibilities instead of just one.">
       <created>1447705577795</created>
       <option name="number" value="00057" />
@@ -1262,7 +1251,19 @@
       <option name="project" value="LOCAL" />
       <updated>1449930347960</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="Front-end updates. Asynchronous update of board state. Cleaning up javascript.">
+      <created>1449930892948</created>
+      <option name="number" value="00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1449930892948</updated>
+    </task>
+    <task id="LOCAL-00105" summary="Commenting.">
+      <created>1449931316926</created>
+      <option name="number" value="00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1449931316926</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1350,7 +1351,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Reuploaded demo." />
     <MESSAGE value="Front-end branch." />
     <MESSAGE value="Fixed user registration." />
     <MESSAGE value="Writing no database integration back-end." />
@@ -1375,7 +1375,8 @@
     <MESSAGE value="Fixed database call to resolve collision detection when there is none." />
     <MESSAGE value="Front-end updates. Asynchronous update of board state." />
     <MESSAGE value="Front-end updates. Asynchronous update of board state. Cleaning up javascript." />
-    <option name="LAST_COMMIT_MESSAGE" value="Front-end updates. Asynchronous update of board state. Cleaning up javascript." />
+    <MESSAGE value="Commenting." />
+    <option name="LAST_COMMIT_MESSAGE" value="Commenting." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1628,14 +1629,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/server/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="206" column="8" selection-start-line="206" selection-start-column="8" selection-end-line="206" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.52037615">
@@ -1681,16 +1674,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="259" column="24" selection-start-line="259" selection-start-column="24" selection-end-line="259" selection-end-column="24" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3322884">
-          <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1766,14 +1749,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="237" column="39" selection-start-line="237" selection-start-column="39" selection-end-line="237" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1491228">
@@ -1790,10 +1765,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseWrapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="126" column="33" selection-start-line="126" selection-start-column="33" selection-end-line="126" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="298" column="51" selection-start-line="298" selection-start-column="51" selection-end-line="298" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/server/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="287" column="35" selection-start-line="287" selection-start-column="35" selection-end-line="287" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3325893">
-          <caret line="27" column="30" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.45535713">
+          <caret line="24" column="12" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

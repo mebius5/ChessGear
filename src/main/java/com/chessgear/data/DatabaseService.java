@@ -54,7 +54,11 @@ public class DatabaseService {
         this.databasePath = FileStorageService.DATA_DIRECTORY_NAME + File.separator + prefix + CANONICAL_DB_NAME;
         this.database = prepareCuteDatabase(prefix);
     }
-    
+
+    /**
+     * Gets the instance of this singleton class.
+     * @return The database.
+     */
     public static DatabaseService getInstanceOf(){
         if(instance == null)
             try {
@@ -68,6 +72,12 @@ public class DatabaseService {
         return instance;
     }
 
+    /**
+     * Prepares an sql2o object for handling database queries.
+     * @param databaseFileName Filename of database.
+     * @return Sql2o object for handling queries on the given database file.
+     * @throws IOException File not found.
+     */
     private Sql2o prepareCuteDatabase(String databaseFileName) throws IOException{        
         //check that data folder exists:
         File general = new File(FileStorageService.DATA_DIRECTORY_NAME);
