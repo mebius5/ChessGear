@@ -2,7 +2,7 @@ $(document).ready(function() {
     var loggedInUser = getLoggedInUser();
     setUserHeader(loggedInUser);
 
-    $("#pgn-submit").submit(function(e) {
+    $("#pgn-submit").submit(function (e) {
         alert("Submitted!");
         e.preventDefault();
         var pgnBody = $("#pgn-body").val();
@@ -11,6 +11,36 @@ $(document).ready(function() {
         });
         postRequest.fail(function (data) {
             alert("Import failed: " + jQuery.parseJSON(data.responseText).why);
+        });
+    });
+
+    $("#pgn-file-upload > input:file").change(function() {
+        $("#pgn-file-upload").submit();
+    });
+
+    $("#pgn-file-upload").submit(function (e) {
+        e.preventDefault();
+
+        var file = $("#pgn-file")[0].files[0];
+        var formData = new FormData();
+        formData.append("file", file);
+
+        $.ajax({
+            url: '/chessgear/api/games/importfile/' + loggedInUser,
+                   //Ajax events
+                   success: function (e) {
+                     alert('Upload completed');
+                   },
+                   error: function (e) {
+                     alert('error ' + e.message);
+                   },
+                   // Form data
+                   data: formData,
+                   type: 'POST',
+                   //Options to tell jQuery not to process data or worry about content-type.
+                   cache: false,
+                   contentType: false,
+                   processData: false
         });
     });
 });

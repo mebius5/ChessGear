@@ -30,13 +30,16 @@
             <main>
                 
                 <div id="pgn-upload">
-                    <form id="pgn-submit" action="#" method="post">
+                    <form enctype="multipart/form-data" id="pgn-file-upload" action="#" method="post">
                         <h3>Upload a file</h3>
-                        <input type="file" name="pgn-file">
-                        <p style="color: #aaa; font-weight: bold;">or</p>
-                        <h3>Paste in your PGN</h3>
+                        <input type="file" id="pgn-file" name="pgn-file" accept=".pgn"><br>
+                        <input type="submit" style="color: #000;" value="Upload File" hidden>
+                    </form>
+                    <p style="color: #aaa; font-weight: bold;">or</p>
+                    <h3>Paste in your PGN</h3>
+                    <form id="pgn-submit" action="#" method="post">
                         <textarea rows="8" cols="80" id="pgn-body" name="pgn-body"></textarea><br>
-                        <input type="submit" style="color: #000;">
+                        <input type="submit" style="color: #000;" value="Submit PGN">
                     </form>
                 </div>
             </main>

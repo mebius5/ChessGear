@@ -1,5 +1,6 @@
 package com.chessgear;
 
+import com.chessgear.data.FileStorageService;
 import com.chessgear.data.GameTree;
 import com.chessgear.data.GameTreeNode;
 import com.chessgear.server.Server;
@@ -8,6 +9,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.http.Part;
 
 import static spark.Spark.*;
 /**
@@ -80,6 +84,37 @@ public class Bootstrap {
             } else {
                 logger.error("User does not exist!");
                 response.status(408);
+                JsonObject failureResponse = new JsonObject();
+                failureResponse.addProperty("why", "User does not exist!");
+                return failureResponse;
+            }
+        });
+
+        // Handle file import
+        post("/chessgear/api/games/importfile/:username", "multipart/form-data", (request, response) -> {
+            String user = request.params("username").toLowerCase();
+            logger.info("Receiving file import request for user " + user);
+
+            if (server.userExists(user)) {
+                // Also add the game to the user's list of games.
+                User currentUser = server.getUser(user);
+
+                // Read in file contents.
+                MultipartConfigElement configElement = new MultipartConfigElement("/tmp");
+                request.raw().setAttribute("org.eclipse.jetty.multipartConfig", configElement);
+                Part file = request.raw().getPart("file");
+                String pgn = FileStorageService.readInputStreamIntoString(file.getInputStream());
+
+                currentUser.addGame(pgn);
+                // Return response
+                response.status(201);
+                JsonObject successResponse = new JsonObject();
+                successResponse.addProperty("user", user);
+                logger.info("Game import success!");
+                return successResponse;
+            } else {
+                logger.error("Import failed: user does not exist!");
+                response.status(400);
                 JsonObject failureResponse = new JsonObject();
                 failureResponse.addProperty("why", "User does not exist!");
                 return failureResponse;

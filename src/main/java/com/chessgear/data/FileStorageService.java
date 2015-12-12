@@ -8,6 +8,7 @@ package com.chessgear.data;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class FileStorageService {
 
@@ -248,6 +249,22 @@ public class FileStorageService {
         PrintWriter stream = new PrintWriter(toStore);
         stream.print(data);
         stream.close();
+    }
+
+    /**
+     * Reads the contents of an input stream into a String.
+     * @param stream Input stream to read.
+     * @return Returns a String containing the file information.
+     */
+    public static String readInputStreamIntoString(InputStream stream) {
+        StringBuilder result = new StringBuilder();
+        Scanner scanner = new Scanner(stream);
+        while (scanner.hasNextLine()) {
+            result.append(scanner.nextLine());
+            result.append(System.lineSeparator());
+        }
+        scanner.close();
+        return result.toString();
     }
 
 }
