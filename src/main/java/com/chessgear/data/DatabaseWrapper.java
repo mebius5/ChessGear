@@ -2,11 +2,15 @@ package com.chessgear.data;
 
 import com.chessgear.analysis.EngineResult;
 import com.chessgear.game.BoardState;
+import com.chessgear.game.Move;
 import com.chessgear.server.User;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.chessgear.data.GameTreeNode.NodeProperties;
 
 /**
  * Helper methods for interfacing with the Database.
@@ -37,19 +41,31 @@ public class DatabaseWrapper {
      */
     public static GameTreeNode getGameTreeNode(String username, int id) {
         if (service.nodeExists(username, id)) {
-            Map<GameTreeNode.NodeProperties, String> properties = service.fetchNodeProperty(username, id);
-            EngineResult engineResult = new EngineResult();
-            engineResult.setBestMove(properties.get(GameTreeNode.NodeProperties.BESTMOVE));
-            try {
-                engineResult.setCp(Double.parseDouble(properties.get(GameTreeNode.NodeProperties.CP)));
-            } catch (NumberFormatException e) {
-                engineResult.setCp(0);
-            }
-            engineResult.setPv(properties.get(GameTreeNode.NodeProperties.PV));
             GameTreeNode result = new GameTreeNode(id);
-            result.setEngineResult(engineResult);
-            result.setBoardState(new BoardState(properties.get(GameTreeNode.NodeProperties.BOARDSTATE)));
-            result.setMultiplicity(Integer.parseInt(properties.get(GameTreeNode.NodeProperties.MULTIPLICITY)));
+            Map<NodeProperties, String> properties = service.fetchNodeProperty(username, id);
+
+            /**
+             * If at least one of the fields is not blank, then we compute and put in the engine result.
+             */
+            if (!properties.get(NodeProperties.BESTMOVE).equals("") || !properties.get(NodeProperties.CP).equals("") || !properties.get(NodeProperties.PV).equals("")) {
+                EngineResult engineResult = new EngineResult();
+                engineResult.setBestMove(properties.get(NodeProperties.BESTMOVE));
+                try {
+                    engineResult.setCp(Double.parseDouble(properties.get(NodeProperties.CP)));
+                } catch (NumberFormatException e) {
+                    engineResult.setCp(0);
+                }
+                engineResult.setPv(properties.get(NodeProperties.PV));
+                result.setEngineResult(engineResult);
+            }
+
+            result.setBoardState(new BoardState(properties.get(NodeProperties.BOARDSTATE)));
+            result.setMultiplicity(Integer.parseInt(properties.get(NodeProperties.MULTIPLICITY)));
+
+            if (!properties.get(NodeProperties.LASTMOVE).equals("")) {
+                result.setLastMoveMade(new Gson().fromJson(properties.get(NodeProperties.LASTMOVE), Move.class));
+            }
+
             return result;
         } else {
             return null;
@@ -63,7 +79,7 @@ public class DatabaseWrapper {
      * @param multiplicity New multiplicity of the node.
      */
     public static void setMultiplicity(String username, int id, int multiplicity) {
-        service.updateNodeProperty(username, id, GameTreeNode.NodeProperties.MULTIPLICITY, String.valueOf(multiplicity));
+        service.updateNodeProperty(username, id, NodeProperties.MULTIPLICITY, String.valueOf(multiplicity));
     }
 
     /**
@@ -83,7 +99,7 @@ public class DatabaseWrapper {
      * @param node Node object to add.
      */
     public static void addNode(String username, GameTreeNode node) {
-        service.addNode(username, node.getId(), GameTreeNode.NodeProperties.getProperties(node));
+        service.addNode(username, node.getId(), NodeProperties.getProperties(node));
     }
 
     /**

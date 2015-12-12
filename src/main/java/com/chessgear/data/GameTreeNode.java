@@ -4,6 +4,7 @@ import com.chessgear.analysis.EngineResult;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
 import com.chessgear.game.Player;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
@@ -283,7 +284,7 @@ public class GameTreeNode {
     }
 
     public enum NodeProperties{
-        CP, BOARDSTATE, MULTIPLICITY, PV, BESTMOVE;
+        CP, BOARDSTATE, MULTIPLICITY, PV, BESTMOVE, LASTMOVE;
 
         public static Map<NodeProperties, String> getProperties(GameTreeNode node) {
             HashMap<NodeProperties, String> result = new HashMap<>();
@@ -295,6 +296,11 @@ public class GameTreeNode {
                 result.put(CP, "");
                 result.put(PV, "");
                 result.put(BESTMOVE, "");
+            }
+            if (node.getLastMoveMade() != null) {
+                result.put(LASTMOVE, new Gson().toJson(node.getLastMoveMade()));
+            } else {
+                result.put(LASTMOVE, "");
             }
 
             result.put(BOARDSTATE, node.getBoardState().toFEN());

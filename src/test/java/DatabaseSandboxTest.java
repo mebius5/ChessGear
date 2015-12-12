@@ -1,13 +1,15 @@
-import com.chessgear.data.*;
-import com.chessgear.server.User;
+import com.chessgear.data.GameTreeBuilder;
+import com.chessgear.data.GameTreeNode;
+import com.chessgear.data.PGNParseException;
+import com.chessgear.data.PGNParser;
+import com.chessgear.game.Move;
+import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Ran on 12/12/2015.
@@ -52,44 +54,14 @@ public class DatabaseSandboxTest {
     @Test
     public void test() {
 
-        DatabaseService service = DatabaseService.getInstanceOf();
+        List<GameTreeNode> nodes = builder.getListOfNodes();
+        Move m = nodes.get(1).getLastMoveMade();
+        Gson gson = new Gson();
+        String serialized = gson.toJson(m);
+        System.out.println(serialized);
+        Move n = gson.fromJson(serialized, Move.class);
 
-        User absox = new User("absox", "password");
-        if (!service.userExists(absox.getUsername())) {
-            DatabaseWrapper.addUser(absox);
-
-        }
-
-        System.out.println("User properties: ");
-        Map<User.Property, String> absoxProperties = service.fetchUserProperties(absox.getUsername());
-        for (User.Property property : absoxProperties.keySet()) {
-            System.out.println(property.toString() + " : " + absoxProperties.get(property));
-        }
-
-        assertTrue(service.hasRoot(absox.getUsername()));
-        assertEquals(service.getRoot(absox.getUsername()), 0);
-
-        GameTreeNode rootAbsoxNode = DatabaseWrapper.getGameTreeNode(absox.getUsername(), absox.getGameTree().getRoot().getId());
-        System.out.println("Boardstate: " + rootAbsoxNode.getBoardState().toFEN());
-        System.out.println("Multiplicity: " + rootAbsoxNode.getMultiplicity());
-
-        DatabaseWrapper.setMultiplicity(absox.getUsername(), 0, rootAbsoxNode.getMultiplicity()+1);
-
-
-        if (!service.nodeExists(absox.getUsername(), 1)) {
-            GameTreeNode childNode = builder.getListOfNodes().get(1);
-            childNode.setId(1);
-            DatabaseWrapper.addChild(absox.getUsername(), absox.getGameTree().getRoot(), childNode);
-        }
-
-        List<Integer> children = service.childrenFrom(absox.getUsername(), 0);
-        int child = children.get(0);
-        assertEquals(child, 1);
-
-        int parent = service.parentFrom(absox.getUsername(), 1);
-        assertEquals(parent, 0);
-
-
+        assertEquals(m, n);
     }
 
 

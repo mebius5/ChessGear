@@ -140,4 +140,32 @@ public class Move {
         return result.toString();
     }
 
+    /**
+     * Checks equality of with another object.
+     * @param o Object to compare to.
+     * @return True if equal, eslse false.
+     */
+    public boolean equals(Object o) {
+
+        if (o instanceof Move) {
+
+            Move other = (Move)o;
+            if (this.whoMoved != other.whoMoved) return false;
+            if (this.pieceType != other.pieceType) return false;
+            if (!this.origin.equals(other.origin)) return false;
+            if (!this.destination.equals(other.destination)) return false;
+            if (!this.destination.equals(other.destination)) return false;
+            if (this.promotionType != null) {
+                if (!this.promotionType.equals(other.promotionType)) return false;
+            } else {
+                if (this.promotionType != other.promotionType) return false;
+            }
+            if (this.castling != other.castling) return false;
+
+            return true;
+        }
+        return false;
+
+    }
+
 }
