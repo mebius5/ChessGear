@@ -3,6 +3,7 @@ import com.chessgear.server.User;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -55,12 +56,9 @@ public class DatabaseSandboxTest {
 
         User absox = new User("absox", "password");
         if (!service.userExists(absox.getUsername())) {
-            System.out.println("Adding user absox!");
-            service.addUser(absox.getUsername(), User.Property.getProperties(absox));
+            DatabaseWrapper.addUser(absox);
 
         }
-
-        assertTrue(service.userExists(absox.getUsername()));
 
         System.out.println("User properties: ");
         Map<User.Property, String> absoxProperties = service.fetchUserProperties(absox.getUsername());
@@ -68,23 +66,31 @@ public class DatabaseSandboxTest {
             System.out.println(property.toString() + " : " + absoxProperties.get(property));
         }
 
-        // Adds a tree for user
-        if (!service.hasRoot(absox.getUsername())) {
-            System.out.println("Adding tree for user absox");
-            GameTreeNode rootNode = GameTreeNode.rootNode(0);
-            service.addNode(absox.getUsername(), 0, GameTreeNode.NodeProperties.getProperties(rootNode));
-            service.addTree(absox.getUsername(), 0);
-        }
-
         assertTrue(service.hasRoot(absox.getUsername()));
         assertEquals(service.getRoot(absox.getUsername()), 0);
 
-        System.out.println("Node properties: ");
-        Map<GameTreeNode.NodeProperties, String> nodeProperties = service.fetchNodeProperty(absox.getUsername(), 0);
-        for (GameTreeNode.NodeProperties property : nodeProperties.keySet()) {
-            System.out.println(property.toString() + " : " + nodeProperties.get(property));
+        GameTreeNode rootAbsoxNode = DatabaseWrapper.getGameTreeNode(absox.getUsername(), absox.getGameTree().getRoot().getId());
+        System.out.println("Boardstate: " + rootAbsoxNode.getBoardState().toFEN());
+        System.out.println("Multiplicity: " + rootAbsoxNode.getMultiplicity());
+
+        DatabaseWrapper.setMultiplicity(absox.getUsername(), 0, rootAbsoxNode.getMultiplicity()+1);
+
+
+        if (!service.nodeExists(absox.getUsername(), 1)) {
+            GameTreeNode childNode = builder.getListOfNodes().get(1);
+            childNode.setId(1);
+            DatabaseWrapper.addChild(absox.getUsername(), absox.getGameTree().getRoot(), childNode);
         }
 
+        List<Integer> children = service.childrenFrom(absox.getUsername(), 0);
+        int child = children.get(0);
+        assertEquals(child, 1);
+
+        int parent = service.parentFrom(absox.getUsername(), 1);
+        assertEquals(parent, 0);
+
+
     }
+
 
 }

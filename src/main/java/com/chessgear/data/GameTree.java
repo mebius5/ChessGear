@@ -6,10 +6,8 @@ import com.chessgear.analysis.OsUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.crypto.Data;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Game Tree data structure.
@@ -54,16 +52,10 @@ public class GameTree {
      * @throws Exception if error occurs while adding a game to gameTree
      */
     public void addGame(List<GameTreeNode> gameTreeNodes, String username) throws Exception {
-        DatabaseService db = DatabaseService.getInstanceOf();
         OsUtils osUtils = new OsUtils();
         Engine engine = new Engine(osUtils.getBinaryLocation());
         this.root.incrementMultiplicity();
-        Integer rootmult = root.getMultiplicity();
-        try {
-            db.updateNodeProperty(username, this.root.getId(), GameTreeNode.NodeProperties.MULTIPLICITY, rootmult.toString());
-        } catch (IllegalArgumentException e) {
-            logger.error(e.getMessage());
-        }
+
         GameTreeNode currentNode = this.root;
         for (int c = 1; c < gameTreeNodes.size(); c++) {
             GameTreeNode candidateChildNode = gameTreeNodes.get(c);
@@ -74,14 +66,6 @@ public class GameTree {
                     n.incrementMultiplicity();
                     currentNode = n;
                     childFound = true;
-                    Integer mult = n.getMultiplicity();
-                    String multi = mult.toString();
-                    try {
-                        db.updateNodeProperty(username, n.getId(), GameTreeNode.NodeProperties.MULTIPLICITY, multi);
-                    } catch (IllegalArgumentException e) {
-                        logger.error(e.getMessage());
-                    }
-                    //.updateNodeProperty();
                     break;
                 }
             }
@@ -90,48 +74,16 @@ public class GameTree {
             if (!childFound) {
                 candidateChildNode.setMultiplicity(1);
                 candidateChildNode.setId(this.nodeIdCounter);
-                //logger.info(candidateChildNode.getBoardState().toFEN());
                 EngineResult engineResult = engine.analyseFEN(candidateChildNode.getBoardState().toFEN(), 100);
                 candidateChildNode.setEngineResult(engineResult);
                 this.nodeMapping.put(this.nodeIdCounter++, candidateChildNode);
                 currentNode.addChild(candidateChildNode);
-                HashMap<GameTreeNode.NodeProperties, String> props = new HashMap<>();
-                props.put(GameTreeNode.NodeProperties.BOARDSTATE,candidateChildNode.getBoardState().toFEN());
-                Integer mult = candidateChildNode.getMultiplicity();
-                props.put(GameTreeNode.NodeProperties.MULTIPLICITY, mult.toString());
-                props.put(GameTreeNode.NodeProperties.BESTMOVE, engineResult.getBestMove());
-                Double cp = engineResult.getCp();
-                props.put(GameTreeNode.NodeProperties.CP, cp.toString());
-                props.put(GameTreeNode.NodeProperties.PV, engineResult.getPv());
-                try {
-                    db.addNode(username, candidateChildNode.getId(), props);
-                    //logger.info("added node with ID" + candidateChildNode.getId());
-                } catch (IllegalArgumentException e) {
-                    if(!e.getMessage().equals("Node already exists in database"))
-                        logger.error(e.getMessage());
-                }
-                try {
-                    //logger.info(currentNode.getId() + " and " + candidateChildNode.getId());
-                    db.addChild(username, currentNode.getId(), candidateChildNode.getId());
-                } catch (IllegalArgumentException e) {
-                    if(!Objects.equals(e.getMessage(), "this child already has a parent!"))
-                        logger.error(e.getMessage());
-                }
                 currentNode = candidateChildNode;
-                //also update in the database
-
             }
-
         }
         engine.terminateEngine();
         
         //TODO: make the update in the database.
-        /*
-         * The update made to the tree should be repercuted in the database.
-         * 
-         */
-
-
     }
 
     /**

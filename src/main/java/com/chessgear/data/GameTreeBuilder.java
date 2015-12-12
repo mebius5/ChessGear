@@ -1,15 +1,12 @@
 package com.chessgear.data;
 
-import com.chessgear.analysis.EngineResult;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * GameTree builder helper class.
@@ -45,74 +42,6 @@ public class GameTreeBuilder {
      */
     public GameTreeBuilder(PGNParser parser) throws Exception{
         this(parser.getListOfBoardStates(), parser.getWhiteHalfMoves(), parser.getBlackHalfMoves());
-    }
-
-    /**
-     * Builds a game tree from a user's gametree stored in the database.
-     * @param username username of the user requesting constructGameTree
-     * @return the reconstructed gameTree object from database
-     */
-    public static GameTree constructGameTree(String username){
-        // TODO RAN
-        return null;
-    }
-
-    /**
-     * Recursive call to create a tree from the database;
-     * @param base Base of the tree to recreate from
-     * @param username Username of the request for makeTree
-     * @return integer for the id
-     */
-    private static int makeTree(GameTreeNode base, String username, HashMap<Integer, GameTreeNode> nodemap) {
-        DatabaseService db = DatabaseService.getInstanceOf();
-        List<Integer> children;
-        try {
-            children = db.childrenFrom(username, base.getId());
-        } catch(IllegalArgumentException e) {
-            //logger.error("being called");
-            nodemap.put(base.getId(), base);
-            return base.getId();
-        }
-        int bigid = base.getId();
-
-        for (Integer aChildren : children) {
-            Map<GameTreeNode.NodeProperties, String> map = db.fetchNodeProperty(username, aChildren);
-            String board = map.get(GameTreeNode.NodeProperties.BOARDSTATE);
-            String cp = map.get(GameTreeNode.NodeProperties.CP);
-            String pv = map.get(GameTreeNode.NodeProperties.PV);
-            String bestmove = map.get(GameTreeNode.NodeProperties.BESTMOVE);
-            EngineResult engine = new EngineResult();
-            engine.setBestMove(bestmove);
-            double dcp = Double.parseDouble(cp);
-            engine.setCp(dcp);
-            engine.setPv(pv);
-            int mult;
-            try {
-                mult = Integer.parseInt(map.get(GameTreeNode.NodeProperties.MULTIPLICITY));
-            } catch (NumberFormatException e) {
-                logger.error("Error Fetching");
-                mult = 1;
-            }
-            GameTreeNode next = new GameTreeNode(aChildren);
-            BoardState boarstate = new BoardState(board);
-            next.setMultiplicity(mult);
-            next.setBoardState(boarstate);
-            next.setEngineResult(engine);
-            base.addChild(next);
-            next.setParent(base);
-            int id = makeTree(next, username, nodemap);
-
-            if (bigid < id)
-                bigid = id;
-        }
-
-        nodemap.put(base.getId(), base);
-        //logger.info("added node with id" + base.getId());
-        if(bigid > base.getId()) {
-            return bigid;
-        } else {
-            return bigid;
-        }
     }
 
     /**

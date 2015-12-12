@@ -1,7 +1,6 @@
 package com.chessgear.server;
 
 import com.chessgear.data.*;
-import com.chessgear.game.BoardState;
 import com.chessgear.game.Game;
 import com.google.gson.GsonBuilder;
 import org.slf4j.Logger;
@@ -41,14 +40,10 @@ public class User {
     }
     
     /**
-     * DEPRECATED: if you want to fetch back an existing user from the database, use getUser(String username) function.
-     *             if you want to register a new user (inexistant in the database, use registerUser(String username) function.
-     * 
      * Creates a user.
      * @param username Username.
      * @param password Password.
      */
-    @Deprecated
     public User(String username, String password) {
         this.username = username;
         this.password = password;
@@ -137,7 +132,7 @@ public class User {
     
     /***
      * DEPRECATED: modify directly the GameTree, not it's reference!
-     * 
+     *
      * Sets the gameTree to tree
      * @param tree the gameTree to be set to
      */
@@ -181,30 +176,12 @@ public class User {
      * @return An instance representing this user, for commodity.
      */
     public static User registerNewUser(String username, String password){
-        if(db.userExists(username))
+        if (db.userExists(username))
             throw new IllegalArgumentException("user already exists");
         
-        User toReturn = new User(username);
-        toReturn.password = password;
-        toReturn.gameTree = new GameTree();
-        
-        //now we store all those info in the database.
-        HashMap<Property, String> userProp = new HashMap<>();
-        userProp.put(Property.PASSWORD, password);
-        db.addUser(username, userProp);
-
-        //now the gametree
-        HashMap<GameTreeNode.NodeProperties, String> props = new HashMap<>();
-        props.put(GameTreeNode.NodeProperties.MULTIPLICITY, "1");
-
-        //put in the initial board state
-        BoardState begin = new BoardState();
-        begin.setToDefaultPosition();
-        props.put(GameTreeNode.NodeProperties.BOARDSTATE, begin.toFEN());
-
-        db.addNode(username, 0, props);
-        db.addTree(username, 0);
-        return toReturn;
+        User user = new User(username, password);
+        DatabaseWrapper.addUser(user);
+        return user;
     }
     
     /**
@@ -219,12 +196,12 @@ public class User {
         if(!db.userExists(username))
             throw new IllegalArgumentException("user does not exist in the database");
         
-        //first we fetch basic data.
+        // first we fetch basic data.
         User toReturn = new User(username);
         toReturn.password = db.fetchUserProperties(username).get(Property.PASSWORD);
         
-        //now we reconstruct it's gametree
-        toReturn.gameTree = GameTreeBuilder.constructGameTree(username);
+        // now we reconstruct its gametree
+        toReturn.gameTree = DatabaseWrapper.getGameTree(username);
         
         //we reconstruct the list of all it's games
         for(String filename: fss.getFilesFor(username)){
