@@ -1,0 +1,12 @@
+language: java
+jdk:
+    - oraclejdk8
+
+sudo: required
+
+before_script:
+    - sudo apt-get install build-essential
+    - cd ./stockfish-6-src/src/
+    - make clean
+    - make build ARCH=x86-32
+    - cd ../../

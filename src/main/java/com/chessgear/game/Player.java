@@ -6,7 +6,18 @@ package com.chessgear.game;
  */
 public enum Player {
 
+    WHITE, BLACK;
 
-    WHITE, BLACK
+    /**
+     * Returns the reverse of the current player.
+     * @return If black, returns white. If white, returns black.
+     */
+    public Player toggle() {
+        if (this == WHITE) {
+            return BLACK;
+        } else {
+            return WHITE;
+        }
+    }
 
 }

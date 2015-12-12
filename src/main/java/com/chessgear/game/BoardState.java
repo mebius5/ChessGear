@@ -23,7 +23,7 @@ public class BoardState {
     /**
      * Flag indicating whether or not castling kingside for white is legal.
      */
-    private boolean canWhiteCastleKingside;
+    private boolean canWhiteCastleKingSide;
 
     /**
      * Flag indicating whether or not castling queenside for black is legal.
@@ -63,6 +63,81 @@ public class BoardState {
     }
 
     /**
+     * Reads in information from Forsythe-Edwards notation into a Boardstate object.
+     * @param fen FEN notation of the board state.
+     */
+    public BoardState(String fen) {
+        this.pieces = new Piece[8][8];
+
+        String[] tokenizedFen = fen.split(" ");
+        String[] tokenizedPiecePositions = tokenizedFen[0].split("/");
+        // For each token
+        for (int c = 0; c < 8 ; c++) {
+            // We begin on the 8th rank, and work our way back.
+            int rank = 7 - c;
+            // We begin on the a file, and work our way to the right.
+            int file = 0;
+
+            // For each character on each rank:
+            for (int d = 0; d < tokenizedPiecePositions[c].length(); d++) {
+                char currentCharacter = tokenizedPiecePositions[c].charAt(d);
+                // If it's numeric, it symbolizes the number of spaces we skip.
+                if (Character.isDigit(currentCharacter)) {
+                    int numberOfEmpties = Character.getNumericValue(currentCharacter);
+                    file += numberOfEmpties;
+                } else {
+                    PieceType type = PieceType.parseCharacter(currentCharacter);
+                    Player player;
+                    if (Character.isUpperCase(currentCharacter)) {
+                        player = Player.WHITE;
+                    } else {
+                        player = Player.BLACK;
+                    }
+                    this.pieces[file][rank] = new Piece(type, player, new Square(file, rank));
+                    file++;
+                }
+            }
+        }
+
+        // Now read in active flag.
+        switch (tokenizedFen[1]) {
+            case "w":
+                this.active = Player.WHITE;
+                break;
+            case "b":
+                this.active = Player.BLACK;
+                break;
+        }
+
+        // Read in castling flags.
+        String castlingFlags = tokenizedFen[2];
+        if (castlingFlags.contains("Q")) {
+            this.canWhiteCastleQueenSide = true;
+        }
+        if (castlingFlags.contains("K")) {
+            this.canWhiteCastleKingSide = true;
+        }
+        if (castlingFlags.contains("k")) {
+            this.canBlackCastleKingSide = true;
+        }
+        if (castlingFlags.contains("q")) {
+            this.canBlackCastleQueenSide = true;
+        }
+
+        // Read in en passant target.
+        String enPassantTarget = tokenizedFen[3];
+        if (!enPassantTarget.equals("-")) {
+            this.enPassantTarget = new Square(enPassantTarget);
+        }
+
+        // Read in half move counter.
+        this.halfMoveCounter = Integer.parseInt(tokenizedFen[4]);
+
+        // Read in full move counter.
+        this.fullMoveCounter = Integer.parseInt(tokenizedFen[5]);
+    }
+
+    /**
      * Sets the boardstate to the starting position.
      */
     public void setToDefaultPosition() {
@@ -90,7 +165,7 @@ public class BoardState {
             this.pieces[c][6] = new Piece(PieceType.PAWN, Player.BLACK, new Square(c, 6));
         }
         // Initialize flags and counters
-        this.canWhiteCastleKingside = true;
+        this.canWhiteCastleKingSide = true;
         this.canWhiteCastleQueenSide = true;
         this.canBlackCastleKingSide = true;
         this.canBlackCastleQueenSide = true;
@@ -141,8 +216,8 @@ public class BoardState {
         fenBuilder.append(" ");
 
         // Castling availability
-        if (this.canWhiteCastleQueenSide || this.canBlackCastleQueenSide || this.canWhiteCastleKingside || this.canBlackCastleKingSide) {
-            if (this.canWhiteCastleKingside) {
+        if (this.canWhiteCastleQueenSide || this.canBlackCastleQueenSide || this.canWhiteCastleKingSide || this.canBlackCastleKingSide) {
+            if (this.canWhiteCastleKingSide) {
                 fenBuilder.append("K");
             }
             if (this.canWhiteCastleQueenSide) {
@@ -183,7 +258,7 @@ public class BoardState {
      * NOTE: This boardstate remains unchanged! We do not do a modification in place!
      * We clone the boardstate, then do a new move.
      * @param m Move to execute.
-     * @return
+     * @return Returns the boardstate resulting from the move.
      */
     public BoardState doMove(Move m) {
         boolean capture = false;
@@ -191,10 +266,50 @@ public class BoardState {
 
         // Move the piece.
         Piece originPiece = newBoardState.getPieceAt(m.getOrigin());
+
+        // Check if it was a pawn move. This flag is used for setting the halfmove clock.
+        boolean pawnMove = (originPiece.getType() == PieceType.PAWN);
+
+        // Check if it was a king move. If so, we set all castling flags for this player to false.
+        if (originPiece.getType() == PieceType.KING) {
+            switch (m.getWhoMoved()) {
+                case WHITE:
+                    newBoardState.canWhiteCastleKingSide = false;
+                    newBoardState.canWhiteCastleQueenSide = false;
+                    break;
+                case BLACK:
+                    newBoardState.canBlackCastleKingSide = false;
+                    newBoardState.canBlackCastleQueenSide = false;
+                    break;
+            }
+        }
+
+        // Check if it was a rook move, and if it was one of the corner rooks. We set that side's castling flag to false.
+        if (originPiece.getType() == PieceType.ROOK) {
+            if (m.getWhoMoved() == Player.WHITE) {
+                if (m.getOrigin().equals(new Square("a1"))) {
+                    newBoardState.canWhiteCastleQueenSide = false;
+                }
+                if (m.getOrigin().equals(new Square("h1"))) {
+                    newBoardState.canWhiteCastleKingSide = false;
+                }
+            } else {
+                if (m.getOrigin().equals(new Square("a8"))) {
+                    newBoardState.canBlackCastleQueenSide = false;
+                }
+                if (m.getOrigin().equals(new Square("h8"))) {
+                    newBoardState.canBlackCastleKingSide = false;
+                }
+            }
+        }
+
         newBoardState.setPieceAt(m.getOrigin(), null); // Remove from original location.
         Piece destinationPiece = newBoardState.getPieceAt(m.getDestination());
         if (destinationPiece != null) capture = true;
         newBoardState.setPieceAt(m.getDestination(), originPiece);
+
+        // Check if pawn was pushed two squares.
+        newBoardState.enPassantTarget = m.getEnPassantTarget();
 
         // If castling.
         if (m.isCastling()) {
@@ -203,27 +318,27 @@ public class BoardState {
             switch (castlingDestination) {
                 case "g1":
                     // Get the piece at h1, move it to f1
-                    castlePiece = newBoardState.pieces[7][0];
-                    newBoardState.pieces[7][0] = null;
-                    newBoardState.pieces[5][0] = castlePiece;
+                    castlePiece = newBoardState.getPieceAt(new Square("h1"));
+                    newBoardState.setPieceAt(new Square("h1"), null);
+                    newBoardState.setPieceAt(new Square("f1"), castlePiece);
                     break;
                 case "c1":
                     // Get the piece at a1, move it to d1
-                    castlePiece = newBoardState.pieces[0][0];
-                    newBoardState.pieces[0][0] = null;
-                    newBoardState.pieces[3][0] = castlePiece;
+                    castlePiece = newBoardState.getPieceAt(new Square("a1"));
+                    newBoardState.setPieceAt(new Square("a1"), null);
+                    newBoardState.setPieceAt(new Square("d1"), castlePiece);
                     break;
                 case "g8":
                     // Get the piece at h8, move it to f8
-                    castlePiece = newBoardState.pieces[7][7];
-                    newBoardState.pieces[7][7] = null;
-                    newBoardState.pieces[5][7] = castlePiece;
+                    castlePiece = newBoardState.getPieceAt(new Square("h8"));
+                    newBoardState.setPieceAt(new Square("h8"), null);
+                    newBoardState.setPieceAt(new Square("f8"), castlePiece);
                     break;
                 case "c8":
                     // Get the pice at a8, move it to d8
-                    castlePiece = newBoardState.pieces[0][7];
-                    newBoardState.pieces[0][7] = null;
-                    newBoardState.pieces[3][7] = castlePiece;
+                    castlePiece = newBoardState.getPieceAt(new Square("a8"));
+                    newBoardState.setPieceAt(new Square("a8"), null);
+                    newBoardState.setPieceAt(new Square("d8"), castlePiece);
                     break;
                 default:
             }
@@ -231,18 +346,24 @@ public class BoardState {
 
         // If promotion, change piece's type.
         if (m.getPromotionType() != null) {
-            destinationPiece.setPieceType(m.getPromotionType());
+            originPiece.setPieceType(m.getPromotionType());
         }
 
         // If nothing was captured, or if no pawn was moved, increment half move counter.
-        if (!capture) {
+        if (!capture && !pawnMove) {
             newBoardState.halfMoveCounter++;
+        } else {
+            newBoardState.halfMoveCounter = 0;
         }
 
         // If black moved, increment full move counter
         if (m.getWhoMoved() == Player.BLACK) {
             newBoardState.fullMoveCounter++;
         }
+
+        // Toggle active switch
+        newBoardState.active = this.active.toggle();
+
         return newBoardState;
     }
 
@@ -260,7 +381,7 @@ public class BoardState {
         cloneBoardState.canBlackCastleKingSide = this.canBlackCastleKingSide;
         cloneBoardState.canBlackCastleQueenSide = this.canBlackCastleQueenSide;
         cloneBoardState.canWhiteCastleQueenSide = this.canWhiteCastleQueenSide;
-        cloneBoardState.canWhiteCastleKingside = this.canWhiteCastleKingside;
+        cloneBoardState.canWhiteCastleKingSide = this.canWhiteCastleKingSide;
         cloneBoardState.enPassantTarget = this.enPassantTarget;
         cloneBoardState.active = this.active;
         cloneBoardState.halfMoveCounter = this.halfMoveCounter;
@@ -288,27 +409,143 @@ public class BoardState {
     }
 
     /**
-     *
+     * Checks if move can be made.
      * @param origin Location of piece being moved
      * @param target The target square
      * @return True if piece can make the move; false if not.
      */
     public boolean canMakeMove(Square origin, Square target) {
-        // TODO
-        // NOTE: We must check for absolute pins!
+        Piece piece = this.getPieceAt(origin);
+        int xDisplace = origin.getXDisplacement(target);
+        int yDisplace = origin.getYDisplacement(target);
+
+        // Firstly, the piece has to exist.
+        if (piece != null) {
+
+            switch (piece.getType()) {
+                case PAWN:
+                    // Can't move more than 1 laterally or 2 horizontally, can't stay on same rank.
+                    if (Math.abs(yDisplace) > 2 || yDisplace == 0 || Math.abs(xDisplace) > 1) {
+                        return false;
+                    }
+                    // If we're moving laterally, we have to either be moving to the en passant target or taking a piece.
+                    if (Math.abs(xDisplace) == 1) {
+                        if (this.getPieceAt(target) == null && (this.enPassantTarget == null || !this.enPassantTarget.equals(target))) {
+                            return false;
+                        }
+                    }
+                    switch (piece.getOwner()) {
+                        case WHITE:
+                            // Can't move backwards as white.
+                            if (yDisplace < 0) {
+                                return false;
+                            }
+                            // Can't move forwards 2 unless we're on the correct rank (2nd rank)
+                            if (yDisplace == 2 && (piece.getLocation().getY() != 1 || xDisplace != 0)) {
+                                return false;
+                            }
+                            break;
+                        case BLACK:
+                            if (yDisplace > 0) return false;
+                            // Can't move up 2 unless we're on the correct rank (7th rank)
+                            if (yDisplace == -2 && (piece.getLocation().getY() != 6 || xDisplace != 0)) return false;
+                            break;
+                    }
+                    // Can't move if path is blocked
+                    if (this.isBlocked(origin, target)) {
+                        return false;
+                    }
+                    break;
+
+                case BISHOP:
+                    // Can't move if not on the same diagonal.
+                    if (!origin.isOnDiagonal(target)) return false;
+                    // Can't move if path is blocked.
+                    if (this.isBlocked(origin, target)) return false;
+                    break;
+
+                case KNIGHT:
+                    if (!((Math.abs(xDisplace) == 2 && Math.abs(yDisplace) == 1) || Math.abs(xDisplace) == 1 && Math.abs(yDisplace) == 2)) return false;
+                    break;
+
+                case ROOK:
+                    if (!origin.isOnSameFile(target) && !origin.isOnSameRank(target)) {
+                        return false;
+                    }
+                    if (this.isBlocked(origin, target)) {
+                        return false;
+                    }
+                    break;
+
+                case QUEEN:
+                    if (!origin.isOnDiagonal(target) && !origin.isOnSameFile(target) && !origin.isOnSameRank(target)) {
+                        return false;
+                    }
+                    if (this.isBlocked(origin, target)) return false;
+                    break;
+
+                case KING:
+                    // TODO validate king moves. Not essential for basic pgn parsing.
+                    break;
+
+            }
+            // TODO
+            // Must check for absolute pins, if we're on the same diagonal, rank, or file as the king.
+            return true;
+        }
+
         return false;
     }
 
     /**
-     * Gets piece by target square.
-     * @param type Type of piece
-     * @param target
-     * @param fileDisambiguation
-     * @param rankDisambiguation
-     * @return
+     * Checks if move can be made.
+     * @param origin Location of origin piece.
+     * @param target Location of target piece.
+     * @return True if can be made, else false.
      */
-    public Piece getPieceByTarget(PieceType type, Square target, char fileDisambiguation, int rankDisambiguation) {
-        // TODO
+    public boolean canMakeMove(String origin, String target) {
+        return this.canMakeMove(new Square(origin), new Square(target));
+    }
+
+    /**
+     * Gets piece by target square.
+     * @param type Type of piece.
+     * @param owner Owner of piece.
+     * @param target Square that piece is being moved to.
+     * @param fileDisambiguation Disambiguation for file.
+     * @param rankDisambiguation Disambiguation for rank.
+     * @return Returns the piece.
+     */
+    public Piece getPieceByTarget(PieceType type, Player owner, Square target, char fileDisambiguation, int rankDisambiguation) {
+        List<Piece> candidatePieces = this.getAllPiecesOfType(owner, type);
+
+        for (Piece p : candidatePieces) {
+            Square location = p.getLocation();
+            if (this.canMakeMove(location, target)) {
+                // Check if there's file disambiguation
+                if (fileDisambiguation != 0) {
+                    // If there is, then check if we're on the correct file
+                    if (location.getFile() == fileDisambiguation) {
+                        return p;
+                    } else {
+                        // If we're not, continue with the loop.
+                        continue;
+                    }
+                }
+                // Else, check if there's rank disambiguation
+                if (rankDisambiguation != -1) {
+                    // If there is, check if we're on the correct rank.
+                    if (location.getRank() == rankDisambiguation) {
+                        return p;
+                    } else {
+                        // If we're not, continue.
+                        continue;
+                    }
+                }
+                // If there's no disambiguation at all, we return p.
+                return p;
+            }
+        }
         return null;
     }
 
@@ -329,6 +566,120 @@ public class BoardState {
      */
     public Piece getPieceAt(Square s) {
         return this.pieces[s.getX()][s.getY()];
+    }
+
+    /**
+     * Checks if there is a piece between the two squares.
+     * @param origin Origin square.
+     * @param destination Destination square.
+     * @return True if the path is blocked. False if not.
+     */
+    public boolean isBlocked(Square origin, Square destination) {
+        int xDisplacement = origin.getXDisplacement(destination);
+        int yDisplacement = origin.getYDisplacement(destination);
+
+        // Along a rank
+        if (xDisplacement == 0 && yDisplacement != 0) {
+            int x = origin.getX();
+            if (yDisplacement > 0) {
+                for (int y = origin.getY() + 1; y < destination.getY(); y++) {
+                    if (this.getPieceAt(new Square(x, y)) != null) {
+                        return true;
+                    }
+                }
+            } else {
+                for (int y = origin.getY() - 1; y > destination.getY(); y--) {
+                    if (this.getPieceAt(new Square(x, y)) != null) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        // Along a file
+        if (yDisplacement == 0 && xDisplacement != 0) {
+            int y = origin.getY();
+            if (xDisplacement > 0) {
+                for (int x = origin.getX() + 1; x < destination.getX(); x++) {
+                    if (this.getPieceAt(new Square(x, y)) != null) {
+                        return true;
+                    }
+                }
+            } else {
+                for (int x = origin.getX() - 1; x > destination.getX(); x--) {
+                    if (this.getPieceAt(new Square(x, y)) != null) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        // Diagonal
+        if (xDisplacement > 0) {
+            if (yDisplacement > 0) {
+                for (int c = 1; c < xDisplacement; c++) {
+                    int x = origin.getX() + c;
+                    int y = origin.getY() + c;
+                    if (this.getPieceAt(new Square(x, y)) != null) {
+                        return true;
+                    }
+                }
+            } else {
+                for (int c = 1; c < xDisplacement; c++) {
+                    int x = origin.getX() + c;
+                    int y = origin.getY() - c;
+                    if (this.getPieceAt(new Square(x, y)) != null) {
+                        return true;
+                    }
+                }
+            }
+        } else {
+            if (yDisplacement > 0) {
+                for (int c = 1; c < Math.abs(xDisplacement); c++) {
+                    int x = origin.getX() - c;
+                    int y = origin.getY() + c;
+                    if (this.getPieceAt(new Square(x, y)) != null) {
+                        return true;
+                    }
+                }
+            } else {
+                for (int c = 1; c < Math.abs(xDisplacement); c++) {
+                    int x = origin.getX() - c;
+                    int y = origin.getY() - c;
+                    if (this.getPieceAt(new Square(x, y)) != null) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Overrides object comparison method.
+     * @param o Object to compare to.
+     * @return True if equal, else false.
+     */
+    public boolean equals(Object o) {
+        if (o instanceof BoardState) {
+            BoardState other = (BoardState)o;
+            if (other.toFEN().equals(this.toFEN())) return true;
+        } else if (o instanceof String) {
+            String other = (String)o;
+            if (other.equals(this.toFEN())) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Accessor for full move counter.
+     * @return Full move counter.
+     */
+    public int getFullMoveCounter() {
+        return this.fullMoveCounter;
     }
 
 }

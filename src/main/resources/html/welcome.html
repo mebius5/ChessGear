@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ChessGear</title>
+        <link href="css/normalize.css" rel="stylesheet" type="text/css">
+        <link href="css/style.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="js/js.cookie.js"></script>
+    </head>
+    <body>
+
+        <div id="main-wrapper">
+            <header>
+                <div id="wordmark">
+                    ChessGear v1.0
+                </div>
+                <div id="current-user">
+                    | <a href="#" id="logout">logout</a>
+                </div>
+                <div id="nav">
+                    <ul>
+                        <li class="active-nav"><a href="index.html">Home</a></li>
+                        <li class="inactive-nav"><a href="import.html">Import</a></li>
+                        <li class="inactive-nav"><a href="account.html">Account</a></li>
+                        <div class="clear"></div>
+                    </ul>
+                </div>
+            </header>
+            <main>
+                
+                <form id="login" action="#">
+                    Username: <input type="text" id="username"><br>
+                    Password: <input type="password" id="password"><br>
+                    <input type="submit" id="login-button" value="log in">
+                    <input type="button" id="register-button" value="register">
+                </form>
+
+            </main>
+
+            <footer>
+                &copy;ChessGear 2015
+            </footer>
+
+        </div>
+
+    </body>
+
+    <script type="text/javascript" src="js/welcome.js"></script>
+</html>
