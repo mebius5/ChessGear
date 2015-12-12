@@ -1,4 +1,4 @@
-/**
+package com.chessgear.game; /**
  * Created by Grady Xiao on 10/24/15.
  * JUnit Test for Move.java
  */

@@ -75,8 +75,7 @@ public class PGNParser {
             // Parse the tags.
             List<Tag> tags = parseTags(this.pgn);
 
-            if(tags.size()<=3){
-                System.out.println(this.pgn);
+            if(tags.size()<=2){
                 throw new PGNParseException("PGN string must have at least tags for blackPlayerName, whitePlayerName, and result.");
             }
 
@@ -451,7 +450,7 @@ public class PGNParser {
      * @param token String for which to find last numeric index.
      * @return Last numeric index.
      */
-    public static int getLastNumericIndex(String token) {
+    private static int getLastNumericIndex(String token) {
         int lastIndex = 0;
         for (int c = 0; c < token.length(); c++) {
             if (Character.isDigit(token.charAt(c))) lastIndex = c;
@@ -470,11 +469,11 @@ public class PGNParser {
         /**
          * Name of the tag.
          */
-        private String name;
+        private final String name;
         /**
          * Value of the tag.
          */
-        private String value;
+        private final String value;
 
         /**
          * Field-based constructor.

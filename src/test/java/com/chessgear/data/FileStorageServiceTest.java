@@ -1,9 +1,8 @@
 package com.chessgear.data;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.util.List;
 import java.util.Random;
 
 import static org.junit.Assert.*;
@@ -161,28 +160,19 @@ public class FileStorageServiceTest {
             
             //check that we can well fetch back
             assertEquals(fss.fetchFileContent(user, "hello.pgn"), "blublabli");
-            
-            //and check that we can fetch a representative stream also
-            
-            InputStream is = fss.downloadFile(user, "hello.pgn");
-            
-            //tip found on http://stackoverflow.com/questions/309424/read-convert-an-inputstream-to-a-string
-            java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
-            String fetched =  s.hasNext() ? s.next() : "";
-            s.close();
+
+            InputStream is = fss.downloadFile(user,"hello.pgn");
+            assertEquals(fss.readInputStreamIntoString(is),"blublabli");
+
             is.close();
-            
-            assertEquals(fetched, "blublabli");
-            
             DatabaseServiceTestTool.destroyFileStorageService(fss);
-            
+
         } catch (IOException e) {
             e.printStackTrace();
             fail();
         }
-        
-        
     }
+
     
     @Test
     public void testAddFilesThrowsExceptionOnNonexistentUser(){

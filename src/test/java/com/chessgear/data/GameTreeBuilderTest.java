@@ -1,20 +1,26 @@
-/**
- * Created by GradyXiao on 12/1/15.
- */
-import static org.junit.Assert.*;
+package com.chessgear.data;
 
-import com.chessgear.analysis.EngineResult;
+import com.chessgear.data.GameTreeBuilder;
 import com.chessgear.data.GameTreeNode;
+import com.chessgear.data.PGNParseException;
 import com.chessgear.data.PGNParser;
 import com.chessgear.game.BoardState;
-import com.chessgear.game.Move;
+import com.chessgear.game.PieceType;
+import com.chessgear.game.Player;
+import jdk.nashorn.internal.runtime.ECMAException;
 import org.junit.Before;
 import org.junit.Test;
 
-/***
- * Test for GameTreeNode.java
+import java.util.List;
+
+import static org.junit.Assert.*;
+
+/**
+ * Test cases for GameTreeBuilder class.
+ * Created by Ran on 11/5/2015.
  */
-public class GameTreeNodeTest {
+public class GameTreeBuilderTest {
+
     private String testPGN;
 
     @Before
@@ -39,51 +45,30 @@ public class GameTreeNodeTest {
     }
 
     @Test
-    public void testGameTreeNode(){
+    public void testGameTreeBuilder() {
+
         try {
+
             PGNParser parser = new PGNParser(this.testPGN);
-            BoardState startingBoardState = parser.getListOfBoardStates().get(0);
-            BoardState nextBoardState = parser.getListOfBoardStates().get(1);
-            Move lastMove = parser.getBlackHalfMoves().get(0);
-            EngineResult engineResult = new EngineResult();
-            int id = 0;
-            int multiplicity = 0;
+            GameTreeBuilder testBuilder = new GameTreeBuilder(parser.getListOfBoardStates(), parser.getWhiteHalfMoves(), parser.getBlackHalfMoves());
 
-            GameTreeNode gameTreeNode = new GameTreeNode(id);
-            assertEquals(gameTreeNode.getId(),id);
-            assertEquals(gameTreeNode.isRoot(),true);
+            List<GameTreeNode> gameTreeNodes = testBuilder.getListOfNodes();
+            assertEquals(gameTreeNodes.size(), 129);
+            BoardState startingBoardState = gameTreeNodes.get(0).getBoardState();
+            assertEquals(startingBoardState.toFEN(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 
-            gameTreeNode.setBoardState(startingBoardState);
-            assertEquals(gameTreeNode.getBoardState().toFEN(), startingBoardState.toFEN());
+            assertEquals(gameTreeNodes.get(1).getBoardState().toFEN(), "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1");
+            assertEquals(gameTreeNodes.get(1).getLastMoveMade().getWhoMoved(), Player.WHITE);
+            assertEquals(gameTreeNodes.get(1).getLastMoveMade().getPieceType(), PieceType.KNIGHT);
+            assertEquals(gameTreeNodes.get(1).getLastMoveMade().getDestination().toString(), "f3");
 
-            gameTreeNode.setLastMoveMade(lastMove);
-            assertEquals(gameTreeNode.getLastMoveMade(),lastMove);
+            GameTreeBuilder testBuilder2 = new GameTreeBuilder(parser);
+            assertEquals(testBuilder2.getListOfNodes(),testBuilder.getListOfNodes());
 
-            id++;
-            gameTreeNode.setId(id);
-            assertEquals(gameTreeNode.getId(),id);
-
-            gameTreeNode.setEngineResult(engineResult);
-            assertEquals(gameTreeNode.getEngineResult(),engineResult);
-
-            gameTreeNode.setMultiplicity(multiplicity);
-            assertEquals(gameTreeNode.getMultiplicity(), multiplicity);
-            gameTreeNode.incrementMultiplicity();
-            assertEquals(gameTreeNode.getMultiplicity(), ++multiplicity);
-
-            GameTreeNode parentNode = new GameTreeNode(0);
-            GameTreeNode childNode = new GameTreeNode(2);
-            gameTreeNode.setParent(parentNode);
-            gameTreeNode.addChild(childNode);
-            assertEquals(gameTreeNode.isLeaf(), false);
-            assertEquals(gameTreeNode.isRoot(), false);
-            assertEquals(gameTreeNode.getParent(),parentNode);
-            assertEquals(gameTreeNode.getChildren().get(0),childNode);
-
+        } catch (Exception e) {
+            fail();
         }
-        catch (Exception e){
-            e.printStackTrace();
-            fail("Should not have thrown exception during testGameTreeNode. ");
-        }
+
     }
+
 }

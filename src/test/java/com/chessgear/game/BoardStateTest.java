@@ -1,3 +1,5 @@
+package com.chessgear.game;
+
 import com.chessgear.data.PGNParser;
 import com.chessgear.game.*;
 import org.junit.Before;

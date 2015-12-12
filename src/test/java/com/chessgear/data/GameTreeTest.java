@@ -1,4 +1,4 @@
-/**
+package com.chessgear.data; /**
  * Created by GradyXiao on 10/24/15.
  * JUnit Test for GameTree.java
  */

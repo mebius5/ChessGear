@@ -20,7 +20,7 @@ import static com.chessgear.data.GameTreeNode.NodeProperties;
  */
 public class DatabaseWrapper {
 
-    private static DatabaseService service = DatabaseService.getInstanceOf();
+    private final static DatabaseService service = DatabaseService.getInstanceOf();
 
     /**
      * Adds a new user to the database.
@@ -116,6 +116,9 @@ public class DatabaseWrapper {
 
         // Get the root node, and put it into the mapping.
         GameTreeNode root = getGameTreeNode(username, service.getRoot(username));
+        if(root==null){
+            throw new NullPointerException("GameTree not found for the user");
+        }
         tree.setRoot(root);
         nodeMapping.put(root.getId(), root);
 

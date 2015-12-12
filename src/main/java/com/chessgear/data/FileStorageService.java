@@ -5,6 +5,9 @@
 
 package com.chessgear.data;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,10 @@ public class FileStorageService {
     private static DatabaseService db;
     private static FileStorageService instance;
 
+    //Logger
+    private static final Logger logger = LoggerFactory.getLogger(FileStorageService.class);
+
+
     /**
      * Should be called directly for tests only. Construct a small utility to manage server files.
      * 
@@ -38,13 +45,16 @@ public class FileStorageService {
 
         File general = new File(DATA_DIRECTORY_NAME);
         if(!general.exists())
-            general.mkdir();
+            if(!general.mkdir()){
+                throw new IllegalArgumentException("General directory cannot be made");
+            }
 
         root = new File(DATA_DIRECTORY_NAME + File.separator + FILE_DIRECTORY_NAME + rootDirectorySuffix);
         if(!root.exists())
-            root.mkdir();
-
-        this.db = db;
+            if(!root.mkdir()){
+                throw new IllegalArgumentException("Root directory cannot be made");
+            }
+        FileStorageService.db = db;
     }
 
     /**
@@ -80,7 +90,9 @@ public class FileStorageService {
                 deleteRecursively(ff);
         }
 
-        f.delete();
+        if(!f.delete()){
+            logger.error(f.getName()+" cannot be deleted");
+        }
     }
 
     /**
@@ -164,9 +176,12 @@ public class FileStorageService {
         StringBuilder sb = new StringBuilder();
 
         String line;
-        while ((line = br.readLine()) != null) {
+        if((line=br.readLine())!=null){
             sb.append(line);
+        }
+        while ((line = br.readLine()) != null) {
             sb.append(System.lineSeparator());
+            sb.append(line);
         }
         br.close();
 
@@ -189,7 +204,9 @@ public class FileStorageService {
         if(!out.exists())
             throw new IllegalArgumentException("Non existent file");
 
-        out.delete();
+        if(!out.delete()){
+            logger.error(out.getName()+" cannot be deleted");
+        }
     }
 
     /**
@@ -209,13 +226,15 @@ public class FileStorageService {
         //check if the user already has a folder
         File userDir = new File(root.getPath() + File.separator + username);
         if(!userDir.exists())
-            userDir.mkdir();
+            if(!userDir.mkdir()){
+                logger.error("UserDir: "+userDir.getName()+" cannot be created");
+            }
 
         File toStore = new File(userDir.getPath() + File.separator + fileName);
         FileOutputStream fos;
         fos = new FileOutputStream(toStore);
 
-        int read = 0;
+        int read;
         byte[] bytes = new byte[1024];
 
         while ((read = is.read(bytes)) != -1)
@@ -242,7 +261,9 @@ public class FileStorageService {
         //check if the user already has a folder
         File userDir = new File(root.getPath() + File.separator + username);
         if(!userDir.exists())
-            userDir.mkdir();
+            if(!userDir.mkdir()){
+                logger.error("UserDir: "+userDir.getName()+" cannot be created");
+            }
 
         File toStore = new File(userDir.getPath() + File.separator + fileName);
 
@@ -259,9 +280,12 @@ public class FileStorageService {
     public static String readInputStreamIntoString(InputStream stream) {
         StringBuilder result = new StringBuilder();
         Scanner scanner = new Scanner(stream);
-        while (scanner.hasNextLine()) {
+        if(scanner.hasNextLine()) {
             result.append(scanner.nextLine());
+        }
+        while (scanner.hasNextLine()) {
             result.append(System.lineSeparator());
+            result.append(scanner.nextLine());
         }
         scanner.close();
         return result.toString();

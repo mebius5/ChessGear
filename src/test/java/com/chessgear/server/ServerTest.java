@@ -1,3 +1,5 @@
+package com.chessgear.server;
+
 import com.chessgear.server.Server;
 import com.chessgear.server.User;
 import org.junit.Before;

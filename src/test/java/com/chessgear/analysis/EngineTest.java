@@ -1,4 +1,4 @@
-/**
+package com.chessgear.analysis; /**
  * Created by GradyXiao on 11/8/15.
  */
 import static org.junit.Assert.*;

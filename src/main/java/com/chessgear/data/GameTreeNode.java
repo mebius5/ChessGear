@@ -332,15 +332,8 @@ public class GameTreeNode {
             GameTreeNode other = (GameTreeNode)o;
             if (this.boardState != null && other.boardState != null) {
                 return other.boardState.equals(this.boardState);
-            } else if (this.boardState == null && other.boardState == null) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+            } else return this.boardState == null && other.boardState == null;
+        } else return false;
     }
-    
 
 }
