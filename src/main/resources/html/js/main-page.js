@@ -53,7 +53,7 @@ function getNodeAndDisplayBoard(id, username) {
         var parsedResponse = jQuery.parseJSON(data);
         back = parsedResponse.previousNodeId;
         displayBoard(parsedResponse.boardstate);
-        displayChildren(parsedResponse.children);
+        displayChildren(parsedResponse);
     });
 }
 
@@ -74,8 +74,6 @@ function displayBoard(boardState) {
         var currentRowFEN = tokenizedRows[c];
         // For each character in the current row's FEN
         for (var d = 0; d < currentRowFEN.length; d++) {
-
-
             var currentChar = currentRowFEN.charAt(d);
             var numSpaces = parseInt(currentChar);
             // If numeric
@@ -102,11 +100,13 @@ function displayBoard(boardState) {
 /**
  * Displays the children from JSON data.
  */
-function displayChildren(children) {
+function displayChildren(response) {
+    var children = response.children;
     // Clears the list of children first.
     $("#children-list").html("");
     for (var c = 0; c < children.length; c++) {
-        $("#children-list").append("<li><a href='" + children[c].id + "' id='child-" + children[c].id + "'>" + children[c].name + "</a> - Eval : " + children[c].eval + "</li>");
+        var percentage = children[c].multiplicity / response.multiplicity * 100;
+        $("#children-list").append("<li><a href='" + children[c].id + "' id='child-" + children[c].id + "'>" + children[c].name + " | (" + children[c].eval + ") | " + percentage + "%</a></li>");
         $("#child-" + children[c].id).click(function (e) {
             e.preventDefault();
             getNodeAndDisplayBoard($(this).attr("href"), getLoggedInUser());

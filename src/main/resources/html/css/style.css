@@ -165,9 +165,23 @@ footer {
 }
 
 #children-wrapper > ul {
-    margin: 25px 0px 0px 25px;
+    margin: 25px 15px 0px 15px;
     padding: 0px;
     list-style-type: none;
+}
+
+#children-list > li > a {
+    text-decoration: none;
+    color: #000;
+}
+
+#children-list > li {
+    background-color: #aaa;
+    margin-bottom: 10px;
+}
+
+#children-list > li:hover {
+    background-color: #ddd;
 }
 
 .clear {
