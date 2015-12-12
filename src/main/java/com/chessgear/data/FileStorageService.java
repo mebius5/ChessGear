@@ -164,9 +164,12 @@ public class FileStorageService {
         StringBuilder sb = new StringBuilder();
 
         String line;
-        while ((line = br.readLine()) != null) {
+        if((line=br.readLine())!=null){
             sb.append(line);
+        }
+        while ((line = br.readLine()) != null) {
             sb.append(System.lineSeparator());
+            sb.append(line);
         }
         br.close();
 
@@ -259,9 +262,12 @@ public class FileStorageService {
     public static String readInputStreamIntoString(InputStream stream) {
         StringBuilder result = new StringBuilder();
         Scanner scanner = new Scanner(stream);
-        while (scanner.hasNextLine()) {
+        if(scanner.hasNextLine()) {
             result.append(scanner.nextLine());
+        }
+        while (scanner.hasNextLine()) {
             result.append(System.lineSeparator());
+            result.append(scanner.nextLine());
         }
         scanner.close();
         return result.toString();
