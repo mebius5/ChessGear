@@ -91,8 +91,8 @@
       <file leaf-file-name="User.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/server/User.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="5.1232877">
-              <caret line="191" column="37" selection-start-line="191" selection-start-column="37" selection-end-line="191" selection-end-column="37" />
+            <state vertical-scroll-proportion="-3.3476028">
+              <caret line="119" column="59" selection-start-line="119" selection-start-column="59" selection-end-line="119" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -925,12 +925,6 @@
       <option name="number" value="Default" />
       <updated>1443206600718</updated>
     </task>
-    <task id="LOCAL-00073" summary="Fixed user registration.">
-      <created>1449183094260</created>
-      <option name="number" value="00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1449183094260</updated>
-    </task>
     <task id="LOCAL-00074" summary="Fixed user registration.">
       <created>1449183711476</created>
       <option name="number" value="00074" />
@@ -1219,7 +1213,13 @@
       <option name="project" value="LOCAL" />
       <updated>1449979794247</updated>
     </task>
-    <option name="localTasksCounter" value="122" />
+    <task id="LOCAL-00122" summary="Updated comments.">
+      <created>1449979992203</created>
+      <option name="number" value="00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1449979992203</updated>
+    </task>
+    <option name="localTasksCounter" value="123" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1753,8 +1753,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/server/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="5.1232877">
-          <caret line="191" column="37" selection-start-line="191" selection-start-column="37" selection-end-line="191" selection-end-column="37" />
+        <state vertical-scroll-proportion="-3.3476028">
+          <caret line="119" column="59" selection-start-line="119" selection-start-column="59" selection-end-line="119" selection-end-column="59" />
           <folding />
         </state>
       </provider>

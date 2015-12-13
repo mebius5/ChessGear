@@ -21,17 +21,12 @@ public class User {
     
     //the properties of the user.
     private String password;
-    //if wanted, can add private String email here.
-    
-    //those two field are just references to to shorten the code.
+
     private static DatabaseService db = DatabaseService.getInstanceOf();
     private static FileStorageService fss = FileStorageService.getInstanceOf();
 
-    //Logger
+    // Logger
     private static final Logger logger = LoggerFactory.getLogger(User.class);
-
-
-    //in the end, only this constructor should remain
 
     /***
      * Private constructor to create a user
@@ -122,7 +117,7 @@ public class User {
             games.add(newGame);
         } catch (PGNParseException e) {
             e.printStackTrace();
-            logger.error("Was not able to parse the file "+ fileName + " for user "+username);
+            logger.error("Was not able to parse the file " + fileName + " for user " + username);
         } catch (Exception e) {
             //TODO: check this, really ugly Exception.
             e.printStackTrace();
