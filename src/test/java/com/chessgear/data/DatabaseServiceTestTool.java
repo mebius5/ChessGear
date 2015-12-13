@@ -186,6 +186,10 @@ public class DatabaseServiceTestTool {
             Field f = DatabaseService.class.getDeclaredField("instance");
             f.setAccessible(true);
             f.set(null, replaceWith);
+            
+            f = User.class.getDeclaredField("db");
+            f.setAccessible(true);
+            f.set(null, DatabaseService.getInstanceOf());
         }
         catch(Exception e){
             e.printStackTrace();
@@ -197,13 +201,49 @@ public class DatabaseServiceTestTool {
         try{
             Field f = FileStorageService.class.getDeclaredField("instance"); //NoSuchFieldException
             f.setAccessible(true);
-            f.set(null, replaceWith);
+            f.set(null, replaceWith); 
+            
+            f = User.class.getDeclaredField("fss");
+            f.setAccessible(true);
+            f.set(null, FileStorageService.getInstanceOf());
         }
         catch(Exception e){
             e.printStackTrace();
             fail();
         }
     }
+    
+    public static void putGetInstanceOfBackToNormal(){
+        try{
+            Field f = DatabaseService.class.getDeclaredField("instance");
+            f.setAccessible(true);
+            f.set(null, null);
+            
+            f = FileStorageService.class.getDeclaredField("instance"); //NoSuchFieldException
+            f.setAccessible(true);
+            f.set(null, null);
+            
+            //now we update the db ref in fss
+            f = FileStorageService.class.getDeclaredField("db");
+            f.setAccessible(true);
+            f.set(null, DatabaseService.getInstanceOf());
+            
+            //now the refs in User
+            f = User.class.getDeclaredField("db");
+            f.setAccessible(true);
+            f.set(null, DatabaseService.getInstanceOf());
+            
+            f = User.class.getDeclaredField("fss");
+            f.setAccessible(true);
+            f.set(null, FileStorageService.getInstanceOf());
+            
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            fail();
+        }
+    }
+    
     /***
     
     @Deprecated

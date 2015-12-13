@@ -109,9 +109,9 @@ public class UserTest {
             );
 
 
+
+            DatabaseServiceTestTool.putGetInstanceOfBackToNormal();
             DatabaseServiceTestTool.destroyFileStorageService(fss);
-            DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(null);
-            DatabaseServiceTestTool.changeGetInstanceOfInFileStorageServiceClass(null);
         } catch (Exception e){
             e.printStackTrace();
             fail();
