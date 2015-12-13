@@ -3,8 +3,6 @@ package com.chessgear.data;
 import com.chessgear.analysis.Engine;
 import com.chessgear.analysis.EngineResult;
 import com.chessgear.analysis.OsUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,8 +13,6 @@ import java.util.List;
  */
 public class GameTree {
 
-    public static final char END_OF_CHILDREN = '$';
-    
     /**
      * Root node of the game tree.
      */
@@ -31,9 +27,6 @@ public class GameTree {
      * Counter for node ids.
      */
     private int nodeIdCounter;
-
-    //Logger
-    private static final Logger logger = LoggerFactory.getLogger(GameTree.class);
 
     /**
      * Initializes a new empty game tree.
