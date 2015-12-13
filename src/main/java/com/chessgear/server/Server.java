@@ -5,7 +5,7 @@ import com.chessgear.data.DatabaseService;
 import java.util.HashMap;
 
 /**
- * ChessGear server object, with no database integration.
+ * ChessGear server.
  * Created by Ran on 12/4/2015.
  */
 public class Server {

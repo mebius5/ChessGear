@@ -10,28 +10,23 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * User object, with no database integration.
+ * User object.
  * Created by Ran on 12/4/2015.
  */
 public class User {
 
-    private GameTree gameTree;    // in the end, this field should be final
+    private GameTree gameTree;
     private final List<Game> games;
     private final String username;
     
     //the properties of the user.
     private String password;
-    //if wanted, can add private String email here.
-    
-    //those two field are just references to to shorten the code.
+
     private static DatabaseService db = DatabaseService.getInstanceOf();
     private static FileStorageService fss = FileStorageService.getInstanceOf();
 
-    //Logger
+    // Logger
     private static final Logger logger = LoggerFactory.getLogger(User.class);
-
-
-    //in the end, only this constructor should remain
 
     /***
      * Private constructor to create a user
@@ -94,7 +89,6 @@ public class User {
      * @param pgn A PGN representing the game
      */
     public void addGame(String pgn){
-        //make a mokeupname
         String name = username + "_" + UUID.randomUUID().toString() + ".pgn";
         addGame(pgn, name);
     }
@@ -106,7 +100,7 @@ public class User {
      * @param fileName The name of the file.
      */
     public void addGame(String pgn, String fileName){
-        //first, we store safely the file
+        // First, store the pgn in a file.
         try {
             fss.addFile(username, fileName, pgn);
         } catch (Exception e) {
@@ -114,43 +108,27 @@ public class User {
             logger.error("Was not able to store file " + fileName + " for user " + username);
         }
         
-        //now we add the game to the list of game and to the tree
+        // Add game to tree and user's list of games
         try {
             PGNParser parser = new PGNParser(pgn);
             GameTreeBuilder treeBuilder = new GameTreeBuilder(parser);
             Game newGame = new Game(parser);
-            
-            //we modify the user's belonging.
             gameTree.addGame(treeBuilder.getListOfNodes(), username);
             games.add(newGame);
         } catch (PGNParseException e) {
             e.printStackTrace();
-            logger.error("Was not able to parse the file "+ fileName + " for user "+username);
+            logger.error("Was not able to parse the file " + fileName + " for user " + username);
         } catch (Exception e) {
             //TODO: check this, really ugly Exception.
             e.printStackTrace();
         } 
     }
     
-    /***
-     * DEPRECATED: modify directly the GameTree, not it's reference!
-     *
-     * Sets the gameTree to tree
-     * //@param //tree the gameTree to be set to
-     */
-    @Deprecated
-    /***
-    public void setGameTree(GameTree tree) {
-        this.gameTree = tree;
-    }
-     ***/
-    
     /**
      * Sets the password of an user, makes the necessary calls to update the database.
-     * 
      * @param newPassword The new password.
      */
-    public void setPassword(String newPassword){
+    public void setPassword(String newPassword) {
         this.password = newPassword;
         
         //make the changes in the database
@@ -179,7 +157,7 @@ public class User {
      * 
      * @return An instance representing this user, for commodity.
      */
-    public static User registerNewUser(String username, String password){
+    public static User registerNewUser(String username, String password) {
         if (db.userExists(username))
             throw new IllegalArgumentException("user already exists");
         
@@ -189,27 +167,24 @@ public class User {
     }
     
     /**
-     * This methods fetches the database and creates a handy representation of user.
-     * Some call should be made to contol the validity of the password after that.
-     * 
+     * Factory method for user; builds from database information.
      * @param username The name of the user.
-     * 
-     * @return A handy representation of an User.
+     * @return User object built from database.
      */
-    public static User getUser(String username){
+    public static User getUser(String username) {
         logger.info("Building user " + username + " from database!");
 
         if(!db.userExists(username))
             throw new IllegalArgumentException("user does not exist in the database");
         
-        // first we fetch basic data.
+        // Fetch basic data from database.
         User toReturn = new User(username);
         toReturn.password = db.fetchUserProperties(username).get(Property.PASSWORD);
         
-        // now we reconstruct its gametree
+        // Reconstruct gameTree from database.
         toReturn.gameTree = DatabaseWrapper.getInstance().getGameTree(username);
         
-        //we reconstruct the list of all it's games
+        // Reconstruct list of games.
         for(String filename: fss.getFilesFor(username)){
             try {
                 String fileContent;

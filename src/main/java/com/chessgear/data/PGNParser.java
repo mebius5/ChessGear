@@ -59,7 +59,7 @@ public class PGNParser {
      * @throws PGNParseException PGN couldn't be parsed.
      */
     public PGNParser(String pgn) throws PGNParseException {
-        if(pgn==null){
+        if (pgn == null) {
             throw new PGNParseException("Null PGN string.");
         }
         this.pgn = pgn;
