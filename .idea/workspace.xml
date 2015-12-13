@@ -91,8 +91,8 @@
       <file leaf-file-name="User.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/server/User.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.14554794">
-              <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+            <state vertical-scroll-proportion="5.1232877">
+              <caret line="191" column="37" selection-start-line="191" selection-start-column="37" selection-end-line="191" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -925,12 +925,6 @@
       <option name="number" value="Default" />
       <updated>1443206600718</updated>
     </task>
-    <task id="LOCAL-00072" summary="Front-end branch.">
-      <created>1449176767914</created>
-      <option name="number" value="00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1449176767914</updated>
-    </task>
     <task id="LOCAL-00073" summary="Fixed user registration.">
       <created>1449183094260</created>
       <option name="number" value="00073" />
@@ -1219,7 +1213,13 @@
       <option name="project" value="LOCAL" />
       <updated>1449956270934</updated>
     </task>
-    <option name="localTasksCounter" value="121" />
+    <task id="LOCAL-00121" summary="Updated comments.">
+      <created>1449979794246</created>
+      <option name="number" value="00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1449979794247</updated>
+    </task>
+    <option name="localTasksCounter" value="122" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1269,6 +1269,7 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32540542" sideWeight="0.49394855" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30228758" sideWeight="0.47579426" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31862745" sideWeight="0.5181543" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -1288,7 +1289,6 @@
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328594" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39968404" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30228758" sideWeight="0.47579426" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25750396" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2777778" sideWeight="0.618003" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24583964" sideWeight="0.50653595" order="6" side_tool="true" content_ui="tabs" />
@@ -1335,7 +1335,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added more coverage to GameTreeTest.java&#10;Tried to update Javadoc, but have some errors still." />
     <MESSAGE value="Modified GameTree to also calculate multiplicity for the root" />
     <MESSAGE value="Front-end changes." />
     <MESSAGE value="Added Result.toString()" />
@@ -1360,7 +1359,8 @@
     <MESSAGE value="Removed dead code." />
     <MESSAGE value="Front-end tweaks." />
     <MESSAGE value="Change to UserTest." />
-    <option name="LAST_COMMIT_MESSAGE" value="Change to UserTest." />
+    <MESSAGE value="Updated comments." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated comments." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1753,8 +1753,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/server/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14554794">
-          <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+        <state vertical-scroll-proportion="5.1232877">
+          <caret line="191" column="37" selection-start-line="191" selection-start-column="37" selection-end-line="191" selection-end-column="37" />
           <folding />
         </state>
       </provider>
