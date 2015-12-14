@@ -207,10 +207,10 @@ public class DatabaseService {
         if(v == null)
             throw new IllegalArgumentException("args should not be null");
 
-        String cmd = "UPDATE User SET "+p.toString().toLowerCase()+"='"+v+"' WHERE username='"+username+"';";
+        String cmd = "UPDATE User SET "+p.toString().toLowerCase()+"=:v WHERE username=:username;";
         
         Connection conn = database.open();
-        conn.createQuery(cmd).executeUpdate();
+        conn.createQuery(cmd).addParameter("v", v).addParameter("username", username).executeUpdate();
         conn.close();
     }
 
