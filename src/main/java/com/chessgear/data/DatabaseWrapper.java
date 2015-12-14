@@ -133,7 +133,7 @@ public class DatabaseWrapper {
 
         // Get the root node, and put it into the mapping.
         GameTreeNode root = getGameTreeNode(username, service.getRoot(username));
-        if(root==null){
+        if (root == null) {
             throw new NullPointerException("GameTree not found for the user");
         }
         tree.setRoot(root);
