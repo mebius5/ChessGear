@@ -184,9 +184,11 @@ public class DatabaseService {
         if(!userExists(username))
             throw new IllegalArgumentException("user does not exists");
         
-        String cmd = "DELETE FROM User Where username='"+username+"';";
+        String cmd = "DELETE FROM User Where username = :username;";
         Connection conn = database.open();
-        conn.createQuery(cmd).executeUpdate();
+        
+        
+        conn.createQuery(cmd).addParameter("username", username).executeUpdate();
         conn.close(); 
     }
 
