@@ -84,7 +84,7 @@ public class DatabaseServiceNodeTest {
         assertEquals(db.fetchNodeProperty("gogol", 1).get(NodeProperties.CP), "0.78");
         
         //a second example with null value
-        db.addNode("gogol", 2, Collections.emptyMap());
+        db.addNode("gogol", 2, Collections.emptyMap());        
         assertTrue(db.fetchNodeProperty("gogol", 2).get(NodeProperties.CP) == null);
 
         db.addNode("gogol", 0, prop);

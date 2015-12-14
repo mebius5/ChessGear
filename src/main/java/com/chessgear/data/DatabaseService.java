@@ -161,11 +161,9 @@ public class DatabaseService {
         
         my.addParameter("username", username);
         for(User.Property p: User.Property.values()){
-            //if property not availaible, just put NULL into database
-            if(!attributes.containsKey(p))
-                my.addParameter(p.toString(), "NULL");
-            else
-                my.addParameter(p.toString(), attributes.get(p));
+            //this is a small trick, sql2o handles correctly null values (that is pu a NULL value in tuple).
+            String toPut = attributes.getOrDefault(p, null);
+            my.addParameter(p.toString(), toPut);
         }
         
         my.executeUpdate();
@@ -246,10 +244,14 @@ public class DatabaseService {
         if(!userExists(username))
             return false;
         
-        String cmd = "SELECT * FROM Node as N WHERE N.username = '" + username + "' and N.nodeId = " + nodeId;
+        String cmd = "SELECT * FROM Node as N WHERE N.username = :username and N.nodeId = :nodeId";
         
         Connection conn = database.open();
-        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).
+                addParameter("username", username).
+                addParameter("nodeId", nodeId).
+                executeAndFetchTable().
+                asList();
         conn.close();
         
         return !boh.isEmpty(); 
@@ -270,16 +272,21 @@ public class DatabaseService {
         if(childrenFrom(username, nodeId).size() != 0)
             throw new IllegalArgumentException("Node has children!");
         
-        String cmd = "DELETE FROM Node Where username='"+username+"' and nodeid="+nodeId+";";
+        String cmd = "DELETE FROM Node Where username = :username and nodeid = :nodeId;";
         Connection conn = database.open();
-        conn.createQuery(cmd).executeUpdate();
+        conn.createQuery(cmd).
+            addParameter("username", username).
+            addParameter("nodeId", nodeId).
+            executeUpdate();
         
-        cmd = "DELETE FROM ParentOf Where username='"+username+"' and childid="+nodeId+";";
-        conn.createQuery(cmd).executeUpdate();
+        //if no parent, then this query won't do any damage.
+        cmd = "DELETE FROM ParentOf Where username = :username and childid = :nodeId;";
+        conn.createQuery(cmd).
+            addParameter("username", username).
+            addParameter("nodeId", nodeId).
+            executeUpdate();
         
         conn.close();
-        
-
     }
     
     /**
@@ -296,16 +303,19 @@ public class DatabaseService {
         if(!userExists(username))
             throw new IllegalArgumentException("The user does not exists");
         
-        String cmd = "SELECT * FROM User as S where S.username = '"+username+"'";
+        String cmd = "SELECT * FROM User as S where S.username = :username";
         
         Connection conn = database.open();
-        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).
+                addParameter("username", username).
+                executeAndFetchTable().asList();
         conn.close();
-                
+        
+        //now we put the result in a cute map
         HashMap<Property, String> toReturn = new HashMap<>();
         
         for(Property pr: Property.values()){
-            //has to be flexiple with NULL values
+            //has to be flexible with NULL values
             String value = (boh.get(0).get(pr.toString().toLowerCase()) == null)? 
                     null :
                     boh.get(0).get(pr.toString().toLowerCase()).toString();
@@ -331,10 +341,15 @@ public class DatabaseService {
         if(v == null)
             throw new IllegalArgumentException("args should not be null");
 
-        String cmd = "UPDATE Node SET "+p.toString().toLowerCase()+"='"+v+"' WHERE username = '"+username+"' AND nodeid="+nodeId+";";
+        //note: no need to SQL inject the property name. We trust our own program
+        String cmd = "UPDATE Node SET "+p.toString().toLowerCase()+" = :v WHERE username = :username AND nodeid = :nodeId;";
         
         Connection conn = database.open();
-        conn.createQuery(cmd).executeUpdate();
+        conn.createQuery(cmd).
+            addParameter("v", v).
+            addParameter("username",  username).
+            addParameter("nodeId", nodeId).executeUpdate();
+        
         conn.close();
     }
 
@@ -348,21 +363,23 @@ public class DatabaseService {
         if(!nodeExists(username, rootId))
             throw new IllegalArgumentException("Node does not exists in the database");
         
-        //check that the user has not already a tree TODO: use SQL trigger mechansim to make it better
-        String cmd = "SELECT * FROM Tree as T where T.username = '"+username+"'";
+        //check that the user has not already a tree
+        String cmd = "SELECT * FROM Tree as T where T.username = :username";
         
         Connection conn = database.open();
-        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).
+                addParameter("username", username).
+                executeAndFetchTable().asList();
         conn.close();
         
         if(!boh.isEmpty())
             throw new IllegalArgumentException("The user already has a game tree");
         
         //finally execute command
-        cmd = "INSERT INTO Tree Values('"+username+"', "+rootId+")";
+        cmd = "INSERT INTO Tree Values(:username, :rootId)";
         
         conn = database.open();
-        conn.createQuery(cmd).executeUpdate();
+        conn.createQuery(cmd).addParameter("username", username).addParameter("rootId", rootId).executeUpdate();
         conn.close();        
     }
     
@@ -386,22 +403,27 @@ public class DatabaseService {
         else if(properties == null)
             throw new IllegalArgumentException("properties cannot be null");
 
-        //constructing the sql command
-        StringBuilder cmdBuilder = new StringBuilder("INSERT INTO Node Values('"+username+"', "+nodeId);
-        for(GameTreeNode.NodeProperties P : GameTreeNode.NodeProperties.values()){
-            cmdBuilder.append(", ");
-            
-            //if property not availaible, should put NULL into database
-            if(!properties.containsKey(P))
-                cmdBuilder.append("NULL");
-            else
-                cmdBuilder.append("'" + properties.get(P) + "'");
+        //constructing the string command
+        StringBuilder cmdBuilder = new StringBuilder("INSERT INTO Node Values(:username, :nodeId");
+        for(GameTreeNode.NodeProperties p : GameTreeNode.NodeProperties.values()){
+            cmdBuilder.append(", :").append(p.toString());
         }
         cmdBuilder.append(");");
-        String cmd = cmdBuilder.toString();
         
         Connection conn = database.open();
-        conn.createQuery(cmd).executeUpdate();
+        
+        //now we fill the parameters
+        Query query = conn.createQuery(cmdBuilder.toString());
+        query.addParameter("username", username).addParameter("nodeId", nodeId);        
+        for(GameTreeNode.NodeProperties p : GameTreeNode.NodeProperties.values()){
+            //this is a small trick, sql2o handles correctly null values (that is pu a NULL value in tuple).
+            String toPut = properties.getOrDefault(p, null);
+            query.addParameter(p.toString(), toPut);
+        }
+        
+        //finally we can execute the command
+        query.executeUpdate();
+
         conn.close();
     }
 
@@ -420,18 +442,23 @@ public class DatabaseService {
         if(parentId == childId)
             throw new IllegalArgumentException("parent cannot be it's own child (and vice-versa)");
         
-        
         //check that the child has no parent yet
-        String cmd = "SELECT * FROM ParentOf as P WHERE P.childId = " + childId + " and P.username = '" + username + "'";
+        String cmd = "SELECT * FROM ParentOf as P WHERE P.childId = :childId and P.username = :username";
         Connection conn = database.open();
-        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).
+                addParameter("childId", childId).
+                addParameter("username", username).
+                executeAndFetchTable().asList();
         
         if(!boh.isEmpty())
             throw new IllegalArgumentException("this child already has a parent!");
 
         //now we can execute the command
-        cmd = "INSERT INTO ParentOf Values('"+username+"', "+parentId+", "+childId+")";
-        conn.createQuery(cmd).executeUpdate();
+        cmd = "INSERT INTO ParentOf Values(:username, :parentId, :childId)";
+        conn.createQuery(cmd).addParameter("username", username).
+            addParameter("parentId", parentId).
+            addParameter("childId", childId).
+                executeUpdate();
         conn.close();
     }
 
@@ -446,10 +473,12 @@ public class DatabaseService {
         if(!userExists(username))
             throw new IllegalArgumentException("Use does not exists in the database");
 
-        String cmd = "SELECT rootNodeId FROM Tree as T where T.username = '"+username+"'";
+        String cmd = "SELECT rootNodeId FROM Tree as T where T.username = :username";
         
         Connection conn = database.open();
-        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).
+                addParameter("username", username).
+                executeAndFetchTable().asList();
         conn.close();
                 
         if(boh.size() == 0)
@@ -465,10 +494,12 @@ public class DatabaseService {
      * @return true if user does have tree in database or false elsewise
      */
     public boolean hasRoot(String username){
-        String cmd = "SELECT rootNodeId FROM Tree as T where T.username = '"+username+"'";
+        String cmd = "SELECT rootNodeId FROM Tree as T where T.username = :username";
         
         Connection conn = database.open();
-        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).
+                addParameter("username", username).
+                executeAndFetchTable().asList();
         conn.close();
                 
         return boh.size() != 0;
@@ -489,10 +520,13 @@ public class DatabaseService {
         if(!nodeExists(username, nodeid))
             throw new IllegalArgumentException("The user or node does not exists");
         
-        String cmd = "SELECT * FROM Node as N where N.username = '"+username+"' and N.nodeid = '"+nodeid+"'";
+        String cmd = "SELECT * FROM Node as N where N.username = :username and N.nodeid = :nodeId";
         
         Connection conn = database.open();
-        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).
+                addParameter("username", username).
+                addParameter("nodeId", nodeid).
+                executeAndFetchTable().asList();
         conn.close();
                 
         HashMap<NodeProperties, String> toReturn = new HashMap<>();
@@ -521,10 +555,13 @@ public class DatabaseService {
         if(!nodeExists(username, parentId))
             throw new IllegalArgumentException("Use does not exists in the database");
         
-        String cmd = "SELECT childId FROM ParentOf as P where P.username = '"+username+"' and P.parentId = "+parentId;
+        String cmd = "SELECT childId FROM ParentOf as P where P.username = :username and P.parentId = :parentId";
         
         Connection conn = database.open();
-        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).
+                addParameter("username", username).
+                addParameter("parentId", parentId).
+                executeAndFetchTable().asList();
         conn.close();
         
         ArrayList<Integer> toReturn = new ArrayList<Integer>();
@@ -545,10 +582,13 @@ public class DatabaseService {
         if(!nodeExists(username, childId))
             throw new IllegalArgumentException("node does not exists in the database");
         
-        String cmd = "SELECT parentId FROM ParentOf as P where P.username = '"+username+"' and P.childId = "+childId;
+        String cmd = "SELECT parentId FROM ParentOf as P where P.username = :username and P.childId = :childId";
         
         Connection conn = database.open();
-        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).
+                addParameter("username", username).
+                addParameter("childId", childId).
+                executeAndFetchTable().asList();
         conn.close();
         
         if(boh.isEmpty())
