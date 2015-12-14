@@ -225,10 +225,10 @@ public class DatabaseService {
         if(username == null)
             return false;
         
-        String cmd = "SELECT S.username FROM User as S where S.username = '"+username+"'";
+        String cmd = "SELECT S.username FROM User as S where S.username = :username";
         
         Connection conn = database.open();
-        List<Map<String, Object>> boh = conn.createQuery(cmd).executeAndFetchTable().asList();
+        List<Map<String, Object>> boh = conn.createQuery(cmd).addParameter("username", username).executeAndFetchTable().asList();
         conn.close();
         
         return !boh.isEmpty();
