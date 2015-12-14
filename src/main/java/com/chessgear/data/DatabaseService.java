@@ -4,6 +4,7 @@ import com.chessgear.data.GameTreeNode.NodeProperties;
 import com.chessgear.server.User;
 import com.chessgear.server.User.Property;
 import org.sql2o.Connection;
+import org.sql2o.Query;
 import org.sql2o.Sql2o;
 import org.sqlite.SQLiteDataSource;
 
@@ -145,23 +146,30 @@ public class DatabaseService {
         
         if(userExists(username))
             throw new IllegalArgumentException("User with same superkey already exists");
-        
-        //constructing the sql command
-        StringBuilder cmdBuilder = new StringBuilder("INSERT INTO User Values('"+username+"'");
-        for(User.Property P : User.Property.values()){
-            cmdBuilder.append(", ");
-            
-            //if property not availaible, should put NULL into database
-            if(!attributes.containsKey(P))
-                cmdBuilder.append("NULL");
-            else
-                cmdBuilder.append("'" + attributes.get(P) + "'");
+                
+        //first pass: create the SQL
+        StringBuilder cmdBuilder = new StringBuilder("INSERT INTO User Values(:username");
+        for(User.Property p : User.Property.values()){
+            cmdBuilder.append(", :").append(p.toString());
         }
         cmdBuilder.append(");");
-        String cmd = cmdBuilder.toString();
         
+        
+        //second pass: put args in the SQL String
         Connection conn = database.open();
-        conn.createQuery(cmd).executeUpdate();
+        Query my = conn.createQuery(cmdBuilder.toString());
+        
+        my.addParameter("username", username);
+        for(User.Property p: User.Property.values()){
+            //if property not availaible, just put NULL into database
+            if(!attributes.containsKey(p))
+                my.addParameter(p.toString(), "NULL");
+            else
+                my.addParameter(p.toString(), attributes.get(p));
+        }
+        
+        my.executeUpdate();
+
         conn.close();
     }
 
