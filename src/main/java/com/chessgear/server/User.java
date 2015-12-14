@@ -88,7 +88,7 @@ public class User {
      * 
      * @param pgn A PGN representing the game
      */
-    public void addGame(String pgn){
+    public void addGame(String pgn) throws PGNParseException, IOException {
         String name = username + "_" + UUID.randomUUID().toString() + ".pgn";
         addGame(pgn, name);
     }
@@ -99,7 +99,7 @@ public class User {
      * @param pgn A string representing the game in PGN format.
      * @param fileName The name of the file.
      */
-    public void addGame(String pgn, String fileName){
+    public void addGame(String pgn, String fileName) throws PGNParseException, IOException {
         // First, store the pgn in a file.
         try {
             fss.addFile(username, fileName, pgn);
@@ -109,19 +109,11 @@ public class User {
         }
         
         // Add game to tree and user's list of games
-        try {
-            PGNParser parser = new PGNParser(pgn);
-            GameTreeBuilder treeBuilder = new GameTreeBuilder(parser);
-            Game newGame = new Game(parser);
-            gameTree.addGame(treeBuilder.getListOfNodes(), username);
-            games.add(newGame);
-        } catch (PGNParseException e) {
-            e.printStackTrace();
-            logger.error("Was not able to parse the file " + fileName + " for user " + username);
-        } catch (Exception e) {
-            //TODO: check this, really ugly Exception.
-            e.printStackTrace();
-        } 
+        PGNParser parser = new PGNParser(pgn);
+        GameTreeBuilder treeBuilder = new GameTreeBuilder(parser);
+        Game newGame = new Game(parser);
+        gameTree.addGame(treeBuilder.getListOfNodes(), username);
+        games.add(newGame);
     }
     
     /**

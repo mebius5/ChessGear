@@ -3,6 +3,7 @@ package com.chessgear;
 import com.chessgear.data.FileStorageService;
 import com.chessgear.data.GameTree;
 import com.chessgear.data.GameTreeNode;
+import com.chessgear.data.PGNParseException;
 import com.chessgear.server.Server;
 import com.chessgear.server.User;
 import com.google.gson.JsonObject;
@@ -132,7 +133,14 @@ public class Bootstrap {
             if (server.userExists(user)) {
                 // Also add the game to the user's list of games.
                 User currentUser = server.getUser(user);
-                currentUser.addGame(pgn);
+                try {
+                    currentUser.addGame(pgn);
+                } catch (PGNParseException e) {
+                    response.status(400);
+                    JsonObject failureResponse = new JsonObject();
+                    failureResponse.addProperty("why", "Failed to parse PGN: " + e.getMessage());
+                    return failureResponse;
+                }
                 // Return response
                 response.status(201);
                 JsonObject successResponse = new JsonObject();

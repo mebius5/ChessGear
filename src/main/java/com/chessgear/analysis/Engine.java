@@ -1,10 +1,11 @@
 package com.chessgear.analysis;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.util.Scanner;
 import java.util.regex.MatchResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class to facilitate engine analysis.
@@ -50,30 +51,26 @@ public class Engine {
      * @return the EngineResult object containing the result of the analysis
      * @throws Exception throws an error if something wrong happens during analyseFEN()
      */
-    public EngineResult analyseFEN(String fen,int moveTime) throws Exception{
+    public EngineResult analyseFEN(String fen,int moveTime) throws IOException{
 
         //logger.info("Analyzing fen "+fen);
 
-        try {
-            EngineResult engineResult = new EngineResult(); //Results from the engine analysis
+        EngineResult engineResult = new EngineResult(); //Results from the engine analysis
 
-            String command;
-            command="position fen "+fen+"\n";
-            stdOutput.write(command);
-            stdOutput.flush();
+        String command;
+        command="position fen "+fen+"\n";
+        stdOutput.write(command);
+        stdOutput.flush();
 
-            command="go movetime "+moveTime+"\n";
-            stdOutput.write(command);
-            stdOutput.flush();
+        command="go movetime "+moveTime+"\n";
+        stdOutput.write(command);
+        stdOutput.flush();
 
-            boolean print = false; //Set to true to print
-            obtainResultAndMaybePrint(engineResult, print);
+        boolean print = false; //Set to true to print
+        obtainResultAndMaybePrint(engineResult, print);
 
-            return engineResult;
-        } catch (IOException e){
-            //e.printStackTrace();
-            throw e;
-        }
+        return engineResult;
+
     }
 
     /***
@@ -125,14 +122,9 @@ public class Engine {
      * Terminate the Engine process and closes the stream buffers
      * @throws Exception if close is unsuccessful.
      */
-    public void terminateEngine() throws Exception{
-        try {
-            stdInput.close();
-            stdOutput.close();
-            process.destroy();
-        }catch (Exception e){
-            e.printStackTrace();
-            throw e;
-        }
+    public void terminateEngine() throws IOException {
+        stdInput.close();
+        stdOutput.close();
+        process.destroy();
     }
 }

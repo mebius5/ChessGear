@@ -4,6 +4,7 @@ import com.chessgear.analysis.Engine;
 import com.chessgear.analysis.EngineResult;
 import com.chessgear.analysis.OsUtils;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class GameTree {
      * @param username the username of User that will add game to
      * @throws Exception if error occurs while adding a game to gameTree
      */
-    public void addGame(List<GameTreeNode> gameTreeNodes, String username) throws Exception {
+    public void addGame(List<GameTreeNode> gameTreeNodes, String username) throws IOException {
         OsUtils osUtils = new OsUtils();
         Engine engine = new Engine(osUtils.getBinaryLocation());
         this.root.incrementMultiplicity();
