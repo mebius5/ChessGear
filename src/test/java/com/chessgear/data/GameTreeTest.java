@@ -18,6 +18,7 @@ import static org.junit.Assert.*;
 /***
  * Test for GameTree.java
  */
+
 public class GameTreeTest {
     private String testPGN;
     private List<GameTreeNode> gameTreeNodes;

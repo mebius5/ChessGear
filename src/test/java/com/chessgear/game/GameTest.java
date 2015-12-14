@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
+
 public class GameTest {
     String testString;
 
@@ -47,7 +48,7 @@ public class GameTest {
             Game test = new Game(pgnParser);
             assertEquals(test.getWhitePlayerName(), pgnParser.getWhitePlayerName());
             assertEquals(test.getBlackPlayerName(), pgnParser.getBlackPlayerName());
-            assertTrue(test.getDateImported().equals(new Date()));
+            assertTrue(test.getDateImported() instanceof Date);
             assertEquals(test.getPgn(), pgnParser.getPGN());
             assertEquals(test.getResult(), pgnParser.getResult());
             assertEquals(test.getID(), 0);
