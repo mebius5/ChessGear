@@ -16,7 +16,7 @@ import javax.servlet.http.Part;
 
 import static spark.Spark.*;
 /**
- * Alternate bootstrap.
+ * Main class. Handles REST requests.
  * Created by Ran on 12/4/2015.
  */
 public class Bootstrap {

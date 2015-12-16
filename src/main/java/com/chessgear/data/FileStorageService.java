@@ -13,7 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public final class FileStorageService {
+/**
+ * File storage service class.
+ */
+public class FileStorageService {
 
     /*
      * Note: This is a pretty naïve implementation of a file storage system. To scale better, take a look at amazon S3 services
