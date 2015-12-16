@@ -24,6 +24,7 @@ import java.util.Map;
  *  <li> It just hides SQL implentation details.
  *  <li> The superkey (unique identifier) of an user is it's username.
  *  <li> The superkey of a node is the combination of it's owner and an unique integer id.
+ *  <li> It is SQL-injection safe
  * </ul>
  */
 public class DatabaseService {
