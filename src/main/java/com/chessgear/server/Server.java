@@ -8,7 +8,7 @@ import java.util.HashMap;
  * ChessGear server.
  * Created by Ran on 12/4/2015.
  */
-public class Server {
+public final class Server {
 
     private HashMap<String, User> users;
 

@@ -12,7 +12,7 @@ import java.util.Scanner;
  * PGN Parser class.
  * Created by Ran on 10/14/2015.
  */
-public class PGNParser {
+public final class PGNParser {
 
     /**
      * Minimum possible length of a line containing a tag.

@@ -13,7 +13,7 @@ import java.util.*;
  * User object.
  * Created by Ran on 12/4/2015.
  */
-public class User {
+public final class User {
 
     private GameTree gameTree;
     private final List<Game> games;

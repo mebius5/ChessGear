@@ -3,6 +3,8 @@ package com.chessgear.data;
 import com.chessgear.data.GameTreeNode.NodeProperties;
 import com.chessgear.server.User;
 import com.chessgear.server.User.Property;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 import org.sql2o.Query;
 import org.sql2o.Sql2o;
@@ -26,13 +28,16 @@ import java.util.Map;
  *  <li> The superkey of a node is the combination of it's owner and an unique integer id.
  * </ul>
  */
-public class DatabaseService {
+public final class DatabaseService {
     public static final String CANONICAL_DB_NAME = "chessgear.sql";
 
     private static DatabaseService instance;
     
     private final Sql2o database;    
     private final String databasePath;
+
+    // Logger
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseService.class);
 
     /**
      * Construct an easy-to-use representation of the database. If the database does not already exists,
@@ -47,10 +52,17 @@ public class DatabaseService {
         //check that data folder exists:
         File general = new File(FileStorageService.DATA_DIRECTORY_NAME);
         if(!general.exists())
-            general.mkdir();
+            if(!general.mkdir()){
+                IllegalArgumentException e = new IllegalArgumentException("Cannot make directory for "+general.getName());
+                logger.error(e.getMessage());
+                throw e;
+            }
         
-        if(prefix == null)
-            throw new IllegalArgumentException();
+        if(prefix == null) {
+            IllegalArgumentException e = new IllegalArgumentException("Null prefix for database");
+            logger.error(e.getMessage());
+            throw e;
+        }
 
         this.databasePath = FileStorageService.DATA_DIRECTORY_NAME + File.separator + prefix + CANONICAL_DB_NAME;
         this.database = prepareCuteDatabase(prefix);
@@ -141,12 +153,16 @@ public class DatabaseService {
      * @throws IllegalArgumentException If the username is null, already exists or the set of attributes is null.
      */
     public void addUser(String username, Map<Property,String> attributes) throws IllegalArgumentException{
-        if(username == null || attributes == null)
-            throw new IllegalArgumentException("args should not be null");
-        
-        if(userExists(username))
-            throw new IllegalArgumentException("User with same superkey already exists");
-                
+        if(username == null || attributes == null) {
+            IllegalArgumentException e = new IllegalArgumentException("args should not be null");
+            logger.error(e.getMessage());
+            throw e;
+        }
+        if(userExists(username)){
+            IllegalArgumentException e =  new IllegalArgumentException("User with same superkey already exists");
+            logger.error(e.getMessage());
+            throw e;
+        }
         //first pass: create the SQL
         StringBuilder cmdBuilder = new StringBuilder("INSERT INTO User Values(:username");
         for(User.Property p : User.Property.values()){
@@ -179,9 +195,12 @@ public class DatabaseService {
      * @throws IllegalArgumentException If the specified user does not exist in the database
      */
     public void deleteUser(String username) throws IllegalArgumentException{        
-        if(!userExists(username))
-            throw new IllegalArgumentException("user does not exists");
-        
+        if(!userExists(username)) {
+            IllegalArgumentException e =  new IllegalArgumentException("user does not exists");
+            logger.error(e.getMessage());
+            throw e;
+        }
+
         String cmd = "DELETE FROM User Where username = :username;";
         Connection conn = database.open();
         
@@ -200,11 +219,16 @@ public class DatabaseService {
      * @throws IllegalArgumentException If the user does not exists in the database or if the value is null.
      */
     public void updateUserProperty(String username, Property p, String v) throws IllegalArgumentException{
-        if(!userExists(username))
-            throw new IllegalArgumentException("specified user does not exists in database");
-        if(v == null)
-            throw new IllegalArgumentException("args should not be null");
-
+        if(!userExists(username)) {
+            IllegalArgumentException e =  new IllegalArgumentException("specified user does not exists in database");
+            logger.error(e.getMessage());
+            throw e;
+        }
+        if(v == null) {
+            IllegalArgumentException e =  new IllegalArgumentException("args should not be null");
+            logger.error(e.getMessage());
+            throw e;
+        }
         String cmd = "UPDATE User SET "+p.toString().toLowerCase()+"=:v WHERE username=:username;";
         
         Connection conn = database.open();
@@ -266,12 +290,16 @@ public class DatabaseService {
      * @throws IllegalArgumentException If the node does not exist in the database or the node has children
      */
     public void deleteNode(String username, int nodeId) throws IllegalArgumentException{        
-        if(!nodeExists(username, nodeId))
-            throw new IllegalArgumentException("Node does not exists");
-        
-        if(childrenFrom(username, nodeId).size() != 0)
-            throw new IllegalArgumentException("Node has children!");
-        
+        if(!nodeExists(username, nodeId)) {
+            IllegalArgumentException e = new IllegalArgumentException("Node does not exists");
+            logger.error(e.getMessage());
+            throw e;
+        }
+        if(childrenFrom(username, nodeId).size() != 0) {
+            IllegalArgumentException e =  new IllegalArgumentException("Node has children!");
+            logger.error(e.getMessage());
+            throw e;
+        }
         String cmd = "DELETE FROM Node Where username = :username and nodeid = :nodeId;";
         Connection conn = database.open();
         conn.createQuery(cmd).
@@ -300,9 +328,11 @@ public class DatabaseService {
      * @throws IllegalArgumentException If the user does not exist see {@link #userExists(String) userExists}
      */
     public Map<Property, String> fetchUserProperties(String username) throws IllegalArgumentException{        
-        if(!userExists(username))
-            throw new IllegalArgumentException("The user does not exists");
-        
+        if(!userExists(username)) {
+            IllegalArgumentException e =  new IllegalArgumentException("The user does not exists");
+            logger.error(e.getMessage());
+            throw e;
+        }
         String cmd = "SELECT * FROM User as S where S.username = :username";
         
         Connection conn = database.open();
@@ -336,11 +366,16 @@ public class DatabaseService {
      * @throws IllegalArgumentException If the user does not exists in the database or if the value is null.
      */
     public void updateNodeProperty(String username, int nodeId, NodeProperties p, String v) throws IllegalArgumentException{
-        if(!nodeExists(username, nodeId))
-            throw new IllegalArgumentException("specified node does not exists in database");
-        if(v == null)
-            throw new IllegalArgumentException("args should not be null");
-
+        if(!nodeExists(username, nodeId)){
+            IllegalArgumentException e = new IllegalArgumentException("specified node does not exists in database");
+            logger.error(e.getMessage());
+            throw e;
+        }
+        if(v == null) {
+            IllegalArgumentException e = new IllegalArgumentException("args should not be null");
+            logger.error(e.getMessage());
+            throw e;
+        }
         //note: no need to SQL inject the property name. We trust our own program
         String cmd = "UPDATE Node SET "+p.toString().toLowerCase()+" = :v WHERE username = :username AND nodeid = :nodeId;";
         

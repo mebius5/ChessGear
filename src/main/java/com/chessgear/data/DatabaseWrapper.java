@@ -18,7 +18,7 @@ import static com.chessgear.data.GameTreeNode.NodeProperties;
  * Adds some abstraction.
  * Created by Ran on 12/12/2015.
  */
-public class DatabaseWrapper {
+public final class DatabaseWrapper {
 
     private DatabaseService service;
     private static final DatabaseWrapper instance = new DatabaseWrapper(DatabaseService.getInstanceOf());
