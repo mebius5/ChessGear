@@ -12,7 +12,7 @@ public enum Player {
      * Returns the reverse of the current player.
      * @return If black, returns white. If white, returns black.
      */
-    public Player toggle() {
+    public final Player toggle() {
         if (this == WHITE) {
             return BLACK;
         } else {

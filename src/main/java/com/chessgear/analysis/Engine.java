@@ -11,7 +11,7 @@ import java.util.regex.MatchResult;
  * Class to facilitate engine analysis.
  * Created by Ran on 10/24/2015.
  */
-public class Engine {
+public final class Engine {
     private Process process; //Java process
 
     private BufferedReader stdInput; //Input from the Stock engine

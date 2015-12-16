@@ -4,7 +4,7 @@ package com.chessgear.analysis;
  * Modified version of code found on http://stackoverflow.com/questions/228477/how-do-i-programmatically-determine-operating-system-in-java
  * Used to determine the OS of the system and find location of the Stockfile binary file that corresponds to the OS system
  */
-public class OsUtils {
+public final class OsUtils {
 
     private boolean isWindows; //Determines whether the system is a Windows computer
     private boolean is64; //Determines whether the system is a 32-bit or 64-bit architecture

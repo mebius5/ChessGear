@@ -16,7 +16,7 @@ import java.util.Map;
  * Node class for GameTree.
  * Created by Ran on 10/8/2015.
  */
-public class GameTreeNode {
+public final class GameTreeNode {
 
     /**
      * Pointer to parent node.

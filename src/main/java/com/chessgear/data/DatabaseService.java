@@ -3,6 +3,8 @@ package com.chessgear.data;
 import com.chessgear.data.GameTreeNode.NodeProperties;
 import com.chessgear.server.User;
 import com.chessgear.server.User.Property;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 import org.sql2o.Query;
 import org.sql2o.Sql2o;
@@ -27,13 +29,16 @@ import java.util.Map;
  *  <li> It is SQL-injection safe
  * </ul>
  */
-public class DatabaseService {
+public final class DatabaseService {
     public static final String CANONICAL_DB_NAME = "chessgear.sql";
 
     private static DatabaseService instance;
     
     private final Sql2o database;    
     private final String databasePath;
+
+    // Logger
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseService.class);
 
     /**
      * Construct an easy-to-use representation of the database. If the database does not already exists,
@@ -48,10 +53,17 @@ public class DatabaseService {
         //check that data folder exists:
         File general = new File(FileStorageService.DATA_DIRECTORY_NAME);
         if(!general.exists())
-            general.mkdir();
+            if(!general.mkdir()){
+                IllegalArgumentException e = new IllegalArgumentException("Cannot make directory for "+general.getName());
+                logger.error(e.getMessage());
+                throw e;
+            }
         
-        if(prefix == null)
-            throw new IllegalArgumentException();
+        if(prefix == null) {
+            IllegalArgumentException e = new IllegalArgumentException("Null prefix for database");
+            logger.error(e.getMessage());
+            throw e;
+        }
 
         this.databasePath = FileStorageService.DATA_DIRECTORY_NAME + File.separator + prefix + CANONICAL_DB_NAME;
         this.database = prepareCuteDatabase(prefix);
@@ -65,12 +77,10 @@ public class DatabaseService {
         if(instance == null)
             try {
                 instance = new DatabaseService("");
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (IllegalArgumentException | IOException e) {
                 e.printStackTrace();
             }
-        
+
         return instance;
     }
 
@@ -84,7 +94,11 @@ public class DatabaseService {
         //check that data folder exists:
         File general = new File(FileStorageService.DATA_DIRECTORY_NAME);
         if(!general.exists())
-            general.mkdir();
+            if(!general.mkdir()){
+                IOException e = new IOException("Cannot make director for "+general.getName());
+                logger.error(e.getMessage());
+                throw e;
+            }
                 
         //create the source database object
         SQLiteDataSource source = new SQLiteDataSource();
@@ -142,12 +156,16 @@ public class DatabaseService {
      * @throws IllegalArgumentException If the username is null, already exists or the set of attributes is null.
      */
     public void addUser(String username, Map<Property,String> attributes) throws IllegalArgumentException{
-        if(username == null || attributes == null)
-            throw new IllegalArgumentException("args should not be null");
-        
-        if(userExists(username))
-            throw new IllegalArgumentException("User with same superkey already exists");
-                
+        if(username == null || attributes == null) {
+            IllegalArgumentException e = new IllegalArgumentException("args should not be null");
+            logger.error(e.getMessage());
+            throw e;
+        }
+        if(userExists(username)){
+            IllegalArgumentException e =  new IllegalArgumentException("User with same superkey already exists");
+            logger.error(e.getMessage());
+            throw e;
+        }
         //first pass: create the SQL
         StringBuilder cmdBuilder = new StringBuilder("INSERT INTO User Values(:username");
         for(User.Property p : User.Property.values()){
@@ -180,9 +198,12 @@ public class DatabaseService {
      * @throws IllegalArgumentException If the specified user does not exist in the database
      */
     public void deleteUser(String username) throws IllegalArgumentException{        
-        if(!userExists(username))
-            throw new IllegalArgumentException("user does not exists");
-        
+        if(!userExists(username)) {
+            IllegalArgumentException e =  new IllegalArgumentException("user does not exists");
+            logger.error(e.getMessage());
+            throw e;
+        }
+
         String cmd = "DELETE FROM User Where username = :username;";
         Connection conn = database.open();
         
@@ -201,11 +222,16 @@ public class DatabaseService {
      * @throws IllegalArgumentException If the user does not exists in the database or if the value is null.
      */
     public void updateUserProperty(String username, Property p, String v) throws IllegalArgumentException{
-        if(!userExists(username))
-            throw new IllegalArgumentException("specified user does not exists in database");
-        if(v == null)
-            throw new IllegalArgumentException("args should not be null");
-
+        if(!userExists(username)) {
+            IllegalArgumentException e =  new IllegalArgumentException("specified user does not exists in database");
+            logger.error(e.getMessage());
+            throw e;
+        }
+        if(v == null) {
+            IllegalArgumentException e =  new IllegalArgumentException("args should not be null");
+            logger.error(e.getMessage());
+            throw e;
+        }
         String cmd = "UPDATE User SET "+p.toString().toLowerCase()+"=:v WHERE username=:username;";
         
         Connection conn = database.open();
@@ -267,12 +293,16 @@ public class DatabaseService {
      * @throws IllegalArgumentException If the node does not exist in the database or the node has children
      */
     public void deleteNode(String username, int nodeId) throws IllegalArgumentException{        
-        if(!nodeExists(username, nodeId))
-            throw new IllegalArgumentException("Node does not exists");
-        
-        if(childrenFrom(username, nodeId).size() != 0)
-            throw new IllegalArgumentException("Node has children!");
-        
+        if(!nodeExists(username, nodeId)) {
+            IllegalArgumentException e = new IllegalArgumentException("Node does not exists");
+            logger.error(e.getMessage());
+            throw e;
+        }
+        if(childrenFrom(username, nodeId).size() != 0) {
+            IllegalArgumentException e =  new IllegalArgumentException("Node has children!");
+            logger.error(e.getMessage());
+            throw e;
+        }
         String cmd = "DELETE FROM Node Where username = :username and nodeid = :nodeId;";
         Connection conn = database.open();
         conn.createQuery(cmd).
@@ -301,9 +331,11 @@ public class DatabaseService {
      * @throws IllegalArgumentException If the user does not exist see {@link #userExists(String) userExists}
      */
     public Map<Property, String> fetchUserProperties(String username) throws IllegalArgumentException{        
-        if(!userExists(username))
-            throw new IllegalArgumentException("The user does not exists");
-        
+        if(!userExists(username)) {
+            IllegalArgumentException e =  new IllegalArgumentException("The user does not exists");
+            logger.error(e.getMessage());
+            throw e;
+        }
         String cmd = "SELECT * FROM User as S where S.username = :username";
         
         Connection conn = database.open();
@@ -337,11 +369,16 @@ public class DatabaseService {
      * @throws IllegalArgumentException If the user does not exists in the database or if the value is null.
      */
     public void updateNodeProperty(String username, int nodeId, NodeProperties p, String v) throws IllegalArgumentException{
-        if(!nodeExists(username, nodeId))
-            throw new IllegalArgumentException("specified node does not exists in database");
-        if(v == null)
-            throw new IllegalArgumentException("args should not be null");
-
+        if(!nodeExists(username, nodeId)){
+            IllegalArgumentException e = new IllegalArgumentException("specified node does not exists in database");
+            logger.error(e.getMessage());
+            throw e;
+        }
+        if(v == null) {
+            IllegalArgumentException e = new IllegalArgumentException("args should not be null");
+            logger.error(e.getMessage());
+            throw e;
+        }
         //note: no need to SQL inject the property name. We trust our own program
         String cmd = "UPDATE Node SET "+p.toString().toLowerCase()+" = :v WHERE username = :username AND nodeid = :nodeId;";
         
@@ -361,9 +398,11 @@ public class DatabaseService {
      * @param rootId The unique ID of the root (has only to be unique across nodes of the user)
      */
     public void addTree(String username, int rootId){
-        if(!nodeExists(username, rootId))
-            throw new IllegalArgumentException("Node does not exists in the database");
-        
+        if(!nodeExists(username, rootId)) {
+            IllegalArgumentException e = new IllegalArgumentException("Node does not exists in the database");
+            logger.error(e.getMessage());
+            throw e;
+        }
         //check that the user has not already a tree
         String cmd = "SELECT * FROM Tree as T where T.username = :username";
         
@@ -373,8 +412,11 @@ public class DatabaseService {
                 executeAndFetchTable().asList();
         conn.close();
         
-        if(!boh.isEmpty())
-            throw new IllegalArgumentException("The user already has a game tree");
+        if(!boh.isEmpty()) {
+            IllegalArgumentException e = new IllegalArgumentException("The user already has a game tree");
+            logger.error(e.getMessage());
+            throw e;
+        }
         
         //finally execute command
         cmd = "INSERT INTO Tree Values(:username, :rootId)";
@@ -397,12 +439,21 @@ public class DatabaseService {
      * @throws IllegalArgumentException If the node already exists or if the user does not exists.
      */
     public void addNode(String username, int nodeId, Map<GameTreeNode.NodeProperties, String> properties){
-        if(nodeExists(username, nodeId))
-            throw new IllegalArgumentException("Node already exists in database");
-        else if(!userExists(username))
-            throw new IllegalArgumentException("User does not exists");
-        else if(properties == null)
-            throw new IllegalArgumentException("properties cannot be null");
+        if(nodeExists(username, nodeId)) {
+            IllegalArgumentException e = new IllegalArgumentException("Node already exists in database");
+            logger.error(e.getMessage());
+            throw e;
+        }
+        else if(!userExists(username)){
+            IllegalArgumentException e =  new IllegalArgumentException("User does not exists");
+            logger.error(e.getMessage());
+            throw e;
+        }
+        else if(properties == null) {
+            IllegalArgumentException e =  new IllegalArgumentException("properties cannot be null");
+            logger.error(e.getMessage());
+            throw e;
+        }
 
         //constructing the string command
         StringBuilder cmdBuilder = new StringBuilder("INSERT INTO Node Values(:username, :nodeId");
@@ -438,11 +489,16 @@ public class DatabaseService {
      * @throws IllegalArgumentException if the child already has a parent. (In a tree, there is only one parent)
      */
     public void addChild(String username, int parentId, int childId){        
-        if(!nodeExists(username, parentId) || !nodeExists(username, childId))
-            throw new IllegalArgumentException("parent or child not present in database");
-        if(parentId == childId)
-            throw new IllegalArgumentException("parent cannot be it's own child (and vice-versa)");
-        
+        if(!nodeExists(username, parentId) || !nodeExists(username, childId)) {
+            IllegalArgumentException e =  new IllegalArgumentException("parent or child not present in database");
+            logger.error(e.getMessage());
+            throw e;
+        }
+        if(parentId == childId) {
+            IllegalArgumentException e = new IllegalArgumentException("parent cannot be it's own child (and vice-versa)");
+            logger.error(e.getMessage());
+            throw e;
+        }
         //check that the child has no parent yet
         String cmd = "SELECT * FROM ParentOf as P WHERE P.childId = :childId and P.username = :username";
         Connection conn = database.open();
@@ -451,8 +507,11 @@ public class DatabaseService {
                 addParameter("username", username).
                 executeAndFetchTable().asList();
         
-        if(!boh.isEmpty())
-            throw new IllegalArgumentException("this child already has a parent!");
+        if(!boh.isEmpty()) {
+            IllegalArgumentException e = new IllegalArgumentException("this child already has a parent!");
+            logger.error(e.getMessage());
+            throw e;
+        }
 
         //now we can execute the command
         cmd = "INSERT INTO ParentOf Values(:username, :parentId, :childId)";
@@ -471,8 +530,11 @@ public class DatabaseService {
      * @return The id of player game tree's roote.
      */
     public int getRoot(String username){
-        if(!userExists(username))
-            throw new IllegalArgumentException("Use does not exists in the database");
+        if(!userExists(username)) {
+            IllegalArgumentException e =  new IllegalArgumentException("Use does not exists in the database");
+            logger.error(e.getMessage());
+            throw e;
+        }
 
         String cmd = "SELECT rootNodeId FROM Tree as T where T.username = :username";
         
@@ -482,8 +544,11 @@ public class DatabaseService {
                 executeAndFetchTable().asList();
         conn.close();
                 
-        if(boh.size() == 0)
-            throw new IllegalArgumentException("This user has no gametree yet");
+        if(boh.size() == 0){
+            IllegalArgumentException e = new IllegalArgumentException("This user has no gametree yet");
+            logger.error(e.getMessage());
+            throw e;
+        }
   
         return (Integer) boh.get(0).get("rootnodeid");
     }
@@ -518,8 +583,11 @@ public class DatabaseService {
      */
     public Map<GameTreeNode.NodeProperties, String> fetchNodeProperty(String username, int nodeid){
 
-        if(!nodeExists(username, nodeid))
-            throw new IllegalArgumentException("The user or node does not exists");
+        if(!nodeExists(username, nodeid)) {
+            IllegalArgumentException e = new IllegalArgumentException("The user or node does not exists");
+            logger.error(e.getMessage());
+            throw e;
+        }
         
         String cmd = "SELECT * FROM Node as N where N.username = :username and N.nodeid = :nodeId";
         
@@ -553,8 +621,11 @@ public class DatabaseService {
      * @return a list of children id
      */
     public List<Integer> childrenFrom(String username, int parentId){
-        if(!nodeExists(username, parentId))
-            throw new IllegalArgumentException("Use does not exists in the database");
+        if(!nodeExists(username, parentId)){
+            IllegalArgumentException e = new IllegalArgumentException("Use does not exists in the database");
+            logger.error(e.getMessage());
+            throw e;
+        }
         
         String cmd = "SELECT childId FROM ParentOf as P where P.username = :username and P.parentId = :parentId";
         
@@ -565,7 +636,7 @@ public class DatabaseService {
                 executeAndFetchTable().asList();
         conn.close();
         
-        ArrayList<Integer> toReturn = new ArrayList<Integer>();
+        ArrayList<Integer> toReturn = new ArrayList<>();
         for(Map<String, Object> m: boh)
             toReturn.add((Integer)m.get("childid"));
         
@@ -580,8 +651,11 @@ public class DatabaseService {
      * @return the node from the parent
      */
     public int parentFrom(String username, int childId){
-        if(!nodeExists(username, childId))
-            throw new IllegalArgumentException("node does not exists in the database");
+        if(!nodeExists(username, childId)) {
+            IllegalArgumentException e = new IllegalArgumentException("node does not exists in the database");
+            logger.error(e.getMessage());
+            throw e;
+        }
         
         String cmd = "SELECT parentId FROM ParentOf as P where P.username = :username and P.childId = :childId";
         
@@ -592,8 +666,11 @@ public class DatabaseService {
                 executeAndFetchTable().asList();
         conn.close();
         
-        if(boh.isEmpty())
-            throw new IllegalArgumentException("this node has no parent! (it's a root node)");
+        if(boh.isEmpty()){
+            IllegalArgumentException e = new IllegalArgumentException("this node has no parent! (it's a root node)");
+            logger.error(e.getMessage());
+            throw e;
+        }
         
         return (Integer) boh.get(0).get("parentid");
     }

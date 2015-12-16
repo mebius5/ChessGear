@@ -7,7 +7,7 @@ import java.util.List;
  * Board state class.
  * Created by Ran on 10/8/2015.
  */
-public class BoardState {
+public final class BoardState {
 
     /**
      * Array of all pieces in board.

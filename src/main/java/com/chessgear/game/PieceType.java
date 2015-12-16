@@ -37,7 +37,7 @@ public enum PieceType {
      * Returns lowercase FEN character notation of this piece type.
      * @return Lowercase FEN character notation of the piece type.
      */
-    public char getFENChar() {
+    public final char getFENChar() {
         switch (this) {
             case PAWN:
                 return 'p';

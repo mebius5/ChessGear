@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * File storage service class.
+ */
 public class FileStorageService {
 
     /*

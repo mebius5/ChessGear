@@ -10,7 +10,7 @@ import java.util.List;
  * GameTree builder helper class.
  * Created by Ran on 11/5/2015.
  */
-public class GameTreeBuilder {
+public final class GameTreeBuilder {
 
     private List<BoardState> boardStateList;
     private List<Move> whiteHalfMoves;
