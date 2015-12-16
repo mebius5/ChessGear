@@ -49,7 +49,7 @@ public class Engine {
      * @param fen the FEN string passed in
      * @param moveTime the time for the engine to analyse for in ms
      * @return the EngineResult object containing the result of the analysis
-     * @throws Exception throws an error if something wrong happens during analyseFEN()
+     * @throws IOException throws an error if something wrong happens during analyseFEN()
      */
     public EngineResult analyseFEN(String fen,int moveTime) throws IOException{
 
@@ -120,7 +120,7 @@ public class Engine {
 
     /***
      * Terminate the Engine process and closes the stream buffers
-     * @throws Exception if close is unsuccessful.
+     * @throws IOException if close is unsuccessful.
      */
     public void terminateEngine() throws IOException {
         stdInput.close();

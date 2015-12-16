@@ -43,7 +43,7 @@ public class GameTree {
      * Adds a game to the tree.
      * @param gameTreeNodes a list of game tree node
      * @param username the username of User that will add game to
-     * @throws Exception if error occurs while adding a game to gameTree
+     * @throws IOException if error occurs while adding a game to gameTree
      */
     public void addGame(List<GameTreeNode> gameTreeNodes, String username) throws IOException {
         OsUtils osUtils = new OsUtils();

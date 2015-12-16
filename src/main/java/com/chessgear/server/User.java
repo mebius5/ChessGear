@@ -87,6 +87,8 @@ public class User {
      * username_&lt;current time&gt;.pgn
      * 
      * @param pgn A PGN representing the game
+     * @throws PGNParseException if invalid PGN detected
+     * @throws IOException if something goes wrong
      */
     public void addGame(String pgn) throws PGNParseException, IOException {
         String name = username + "_" + UUID.randomUUID().toString() + ".pgn";
@@ -98,6 +100,8 @@ public class User {
      * 
      * @param pgn A string representing the game in PGN format.
      * @param fileName The name of the file.
+     * @throws PGNParseException if invalid PGN detected
+     * @throws IOException if something goes wrong
      */
     public void addGame(String pgn, String fileName) throws PGNParseException, IOException {
         // First, store the pgn in a file.

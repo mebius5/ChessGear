@@ -1,5 +1,6 @@
 package com.chessgear.game;
 
+import com.chessgear.data.PGNParseException;
 import com.chessgear.data.PGNParser;
 
 import java.util.Date;
@@ -66,8 +67,9 @@ public class Game {
     /**
      * Creates a new game from pgn parser.
      * @param parser the PGNParser with the requested information from parsing the PGN string
+     * @throws PGNParseException if invalid PGN detected
      */
-    public Game(PGNParser parser) {
+    public Game(PGNParser parser) throws PGNParseException{
         this(parser.getWhitePlayerName(), parser.getBlackPlayerName(), new Date(), parser.getPGN(), parser.getResult(), nextGameId++);
     }
 

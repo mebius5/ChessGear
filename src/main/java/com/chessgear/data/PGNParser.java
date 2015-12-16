@@ -60,7 +60,9 @@ public class PGNParser {
      */
     public PGNParser(String pgn) throws PGNParseException {
         if (pgn == null) {
-            throw new PGNParseException("Null PGN string.");
+            PGNParseException e = new PGNParseException("Null PGN string.");
+            logger.error(e.getMessage());
+            throw e;
         }
         this.pgn = pgn;
         parseInformation();
@@ -70,90 +72,104 @@ public class PGNParser {
      * Parses the pgn and stores relevant information in the class attributes.
      */
     private void parseInformation() throws PGNParseException {
-
-        try {
             // Parse the tags.
             List<Tag> tags = parseTags(this.pgn);
 
             if(tags.size()<=2){
-                throw new PGNParseException("PGN string must have at least tags for blackPlayerName, whitePlayerName, and result.");
+                PGNParseException e = new PGNParseException("PGN String must contain at least 3 tags (WHITE, BLACK, RESULT).");
+                logger.error(e.getMessage());
+                throw e;
+            } else {
+                int requiredTags=0;
+                for(Tag t:tags){
+                    if(t.getName().equals("White")||
+                            t.getName().equals("Black")||
+                            t.getName().equals("Result")){
+                        requiredTags++;
+                    }
+                }
+                if(requiredTags<3){
+                    PGNParseException e = new PGNParseException("Tags for WHITE, BLACK, RESULT not found in PGN string.");
+                    logger.error(e.getMessage());
+                    throw e;
+                }
             }
 
             // Get tag with name White
             for (Tag t : tags) {
                 switch (t.getName()) {
-                    case "White": this.whitePlayerName = t.getValue();
+                    case "White":
+                        if(t.getValue().equals("")){
+                            PGNParseException e = new PGNParseException("Invalid PGN due to blank WHITE player name");
+                            logger.error(e.getMessage());
+                            throw e;
+                        }
+                        this.whitePlayerName = t.getValue();
                         break;
-                    case "Black": this.blackPlayerName = t.getValue();
+                    case "Black":
+                        if(t.getValue().equals("")){
+                            PGNParseException e = new PGNParseException("Invalid PGN due to blank BLACK player name");
+                            logger.error(e.getMessage());
+                            throw e;
+                        }
+                        this.blackPlayerName = t.getValue();
                         break;
-                    case "Result": this.result = Result.parseResult(t.getValue());
+                    case "Result":
+                        if(t.getValue().equals("")){
+                            PGNParseException e = new PGNParseException("Invalid PGN due to blank RESULT");
+                            logger.error(e.getMessage());
+                            throw e;
+                        }
+                        this.result = Result.parseResult(t.getValue());
                         break;
                     case "Variant":
                         if(!t.getValue().equals("Standard")){
-                            throw new PGNParseException("PGN Variant other than Standard detected!. Error thrown!");
+                            PGNParseException e = new PGNParseException("PGN Variant other than Standard detected!. Error thrown!");
+                            logger.error(e.getMessage());
+                            throw e;
                         }
                 }
             }
-        } catch (PGNParseException e) {
-            logger.error(e.getMessage());
-            throw e;
-        }
     }
 
     /**
      * Accessor for white player name.
      * @return White player name.
+     * @throws PGNParseException if invalid PGN detected
      */
-    public String getWhitePlayerName(){
-        try {
-            if (this.whitePlayerName == null) this.parseInformation();
-            return this.whitePlayerName;
-        } catch (PGNParseException e){
-            logger.error(e.getMessage());
-        }
-        return null;
+    public String getWhitePlayerName() throws PGNParseException{
+        if (this.whitePlayerName == null) this.parseInformation();
+        return this.whitePlayerName;
     }
 
     /**
      * Accessor for black player name.
      * @return Black player name.
+     * @throws PGNParseException if invalid PGN detected
      */
-    public String getBlackPlayerName() {
-        try {
-            if (this.blackPlayerName == null) this.parseInformation();
-            return this.blackPlayerName;
-        } catch (PGNParseException e){
-            logger.error(e.getMessage());
-        }
-        return null;
+    public String getBlackPlayerName() throws PGNParseException{
+        if (this.blackPlayerName == null) this.parseInformation();
+        return this.blackPlayerName;
     }
 
     /**
      * Gets the result of the game.
      * @return Result of the game.
+     * @throws PGNParseException if invalid PGN detected
      */
-    public Result getResult() {
-        try {
+    public Result getResult() throws PGNParseException{
             if (this.result == null) this.parseInformation();
             return this.result;
-        } catch (PGNParseException e){
-            logger.error(e.getMessage());
-        }
-        return null;
     }
 
     /**
      * Returns the number of full moves in the game.
      * @return Number of full moves in the game.
+     * @throws PGNParseException if invalid PGN detected
      */
-    public int getGameLength() {
-        try {
+    public int getGameLength() throws PGNParseException {
             if (this.boardStates == null) this.parseMoves(this.pgn);
             return this.boardStates.size() / 2;
-        }catch(PGNParseException e){
-            logger.error(e.getMessage());
-        }
-        return 0;
     }
 
     /**
@@ -161,102 +177,93 @@ public class PGNParser {
      * @param player Player who made the move.
      * @param fullMoveNumber Full move number of the move.
      * @return Move corresponding to the passed arguments.
+     * @throws PGNParseException if invalid PGN detected
      */
-    public Move getHalfMove(Player player, int fullMoveNumber) {
-        try {
-            if (this.boardStates == null) this.parseMoves(this.pgn);
-            switch (player) {
-                case BLACK:
-                    if (this.blackHalfMoves.size() >= fullMoveNumber) {
-                        return this.blackHalfMoves.get(fullMoveNumber - 1);
-                    } else {
-                        return null;
-                    }
-
-                case WHITE:
-                    if (this.whiteHalfMoves.size() >= fullMoveNumber) {
-                        return this.whiteHalfMoves.get(fullMoveNumber - 1);
-                    } else {
-                        return null;
-                    }
-                default:
+    public Move getHalfMove(Player player, int fullMoveNumber) throws PGNParseException{
+        if (this.boardStates == null) this.parseMoves(this.pgn);
+        switch (player) {
+            case BLACK:
+                if (this.blackHalfMoves.size() >= fullMoveNumber) {
+                    return this.blackHalfMoves.get(fullMoveNumber - 1);
+                } else {
                     return null;
-            }
-        }catch(Exception e){
-            logger.error(e.getMessage());
+                }
+
+            case WHITE:
+                if (this.whiteHalfMoves.size() >= fullMoveNumber) {
+                    return this.whiteHalfMoves.get(fullMoveNumber - 1);
+                } else {
+                    return null;
+                }
+            default:
+                return null;
         }
-        return null;
     }
 
     /**
      * Accessor for black's half moves.
      * @return List of black's half moves.
+     * @throws PGNParseException if invalid PGN detected
      */
-    public List<Move> getBlackHalfMoves() {
-        try {
+    public List<Move> getBlackHalfMoves() throws PGNParseException{
             if (this.blackHalfMoves == null) this.parseMoves(this.pgn);
             return this.blackHalfMoves;
-        } catch(PGNParseException e){
-            logger.error(e.getMessage());
-        }
-        return null;
     }
 
     /**
      * Accessor for white's half moves.
      * @return List of white's half moves.
+     * @throws PGNParseException if invalid PGN detected
      */
-    public List<Move> getWhiteHalfMoves() {
-        try {
+    public List<Move> getWhiteHalfMoves() throws PGNParseException{
             if (this.whiteHalfMoves == null) this.parseMoves(this.pgn);
             return this.whiteHalfMoves;
-        } catch(PGNParseException e){
-            logger.error(e.getMessage());
-        }
-        return null;
     }
 
     /**
      * Returns the game represented as a list of board states. 0 indexed at the starting position.
      * @return List of board states containing game progression.
+     * @throws PGNParseException if invalid PGN detected
      */
-    public List<BoardState> getListOfBoardStates() {
-        try {
+    public List<BoardState> getListOfBoardStates() throws PGNParseException {
             if (this.boardStates == null) this.parseMoves(this.pgn);
             return this.boardStates;
-        }catch(Exception e){
-            logger.error(e.getMessage());
-        }
-        return null;
     }
 
     /**
      * Given a pgn string, return a list of its tags.
      * @param pgn Pgn string.
      * @return List of tags contained within pgn string.
+     * @throws PGNParseException if invalid PGN detected
      */
-    public static List<Tag> parseTags(String pgn){
-        List<Tag> tags = new ArrayList<>();
-        Scanner scanner = new Scanner(pgn);
+    public static List<Tag> parseTags(String pgn) throws PGNParseException{
+        try {
+            List<Tag> tags = new ArrayList<>();
+            Scanner scanner = new Scanner(pgn);
 
-        while (scanner.hasNextLine()) {
+            while (scanner.hasNextLine()) {
 
-            String line = scanner.nextLine();
+                String line = scanner.nextLine();
 
-            int lineLength = line.length();
-            // This is a tag.
-            if (lineLength > MINIMUM_TAG_LINE_LENGTH && line.charAt(0) == '[' && line.charAt(lineLength - 1) == ']') {
-                String strippedLine = line.replaceAll("\\[|\\]|\"", "");
-                int splitIndex = strippedLine.indexOf(" ");
-                String name = strippedLine.substring(0, splitIndex);
-                String value = strippedLine.substring(splitIndex + 1);
-                Tag newTag = new Tag(name, value);
-                tags.add(newTag);
+                int lineLength = line.length();
+                // This is a tag.
+                if (lineLength > MINIMUM_TAG_LINE_LENGTH && line.charAt(0) == '[' && line.charAt(lineLength - 1) == ']') {
+                    String strippedLine = line.replaceAll("\\[|\\]|\"", "");
+                    int splitIndex = strippedLine.indexOf(" ");
+                    String name = strippedLine.substring(0, splitIndex);
+                    String value = strippedLine.substring(splitIndex + 1);
+                    Tag newTag = new Tag(name, value);
+                    tags.add(newTag);
+                }
             }
-        }
 
-        scanner.close();
-        return tags;
+            scanner.close();
+            return tags;
+        } catch(StringIndexOutOfBoundsException e){
+            PGNParseException f = new PGNParseException("Invalid tag found in PGN string during parsing");
+            logger.error(f.getMessage());
+            throw f;
+        }
     }
 
     /**
@@ -315,7 +322,9 @@ public class PGNParser {
                             target = new Square("g8");
                             break;
                         default:
-                            throw new PGNParseException("Invalid active player!");
+                            PGNParseException e = new PGNParseException("Invalid active player!");
+                            logger.error(e.getMessage());
+                            throw e;
                     }
                     m = new Move(active, type, origin, target, true, null);
                 } else if (s.equals("O-O-O")) {
@@ -333,7 +342,9 @@ public class PGNParser {
                             target = new Square("c8");
                             break;
                         default:
-                            throw new PGNParseException("Invalid active player!");
+                            PGNParseException e = new PGNParseException("Invalid active player!");
+                            logger.error(e.getMessage());
+                            throw e;
                     }
                     m = new Move(active, type, origin, target, true, null);
                 } else {
@@ -363,9 +374,6 @@ public class PGNParser {
                 this.boardStates.add(currentBoardState);
                 active = active.toggle();
             }
-        } catch (PGNParseException e) {
-            logger.error(e.getMessage());
-            throw e;
         } catch (StringIndexOutOfBoundsException error){
             PGNParseException e = new PGNParseException("Unable to parse PGN due to string Out of Bound error. Most likely " +
                     "due to invalid PGN string");
