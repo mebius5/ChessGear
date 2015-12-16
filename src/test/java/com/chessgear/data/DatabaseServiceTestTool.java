@@ -140,7 +140,6 @@ public class DatabaseServiceTestTool {
         DatabaseService toReturn = null;
 
         try {
-
             Constructor<DatabaseService> constructor = 
                     (Constructor<DatabaseService>) DatabaseService.class.getDeclaredConstructors()[0];
             constructor.setAccessible(true); 

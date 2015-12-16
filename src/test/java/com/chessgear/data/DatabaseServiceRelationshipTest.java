@@ -6,6 +6,8 @@ import java.util.Collections;
 import org.junit.Test;
 
 import com.chessgear.data.DatabaseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /*
  *	Author:      Gilbert Maystre
@@ -13,6 +15,9 @@ import com.chessgear.data.DatabaseService;
  */
 
 public class DatabaseServiceRelationshipTest {
+
+    // Logger
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseServiceRelationshipTest.class);
 
     @Test
     public void testAddChildrenReallyAdds(){
@@ -43,8 +48,9 @@ public class DatabaseServiceRelationshipTest {
             db.addChild("gogol", 1, 34);
             fail();
         }
-        catch(IllegalArgumentException e){
-            
+        catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testAddChildrenWithInexistantNodeFails");
         }
         
         try{
@@ -52,8 +58,9 @@ public class DatabaseServiceRelationshipTest {
             db.addChild("gogol", 34, 1);
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testAddChildrenWithInexistantNodeFails");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -69,8 +76,9 @@ public class DatabaseServiceRelationshipTest {
             db.addChild("nonexistentuser", 1, 2);
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testAddChildrenWithInexistentUserFails");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -85,8 +93,9 @@ public class DatabaseServiceRelationshipTest {
             db.addChild("gogol", 1, 1);
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testChildCannotBeItsParent");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -106,8 +115,9 @@ public class DatabaseServiceRelationshipTest {
             
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testChildCannotHaveTwoParent");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -154,8 +164,9 @@ public class DatabaseServiceRelationshipTest {
             db.parentFrom("gogol", 1);
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testGetParentWhenNoParentThrowsException");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -171,8 +182,9 @@ public class DatabaseServiceRelationshipTest {
             db.parentFrom("gogol", 2);
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testGetParentWhenInexistentNodeFails");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -189,8 +201,9 @@ public class DatabaseServiceRelationshipTest {
             db.parentFrom("nonexistentuser", 1);
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testGetParentWhenInexistentUserFails");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);

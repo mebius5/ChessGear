@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import com.chessgear.data.DatabaseService;
 import com.chessgear.server.User.Property;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /*
  *	Author:      Gilbert Maystre
@@ -18,7 +20,11 @@ import com.chessgear.server.User.Property;
  * Test for DatabaseServer User
  */
 public class DatabaseServiceUserTest {
-        
+
+
+    //Logger
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseServiceUserTest.class);
+
     public void testAddUserFailsOnNullUser(){
         DatabaseService yeh = DatabaseServiceTestTool.createDatabase(false);
         
@@ -26,8 +32,9 @@ public class DatabaseServiceUserTest {
             yeh.addUser(null, Collections.emptyMap());
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testAddUserFailsOnNullUser");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -54,6 +61,7 @@ public class DatabaseServiceUserTest {
     public void testUserExistsOnNullValueReturnsFalse(){
         DatabaseService yeh = DatabaseServiceTestTool.createDatabase(false);
         assertFalse(yeh.userExists(null));
+        logger.info("Ignore previous error message for testUserExistsOnNullValueReturnsFalse");
         DatabaseServiceTestTool.destroyDatabase(yeh);
     }
     
@@ -84,6 +92,7 @@ public class DatabaseServiceUserTest {
         }
         catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testFetchUserPropertiesFailsOnNullUser");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -101,6 +110,7 @@ public class DatabaseServiceUserTest {
         }
         catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for cannotAddExistingAlreadyExistingUser");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -141,7 +151,7 @@ public class DatabaseServiceUserTest {
         }
         catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
-
+            logger.info("Ignore previous error message for testUpdatePropertyFailsOnNonexistentKey");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -156,7 +166,7 @@ public class DatabaseServiceUserTest {
         }
         catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
-
+            logger.info("Ignore previous error message for testUpdatePropertyFailsOnNullUser");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -171,6 +181,7 @@ public class DatabaseServiceUserTest {
         }
         catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testUpdatePropertyFailsOnNullProperty");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -199,6 +210,7 @@ public class DatabaseServiceUserTest {
         }
         catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testDeleteUserFailsOnNonexistentKey");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);
@@ -214,6 +226,7 @@ public class DatabaseServiceUserTest {
         }
         catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testDeleteuserFailsOnNullUser");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(yeh);

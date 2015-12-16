@@ -138,8 +138,13 @@ public final class PGNParser {
      * @throws PGNParseException if invalid PGN detected
      */
     public String getWhitePlayerName() throws PGNParseException{
-        if (this.whitePlayerName == null) this.parseInformation();
-        return this.whitePlayerName;
+        try {
+            if (this.whitePlayerName == null) this.parseInformation();
+            return this.whitePlayerName;
+        }catch(NullPointerException error){
+            PGNParseException e = new PGNParseException("Null value for white player name");
+            throw e;
+        }
     }
 
     /**
@@ -148,8 +153,13 @@ public final class PGNParser {
      * @throws PGNParseException if invalid PGN detected
      */
     public String getBlackPlayerName() throws PGNParseException{
-        if (this.blackPlayerName == null) this.parseInformation();
-        return this.blackPlayerName;
+        try {
+            if (this.blackPlayerName == null) this.parseInformation();
+            return this.blackPlayerName;
+        } catch(NullPointerException error){
+            PGNParseException e = new PGNParseException("Null value for white player name");
+            throw e;
+        }
     }
 
     /**

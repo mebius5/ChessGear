@@ -6,6 +6,8 @@ import java.util.Collections;
 import org.junit.Test;
 
 import com.chessgear.data.DatabaseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /*
  *	Author:      Gilbert Maystre
@@ -13,6 +15,10 @@ import com.chessgear.data.DatabaseService;
  */
 
 public class DatabaseServiceTreeTest {
+
+    //Logger
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseServiceTreeTest.class);
+
 
     @Test
     public void testAddTreeActuallyAdds(){
@@ -33,8 +39,9 @@ public class DatabaseServiceTreeTest {
             //if no error was thrown in the meantime, this is a fail
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testUserHasInitiallyNoTree");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -51,8 +58,9 @@ public class DatabaseServiceTreeTest {
             
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testCannotAddTwoRoots");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -66,8 +74,9 @@ public class DatabaseServiceTreeTest {
             db.addTree("jean", 78);
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testCannotMakeRootFromInexistentNode");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
@@ -82,8 +91,9 @@ public class DatabaseServiceTreeTest {
             db.addTree("nonexistantuser", 1);
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testCannotAddTreeToInexistentUser");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);

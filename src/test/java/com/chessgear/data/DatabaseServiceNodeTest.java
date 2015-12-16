@@ -10,6 +10,8 @@ import org.junit.Test;
 import com.chessgear.data.DatabaseService;
 import com.chessgear.data.GameTreeNode;
 import com.chessgear.data.GameTreeNode.NodeProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /*
  *	Author:      Gilbert Maystre
@@ -17,6 +19,9 @@ import com.chessgear.data.GameTreeNode.NodeProperties;
  */
 
 public class DatabaseServiceNodeTest {
+
+    //Logger
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseServiceNodeTest.class);
 
     @Test
     public void testAddNodeReallyAdds(){
@@ -49,7 +54,8 @@ public class DatabaseServiceNodeTest {
             db.addNode("gogol", 1, Collections.emptyMap());
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
+            logger.info("Ignore previous error message for testCannotAddTwiceANode");
             assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
@@ -65,7 +71,8 @@ public class DatabaseServiceNodeTest {
             db.addNode("inexistantuser", 1, Collections.emptyMap());
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
+            logger.info("Ignore previous error message for testCannotAddNodeWithInexistentUser");
             assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
@@ -106,7 +113,6 @@ public class DatabaseServiceNodeTest {
         assertEquals(db.fetchNodeProperty("gogol", 1).get(NodeProperties.CP), "0.333");
 
         DatabaseServiceTestTool.destroyDatabase(db);
-        
     }
     
     @Test
@@ -117,7 +123,8 @@ public class DatabaseServiceNodeTest {
             db.updateNodeProperty("inexistantuser", 1, GameTreeNode.NodeProperties.CP, "0.333");
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
+            logger.info("Ignore previous error message for testUpdatePropertyThrowsException");
             assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         finally{
@@ -150,7 +157,9 @@ public class DatabaseServiceNodeTest {
             db.deleteNode("inexistantuser", 1);
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testRemoveThrowsException");
             //intentionally left blank
         }
         finally{
@@ -190,8 +199,9 @@ public class DatabaseServiceNodeTest {
             db.deleteNode("jean", 3);
             fail();
         }
-        catch(IllegalArgumentException e){
+        catch(Exception e){
             assertEquals(e.getClass(),IllegalArgumentException.class);
+            logger.info("Ignore previous error message for testRemoveWithChildrenThrowsException");
         }
         finally{
             DatabaseServiceTestTool.destroyDatabase(db);
