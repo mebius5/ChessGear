@@ -16,7 +16,7 @@ import java.util.Scanner;
 /**
  * File storage service class.
  */
-public class FileStorageService {
+public final class FileStorageService {
 
     /*
      * Note: This is a pretty naïve implementation of a file storage system. To scale better, take a look at amazon S3 services
