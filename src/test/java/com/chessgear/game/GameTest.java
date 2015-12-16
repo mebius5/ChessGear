@@ -5,14 +5,14 @@ package com.chessgear.game; /**
 
 import static org.junit.Assert.*;
 
+import java.lang.reflect.Field;
+
+import com.chessgear.data.DatabaseService;
 import com.chessgear.data.PGNParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Date;
-
 
 public class GameTest {
     String testString;
@@ -48,10 +48,16 @@ public class GameTest {
             Game test = new Game(pgnParser);
             assertEquals(test.getWhitePlayerName(), pgnParser.getWhitePlayerName());
             assertEquals(test.getBlackPlayerName(), pgnParser.getBlackPlayerName());
-            assertTrue(test.getDateImported() instanceof Date);
             assertEquals(test.getPgn(), pgnParser.getPGN());
             assertEquals(test.getResult(), pgnParser.getResult());
-            assertEquals(test.getID(), 0);
+            
+            //we retrieve the internal counter of number of games;
+            Field f = Game.class.getDeclaredField("nextGameId");
+            f.setAccessible(true);
+            int gameId = f.getInt(test);
+            f.setAccessible(false);
+            
+            assertEquals(test.getID(), gameId - 1);
         }catch(Exception e){
             logger.error(e.getMessage());
             fail("Exception should not have been thrown during testGame of GameTest");
