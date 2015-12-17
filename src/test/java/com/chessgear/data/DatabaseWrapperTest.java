@@ -2,9 +2,11 @@ package com.chessgear.data;
 
 import com.chessgear.game.BoardState;
 import com.chessgear.server.User;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.xml.crypto.Data;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -20,8 +22,13 @@ public class DatabaseWrapperTest {
     private DatabaseService database;
     private DatabaseWrapper wrapper;
 
+    private FileStorageService fss;
+
     @Before
     public void initialize() {
+        this.fss = DatabaseServiceTestTool.createFileStorageService();
+        DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(fss.getReferecencedDatabaseService(), DatabaseWrapper.getInstance());
+        DatabaseServiceTestTool.changeGetInstanceOfInFileStorageServiceClass(fss);
         this.database = DatabaseServiceTestTool.createDatabase(false);
         this.wrapper = new DatabaseWrapper(database);
     }
@@ -53,4 +60,9 @@ public class DatabaseWrapperTest {
         assertEquals(this.wrapper.getGameTreeNode("hedgehogs4me", 1).getBoardState(), "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
     }
 
+    @After
+    public void terminate(){
+        DatabaseServiceTestTool.destroyFileStorageService(this.fss);
+        DatabaseServiceTestTool.putGetInstanceOfBackToNormal(DatabaseWrapper.getInstance());
+    }
 }

@@ -30,7 +30,7 @@ public class ServerTest {
 
         assertEquals(server.getUser(user.getUsername()),user);
 
-        DatabaseServiceTestTool.putGetInstanceOfBackToNormal(DatabaseWrapper.getInstance());
         DatabaseServiceTestTool.destroyFileStorageService(fss);
+        DatabaseServiceTestTool.putGetInstanceOfBackToNormal(DatabaseWrapper.getInstance());
     }
 }

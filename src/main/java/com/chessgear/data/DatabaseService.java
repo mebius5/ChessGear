@@ -144,7 +144,10 @@ public final class DatabaseService {
      */
     @SuppressWarnings("unused")
     private void eraseDatabaseFile() throws IOException{
-        Files.delete(Paths.get(databasePath));
+        if(Files.exists(Paths.get(databasePath))) {
+            Files.delete(Paths.get(databasePath));
+            logger.info("Deleting " + databasePath);
+        }
     }
 
     /**

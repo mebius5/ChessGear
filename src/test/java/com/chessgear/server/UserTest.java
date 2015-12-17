@@ -113,8 +113,8 @@ public class UserTest {
                 assertTrue(nodeMapping.get(i).equals(twinMapping.get(i)));
             }
 
-            DatabaseServiceTestTool.putGetInstanceOfBackToNormal(DatabaseWrapper.getInstance());
             DatabaseServiceTestTool.destroyFileStorageService(fss);
+            DatabaseServiceTestTool.putGetInstanceOfBackToNormal(DatabaseWrapper.getInstance());
         } catch (Exception e){
             e.printStackTrace();
             fail();

@@ -99,8 +99,8 @@ public class GameTreeTest {
             assertTrue(gameTree.containsNode(3));
             assertFalse(gameTree.containsNode(0));
 
-            DatabaseServiceTestTool.putGetInstanceOfBackToNormal(DatabaseWrapper.getInstance());
             DatabaseServiceTestTool.destroyFileStorageService(fss);
+            DatabaseServiceTestTool.putGetInstanceOfBackToNormal(DatabaseWrapper.getInstance());
 
         } catch (Exception e) {
             e.printStackTrace();
