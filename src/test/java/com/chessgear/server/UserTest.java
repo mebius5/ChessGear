@@ -1,10 +1,13 @@
 package com.chessgear.server;
 
 import com.chessgear.data.DatabaseServiceTestTool;
+import com.chessgear.data.DatabaseWrapper;
 import com.chessgear.data.FileStorageService;
 import com.chessgear.data.GameTreeNode;
 import com.chessgear.data.PGNParser;
 import com.chessgear.game.Game;
+import com.chessgear.server.User;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -64,7 +67,7 @@ public class UserTest {
             String username = "Test1234";
 
             FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
-            DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(fss.getReferecencedDatabaseService());
+            DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(fss.getReferecencedDatabaseService(), DatabaseWrapper.getInstance());
             DatabaseServiceTestTool.changeGetInstanceOfInFileStorageServiceClass(fss);
 
             User user = User.registerNewUser(username, password);
@@ -110,7 +113,7 @@ public class UserTest {
 
 
 
-            DatabaseServiceTestTool.putGetInstanceOfBackToNormal();
+            DatabaseServiceTestTool.putGetInstanceOfBackToNormal(DatabaseWrapper.getInstance());
             DatabaseServiceTestTool.destroyFileStorageService(fss);
         } catch (Exception e){
             e.printStackTrace();

@@ -20,6 +20,10 @@ import static org.junit.Assert.fail;
  * http://stackoverflow.com/questions/5629706/java-accessing-private-constructor-with-type-parameters
  * http://onjavahell.blogspot.com/2009/05/testing-private-methods-using.html
  * 
+ * We also had to use reflexivity in order to change static fields in various class referencing to the singletons.
+ * It gives a pretty hacky coding in the end but it's the only way to do it without having to recompile the project
+ * for each tests.
+ * 
  * Created by GradyXiao on 12/7/15.
  */
 public class DatabaseServiceTestTool {
@@ -180,7 +184,16 @@ public class DatabaseServiceTestTool {
         }
     }
     
-    public static void changeGetInstanceOfInDatabaseService(DatabaseService replaceWith){
+    /**
+     * Takes care of replacing static refs in appropriate classes. The DatabaseWrapper instance is here
+     * to take of the particular instance ref since the field is not static. If no DatabaseWrapper is used during 
+     * the test, then DatabaseWrapper.getInstance() should be passed in. After having call this method and run the code,
+     * one should call putGetInstanceOfBackToNormal().
+     *
+     * @param replaceWith The new database, for instance from a call to createDatabase().
+     * @param inst The DatabaseWrapper used in.
+     */
+    public static void changeGetInstanceOfInDatabaseService(DatabaseService replaceWith, DatabaseWrapper inst){
         try{
             Field f = DatabaseService.class.getDeclaredField("instance");
             f.setAccessible(true);
@@ -189,6 +202,10 @@ public class DatabaseServiceTestTool {
             f = User.class.getDeclaredField("db");
             f.setAccessible(true);
             f.set(null, DatabaseService.getInstanceOf());
+            
+            f = DatabaseWrapper.class.getDeclaredField("service");
+            f.setAccessible(true);
+            f.set(inst, DatabaseService.getInstanceOf());
         }
         catch(Exception e){
             e.printStackTrace();
@@ -196,6 +213,13 @@ public class DatabaseServiceTestTool {
         }
     }
     
+    /**
+     * Changes the static reference in FileStorageService to allow call to getInstanceOf(). Also
+     * takes care of the static ref in the User class. After having call this method and run the code,
+     * one should call putGetInstanceOfBackToNormal().
+     * 
+     * @param replaceWith The new FileStorageService. For instance via constructFileStorageService().
+     */
     public static void changeGetInstanceOfInFileStorageServiceClass(FileStorageService replaceWith){
         try{
             Field f = FileStorageService.class.getDeclaredField("instance"); //NoSuchFieldException
@@ -212,7 +236,16 @@ public class DatabaseServiceTestTool {
         }
     }
     
-    public static void putGetInstanceOfBackToNormal(){
+    /**
+     * Put All references back to normal in all known classes storing reference to DatabaseService 
+     * and FileStorageService
+     * 
+     * @param inst The DatabaseWrapper instance that the tests uses. We
+     *  have controll it since it has a databaseservice field in it.
+     *  If no DatabaseWrapper is used in the test, just pass DatabaseWrapper.getInstance()
+     *  default value.
+     */
+    public static void putGetInstanceOfBackToNormal(DatabaseWrapper inst){
         try{
             Field f = DatabaseService.class.getDeclaredField("instance");
             f.setAccessible(true);
@@ -236,39 +269,16 @@ public class DatabaseServiceTestTool {
             f.setAccessible(true);
             f.set(null, FileStorageService.getInstanceOf());
             
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            fail();
-        }
-    }
-    
-    /***
-    
-    @Deprecated
-    public static void changeDBinUserClass(DatabaseService replaceWith){
-        try{
-            Field f = User.class.getDeclaredField("db");
+            //now the refs in DatabaseWrapper
+            f = DatabaseWrapper.class.getDeclaredField("service");
             f.setAccessible(true);
-            f.set(null, replaceWith);
+            f.set(inst, DatabaseService.getInstanceOf());
+            
+            
         }
         catch(Exception e){
             e.printStackTrace();
             fail();
         }
     }
-    
-    @Deprecated
-    public static void changeFSSinUserClass(FileStorageService replaceWith){
-        try{
-            Field f = User.class.getDeclaredField("fss"); //NoSuchFieldException
-            f.setAccessible(true);
-            f.set(null, replaceWith);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            fail();
-        }
-    }
-***/
 }

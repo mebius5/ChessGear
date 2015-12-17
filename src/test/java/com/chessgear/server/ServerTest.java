@@ -1,6 +1,7 @@
 package com.chessgear.server;
 
 import com.chessgear.data.DatabaseServiceTestTool;
+import com.chessgear.data.DatabaseWrapper;
 import com.chessgear.data.FileStorageService;
 import com.chessgear.server.Server;
 import com.chessgear.server.User;
@@ -17,7 +18,7 @@ public class ServerTest {
     @Test
     public void testServer(){
         FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
-        DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(fss.getReferecencedDatabaseService());
+        DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(fss.getReferecencedDatabaseService(), DatabaseWrapper.getInstance());
         DatabaseServiceTestTool.changeGetInstanceOfInFileStorageServiceClass(fss);
 
         Server server = new Server();
@@ -29,8 +30,7 @@ public class ServerTest {
 
         assertEquals(server.getUser(user.getUsername()),user);
 
+        DatabaseServiceTestTool.putGetInstanceOfBackToNormal(DatabaseWrapper.getInstance());
         DatabaseServiceTestTool.destroyFileStorageService(fss);
-        DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(null);
-        DatabaseServiceTestTool.changeGetInstanceOfInFileStorageServiceClass(null);
     }
 }

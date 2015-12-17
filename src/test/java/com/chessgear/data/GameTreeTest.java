@@ -57,7 +57,7 @@ public class GameTreeTest {
         try {
 
             FileStorageService fss = DatabaseServiceTestTool.createFileStorageService();
-            DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(fss.getReferecencedDatabaseService());
+            DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(fss.getReferecencedDatabaseService(), DatabaseWrapper.getInstance());
             DatabaseServiceTestTool.changeGetInstanceOfInFileStorageServiceClass(fss);
 
             //Tests GameTree() and getRoot()
@@ -99,10 +99,8 @@ public class GameTreeTest {
             assertTrue(gameTree.containsNode(3));
             assertFalse(gameTree.containsNode(0));
 
+            DatabaseServiceTestTool.putGetInstanceOfBackToNormal(DatabaseWrapper.getInstance());
             DatabaseServiceTestTool.destroyFileStorageService(fss);
-
-            DatabaseServiceTestTool.changeGetInstanceOfInDatabaseService(null);
-            DatabaseServiceTestTool.changeGetInstanceOfInFileStorageServiceClass(null);
 
         } catch (Exception e) {
             e.printStackTrace();

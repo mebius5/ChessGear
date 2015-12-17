@@ -21,7 +21,7 @@ import static com.chessgear.data.GameTreeNode.NodeProperties;
 public final class DatabaseWrapper {
 
     private DatabaseService service;
-    private static final DatabaseWrapper instance = new DatabaseWrapper(DatabaseService.getInstanceOf());
+    private static DatabaseWrapper instance = new DatabaseWrapper(DatabaseService.getInstanceOf());
 
     /**
      * Constructs a database wrapper for the given database service.
