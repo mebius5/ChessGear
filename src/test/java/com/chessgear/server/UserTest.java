@@ -85,7 +85,7 @@ public class UserTest {
             f.setAccessible(false);
                         
             //Basic test
-            assertEquals(user.getGameList().get(id).getPgn(), testPGN);
+            assertEquals(user.getGameList().get(id-1).getPgn(), testPGN);
 
             //A deeper test
             String result = user.getGameById(id).getResult().toString();

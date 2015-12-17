@@ -6,6 +6,7 @@ package com.chessgear.game; /**
 import static org.junit.Assert.*;
 
 import java.lang.reflect.Field;
+import java.util.Date;
 
 import com.chessgear.data.DatabaseService;
 import com.chessgear.data.PGNParser;
@@ -50,6 +51,7 @@ public class GameTest {
             assertEquals(test.getBlackPlayerName(), pgnParser.getBlackPlayerName());
             assertEquals(test.getPgn(), pgnParser.getPGN());
             assertEquals(test.getResult(), pgnParser.getResult());
+            assertEquals(test.getDateImported().getClass(),Date.class);
             
             //we retrieve the internal counter of number of games;
             Field f = Game.class.getDeclaredField("nextGameId");
