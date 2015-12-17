@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * Object representation of a game after import/parsing into the tool.
- * Created by Ran on 10/8/2015.
+ * Contains information about the game
  */
 public final class Game {
 

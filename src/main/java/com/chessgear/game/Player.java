@@ -1,8 +1,8 @@
 package com.chessgear.game;
 
 /**
- * Enumeration of the two classes.
- * Created by Ran on 10/8/2015.
+ * Object representaiton of a player
+ * Enum class with the different player types
  */
 public enum Player {
 

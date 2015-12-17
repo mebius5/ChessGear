@@ -3,9 +3,9 @@ package com.chessgear.game;
 import com.chessgear.data.PGNParseException;
 
 /**
- * Game result enum.
- * Created by Ran on 10/14/2015.
- */
+ * Object representation for a game
+ * Enum class with the different results
+ * */
 public enum Result {
 
     WHITE_WIN, BLACK_WIN, DRAW, INVALID;

@@ -1,10 +1,9 @@
 package com.chessgear.game;
 
-import com.chessgear.data.PGNParseException;
-
 /**
+ * Object Representation of PieceType
  * Enumeration of all Chess piece types.
- * Created by Ran on 10/8/2015.
+ * Contains functions for PGN and fen
  */
 public enum PieceType {
     PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING;

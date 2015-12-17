@@ -9,8 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Game Tree data structure.
- * Created by Ran on 10/8/2015.
+ * Object representation of the Game Tree
  */
 public final class GameTree {
 

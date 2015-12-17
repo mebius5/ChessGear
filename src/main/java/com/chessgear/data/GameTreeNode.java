@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Node class for GameTree.
- * Created by Ran on 10/8/2015.
+ * Object representation of a node in the Game Tree
  */
 public final class GameTreeNode {
 

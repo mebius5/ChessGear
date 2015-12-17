@@ -1,8 +1,8 @@
 package com.chessgear.game;
 
 /**
- * Move class.
- * Created by Ran on 10/8/2015.
+ * Object representation of a move
+ * Contains information for a particular move
  */
 public final class Move {
 

@@ -1,7 +1,6 @@
 package com.chessgear.analysis;
 
 /**
- * Created by Grady Xiao on 11/8/15.
  * Class used to store the result returned from Stockfish Engine Analysis
  */
 
