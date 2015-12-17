@@ -19,7 +19,7 @@ import static spark.Spark.*;
  * Main class. Handles REST requests.
  * Created by Ran on 12/4/2015.
  */
-public class Bootstrap {
+public final class Bootstrap {
 
     private static final int PORT = 8080;
     private static final String ADDRESS = "localhost";
