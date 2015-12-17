@@ -4,83 +4,9 @@
     <option name="CUSTOM_SCOPE_NAME" value="Project Files" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="Updated JavaDoc comments">
+    <list default="true" id="bdaba507-e34d-44bf-8a28-89e9db009dfa" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/allclasses-frame.html" afterPath="$PROJECT_DIR$/javadoc/allclasses-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/allclasses-noframe.html" afterPath="$PROJECT_DIR$/javadoc/allclasses-noframe.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/Bootstrap.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/Bootstrap.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/Engine.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/Engine.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/EngineResult.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/EngineResult.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/OsUtils.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/OsUtils.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/analysis/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseService.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseService.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseServiceNodeTest.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseServiceNodeTest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseServiceRelationshipTest.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseServiceRelationshipTest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseServiceTestTool.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseServiceTestTool.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseServiceTreeTest.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseServiceTreeTest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseServiceUserTest.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseServiceUserTest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseWrapper.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/DatabaseWrapper.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/FileStorageService.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/FileStorageService.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/FileStorageServiceTest.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/FileStorageServiceTest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTreeBuilder.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTreeBuilder.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTreeNode.NodeProperties.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTreeNode.NodeProperties.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTreeNode.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/GameTreeNode.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParseException.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParseException.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParser.Tag.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParser.Tag.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParser.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/PGNParser.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/data/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/BoardState.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/BoardState.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Game.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Game.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Move.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Move.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Piece.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Piece.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/PieceType.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/PieceType.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Player.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Player.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Result.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Result.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/Square.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/Square.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/game/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/server/Server.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/Server.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/server/User.Property.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/User.Property.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/server/User.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/User.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/com/chessgear/server/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/constant-values.html" afterPath="$PROJECT_DIR$/javadoc/constant-values.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/deprecated-list.html" afterPath="$PROJECT_DIR$/javadoc/deprecated-list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/help-doc.html" afterPath="$PROJECT_DIR$/javadoc/help-doc.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-all.html" afterPath="$PROJECT_DIR$/javadoc/index-all.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index.html" afterPath="$PROJECT_DIR$/javadoc/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/overview-frame.html" afterPath="$PROJECT_DIR$/javadoc/overview-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/overview-summary.html" afterPath="$PROJECT_DIR$/javadoc/overview-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/overview-tree.html" afterPath="$PROJECT_DIR$/javadoc/overview-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/serialized-form.html" afterPath="$PROJECT_DIR$/javadoc/serialized-form.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/analysis/Engine.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/analysis/Engine.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/analysis/EngineResult.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/analysis/EngineResult.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseWrapper.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/DatabaseWrapper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/FileStorageService.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/FileStorageService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTree.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTree.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeBuilder.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/GameTreeNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/PGNParseException.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/PGNParseException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/data/PGNParser.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/data/PGNParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/game/BoardState.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/game/BoardState.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/game/Game.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/game/Game.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/game/Move.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/game/Move.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/game/Piece.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/game/Piece.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/game/PieceType.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/game/PieceType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/game/Player.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/game/Player.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/game/Result.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/game/Result.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/chessgear/game/Square.java" afterPath="$PROJECT_DIR$/src/main/java/com/chessgear/game/Square.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/chessgear/game/BoardStateTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/chessgear/game/BoardStateTest.java" />
     </list>
     <ignored path="ChessGear.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -143,20 +69,7 @@
     <favorites_list name="ChessGear" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="FileStorageService.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/FileStorageService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.69304556">
-              <caret line="139" column="74" selection-start-line="139" selection-start-column="74" selection-end-line="139" selection-end-column="74" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -1137,12 +1050,6 @@
       <option name="number" value="Default" />
       <updated>1443206600718</updated>
     </task>
-    <task id="LOCAL-00081" summary="Added UserTest.java">
-      <created>1449786149813</created>
-      <option name="number" value="00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1449786149814</updated>
-    </task>
     <task id="LOCAL-00082" summary="Deleted test for USERNAME as property of User since it's no longer the case.">
       <created>1449788419241</created>
       <option name="number" value="00082" />
@@ -1431,7 +1338,13 @@
       <option name="project" value="LOCAL" />
       <updated>1450309332586</updated>
     </task>
-    <option name="localTasksCounter" value="130" />
+    <task id="LOCAL-00130" summary="Updated JavaDoc comments">
+      <created>1450310828197</created>
+      <option name="number" value="00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1450310828197</updated>
+    </task>
+    <option name="localTasksCounter" value="131" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1477,11 +1390,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1" y="23" width="1278" height="727" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3251634" sideWeight="0.49394855" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2992126" sideWeight="0.47579426" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2992126" sideWeight="0.47579426" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31862745" sideWeight="0.5181543" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32714054" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1971,8 +1884,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/chessgear/data/FileStorageService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.69304556">
-          <caret line="139" column="74" selection-start-line="139" selection-start-column="74" selection-end-line="139" selection-end-column="74" />
+        <state vertical-scroll-proportion="-0.7817746">
+          <caret line="142" column="5" selection-start-line="142" selection-start-column="5" selection-end-line="142" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -136,8 +136,9 @@ public final class FileStorageService {
                 toReturn.add(f.getName());
 
             return toReturn;
-        }catch(NullPointerException e){
+        } catch(NullPointerException e){
             logger.error("NullPointerException caught during getFilesFor()");
+            return null;
         }
     }
 
