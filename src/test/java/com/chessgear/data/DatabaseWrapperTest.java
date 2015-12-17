@@ -2,20 +2,14 @@ package com.chessgear.data;
 
 import com.chessgear.game.BoardState;
 import com.chessgear.server.User;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-import javax.xml.crypto.Data;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
- * Unit tests for DatabaseWrapper.
- * Created by Ran on 12/16/2015.
+ * Test for DatabaseWrapper.
  */
 public class DatabaseWrapperTest {
 

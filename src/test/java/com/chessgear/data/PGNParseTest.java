@@ -6,17 +6,15 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.junit.Assert.*;
-
-import java.text.ParseException;
 import java.util.List;
 
-import static com.chessgear.data.PGNParser.parseTags;
 import static com.chessgear.data.PGNParser.Tag;
+import static com.chessgear.data.PGNParser.parseTags;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * JUnit Test for PGNParse.java
- * Created by Ran on 10/18/2015.
  */
 public class PGNParseTest {
 

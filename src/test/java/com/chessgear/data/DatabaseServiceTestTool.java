@@ -1,6 +1,5 @@
 package com.chessgear.data;
-import com.chessgear.data.DatabaseService;
-import com.chessgear.data.FileStorageService;
+
 import com.chessgear.server.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +23,7 @@ import static org.junit.Assert.fail;
  * It gives a pretty hacky coding in the end but it's the only way to do it without having to recompile the project
  * for each tests.
  * 
- * Created by GradyXiao on 12/7/15.
+ * Used by the tests for DatabaseService
  */
 public class DatabaseServiceTestTool {
 

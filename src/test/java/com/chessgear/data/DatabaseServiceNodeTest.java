@@ -1,21 +1,18 @@
 package com.chessgear.data;
-import static org.junit.Assert.*;
+
+import com.chessgear.data.GameTreeNode.NodeProperties;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.*;
 
-import com.chessgear.data.DatabaseService;
-import com.chessgear.data.GameTreeNode;
-import com.chessgear.data.GameTreeNode.NodeProperties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-/*
- *	Author:      Gilbert Maystre
- *	Date:        Nov 8, 2015
+/***
+ * Part of Tests for DatabaseService.java
  */
 
 public class DatabaseServiceNodeTest {

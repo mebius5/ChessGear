@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by Ran on 12/4/2015.
  * Test for GameTreeNodeJson
  */
 public class GameTreeNodeJsonTest {

@@ -1,12 +1,12 @@
-package com.chessgear.analysis; /**
- * Created by GradyXiao on 11/8/15.
- */
+package com.chessgear.analysis;
 
-import static org.junit.Assert.*;
-
-import com.chessgear.analysis.EngineResult;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
+/***
+ * Test for EngineResult.java
+ */
 public class EngineResultTest {
     /**
      * Test the setCP, setPV, setBestMove, getCp, getPV, getBestMove,

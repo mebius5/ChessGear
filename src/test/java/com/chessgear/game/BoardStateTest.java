@@ -1,7 +1,6 @@
 package com.chessgear.game;
 
 import com.chessgear.data.PGNParser;
-import com.chessgear.game.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,8 +9,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Boardstate unit tests.
- * Created by Ran on 10/21/2015.
+ * Test for Boardstate Class
  */
 public class BoardStateTest {
 

@@ -4,25 +4,18 @@ import com.chessgear.data.DatabaseServiceTestTool;
 import com.chessgear.data.DatabaseWrapper;
 import com.chessgear.data.FileStorageService;
 import com.chessgear.data.GameTreeNode;
-import com.chessgear.data.PGNParser;
 import com.chessgear.game.Game;
-import com.chessgear.server.User;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
-import java.util.Date;
 import java.util.HashMap;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
- * Created by GradyXiao on 12/4/15.
  * JUnit Test for User.java
  */
 public class UserTest {

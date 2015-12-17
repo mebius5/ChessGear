@@ -1,10 +1,12 @@
-package com.chessgear.game; /**
- * Created by Grady Xiao on 10/24/15.
- * JUnit Test for PieceType.java
- */
+package com.chessgear.game;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
-import com.chessgear.game.PieceType;
+
+import static org.junit.Assert.assertEquals;
+
+/***
+ * Test for PieceType.java
+ */
 
 public class PieceTypeTest {
     @Test

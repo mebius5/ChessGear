@@ -1,11 +1,12 @@
 package com.chessgear.data;
 
-import com.chessgear.data.PGNParseException;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-/**
- * Created by GradyXiao on 12/7/15.
+import static org.junit.Assert.assertEquals;
+
+
+/***
+ * Test for PGNParseException class
  */
 public class PGNParseExceptionTest {
     @Test

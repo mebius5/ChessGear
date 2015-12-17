@@ -1,18 +1,17 @@
 package com.chessgear.data; /**
  * Created by GradyXiao on 12/1/15.
  */
-import static org.junit.Assert.*;
 
 import com.chessgear.analysis.EngineResult;
-import com.chessgear.data.GameTreeNode;
-import com.chessgear.data.PGNParser;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
-import com.sun.javafx.collections.MappingChange;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /***
  * Test for GameTreeNode.java

@@ -2,7 +2,7 @@ package com.chessgear.data; /**
  * Created by GradyXiao on 10/24/15.
  * JUnit Test for GameTree.java
  */
-import com.chessgear.data.*;
+
 import com.chessgear.game.BoardState;
 import com.chessgear.game.PieceType;
 import com.chessgear.game.Player;

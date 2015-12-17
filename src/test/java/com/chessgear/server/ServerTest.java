@@ -3,15 +3,13 @@ package com.chessgear.server;
 import com.chessgear.data.DatabaseServiceTestTool;
 import com.chessgear.data.DatabaseWrapper;
 import com.chessgear.data.FileStorageService;
-import com.chessgear.server.Server;
-import com.chessgear.server.User;
-import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 
-/**
- * Created by GradyXiao on 12/10/15.
+/***
+ * Test for Server class
  */
 
 public class ServerTest {

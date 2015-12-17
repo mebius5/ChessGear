@@ -1,12 +1,12 @@
-package com.chessgear.game; /**
- * Created by Grady Xiao on 10/24/15.
- * JUnit Test for PlayerTest.java
- */
-import static org.junit.Assert.*;
+package com.chessgear.game;
+
 import org.junit.Test;
 
-import com.chessgear.game.Player;
+import static org.junit.Assert.assertEquals;
 
+/***
+ * Test for Player class
+ */
 public class PlayerTest {
     @Test
     public void TestToggle(){

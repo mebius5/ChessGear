@@ -1,9 +1,12 @@
-package com.chessgear.analysis; /**
- * Created by GradyXiao on 12/2/15.
- */
-import static org.junit.Assert.*;
-import com.chessgear.analysis.OsUtils;
+package com.chessgear.analysis;
+
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+/***
+ * Test for OsUtils.java
+ */
 
 public class OsUtilsTest {
     private final String unix32BinaryLocation = "./stockfish-6-src/src/./stockfish-32"; //Location for 32 bit mac or unix binary file

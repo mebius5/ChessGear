@@ -1,13 +1,11 @@
 package com.chessgear.game;
 
-import static org.junit.Assert.*;
-
-import com.chessgear.game.Square;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * JUnit Test for Square.java
- * Created by Ran on 10/18/2015.
  */
 public class SquareTest {
 

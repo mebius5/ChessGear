@@ -1,15 +1,16 @@
 package com.chessgear.data;
+
 import org.junit.Test;
 
-import java.io.*;
-import java.util.List;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 
 import static org.junit.Assert.*;
 
-/*
- *	Author:      Gilbert Maystre
- *	Date:        Dec 7, 2015
+/***
+ * Test for FileStorageService.java
  */
 
 public class FileStorageServiceTest {
@@ -125,7 +126,7 @@ public class FileStorageServiceTest {
             InputStream cst = prepareConstantInputStream(100, (byte) 2);
             
             //dirty way to compare two streams.
-            int token = 0;
+            int token;
             while((token = is.read()) != -1){
                 if(cst.read() != token)
                     fail();
@@ -162,7 +163,7 @@ public class FileStorageServiceTest {
             assertEquals(fss.fetchFileContent(user, "hello.pgn"), "blublabli");
 
             InputStream is = fss.downloadFile(user,"hello.pgn");
-            assertEquals(fss.readInputStreamIntoString(is),"blublabli");
+            assertEquals(FileStorageService.readInputStreamIntoString(is),"blublabli");
 
             is.close();
             DatabaseServiceTestTool.destroyFileStorageService(fss);
@@ -182,11 +183,8 @@ public class FileStorageServiceTest {
         try {
             fss.addFile("nonexistentuser", "wontbestoredanyway.pgn", is);
             fail();
-        } catch (IOException e) {
-            e.printStackTrace();
-            fail();
-        } catch (IllegalArgumentException e2){
-            
+        } catch (Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         
         try {
@@ -205,12 +203,10 @@ public class FileStorageServiceTest {
         try {
             fss.removeFile("nonexistentuser", "wontbestoredanyway.pgn");
             fail();
-        } catch (IllegalArgumentException e2) {
-           
-        } catch (IOException e) {
-
+        } catch (Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
-        
+
         DatabaseServiceTestTool.destroyFileStorageService(fss);
     }
     
@@ -221,12 +217,10 @@ public class FileStorageServiceTest {
         try {
             fss.removeFile(DatabaseServiceTestTool.usernames[0], "idontexistsmeeh.pgn");
             fail();
-        } catch (IllegalArgumentException e2) {
-           
-        } catch (IOException e) {
-
+        } catch (Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
-        
+
         DatabaseServiceTestTool.destroyFileStorageService(fss);
     }
     
@@ -237,8 +231,8 @@ public class FileStorageServiceTest {
         try {
             fss.getFilesFor("nonexistentuser");
             fail();
-        } catch (IllegalArgumentException e) {
-            
+        } catch (Exception e) {
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         
         DatabaseServiceTestTool.destroyFileStorageService(fss);
@@ -251,11 +245,8 @@ public class FileStorageServiceTest {
         try {
             fss.downloadFile("nonexistentuser", "meeh.pgn");
             fail();
-        } catch (IllegalArgumentException e) {
-           
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
+        } catch (Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         
         DatabaseServiceTestTool.destroyFileStorageService(fss);
@@ -268,11 +259,8 @@ public class FileStorageServiceTest {
         try {
             fss.downloadFile(DatabaseServiceTestTool.usernames[0], "meeh.pgn");
             fail();
-        } catch (IllegalArgumentException e) {
-           
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
+        } catch (Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         
         DatabaseServiceTestTool.destroyFileStorageService(fss);
@@ -286,11 +274,8 @@ public class FileStorageServiceTest {
         try {
             fss.fetchFileContent("nonexistentuser", "meeh.pgn");
             fail();
-        } catch (IllegalArgumentException e) {
-           
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
+        } catch (Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         
         DatabaseServiceTestTool.destroyFileStorageService(fss);
@@ -303,11 +288,8 @@ public class FileStorageServiceTest {
         try {
             fss.fetchFileContent(DatabaseServiceTestTool.usernames[0], "meeh.pgn");
             fail();
-        } catch (IllegalArgumentException e) {
-           
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
+        } catch(Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         
         DatabaseServiceTestTool.destroyFileStorageService(fss);
@@ -320,17 +302,10 @@ public class FileStorageServiceTest {
         try {
             fss.addFile("nonexistentuser", "wontbestoredanyway.pgn", "blehblehbleh");
             fail();
-        } catch (IOException e) {
-            e.printStackTrace();
-            fail();
-        } catch (IllegalArgumentException e2){
-            
+        } catch (Exception e){
+            assertEquals(e.getClass(),IllegalArgumentException.class);
         }
         
         DatabaseServiceTestTool.destroyFileStorageService(fss);
     }
-    
-    
-    
-    
 }

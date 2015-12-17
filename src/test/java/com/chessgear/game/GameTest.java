@@ -1,20 +1,20 @@
-package com.chessgear.game; /**
- * Created by Grady Xiao on 10/24/15.
- * JUnit Test for Game.java
- */
+package com.chessgear.game;
 
-import static org.junit.Assert.*;
-
-import java.lang.reflect.Field;
-import java.util.Date;
-
-import com.chessgear.data.DatabaseService;
 import com.chessgear.data.PGNParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Field;
+import java.util.Date;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+/**
+ * Test for Game class
+ */
 public class GameTest {
     String testString;
 

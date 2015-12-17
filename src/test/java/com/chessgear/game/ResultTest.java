@@ -1,12 +1,13 @@
-package com.chessgear.game; /**
- * Created by GradyXiao on 10/24/15.
- * JUnit Test for Result.java
- */
-import static org.junit.Assert.*;
+package com.chessgear.game;
 
 import com.chessgear.data.PGNParseException;
-import com.chessgear.game.Result;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+/***
+ * Test for Result class
+ */
 
 public class ResultTest {
     @Test

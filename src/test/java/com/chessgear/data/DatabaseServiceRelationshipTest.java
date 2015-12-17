@@ -1,17 +1,15 @@
 package com.chessgear.data;
-import static org.junit.Assert.*;
-
-import java.util.Collections;
 
 import org.junit.Test;
-
-import com.chessgear.data.DatabaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*
- *	Author:      Gilbert Maystre
- *	Date:        Nov 8, 2015
+import java.util.Collections;
+
+import static org.junit.Assert.*;
+
+/***
+ * Part of Tests for DatabaseService.java
  */
 
 public class DatabaseServiceRelationshipTest {

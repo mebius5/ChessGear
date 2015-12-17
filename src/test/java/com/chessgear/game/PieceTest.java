@@ -1,14 +1,12 @@
-package com.chessgear.game; /**
- * Created by Grady Xiao on 10/24/15.
- * JUnit Test for Piece.java
- */
-import com.chessgear.game.PieceType;
-import com.chessgear.game.Player;
-import com.chessgear.game.Square;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import com.chessgear.game.Piece;
+package com.chessgear.game;
 
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+/***
+ * Test for Piece class
+ */
 public class PieceTest {
     @Test
     public void testPieceConstructor(){

@@ -1,16 +1,17 @@
-package com.chessgear.analysis; /**
- * Created by GradyXiao on 11/8/15.
- */
-import static org.junit.Assert.*;
+package com.chessgear.analysis;
 
-import com.chessgear.analysis.Engine;
-import com.chessgear.analysis.OsUtils;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
+
+/***
+ * Test for Engine.java
+ */
 public class EngineTest {
 
     private String fen;

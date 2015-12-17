@@ -1,23 +1,18 @@
 package com.chessgear.data;
-import static org.junit.Assert.*;
+
+import com.chessgear.server.User.Property;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.*;
 
-import com.chessgear.data.DatabaseService;
-import com.chessgear.server.User.Property;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-/*
- *	Author:      Gilbert Maystre
- *	Date:        Oct 24, 2015
- */
 
 /***
- * Test for DatabaseServer User
+ * Part of Tests for DatabaseService
  */
 public class DatabaseServiceUserTest {
 

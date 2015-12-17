@@ -1,12 +1,12 @@
-package com.chessgear.game; /**
- * Created by Grady Xiao on 10/24/15.
- * JUnit Test for Move.java
- */
-import com.chessgear.game.*;
+package com.chessgear.game;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/***
+ * Test for Move class
+ */
 public class MoveTest {
     @Test
     public void testMoveConstructor(){
@@ -42,6 +42,6 @@ public class MoveTest {
         Move move1 = new Move(Player.WHITE, PieceType.PAWN, new Square("d2"), new Square("d4"), false, null);
         Move move2 = new Move(Player.WHITE, PieceType.PAWN, new Square("d2"), new Square("d4"), false, null);
         assertTrue(move1.equals(move2));
-        assertFalse(move1.equals(2));
+        assertFalse(move1.equals(new String("2")));
     }
 }

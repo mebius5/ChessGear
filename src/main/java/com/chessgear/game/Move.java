@@ -160,9 +160,8 @@ public final class Move {
             } else {
                 if (this.promotionType != other.promotionType) return false;
             }
-            if (this.castling != other.castling) return false;
+            return this.castling == other.castling;
 
-            return true;
         }
         return false;
 

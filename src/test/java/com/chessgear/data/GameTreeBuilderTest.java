@@ -1,23 +1,18 @@
 package com.chessgear.data;
 
-import com.chessgear.data.GameTreeBuilder;
-import com.chessgear.data.GameTreeNode;
-import com.chessgear.data.PGNParseException;
-import com.chessgear.data.PGNParser;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.PieceType;
 import com.chessgear.game.Player;
-import jdk.nashorn.internal.runtime.ECMAException;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Test cases for GameTreeBuilder class.
- * Created by Ran on 11/5/2015.
  */
 public class GameTreeBuilderTest {
 
