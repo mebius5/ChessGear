@@ -3,7 +3,7 @@ $(document).ready(function() {
     setUserHeader(loggedInUser);
 
     $("#pgn-submit").submit(function (e) {
-        alert("Submitted!");
+        alert("Import in progress!");
         e.preventDefault();
         var pgnBody = $("#pgn-body").val();
         var postRequest = $.post("chessgear/api/games/import/" + loggedInUser, JSON.stringify({pgn : pgnBody}), function(data) {
