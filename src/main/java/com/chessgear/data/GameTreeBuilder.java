@@ -8,7 +8,6 @@ import java.util.List;
 
 /**
  * GameTree builder helper class.
- * Created by Ran on 11/5/2015.
  */
 public final class GameTreeBuilder {
 

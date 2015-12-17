@@ -150,6 +150,8 @@ public class BoardStateTest {
     @Test
     public void testEquals() {
         assertTrue(this.defaultBoardState.equals(new BoardState("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")));
+        assertTrue(this.defaultBoardState.equals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"));
+        assertFalse(this.defaultBoardState.equals(13));
     }
 
 }

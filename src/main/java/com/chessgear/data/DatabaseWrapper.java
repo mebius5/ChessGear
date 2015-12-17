@@ -16,7 +16,6 @@ import static com.chessgear.data.GameTreeNode.NodeProperties;
  * Wrapper class for DatabaseService.
  * Helper methods for interfacing with the Database singleton.
  * Adds some abstraction.
- * Created by Ran on 12/12/2015.
  */
 public final class DatabaseWrapper {
 

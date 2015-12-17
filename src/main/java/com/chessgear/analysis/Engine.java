@@ -8,8 +8,7 @@ import java.util.Scanner;
 import java.util.regex.MatchResult;
 
 /**
- * Class to facilitate engine analysis.
- * Created by Ran on 10/24/2015.
+ * Class to facilitate engine analysis using Stockfish and Java Runtime
  */
 public final class Engine {
     private Process process; //Java process
@@ -76,7 +75,7 @@ public final class Engine {
     /***
      * Obtains the result from the Stockfish analysis output and store
      * them into EngineResult
-     * Maybe print depending on whether print is true or false
+     * Maybe log all outputs of the engine depending on whether print is true or false
      * @param engineResult Stores the engineResult of the Stockfish analysis
      * @param print Prints the output from Stockfish analysis if True
      * @throws IOException if something goes wrong with the scanner

@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Board state class.
- * Created by Ran on 10/8/2015.
+ * Board state class to describe the state of the board.
  */
 public final class BoardState {
 

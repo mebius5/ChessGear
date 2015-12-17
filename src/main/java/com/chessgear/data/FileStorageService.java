@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * File storage service class.
+ * Class used to facilitate file storage
  */
 public final class FileStorageService {
 
@@ -88,13 +88,17 @@ public final class FileStorageService {
      * @param f The File (which can be a directory, where the deletion has to start)
      */
     public static void deleteRecursively(File f){
-        if(f.isDirectory()){
-            for(File ff : f.listFiles())
-                deleteRecursively(ff);
-        }
+        try {
+            if (f.isDirectory()) {
+                for (File ff : f.listFiles())
+                    deleteRecursively(ff);
+            }
 
-        if(!f.delete()){
-            logger.error(f.getName()+" cannot be deleted");
+            if (!f.delete()) {
+                logger.error(f.getName() + " cannot be deleted");
+            }
+        }catch (NullPointerException e){
+            logger.error("Null pointer exception caught during deleteRecursively() for filename: "+f.getName());
         }
     }
 
@@ -117,20 +121,25 @@ public final class FileStorageService {
      * @throws IllegalArgumentException if the user is not in the database
      */
     public List<String> getFilesFor(String username){
-        if(!db.userExists(username))
-            throw new IllegalArgumentException("User is not in database");
+        try {
+            if (!db.userExists(username))
+                throw new IllegalArgumentException("User is not in database");
 
-        ArrayList<String> toReturn = new ArrayList<>();
+            ArrayList<String> toReturn = new ArrayList<>();
 
-        //check if the user already has a folder        
-        File userDir = new File(root.getPath() + File.separator + username);
-        if(!userDir.exists())
+            //check if the user already has a folder
+            File userDir = new File(root.getPath() + File.separator + username);
+            if (!userDir.exists())
+                return toReturn;
+
+            for (File f : userDir.listFiles())
+                toReturn.add(f.getName());
+
             return toReturn;
-
-        for(File f: userDir.listFiles())
-            toReturn.add(f.getName());
-
-        return toReturn;
+        } catch(NullPointerException e){
+            logger.error("NullPointerException caught during getFilesFor()");
+            return null;
+        }
     }
 
     /**
