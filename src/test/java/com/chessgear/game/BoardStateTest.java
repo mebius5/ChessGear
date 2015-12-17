@@ -154,4 +154,8 @@ public class BoardStateTest {
         assertFalse(this.defaultBoardState.equals(13));
     }
 
+    @Test
+    public void testFullMoveCounter(){
+        assertEquals(this.defaultBoardState.getFullMoveCounter(),1);
+    }
 }

@@ -40,6 +40,7 @@ public final class Engine {
             stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
         } catch (IOException e){
             e.printStackTrace();
+            logger.error("IOException during attempt to startEngine");
         }
     }
 

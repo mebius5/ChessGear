@@ -8,8 +8,11 @@ import com.chessgear.data.GameTreeNode;
 import com.chessgear.data.PGNParser;
 import com.chessgear.game.BoardState;
 import com.chessgear.game.Move;
+import com.sun.javafx.collections.MappingChange;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Map;
 
 /***
  * Test for GameTreeNode.java
@@ -80,6 +83,12 @@ public class GameTreeNodeTest {
             assertEquals(gameTreeNode.getParent(),parentNode);
             assertEquals(gameTreeNode.getChildren().get(0),childNode);
 
+            Map<GameTreeNode.NodeProperties,String> nodeProperties = GameTreeNode.NodeProperties.getProperties(gameTreeNode);
+            assertEquals(nodeProperties.get("CP"),null);
+            assertEquals(nodeProperties.get("BOARDSTATE"),null);
+            assertEquals(nodeProperties.get("MULTIPLICITY"),null);
+            assertEquals(nodeProperties.get("BESTMOVE"),null);
+            assertEquals(nodeProperties.get("LASTMOVE"),null);
         }
         catch (Exception e){
             e.printStackTrace();

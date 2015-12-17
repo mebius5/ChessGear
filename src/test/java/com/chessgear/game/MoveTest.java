@@ -30,4 +30,18 @@ public class MoveTest {
         assertTrue(d4.isPawnPush());
         assertEquals(d4.getEnPassantTarget(), new Square("d3"));
     }
+
+    @Test
+    public void testToString(){
+        Move d4 = new Move(Player.WHITE, PieceType.PAWN, new Square("d2"), new Square("d4"), false, null);
+        assertEquals(d4.toString(),"d2d4");
+    }
+
+    @Test
+    public void testEquals(){
+        Move move1 = new Move(Player.WHITE, PieceType.PAWN, new Square("d2"), new Square("d4"), false, null);
+        Move move2 = new Move(Player.WHITE, PieceType.PAWN, new Square("d2"), new Square("d4"), false, null);
+        assertTrue(move1.equals(move2));
+        assertFalse(move1.equals(2));
+    }
 }
