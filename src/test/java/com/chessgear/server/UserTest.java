@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -76,8 +77,27 @@ public class UserTest {
             user.setPassword("new");
 
             user.addGame(testPGN);
-            assertEquals(user.getGameList().get(0).getPgn(), testPGN);
+            
+            //need to do this because the counter in GameTest is static
+            Field f = Game.class.getDeclaredField("nextGameId");
+            f.setAccessible(true);
+            int id = f.getInt(null) - 1 ;
+            f.setAccessible(false);
+                        
+            //Basic test
+            assertEquals(user.getGameList().get(id).getPgn(), testPGN);
 
+            //A deeper test
+            String result = user.getGameById(id).getResult().toString();
+            String whitePlayerName = user.getGameById(id).getWhitePlayerName();
+            String blackPlayerName = user.getGameById(id).getBlackPlayerName();
+            String date = user.getGameById(id).getDateImported().toString();
+            
+            assertEquals(user.getGamesJson(),
+                    "{\"games\":[{\"name\":\""+result+" - "+whitePlayerName+
+                    " vs "+blackPlayerName+", "+date+"\",\"id\":"+id+"}]}"
+            );
+            
             User fake = new User(username,password);
             assertEquals(fake.getUsername(),username);
             assertEquals(fake.getPassword(),password);
@@ -92,26 +112,9 @@ public class UserTest {
             HashMap<Integer, GameTreeNode> twinMapping = twin.getGameTree().getNodeMapping();
 
             for (Integer i : nodeMapping.keySet()) {
-
                 assertTrue(twinMapping.containsKey(i));
                 assertTrue(nodeMapping.get(i).equals(twinMapping.get(i)));
-
             }
-
-            Game game = new Game(new PGNParser(testPGN));
-            assertEquals(user.getGameById(0).getPgn(),game.getPgn());
-
-            int id = 0;
-            String result = user.getGameById(id).getResult().toString();
-            String whitePlayerName = user.getGameById(id).getWhitePlayerName();
-            String blackPlayerName = user.getGameById(id).getBlackPlayerName();
-            String date = user.getGameById(0).getDateImported().toString();
-            assertEquals(user.getGamesJson(),
-                    "{\"games\":[{\"name\":\""+result+" - "+whitePlayerName+
-                    " vs "+blackPlayerName+", "+date+"\",\"id\":"+id+"}]}"
-            );
-
-
 
             DatabaseServiceTestTool.putGetInstanceOfBackToNormal(DatabaseWrapper.getInstance());
             DatabaseServiceTestTool.destroyFileStorageService(fss);
