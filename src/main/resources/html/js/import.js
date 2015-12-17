@@ -25,6 +25,8 @@ $(document).ready(function() {
         var formData = new FormData();
         formData.append("file", file);
 
+        alert("File upload in progress");
+
         $.ajax({
             url: '/chessgear/api/games/importfile/' + loggedInUser,
                    //Ajax events
